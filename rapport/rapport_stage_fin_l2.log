@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.2.21)  4 AUG 2022 09:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.2.21)  4 AUG 2022 10:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**TP10_copy.tex
-(./TP10_copy.tex
+**rapport_stage_fin_l2.tex
+(./rapport_stage_fin_l2.tex
 LaTeX2e <2020-02-02> patch level 2
 L3 programming layer <2020-02-14>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -174,8 +174,8 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count197
 \l__pdf_internal_box=\box47
 )
-(./TP10_copy.aux)
-\openout1 = `TP10_copy.aux'.
+No file rapport_stage_fin_l2.aux.
+\openout1 = `rapport_stage_fin_l2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
 LaTeX Font Info:    ... okay on input line 11.
@@ -194,7 +194,6 @@ LaTeX Font Info:    ... okay on input line 11.
 LaTeX Info: Redefining \degres on input line 11.
 LaTeX Info: Redefining \dots on input line 11.
 LaTeX Info: Redefining \up on input line 11.
-
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count198
@@ -228,28 +227,29 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 12.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (./TP10_copy.toc)
+)
+No file rapport_stage_fin_l2.toc.
 \tf@toc=\write3
-\openout3 = `TP10_copy.toc'.
-
+\openout3 = `rapport_stage_fin_l2.toc'.
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./TP10_copy.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+(./rapport_stage_fin_l2.aux) ) 
 Here is how much of TeX's memory you used:
- 3843 strings out of 483113
- 50949 string characters out of 5964008
- 288977 words of memory out of 5000000
+ 3839 strings out of 483113
+ 50992 string characters out of 5964008
+ 289010 words of memory out of 5000000
  18852 multiletter control sequences out of 15000+600000
  539084 words of font info for 41 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 30i,6n,35p,232b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home
-/amk/.texlive2019/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/
-amk/.texlive2019/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> </home/a
-mk/.texlive2019/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1440.600pk> </home/am
-k/.texlive2019/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm2074.600pk>
-Output written on TP10_copy.pdf (1 page, 19961 bytes).
+ 30i,6n,35p,243b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/amk/.texlive2019/texmf-var/fonts/pk/ljfou
+r/jknappen/ec/ecrm1200.600pk> </home/amk/.texlive2019/texmf-var/fonts/pk/ljfour
+/jknappen/ec/ecbx1728.600pk> </home/amk/.texlive2019/texmf-var/fonts/pk/ljfour/
+jknappen/ec/ecrm1440.600pk> </home/amk/.texlive2019/texmf-var/fonts/pk/ljfour/j
+knappen/ec/ecrm2074.600pk>
+Output written on rapport_stage_fin_l2.pdf (1 page, 19961 bytes).
 PDF statistics:
  78 PDF objects out of 1000 (max. 8388607)
  20 compressed objects within 1 object stream
