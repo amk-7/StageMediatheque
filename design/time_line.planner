@@ -20,29 +20,29 @@
     </calendar>
   </calendars>
   <tasks>
-    <task id="1" name="R&#xE9;alisation du diagramme de cas d'utilisation." note="" work="172800" start="20220801T000000Z" end="20220803T170000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
-      <constraint type="must-start-on" time="20220801T000000Z"/>
+    <task id="1" name="R&#xE9;alisation du diagramme de cas d'utilisation." note="" work="115200" start="20220802T000000Z" end="20220803T170000Z" work-start="20220802T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20220802T000000Z"/>
     </task>
-    <task id="2" name="R&#xE9;alisation du diagramme de classe" note="" work="86400" start="20220805T000000Z" end="20220808T120000Z" work-start="20220805T080000Z" percent-complete="60" priority="0" type="normal" scheduling="fixed-work">
-      <constraint type="start-no-earlier-than" time="20220805T000000Z"/>
+    <task id="2" name="R&#xE9;alisation du diagramme de classe" note="" work="230400" start="20220804T000000Z" end="20220809T170000Z" work-start="20220804T080000Z" percent-complete="60" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220804T000000Z"/>
       <predecessors>
         <predecessor id="1" predecessor-id="1" type="FS"/>
       </predecessors>
     </task>
-    <task id="3" name="Rechercher les fonctions " note="" work="86400" start="20220815T000000Z" end="20220816T120000Z" work-start="20220815T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <constraint type="start-no-earlier-than" time="20220815T000000Z"/>
+    <task id="3" name="Rechercher les fonctions " note="" work="86400" start="20220810T000000Z" end="20220811T120000Z" work-start="20220810T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220810T000000Z"/>
       <predecessors>
         <predecessor id="1" predecessor-id="2" type="FS"/>
       </predecessors>
     </task>
-    <task id="4" name="G&#xE9;n&#xE9;rer un nouveau projet laravel php" note="" work="10800" start="20220816T120000Z" end="20220816T160000Z" work-start="20220816T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <task id="5" name="Impl&#xE9;menter les Migrations.(La base de donn&#xE9;es) " note="" work="7200" start="20220816T120000Z" end="20220816T150000Z" work-start="20220816T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+    <task id="4" name="G&#xE9;n&#xE9;rer un nouveau projet laravel php" note="" work="10800" start="20220811T120000Z" end="20220812T090000Z" work-start="20220811T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="5" name="Impl&#xE9;menter les Migrations.(La base de donn&#xE9;es) " note="" work="7200" start="20220811T120000Z" end="20220811T150000Z" work-start="20220811T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="start-no-earlier-than" time="20220811T000000Z"/>
         <predecessors>
           <predecessor id="1" predecessor-id="3" type="FS"/>
         </predecessors>
       </task>
-      <task id="6" name="Impl&#xE9;menter le Mod&#xE9;le." note="" work="3600" start="20220816T150000Z" end="20220816T160000Z" work-start="20220816T150000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="6" name="Impl&#xE9;menter le Mod&#xE9;le." note="" work="3600" start="20220812T000000Z" end="20220812T090000Z" work-start="20220812T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="start-no-earlier-than" time="20220812T000000Z"/>
         <predecessors>
           <predecessor id="1" predecessor-id="5" type="FS"/>
