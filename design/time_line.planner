@@ -20,7 +20,7 @@
     </calendar>
   </calendars>
   <tasks>
-    <task id="1" name="R&#xE9;alisation du diagramme de cas d'utilisation." note="" work="172800" start="20220801T000000Z" end="20220803T170000Z" work-start="20220801T080000Z" percent-complete="95" priority="0" type="normal" scheduling="fixed-work">
+    <task id="1" name="R&#xE9;alisation du diagramme de cas d'utilisation." note="" work="172800" start="20220801T000000Z" end="20220803T170000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
       <constraint type="must-start-on" time="20220801T000000Z"/>
     </task>
     <task id="2" name="R&#xE9;alisation du diagramme de classe" note="" work="86400" start="20220805T000000Z" end="20220808T120000Z" work-start="20220805T080000Z" percent-complete="60" priority="0" type="normal" scheduling="fixed-work">
