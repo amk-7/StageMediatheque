@@ -2,7 +2,7 @@
 
 *.aux
 *.log
-*.gz
+*.synctex.gz
 *.toc
 
 
