@@ -1,0 +1,8 @@
+# les résidus du du .tex
+
+*.aux
+*.log
+*.synctex.gz
+*.toc
+
+
