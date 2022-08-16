@@ -17,11 +17,11 @@ class CreateUtilisateursTable extends Migration
             $table->bigIncrements('id_utilisateur');
             $table->string('nom');
             $table->string('prenom');
-            $table->string('nom_utilisateur');
+            $table->string('nom_utilisateur')->unique();
             $table->string('email')->unique();
             $table->string('mot_de_passe');
             $table->string('contact');
-            $table->string('profil');
+            $table->string('photo_profil');
             $table->string('adresse');
             $table->string('sexe');
             $table->timestamps();
