@@ -18,10 +18,27 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'nom', 
+        'prenom', 
+        'nom_utilisateur', 
+        'email', 
+        'password', 
+        'contact', 
+        'photo_profil', 
+        'adresse', 
+        'sexe'        
     ];
+    protected $primaryKey = 'id_utilisateur';
+
+    public function abonne()
+    {
+        return $this->hasOne('App\Models\Abonne');
+    }
+
+    public function personnel()
+    {
+        return $$this->hasOne('App\Models\Personnel');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
