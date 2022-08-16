@@ -21,9 +21,9 @@ class CreateAbonnesTable extends Migration
             $table->string('contact_a_prevenir');
             $table->bigInteger('numero_carte');
             $table->string('type_de_carte');
-            $table->bigIncrements('id_utilisateur');
-            $table->foreign('id_utilisateur')->references('id_utilisateur')->on('utilisateurs');
+            $table->bigInteger('id_utilisateur');
             $table->timestamps();
+            $table->foreign('id_utilisateur')->references('id_utilisateur')->on('utilisateurs');
         });
     }
 

@@ -19,6 +19,7 @@ class CreateClassificationDeweyDizainesTable extends Migration
             $table->string('matiere')->unique();
             $table->bigInteger('id_classification_dewey_centaine');
             $table->timestamps();
+            $table->foreign('id_classification_dewey_centaine')->references('id_classification_dewey_centaine')->on('classification_dewey_centaines');
         });
     }
 

@@ -19,7 +19,8 @@ class CreateTelechargementsTable extends Migration
             $table->bigInteger('id_ouvrage_electronique');
             $table->bigInteger('id_abonne');
             $table->timestamps();
-            $table->foreign('id_ouvrage_electronique')->references('id_ouvrage_electronque')->on('ouvrages_electroniques');
+            $table->foreign('id_ouvrage_electronique')->references('id_ouvrage_electronique')->on('ouvrages_electroniques');
+            $table->foreign('id_abonne')->references('id_abonne')->on('abonnes');
         });
     }
 

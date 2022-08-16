@@ -20,6 +20,7 @@ class CreateApprovisionnementsTable extends Migration
             $table->bigInteger('id_personnel');
             $table->timestamps();
             $table->foreign('id_ouvrage')->references('id_ouvrage')->on('ouvrages');
+            $table->foreign('id_personnel')->references('id_personnel')->on('personnels');
         });
     }
 
