@@ -20,7 +20,7 @@
     </calendar>
   </calendars>
   <tasks>
-    <task id="1" name="R&#xE9;alisation de l'application web" note="" work="1468800" start="20220801T000000Z" end="20220907T170000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+    <task id="1" name="R&#xE9;alisation de l'application web" note="" work="1468800" start="20220801T000000Z" end="20220914T120000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
       <constraint type="must-start-on" time="20220802T000000Z"/>
       <task id="2" name="R&#xE9;alisation du diagramme de cas d'utilisation." note="" work="259200" start="20220801T000000Z" end="20220805T120000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="must-start-on" time="20220801T000000Z"/>
@@ -118,24 +118,26 @@
           </predecessors>
         </task>
       </task>
-      <task id="23" name="Designer L'application" note="" work="144000" start="20220901T120000Z" end="20220905T170000Z" work-start="20220901T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="23" name="Designer L'application" note="" work="144000" start="20220905T000000Z" end="20220907T120000Z" work-start="20220905T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20220905T000000Z"/>
         <predecessors>
           <predecessor id="1" predecessor-id="21" type="FS"/>
         </predecessors>
       </task>
-      <task id="24" name="Ecriture du manuelle m&#xE9;tier d'utilisations de l'application  web" note="" work="144000" start="20220901T120000Z" end="20220905T170000Z" work-start="20220901T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="24" name="Ecriture du manuelle m&#xE9;tier d'utilisations de l'application  web" note="" work="144000" start="20220908T000000Z" end="20220912T120000Z" work-start="20220908T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20220908T000000Z"/>
         <predecessors>
           <predecessor id="1" predecessor-id="21" type="FS"/>
         </predecessors>
       </task>
-      <task id="25" name="Apprendre aux utilisateurs comment utiliser l'application  web" note="" work="115200" start="20220905T170000Z" end="20220907T170000Z" work-start="20220906T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="25" name="Apprendre aux utilisateurs comment utiliser l'application  web" note="" work="115200" start="20220912T120000Z" end="20220914T120000Z" work-start="20220912T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="24" type="FS"/>
         </predecessors>
       </task>
     </task>
-    <task id="26" name="R&#xE9;alisation de l'application mobile (android et ios)" note="" work="144000" start="20220907T170000Z" end="20220912T120000Z" work-start="20220908T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <task id="27" name="R&#xE9;alisation de la charte graphique" note="" work="144000" start="20220907T170000Z" end="20220912T120000Z" work-start="20220908T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+    <task id="26" name="R&#xE9;alisation de l'application mobile (android et ios)" note="" work="144000" start="20220914T120000Z" end="20220916T170000Z" work-start="20220914T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="27" name="R&#xE9;alisation de la charte graphique" note="" work="144000" start="20220914T120000Z" end="20220916T170000Z" work-start="20220914T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="25" type="FS"/>
         </predecessors>
