@@ -10,6 +10,7 @@ class Registraton extends Model
     use HasFactory;
     protected $fillable = ['date_debut', 'date_fin', 'id_abonne', 'id_tarif_abonnement'];
     protected $primaryKey = 'id_registraton';
+    protected $dates = ['date_debut', 'date_fin'];
 
     public function flooz()
     {

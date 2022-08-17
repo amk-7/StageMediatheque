@@ -10,4 +10,8 @@ class ClassificationDeweyDizaines extends Model
     use HasFactory;
     protected $fillable = ['classe', 'matiere', 'id_classification_dewey_centaine'];
     protected $primaryKey = 'id_classification_dewey_dizaine';
+
+    public function ouvragePhysqique(){
+        return $this->hasMany(OuvragePhysique::class);
+    }
 }

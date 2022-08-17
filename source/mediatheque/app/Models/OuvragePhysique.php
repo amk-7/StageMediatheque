@@ -8,6 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class OuvragePhysique extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre_exemplaire', 'etat', 'disponibilite', 'id_ouvrage'];
+    protected $fillable = ['nombre_exemplaire', 'etat', 'disponibilite', 'id_ouvrage', 'id_classification_dewey_dizaine'];
     protected $primaryKey = 'id_ouvrage_physique';
+
+    public function ouvrage(){
+        return $this->hasOne(Ouvrage::class);
+    }
+    public function classification_dewey_dizaine(){
+        return $this->belongsTo(ClassificationDeweyDizaines::class);
+    }
+    public function livrePapier(){
+        return $this->belongsTo(LivrePapier::class);
+    }
+    public function documentAudioVisuel(){
+        return $this->belongsTo(DocumentAudioVisuel::class);
+    }
 }
