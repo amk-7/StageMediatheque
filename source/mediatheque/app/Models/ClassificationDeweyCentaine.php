@@ -10,4 +10,9 @@ class ClassificationDeweyCentaine extends Model
     use HasFactory;
     protected $fillable = ['section', 'theme'];
     protected $primaryKey = 'id_classification_dewey_centaine';
+
+    public function classificationDeweyDizaines()
+    {
+        return $this->hasMany('App\Models\ClassificationDeweyDizaines', 'id_classification_dewey_dizaine');
+    }
 }
