@@ -29,6 +29,7 @@ class User extends Authenticatable
         'sexe'        
     ];
     protected $primaryKey = 'id_utilisateur';
+    protected $cast = ['adresse' => 'array'];
 
     public function abonne()
     {
