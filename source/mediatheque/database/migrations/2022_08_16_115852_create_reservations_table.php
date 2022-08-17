@@ -15,7 +15,7 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id_reservation');
-            $table->date('date_reservation');
+            $table->date('date_reservation')->default('now()');
             $table->date('date_expiration');
             $table->bigInteger('id_abonne');
             $table->bigInteger('id_ouvrage_physique');

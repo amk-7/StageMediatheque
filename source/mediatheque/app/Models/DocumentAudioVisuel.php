@@ -10,4 +10,8 @@ class DocumentAudioVisuel extends Model
     use HasFactory;
     protected $fillable = ['genre', 'ISAN', 'id_ouvrage_physique'];
     protected $primaryKey = 'id_document_audio_visuel';
+
+    public function ouvragePhysique(){
+        return $this->hasOne(OuvragePhysique::class);
+    }
 }

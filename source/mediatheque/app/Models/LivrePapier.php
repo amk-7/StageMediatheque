@@ -10,4 +10,8 @@ class LivrePapier extends Model
     use HasFactory;
     protected $fillable = ['categorie', 'ISBN', 'id_ouvrage_physique'];
     protected $primaryKey = 'id_livre_papier';
+
+    public function ouvragePhysique(){
+        return $this->hasOne(OuvragePhysique::class);
+    }
 }
