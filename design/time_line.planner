@@ -20,30 +20,127 @@
     </calendar>
   </calendars>
   <tasks>
-    <task id="1" name="R&#xE9;alisation de l'application web" note="" work="518400" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+    <task id="1" name="R&#xE9;alisation de l'application web" note="" work="1468800" start="20220801T000000Z" end="20220907T170000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
       <constraint type="must-start-on" time="20220802T000000Z"/>
-      <task id="2" name="R&#xE9;alisation du diagramme de cas d'utilisation." note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="3" name="R&#xE9;alisation du diagramme de classe" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="4" name="Rechercher les fonctions " note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="5" name="G&#xE9;n&#xE9;rer un nouveau projet laravel php" note="" work="86400" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-        <task id="6" name="Impl&#xE9;menter les Migrations.(La base de donn&#xE9;es) " note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-        <task id="7" name="Impl&#xE9;menter le Mod&#xE9;le." note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-        <task id="8" name="Impl&#xE9;mentation des routes et controlleur de ressource" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="2" name="R&#xE9;alisation du diagramme de cas d'utilisation." note="" work="259200" start="20220801T000000Z" end="20220805T120000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="must-start-on" time="20220801T000000Z"/>
       </task>
-      <task id="9" name="D&#xE9;claration des fonctions helpers" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="10" name="R&#xE9;alisation des m&#xE9;thodes des controlleur de ressouces c&#xF4;t&#xE9; ouvrages" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="11" name="R&#xE9;alisation des m&#xE9;thodes des controlleur de ressouces c&#xF4;t&#xE9; utilisateur" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="12" name="Cr&#xE9;ation d'un formulaire d'enr&#xE9;gistrement de donn&#xE9;e d&#xE9;j&#xE0; existante." note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="13" name="R&#xE9;alisation des vues de ressouces c&#xF4;t&#xE9; ouvrages" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="14" name="R&#xE9;alisation des vues de ressouces c&#xF4;t&#xE9; utilisateur" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="15" name="R&#xE9;alisation du syst&#xE8;me d'authentification" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="16" name="Configuration de la machine distante" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="17" name="D&#xE9;ployer l'application en ligne" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="18" name="Designer L'application" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="19" name="Ecriture du manuelle m&#xE9;tier d'utilisations de l'application  web" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="20" name="Apprendre aux utilisateurs comment utiliser l'application  web" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="3" name="R&#xE9;alisation du diagramme de classe" note="" work="144000" start="20220808T000000Z" end="20220810T120000Z" work-start="20220808T080000Z" percent-complete="90" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20220808T000000Z"/>
+        <predecessors>
+          <predecessor id="1" predecessor-id="2" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="4" name="G&#xE9;n&#xE9;rer un nouveau projet laravel php" note="" work="57600" start="20220816T000000Z" end="20220817T120000Z" work-start="20220816T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="5" name="Impl&#xE9;menter les Migrations.(La base de donn&#xE9;es) " note="" work="14400" start="20220816T000000Z" end="20220816T100000Z" work-start="20220816T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+          <constraint type="start-no-earlier-than" time="20220816T000000Z"/>
+        </task>
+        <task id="6" name="Impl&#xE9;menter le Mod&#xE9;le." note="" work="14400" start="20220816T000000Z" end="20220816T100000Z" work-start="20220816T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+          <constraint type="must-start-on" time="20220816T000000Z"/>
+        </task>
+        <task id="7" name="Impl&#xE9;mentation des routes et controlleur de ressource" note="" work="28800" start="20220817T000000Z" end="20220817T120000Z" work-start="20220817T080000Z" percent-complete="90" priority="0" type="normal" scheduling="fixed-work">
+          <constraint type="must-start-on" time="20220817T000000Z"/>
+        </task>
+      </task>
+      <task id="8" name="Rechercher les fonctions " note="" work="14400" start="20220818T000000Z" end="20220818T100000Z" work-start="20220818T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20220818T000000Z"/>
+        <predecessors>
+          <predecessor id="1" predecessor-id="7" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="9" name="D&#xE9;claration et d&#xE9;finition des fonctions helpers" note="" work="14400" start="20220818T100000Z" end="20220818T120000Z" work-start="20220818T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20220818T000000Z"/>
+        <predecessors>
+          <predecessor id="1" predecessor-id="8" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="10" name="R&#xE9;alisation des m&#xE9;thodes des controlleur de ressouces c&#xF4;t&#xE9; ouvrages" note="" work="57600" start="20220818T120000Z" end="20220822T120000Z" work-start="20220818T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="9" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="11" name="R&#xE9;alisation des m&#xE9;thodes des controlleur de ressouces c&#xF4;t&#xE9; utilisateur" note="" work="57600" start="20220818T120000Z" end="20220822T120000Z" work-start="20220818T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="9" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="12" name="Cr&#xE9;ation d'un formulaire d'enr&#xE9;gistrement de donn&#xE9;e d&#xE9;j&#xE0; existante." note="" work="28800" start="20220822T120000Z" end="20220822T170000Z" work-start="20220822T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="10" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="13" name="R&#xE9;alisation des vues de ressouces c&#xF4;t&#xE9; ouvrages" note="" work="86400" start="20220822T120000Z" end="20220825T120000Z" work-start="20220822T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="10" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="14" name="R&#xE9;alisation des vues de ressouces c&#xF4;t&#xE9; utilisateur" note="" work="86400" start="20220822T120000Z" end="20220825T120000Z" work-start="20220822T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="11" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="15" name="R&#xE9;alisation du syst&#xE8;me d'authentification" note="" work="28800" start="20220825T120000Z" end="20220826T120000Z" work-start="20220825T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="14" type="FS"/>
+          <predecessor id="1" predecessor-id="13" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="16" name="R&#xE9;alisation d'un syst&#xE8;me de gestion des r&#xF4;les et des utilisateurs " note="" work="57600" start="20220826T120000Z" end="20220830T120000Z" work-start="20220826T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="15" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="17" name="R&#xE9;alisation d'un syst&#xE8;me de navigation" note="" work="57600" start="20220825T120000Z" end="20220826T120000Z" work-start="20220825T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="14" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="18" name="Configuration de la machine distante" note="" work="115200" start="20220830T120000Z" end="20220902T120000Z" work-start="20220830T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="19" name="Installation du syst&#xE8;me d'exploitation ubuntu 18.04 ou 20 " note="" work="28800" start="20220830T120000Z" end="20220831T120000Z" work-start="20220830T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="16" type="FS"/>
+            <predecessor id="1" predecessor-id="17" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="20" name="Installation de php avec une version &gt; 7.4  et insatallation des d&#xE9;pendances" note="" work="28800" start="20220831T120000Z" end="20220901T120000Z" work-start="20220831T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="19" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="21" name="Exportation du site local vers la machine distante" note="" work="28800" start="20220831T120000Z" end="20220901T120000Z" work-start="20220831T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="19" type="FS"/>
+          </predecessors>
+        </task>
+        <task id="22" name="configuration du site selon le machine" note="" work="28800" start="20220901T120000Z" end="20220902T120000Z" work-start="20220901T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <predecessors>
+            <predecessor id="1" predecessor-id="21" type="FS"/>
+          </predecessors>
+        </task>
+      </task>
+      <task id="23" name="Designer L'application" note="" work="144000" start="20220901T120000Z" end="20220905T170000Z" work-start="20220901T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="21" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="24" name="Ecriture du manuelle m&#xE9;tier d'utilisations de l'application  web" note="" work="144000" start="20220901T120000Z" end="20220905T170000Z" work-start="20220901T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="21" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="25" name="Apprendre aux utilisateurs comment utiliser l'application  web" note="" work="115200" start="20220905T170000Z" end="20220907T170000Z" work-start="20220906T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="24" type="FS"/>
+        </predecessors>
+      </task>
     </task>
-    <task id="21" name="R&#xE9;alisation de l'application mobile (android et ios)" note="" work="28800" start="20220729T000000Z" end="20220729T170000Z" work-start="20220729T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+    <task id="26" name="R&#xE9;alisation de l'application mobile (android et ios)" note="" work="144000" start="20220907T170000Z" end="20220912T120000Z" work-start="20220908T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="27" name="R&#xE9;alisation de la charte graphique" note="" work="144000" start="20220907T170000Z" end="20220912T120000Z" work-start="20220908T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="25" type="FS"/>
+        </predecessors>
+      </task>
+    </task>
   </tasks>
   <resource-groups/>
   <resources>
@@ -51,7 +148,45 @@
     <resource id="2" name="NGANDEU Alhasan" short-name="ANN" type="1" units="0" email="" note="" std-rate="0"/>
   </resources>
   <allocations>
+    <allocation task-id="27" resource-id="1" units="100"/>
+    <allocation task-id="25" resource-id="1" units="100"/>
+    <allocation task-id="24" resource-id="1" units="100"/>
+    <allocation task-id="23" resource-id="1" units="100"/>
+    <allocation task-id="20" resource-id="1" units="100"/>
+    <allocation task-id="19" resource-id="1" units="100"/>
+    <allocation task-id="17" resource-id="1" units="100"/>
+    <allocation task-id="16" resource-id="1" units="100"/>
+    <allocation task-id="13" resource-id="1" units="100"/>
+    <allocation task-id="12" resource-id="1" units="100"/>
+    <allocation task-id="10" resource-id="1" units="100"/>
+    <allocation task-id="9" resource-id="1" units="100"/>
+    <allocation task-id="8" resource-id="1" units="100"/>
+    <allocation task-id="4" resource-id="1" units="100"/>
+    <allocation task-id="7" resource-id="1" units="100"/>
+    <allocation task-id="6" resource-id="1" units="100"/>
+    <allocation task-id="5" resource-id="1" units="100"/>
+    <allocation task-id="3" resource-id="1" units="100"/>
+    <allocation task-id="2" resource-id="1" units="100"/>
     <allocation task-id="1" resource-id="1" units="100"/>
+    <allocation task-id="27" resource-id="2" units="100"/>
+    <allocation task-id="25" resource-id="2" units="100"/>
+    <allocation task-id="24" resource-id="2" units="100"/>
+    <allocation task-id="23" resource-id="2" units="100"/>
+    <allocation task-id="22" resource-id="2" units="100"/>
+    <allocation task-id="21" resource-id="2" units="100"/>
+    <allocation task-id="17" resource-id="2" units="100"/>
+    <allocation task-id="15" resource-id="2" units="100"/>
+    <allocation task-id="14" resource-id="2" units="100"/>
+    <allocation task-id="12" resource-id="2" units="100"/>
+    <allocation task-id="11" resource-id="2" units="100"/>
+    <allocation task-id="9" resource-id="2" units="100"/>
+    <allocation task-id="8" resource-id="2" units="100"/>
+    <allocation task-id="4" resource-id="2" units="100"/>
+    <allocation task-id="7" resource-id="2" units="100"/>
+    <allocation task-id="6" resource-id="2" units="100"/>
+    <allocation task-id="5" resource-id="2" units="100"/>
+    <allocation task-id="3" resource-id="2" units="100"/>
+    <allocation task-id="2" resource-id="2" units="100"/>
     <allocation task-id="1" resource-id="2" units="100"/>
   </allocations>
 </project>
