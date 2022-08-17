@@ -14,6 +14,6 @@ class Flooz extends Model
 
     public function registration()
     {
-        return $this->belongsTo(Registration::class);
+        return $this->belongsTo('App\Models\Registration', 'id_registraton');
     }
 }

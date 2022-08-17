@@ -11,4 +11,14 @@ class Emprunt extends Model
     protected $fillable = ['date_emprunt', 'date_retour', 'etat_retour', 'id_abonne', 'id_ouvrage_physique'];
     protected $primaryKey = 'id_emprunt';
     protected $dates = ['date_emprunt', 'date_retour'];
+
+    public function abonne()
+    {
+        return $this->hasOne('App\Models\Abonne', 'id_abonne');
+    }
+
+    public function ouvragePhysique()
+    {
+        return $this->hasOne('App\Models\OuvragePhysique', 'id_ouvrage_physique');
+    }
 }
