@@ -15,6 +15,7 @@ class LivreNumeriqueController extends Controller
     public function index()
     {
         //
+        return "livres electronique";
     }
 
     /**
