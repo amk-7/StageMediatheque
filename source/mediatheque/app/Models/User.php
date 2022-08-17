@@ -32,12 +32,12 @@ class User extends Authenticatable
 
     public function abonne()
     {
-        return $this->hasOne('App\Models\Abonne');
+        return $this->hasOne('App\Models\Abonne', 'id_abonne');
     }
 
     public function personnel()
     {
-        return $$this->hasOne('App\Models\Personnel');
+        return $$this->hasOne('App\Models\Personnel', 'id_personnel');
     }
 
     /**
