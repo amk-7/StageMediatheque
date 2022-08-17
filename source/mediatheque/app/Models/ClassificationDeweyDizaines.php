@@ -14,4 +14,8 @@ class ClassificationDeweyDizaines extends Model
     public function ouvragePhysqique(){
         return $this->hasMany(OuvragePhysique::class);
     }
+
+    public function classificationDeweyCentaine(){
+        return $this->hasOne(ClassificationDeweyCentaine::class);
+    }
 }
