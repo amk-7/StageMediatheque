@@ -14,6 +14,22 @@ class Abonne extends Model
 
 
     public function utilisateur(){
-        return $this->belongsTo(Utilisateur::class);
+        return $this->belongsTo('App\Models\Utilisateur', 'id_utilisateur');
+    }
+
+    public function registration(){
+        return $this->hasMany('App\Models\Registration', 'id_registraton');
+    }
+
+    public function reservation(){
+        return $this->hasMany('App\Models\Reservation', 'id_reservation');
+    }
+
+    public function emprunt(){
+        return $this->hasMany('App\Models\Emprunt', 'id_emprunt');
+    }
+
+    public function telechargement(){
+        return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
     }
 }

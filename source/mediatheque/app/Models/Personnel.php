@@ -13,6 +13,10 @@ class Personnel extends Model
 
 
     public function utilisateur(){
-        return $this->belongsTo(Utilisateur::class);
+        return $this->belongsTo('App\Models\Utilisateur', 'id_utilisateur');
+    }
+
+    public function approvisionnement(){
+        return $this->hasOne('App\Models\Approvisionnement', 'id_approvisionnement');
     }
 }
