@@ -15,7 +15,7 @@ class CreateEmpruntsTable extends Migration
     {
         Schema::create('emprunts', function (Blueprint $table) {
             $table->bigIncrements('id_emprunt');
-            $table->date('date_emprunt');
+            $table->date('date_emprunt')->default('now()');
             $table->date('date_retour');
             $table->string('etat_retour');
             $table->bigInteger('id_abonne');

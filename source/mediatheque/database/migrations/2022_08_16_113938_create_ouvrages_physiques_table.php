@@ -19,8 +19,10 @@ class CreateOuvragesPhysiquesTable extends Migration
             $table->string('etat');
             $table->boolean('disponibilite');
             $table->bigInteger('id_ouvrage');
+            $table->bigInteger('id_classification_dewey_dizaine');
             $table->timestamps();
             $table->foreign('id_ouvrage')->references('id_ouvrage')->on('ouvrages');
+            $table->foreign('id_classification_dewey_dizaine')->references('id_classification_dewey_dizaine')->on('classification_dewey_dizaines');
         });
     }
 

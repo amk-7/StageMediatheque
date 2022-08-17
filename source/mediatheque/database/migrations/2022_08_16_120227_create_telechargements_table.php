@@ -15,7 +15,7 @@ class CreateTelechargementsTable extends Migration
     {
         Schema::create('telechargements', function (Blueprint $table) {
             $table->bigIncrements('id_telechargement');
-            $table->timestamp('date');
+            $table->timestamp('date')->default('now()');
             $table->bigInteger('id_ouvrage_electronique');
             $table->bigInteger('id_abonne');
             $table->timestamps();

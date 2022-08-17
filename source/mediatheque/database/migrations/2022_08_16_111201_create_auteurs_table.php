@@ -16,8 +16,8 @@ class CreateAuteursTable extends Migration
         Schema::create('auteurs', function (Blueprint $table) {
             $table->bigIncrements('id_auteur');
             $table->string('nom');
-            $table->date('date_naissance');
-            $table->date('date_decces');
+            $table->timestamp('date_naissance');
+            $table->timestamp('date_decces');
             $table->timestamps();
         });
     }
