@@ -23,4 +23,12 @@ class OuvragePhysique extends Model
     public function documentAudioVisuel(){
         return $this->belongsTo(DocumentAudioVisuel::class);
     }
+    public function emprunt()
+    {
+        return $this->belongsToMany(Emprunt::class)->using(OuvrageParEmprunt::class);
+    }
+    public function reservation()
+    {
+        return $this->belongsToMany(Reservation::class)->using(OuvrageParReservation::class);
+    }
 }
