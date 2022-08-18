@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\UtilisateurHelper;
-use App\Models\Abonne;
+use App\Models\Restitution;
 use Illuminate\Http\Request;
 
-class AbonneController extends Controller
+class RestitutionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,11 +25,6 @@ class AbonneController extends Controller
     public function create()
     {
         //
-        $msg = "---";
-        if (UtilisateurHelper::verifierSiUtilisateurExist(null, null)){
-            $msg = "hello";
-        }
-        return $msg;
     }
 
     /**
@@ -47,10 +41,10 @@ class AbonneController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Abonne  $abonne
+     * @param  \App\Models\Restitution  $restitution
      * @return \Illuminate\Http\Response
      */
-    public function show(Abonne $abonne)
+    public function show(Restitution $restitution)
     {
         //
     }
@@ -58,10 +52,10 @@ class AbonneController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Abonne  $abonne
+     * @param  \App\Models\Restitution  $restitution
      * @return \Illuminate\Http\Response
      */
-    public function edit(Abonne $abonne)
+    public function edit(Restitution $restitution)
     {
         //
     }
@@ -70,10 +64,10 @@ class AbonneController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Abonne  $abonne
+     * @param  \App\Models\Restitution  $restitution
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Abonne $abonne)
+    public function update(Request $request, Restitution $restitution)
     {
         //
     }
@@ -81,10 +75,10 @@ class AbonneController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Abonne  $abonne
+     * @param  \App\Models\Restitution  $restitution
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Abonne $abonne)
+    public function destroy(Restitution $restitution)
     {
         //
     }

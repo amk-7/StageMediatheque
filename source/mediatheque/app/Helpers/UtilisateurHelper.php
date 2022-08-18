@@ -6,7 +6,7 @@ use App\Models\User;
 class UtilisateurHelper
 {
     public static function verifierSiUtilisateurExist($nom, $prenom){
-        User::all()->where('nom', $nom)->where('', '');
+        User::all()->where('nom', $nom)->where('prenom', $prenom);
         return true;
     }
 }
