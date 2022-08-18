@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AuteursParOuvrages;
+use App\Models\AuteursParOuvrage;
 use Illuminate\Http\Request;
 
 class AuteursParOuvragesController extends Controller
@@ -41,10 +41,10 @@ class AuteursParOuvragesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\AuteursParOuvrages  $auteursParOuvrages
+     * @param  \App\Models\AuteursParOuvrage  $auteursParOuvrages
      * @return \Illuminate\Http\Response
      */
-    public function show(AuteursParOuvrages $auteursParOuvrages)
+    public function show(AuteursParOuvrage $auteursParOuvrages)
     {
         //
     }
@@ -52,10 +52,10 @@ class AuteursParOuvragesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\AuteursParOuvrages  $auteursParOuvrages
+     * @param  \App\Models\AuteursParOuvrage  $auteursParOuvrages
      * @return \Illuminate\Http\Response
      */
-    public function edit(AuteursParOuvrages $auteursParOuvrages)
+    public function edit(AuteursParOuvrage $auteursParOuvrages)
     {
         //
     }
@@ -64,10 +64,10 @@ class AuteursParOuvragesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AuteursParOuvrages  $auteursParOuvrages
+     * @param  \App\Models\AuteursParOuvrage  $auteursParOuvrages
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AuteursParOuvrages $auteursParOuvrages)
+    public function update(Request $request, AuteursParOuvrage $auteursParOuvrages)
     {
         //
     }
@@ -75,10 +75,10 @@ class AuteursParOuvragesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\AuteursParOuvrages  $auteursParOuvrages
+     * @param  \App\Models\AuteursParOuvrage  $auteursParOuvrages
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AuteursParOuvrages $auteursParOuvrages)
+    public function destroy(AuteursParOuvrage $auteursParOuvrages)
     {
         //
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ouvrage extends Model
 {
     use HasFactory;
-    protected $fillable = ['lieu_edition', 'niveau', 'type', 'image', 'langue'];
+    protected $fillable = ['niveau', 'type', 'image', 'langue'];
     protected $primaryKey = 'id_ouvrage';
 
 
@@ -21,7 +21,7 @@ class Ouvrage extends Model
 
     public function auteur()
     {
-        return $this->belongsToMany(Auteur::class)->using(AuteurParOuvrage::class);
+        return $this->belongsToMany(Auteur::class)->using(AuteursParOuvrage::class);
     }
 
 }
