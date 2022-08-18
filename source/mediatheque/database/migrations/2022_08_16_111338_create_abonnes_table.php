@@ -23,7 +23,7 @@ class CreateAbonnesTable extends Migration
             $table->string('type_de_carte');
             $table->bigInteger('id_utilisateur');
             $table->timestamps();
-            $table->foreign('id_utilisateur')->references('id_utilisateur')->on('utilisateurs');
+            $table->foreign('id_utilisateur')->references('id_utilisateur')->on('users');
         });
     }
 
