@@ -31,7 +31,7 @@ Route::get('formulaire_edition_des_abonnes', 'App\Http\Controllers\AbonneControl
 Route::put('mise_a_jour_des_abonnes', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
 Route::delete('suppression_des_abonnes', 'App\Http\Controllers\AbonneController@destroy')->name('destroyAbonne');
 Route::get('formulaire_Abonne', 'App\Http\Controllers\AbonneController@create')->name('createAbonne');
-Route::post('enregistrement_des_abonnes', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
+Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
 
 // Path: Personnel routes/web.php
 Route::get('liste_des_personnels', 'App\Http\Controllers\PersonnelController@index')->name('listePersonnels');
