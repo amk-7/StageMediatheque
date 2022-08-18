@@ -41,4 +41,12 @@
 ## Installation du package helper
 `composer require laravel/helpers`
 
+`composer require --dev barryvdh/laravel-ide-helper`
 
+    Ajout d'un provider
+    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+    
+### Usage
+    `php artisan ide-helper:generate
+    
+    `    
