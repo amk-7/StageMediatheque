@@ -19,6 +19,6 @@ class Emprunt extends Model
 
     public function ouvragePhysique()
     {
-        return $this->hasOne('App\Models\OuvragePhysique', 'id_ouvrage_physique');
+        return $this->belongsToMany(OuvragePhysique::class)->using(OuvrageParEmprunt::class);
     }
 }

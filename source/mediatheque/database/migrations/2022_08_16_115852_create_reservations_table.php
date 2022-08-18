@@ -17,9 +17,7 @@ class CreateReservationsTable extends Migration
             $table->bigIncrements('id_reservation');
             $table->date('date_reservation')->default('now()');
             $table->bigInteger('id_abonne');
-            $table->bigInteger('id_ouvrage_physique');
             $table->foreign('id_abonne')->references('id_abonne')->on('abonnes');
-            $table->foreign('id_ouvrage_physique')->references('id_ouvrage_physique')->on('ouvrages_physiques');
             $table->timestamps();
         });
     }
