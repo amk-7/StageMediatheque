@@ -17,6 +17,7 @@ class CreateAuteursParOuvragesTable extends Migration
             $table->bigInteger('id_auteur');
             $table->bigInteger('id_ouvrage');
             $table->timestamp('date_apparution');
+            $table->string('lieu_edition');
             $table->timestamps();
             $table->foreign('id_auteur')->references('id_auteur')->on('auteurs');
             $table->foreign('id_ouvrage')->references('id_ouvrage')->on('ouvrages');
