@@ -17,7 +17,6 @@ class CreateEmpruntsTable extends Migration
             $table->bigIncrements('id_emprunt');
             $table->date('date_emprunt')->default('now()');
             $table->date('date_retour');
-            $table->string('etat_retour');
             $table->bigInteger('id_abonne');
             $table->bigInteger('id_ouvrage_physique');
             $table->foreign('id_abonne')->references('id_abonne')->on('abonnes');
