@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\UtilisateurHelper;
 use App\Models\Abonne;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,11 @@ class AbonneController extends Controller
     public function create()
     {
         //
+        $msg = "---";
+        if (UtilisateurHelper::verifierSiUtilisateurExist(null)){
+            $msg = "hello";
+        }
+        return $msg;
     }
 
     /**

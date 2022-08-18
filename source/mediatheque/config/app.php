@@ -175,6 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // package helper
+        MercurySeries\Helpers\HelpersServiceProvider::class,
+
     ],
 
     /*
