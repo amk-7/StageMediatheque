@@ -40,7 +40,7 @@ Route::get('formulaire_edition_des_personnels', 'App\Http\Controllers\PersonnelC
 Route::put('mise_a_jour_des_personnels', 'App\Http\Controllers\PersonnelController@update')->name('updatePersonnel');
 Route::delete('suppression_des_personnels', 'App\Http\Controllers\PersonnelController@destroy')->name('destroyPersonnel');
 Route::get('formulaire_Personnel', 'App\Http\Controllers\PersonnelController@create')->name('createPersonnel');
-Route::post('enregistrement_des_personnels', 'App\Http\Controllers\PersonnelController@store')->name('storePersonnel');
+Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelController@store')->name('storePersonnel');
 
 // Path: Emprunt routes/web.php
 Route::get('liste_des_emprunts', 'App\Http\Controllers\EmpruntController@index')->name('listeEmprunts');
@@ -49,7 +49,7 @@ Route::get('formulaire_edition_des_emprunts', 'App\Http\Controllers\EmpruntContr
 Route::put('mise_a_jour_des_emprunts', 'App\Http\Controllers\EmpruntController@update')->name('updateEmprunt');
 Route::delete('suppression_des_emprunts', 'App\Http\Controllers\EmpruntController@destroy')->name('destroyEmprunt');
 Route::get('formulaire_Emprunt', 'App\Http\Controllers\EmpruntController@create')->name('createEmprunt');
-Route::post('enregistrement_des_emprunts', 'App\Http\Controllers\EmpruntController@store')->name('storeEmprunt');
+Route::post('enregistrement_emprunt', 'App\Http\Controllers\EmpruntController@store')->name('storeEmprunt');
 
 // Path: Reservation routes/web.php
 Route::get('liste_des_reservations', 'App\Http\Controllers\ReservationController@index')->name('listeReservations');
@@ -58,7 +58,7 @@ Route::get('formulaire_edition_des_reservations', 'App\Http\Controllers\Reservat
 Route::put('mise_a_jour_des_reservations', 'App\Http\Controllers\ReservationController@update')->name('updateReservation');
 Route::delete('suppression_des_reservations', 'App\Http\Controllers\ReservationController@destroy')->name('destroyReservation');
 Route::get('formulaire_Reservation', 'App\Http\Controllers\ReservationController@create')->name('createReservation');
-Route::post('enregistrement_des_reservations', 'App\Http\Controllers\ReservationController@store')->name('storeReservation');
+Route::post('enregistrement_reservation', 'App\Http\Controllers\ReservationController@store')->name('storeReservation');
 
 // Path: ClassificationDeweyCentaine routes/web.php
 Route::get('liste_des_classification_dewey_centaines', 'App\Http\Controllers\ClassificationDeweyCentaineController@index')->name('listeClassificationDeweyCentaines');
@@ -67,7 +67,7 @@ Route::get('formulaire_edition_des_classification_dewey_centaines', 'App\Http\Co
 Route::put('mise_a_jour_des_classification_dewey_centaines', 'App\Http\Controllers\ClassificationDeweyCentaineController@update')->name('updateClassificationDeweyCentaine');
 Route::delete('suppression_des_classification_dewey_centaines', 'App\Http\Controllers\ClassificationDeweyCentaineController@destroy')->name('destroyClassificationDeweyCentaine');
 Route::get('formulaire_ClassificationDeweyCentaine', 'App\Http\Controllers\ClassificationDeweyCentaineController@create')->name('createClassificationDeweyCentaine');
-Route::post('enregistrement_des_classification_dewey_centaines', 'App\Http\Controllers\ClassificationDeweyCentaineController@store')->name('storeClassificationDeweyCentaine');
+Route::post('enregistrement_classification_dewey_centaine', 'App\Http\Controllers\ClassificationDeweyCentaineController@store')->name('storeClassificationDeweyCentaine');
 
 // Path: TarifAbonnement routes/web.php
 Route::get('liste_des_tarif_abonnements', 'App\Http\Controllers\TarifAbonnementController@index')->name('listeTarifAbonnements');
@@ -76,7 +76,7 @@ Route::get('formulaire_edition_des_tarif_abonnements', 'App\Http\Controllers\Tar
 Route::put('mise_a_jour_des_tarif_abonnements', 'App\Http\Controllers\TarifAbonnementController@update')->name('updateTarifAbonnement');
 Route::delete('suppression_des_tarif_abonnements', 'App\Http\Controllers\TarifAbonnementController@destroy')->name('destroyTarifAbonnement');
 Route::get('formulaire_TarifAbonnement', 'App\Http\Controllers\TarifAbonnementController@create')->name('createTarifAbonnement');
-Route::post('enregistrement_des_tarif_abonnements', 'App\Http\Controllers\TarifAbonnementController@store')->name('storeTarifAbonnement');
+Route::post('enregistrement_tarif_abonnement', 'App\Http\Controllers\TarifAbonnementController@store')->name('storeTarifAbonnement');
 
 // Path: Registration routes/web.php
 Route::get('liste_des_registrations', 'App\Http\Controllers\RegistrationController@index')->name('listeRegistrations');
@@ -85,7 +85,7 @@ Route::get('formulaire_edition_des_registrations', 'App\Http\Controllers\Registr
 Route::put('mise_a_jour_des_registrations', 'App\Http\Controllers\RegistrationController@update')->name('updateRegistration');
 Route::delete('suppression_des_registrations', 'App\Http\Controllers\RegistrationController@destroy')->name('destroyRegistration');
 Route::get('formulaire_Registration', 'App\Http\Controllers\RegistrationController@create')->name('createRegistration');
-Route::post('enregistrement_des_registrations', 'App\Http\Controllers\RegistrationController@store')->name('storeRegistration');
+Route::post('enregistrement_registration', 'App\Http\Controllers\RegistrationController@store')->name('storeRegistration');
 
 // Path: Tmoney routes/web.php
 Route::get('liste_des_tmoney', 'App\Http\Controllers\TmoneyController@index')->name('listeTmoney');
@@ -94,7 +94,7 @@ Route::get('formulaire_edition_des_tmoney', 'App\Http\Controllers\TmoneyControll
 Route::put('mise_a_jour_des_tmoney', 'App\Http\Controllers\TmoneyController@update')->name('updateTmoney');
 Route::delete('suppression_des_tmoney', 'App\Http\Controllers\TmoneyController@destroy')->name('destroyTmoney');
 Route::get('formulaire_Tmoney', 'App\Http\Controllers\TmoneyController@create')->name('createTmoney');
-Route::post('enregistrement_des_tmoney', 'App\Http\Controllers\TmoneyController@store')->name('storeTmoney');
+Route::post('enregistrement_tmoney', 'App\Http\Controllers\TmoneyController@store')->name('storeTmoney');
 
 // Path: Flooz routes/web.php
 Route::get('liste_des_flooz', 'App\Http\Controllers\FloozController@index')->name('listeFlooz');
@@ -103,7 +103,7 @@ Route::get('formulaire_edition_des_flooz', 'App\Http\Controllers\FloozController
 Route::put('mise_a_jour_des_flooz', 'App\Http\Controllers\FloozController@update')->name('updateFlooz');
 Route::delete('suppression_des_flooz', 'App\Http\Controllers\FloozController@destroy')->name('destroyFlooz');
 Route::get('formulaire_Flooz', 'App\Http\Controllers\FloozController@create')->name('createFlooz');
-Route::post('enregistrement_des_flooz', 'App\Http\Controllers\FloozController@store')->name('storeFlooz');
+Route::post('enregistrement_flooz', 'App\Http\Controllers\FloozController@store')->name('storeFlooz');
 
 // Path: liquide routes/web.php
 Route::get('liste_des_liquides', 'App\Http\Controllers\LiquideController@index')->name('listeLiquides');
@@ -112,7 +112,7 @@ Route::get('formulaire_edition_des_liquides', 'App\Http\Controllers\LiquideContr
 Route::put('mise_a_jour_des_liquides', 'App\Http\Controllers\LiquideController@update')->name('updateLiquide');
 Route::delete('suppression_des_liquides', 'App\Http\Controllers\LiquideController@destroy')->name('destroyLiquide');
 Route::get('formulaire_Liquide', 'App\Http\Controllers\LiquideController@create')->name('createLiquide');
-Route::post('enregistrement_des_liquides', 'App\Http\Controllers\LiquideController@store')->name('storeLiquide');
+Route::post('enregistrement_liquide', 'App\Http\Controllers\LiquideController@store')->name('storeLiquide');
 
 
 Route::get('liste_livres_numerique', [LivreNumeriqueController::class, 'index'])->name('listeLivresNumerique');
