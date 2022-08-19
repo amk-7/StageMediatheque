@@ -25,7 +25,7 @@ class OuvragePhysique extends Model
     }
 
     public function restitution(){
-        return $this->belongsToMany(Restitution::class)->using(OuvragesParRestitution::class);
+        return $this->belongsToMany(Restitution::class)->using(RestitutionOuvragePhysique::class);
     }    
     public function emprunt()
     {

@@ -12,6 +12,6 @@ class Restitution extends Model
     protected $primaryKey = 'id_restitution';
 
     public function OuvragePhysique(){
-        return $this->belongsToMany(OuvragePhysique::class)->using(OuvragesParRestitution::class);
+        return $this->belongsToMany(OuvragePhysique::class)->using(RestitutionOuvragePhysique::class);
     }
 }
