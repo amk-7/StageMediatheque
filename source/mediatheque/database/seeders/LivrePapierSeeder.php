@@ -21,51 +21,51 @@ class LivrePapierSeeder extends Seeder
     public function run()
     {
         //
-        $auteur = Auteur::Create([
+        $auteur5 = Auteur::Create([
             'nom'=>'BONI',
             'prenom'=>'nazi',
             'date_naissance'=> '01-07-1912',
             'date_decces'=>'16-06-1969'
         ]);
-        /*$ouvrage = Ouvrage::Create([
-           'niveau' => '1er degré',
-            'type'=>'Roman',
+        $ouvrage5 = Ouvrage::Create([
+            'titre'=>'Crepuscule des temps anciens EPA',
+           'niveau' => '3è degré',
+            'type'=>'roman',
             'image' => '',
-            'langue'=>'fr',
+            'langue'=>'Français',
         ]);
 
-        $ouvrage->auteur()->attach($auteur->id_auteur, [
-            'date_apparution'=>'15-11-1983',
-            'lieu_edition'=>'Sokodé-TOGO',
+        $ouvrage5->auteur()->attach($auteur5->id_auteur, [
+            'date_apparution'=>'1994',
+            'lieu_edition'=>'DAKAR',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
 
-        $classificationCentaine = ClassificationDeweyCentaine::create([
-            'section'=>100,
-            'theme'=>'Philosophie, psycologie'
+        $classificationCentaine5 = ClassificationDeweyCentaine::create([
+            'section'=>0,
+            'theme'=>'inconnue'
         ]);
 
-        $classificationDizaine = ClassificationDeweyDizaines::create([
-            'classe'=>1,
-            'matiere'=>'Philosophie',
-            'id_classification_dewey_centaine'=>$classificationCentaine->id_classification_dewey_centaine
+        $classificationDizaine5 = ClassificationDeweyDizaines::create([
+            'classe'=>0,
+            'matiere'=>'inconnue',
+            'id_classification_dewey_centaine'=>$classificationCentaine5->id_classification_dewey_centaine
         ]);
 
-        $ouvragePhysique = OuvragesPhysique::Create([
-            'nombre_exemplaire' => 50,
+        $ouvragePhysique5 = OuvragesPhysique::Create([
+            'nombre_exemplaire' => 4,
             'etat'=>'nouveau',
             'disponibilite'=>true,
-            'id_ouvrage'=>$ouvrage->id_ouvrage,
-            'id_classification_dewey_dizaine'=>$classificationDizaine->id_classification_dewey_dizaine
+            'id_ouvrage'=>$ouvrage5->id_ouvrage,
+            'id_classification_dewey_dizaine'=>$classificationDizaine5->id_classification_dewey_dizaine
         ]);
 
-        $livrePapier = LivresPapier::Create([
-            'categorie'=> 'Litérature française',
+        $livrePapier5 = LivresPapier::Create([
+            'categorie'=> 'français',
             'ISBN'=>'12225555',
-            'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
-
-        ]);*/
+            'id_ouvrage_physique'=>$ouvragePhysique5->id_ouvrage_physique
+        ]);
 
         $auteur1 = Auteur::Create([
             'nom'=>'LAYE',
@@ -117,4 +117,6 @@ class LivrePapierSeeder extends Seeder
     }
 }
 
+    }
+}
 
