@@ -14,6 +14,6 @@ class Auteur extends Model
 
     public function ouvrage()
     {
-        return $this->belongsToMany(Ouvrage::class)->using(AuteursParOuvrage::class) ;
+        return $this->belongsToMany(Ouvrage::class)->using(AuteurOuvrage::class) ;
     }
 }

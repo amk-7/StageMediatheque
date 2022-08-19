@@ -19,7 +19,7 @@ class Reservation extends Model
 
     public function ouvragePhysique()
     {
-        return $this->belongsToMany(OuvragePhysique::class)->using(OuvrageParReservation::class);
+        return $this->belongsToMany(OuvragesPhysique::class)->using(OuvrageReservation::class);
     }
 
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OuvrageEmprunt;
+use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
 
-class OuvrageParEmpruntController extends Controller
+class OuvragesPhysiqueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class OuvrageParEmpruntController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\OuvrageEmprunt  $ouvrageParEmprunt
+     * @param  \App\Models\OuvragesPhysique  $ouvragesPhysique
      * @return \Illuminate\Http\Response
      */
-    public function show(OuvrageEmprunt $ouvrageParEmprunt)
+    public function show(OuvragesPhysique $ouvragesPhysique)
     {
         //
     }
@@ -52,10 +52,10 @@ class OuvrageParEmpruntController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\OuvrageEmprunt  $ouvrageParEmprunt
+     * @param  \App\Models\OuvragesPhysique  $ouvragesPhysique
      * @return \Illuminate\Http\Response
      */
-    public function edit(OuvrageEmprunt $ouvrageParEmprunt)
+    public function edit(OuvragesPhysique $ouvragesPhysique)
     {
         //
     }
@@ -64,10 +64,10 @@ class OuvrageParEmpruntController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\OuvrageEmprunt  $ouvrageParEmprunt
+     * @param  \App\Models\OuvragesPhysique  $ouvragesPhysique
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OuvrageEmprunt $ouvrageParEmprunt)
+    public function update(Request $request, OuvragesPhysique $ouvragesPhysique)
     {
         //
     }
@@ -75,10 +75,10 @@ class OuvrageParEmpruntController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\OuvrageEmprunt  $ouvrageParEmprunt
+     * @param  \App\Models\OuvragesPhysique  $ouvragesPhysique
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OuvrageEmprunt $ouvrageParEmprunt)
+    public function destroy(OuvragesPhysique $ouvragesPhysique)
     {
         //
     }
