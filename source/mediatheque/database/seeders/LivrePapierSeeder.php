@@ -117,6 +117,6 @@ class LivrePapierSeeder extends Seeder
     }
 }
 
-    }
-}
+    
+
 
