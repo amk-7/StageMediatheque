@@ -49,11 +49,12 @@ class LivresPapierController extends Controller
             'date_naissance'=> $request["date_naissance"],
             'date_decces'=>$request["date_decces"]
         ]);
-
+        $image = $request->file('avatar');
+        $chemin_image = $image->storeAs('profils', $request->nomUtilisateur.'.'.$image->extension());
         $ouvrage = Ouvrage::create([
             'niveau' => $request["niveau"],
             'type'=>$request["type"],
-            'image' => $request["image"],
+            'image' => $chemin_image,
             'langue'=>$request["langue"]
         ]);
 
@@ -78,7 +79,7 @@ class LivresPapierController extends Controller
         $ouvragePhysique = OuvragesPhysique::Create([
             'nombre_exemplaire' => $request["nombre_exemplaire"],
             'etat'=>$request["etat"],
-            'disponibilite'=>$request["disponibilite"],
+            'disponibilite'=>true,
             'id_ouvrage'=>$ouvrage->id_ouvrage,
             'id_classification_dewey_dizaines'=>$classificationDizaine->id_classification_dewey_dizaines
         ]);
