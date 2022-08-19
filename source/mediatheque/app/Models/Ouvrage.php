@@ -13,7 +13,7 @@ class Ouvrage extends Model
 
 
     public function OuvragePhysique(){
-        return $this->belongsTo(OuvragePhysique::class);
+        return $this->belongsTo(OuvragesPhysique::class);
     }
     public function OuvrageElectronique(){
         return $this->belongsTo(OuvrageElectronique::class);
@@ -21,7 +21,7 @@ class Ouvrage extends Model
 
     public function auteur()
     {
-        return $this->belongsToMany(Auteur::class)->using(AuteursParOuvrage::class);
+        return $this->belongsToMany(Auteur::class)->using(AuteurOuvrage::class);
     }
 
 }

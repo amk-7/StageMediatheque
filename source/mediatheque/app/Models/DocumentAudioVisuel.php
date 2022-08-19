@@ -12,6 +12,6 @@ class DocumentAudioVisuel extends Model
     protected $primaryKey = 'id_document_audio_visuel';
 
     public function ouvragePhysique(){
-        return $this->hasOne(OuvragePhysique::class);
+        return $this->hasOne(OuvragesPhysique::class);
     }
 }

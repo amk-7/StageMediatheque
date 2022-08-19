@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOuvragesTable extends Migration
+class CreateOuvrageEmpruntTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateOuvragesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ouvrages', function (Blueprint $table) {
-            $table->bigIncrements('id_ouvrage');
-            $table->string('niveau');
-            $table->string('type');
-            $table->string('image')->nullable();
-            $table->string('langue');
+        Schema::create('ouvrage_emprunt', function (Blueprint $table) {
+            $table->foreignId('ouvrage_physique_id_ouvrage_physique');
+            $table->foreignId('emprunt_id_emprunt');
             $table->timestamps();
+            $table->primary(['ouvrage_physique_id_ouvrage_physique', 'emprunt_id_emprunt']);
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -29,6 +28,6 @@ class CreateOuvragesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ouvrages');
+        Schema::dropIfExists('ouvrage_emprunt');
     }
 }
