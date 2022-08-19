@@ -15,6 +15,7 @@ class CreateOuvragesTable extends Migration
     {
         Schema::create('ouvrages', function (Blueprint $table) {
             $table->bigIncrements('id_ouvrage');
+            $table->string('titre');
             $table->string('niveau');
             $table->string('type');
             $table->string('image')->nullable();
