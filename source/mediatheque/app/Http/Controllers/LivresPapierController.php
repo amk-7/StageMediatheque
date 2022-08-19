@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auteur;
 use App\Models\LivresPapier;
+use App\Models\Ouvrage;
+use Carbon\Carbon;
+use App\Models\OuvragesPhysique;
+use App\Models\ClassificationDeweyCentaine;
+use App\Models\ClassificationDeweyDizaines;
 use Illuminate\Http\Request;
 
 class LivresPapierController extends Controller
@@ -58,7 +64,56 @@ class LivresPapierController extends Controller
     public function store(Request $request)
     {
         //
+
         dd($request->all());
+        
+        $auteur = Auteur::create([
+            'nom'=>$request["nom"],
+            'prenom'=>$request["prenom"],
+            'titre'=>$request["titre"],
+            'date_naissance'=> $request["date_naissance"],
+            'date_decces'=>$request["date_decces"]
+        ]);
+
+        $ouvrage = Ouvrage::create([
+            'niveau' => $request["niveau"],
+            'type'=>$request["type"],
+            'image' => $request["image"],
+            'langue'=>$request["langue"]
+        ]);
+
+        $ouvrage->auteur()->attach($auteur->id_auteur, [
+            'date_apparution'=>$request["date_apparution"],
+            'lieu_edition'=>$request["lieu_edition"],
+            'created_at'=> Carbon::now(),
+            'updated_at'=> Carbon::now()
+        ]);
+
+        $classificationCentaine = ClassificationDeweyCentaine::create([
+            'section'=>$request["section"],
+            'theme'=>$request["theme"]
+        ]);
+        
+        $classificationDizaine = ClassificationDeweyDizaines::create([
+            'classe'=>$request["classe"],
+            'matiere'=>$request["matiere"],
+            'id_classification_dewey_centaine'=>$classificationCentaine->id_classification_dewey_centaine
+        ]);
+
+        $ouvragePhysique = OuvragesPhysique::Create([
+            'nombre_exemplaire' => $request["nombre_exemplaire"],
+            'etat'=>$request["etat"],
+            'disponibilite'=>$request["disponibilite"],
+            'id_ouvrage'=>$ouvrage->id_ouvrage,
+            'id_classification_dewey_dizaines'=>$classificationDizaine->id_classification_dewey_dizaines
+        ]);
+
+        $livresPapier = LivresPapier::create([
+            'catetegorie'=>$request["catetegorie"],
+            'ISBN'=>$request["ISBN"],
+            'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
+        ]);
+
     }
 
     /**
