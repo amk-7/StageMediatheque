@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOuvragesParRestitutionsTable extends Migration
+class CreateRestitutionOuvragePhysiqueTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateOuvragesParRestitutionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ouvrages_par_restitutions', function (Blueprint $table) {
+        Schema::create('restitution_ouvrage_physique', function (Blueprint $table) {
             $table->string('etat_ouvrage');
-            $table->bigInteger('id_restitution');
-            $table->bigInteger('id_ouvrage_physique');
-            $table->foreign('id_restitution')->references('id_restitution')->on('restitutions');
-            $table->foreign('id_ouvrage_physique')->references('id_ouvrage_physique')->on('ouvrages_physiques');
+            $table->foreignId('id_ouvrage_physique');
+            $table->foreignId('id_restitution');
             $table->primary(['id_restitution', 'id_ouvrage_physique']);
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ class CreateOuvragesParRestitutionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ouvrages_par_restitutions');
+        Schema::dropIfExists('restitution_ouvrage_physique');
     }
 }

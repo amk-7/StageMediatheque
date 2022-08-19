@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Personnel;
 use Illuminate\Database\Seeder;
 
 class PersonnelSeeder extends Seeder
