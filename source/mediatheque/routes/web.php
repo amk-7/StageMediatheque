@@ -5,7 +5,7 @@ use App\Http\Controllers\ApprovisionnementController;
 use App\Http\Controllers\DocumentAudioVisuelController;
 use App\Http\Controllers\DocumentAudioVisuelElectroniqueController;
 use App\Http\Controllers\LivreNumeriqueController;
-use App\Http\Controllers\LivrePapierController;
+use App\Http\Controllers\LivresPapierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -123,13 +123,13 @@ Route::get('formulaire_modification_livre_numerique', [LivreNumeriqueController:
 Route::post('modification_livre_numerique', [LivreNumeriqueController::class, 'update'])->name('modificationLivreNumerique');
 Route::delete('suppression_livre_numerique', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreElectronique');
 
-Route::get('liste_livres_papier', [LivrePapierController::class, 'index'])->name('listeLivresPapier');
-Route::get('formulaire_enregistrement_livre_papier', [LivrePapierController::class, 'create'])->name('formulaireEnregistrementLivrePapier');
-Route::post('enregistrement_livre_papier', [LivrePapierController::class, 'store'])->name('enregistementLivrePapier');
-Route::get('affichage_livre_papier', [LivrePapierController::class, 'show'])->name('affichageLivrePapier');
-Route::get('formulaire_modification_livre_papier', [LivrePapierController::class, 'edit'])->name('formulaireModificationLivrePapier');
-Route::post('modification_livre_papier', [LivrePapierController::class, 'update'])->name('modificationLivrePapier');
-Route::delete('suppression_livre_papier', [LivrePapierController::class, 'destroy'])->name('suppressionLivrePapier');
+Route::get('liste_livres_papier', [LivresPapierController::class, 'index'])->name('listeLivresPapier');
+Route::get('formulaire_enregistrement_livre_papier', [LivresPapierController::class, 'create'])->name('formulaireEnregistrementLivrePapier');
+Route::post('enregistrement_livre_papier', [LivresPapierController::class, 'store'])->name('enregistementLivrePapier');
+Route::get('affichage_livre_papier', [LivresPapierController::class, 'show'])->name('affichageLivrePapier');
+Route::get('formulaire_modification_livre_papier', [LivresPapierController::class, 'edit'])->name('formulaireModificationLivrePapier');
+Route::post('modification_livre_papier', [LivresPapierController::class, 'update'])->name('modificationLivrePapier');
+Route::delete('suppression_livre_papier', [LivresPapierController::class, 'destroy'])->name('suppressionLivrePapier');
 
 Route::get('liste_documents_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'index'])->name('listeDocumentsAudioVisuelsElectroniques');
 Route::get('formulaire_enregistrement_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'create'])->name('formulaireEnregistrementDocumentAudioVisuelsElectroniques');

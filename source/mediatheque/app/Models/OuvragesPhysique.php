@@ -25,13 +25,8 @@ class OuvragesPhysique extends Model
     }
 
     public function restitution(){
-<<<<<<< HEAD:source/mediatheque/app/Models/OuvragePhysique.php
         return $this->belongsToMany(Restitution::class)->using(RestitutionOuvragePhysique::class);
-    }    
-=======
-        return $this->belongsToMany(Restitution::class)->using(OuvragesParRestitution::class);
     }
->>>>>>> 2b7acce2c9bebd6c0d1c218e13fd1151a5add263:source/mediatheque/app/Models/OuvragesPhysique.php
     public function emprunt()
     {
         return $this->belongsToMany(Emprunt::class)->using(OuvrageEmprunt::class);
