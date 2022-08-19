@@ -81,6 +81,7 @@ class LivresPapierController extends Controller
         ]);
         $image = $request->file('avatar');
         $chemin_image = $image->storeAs('profils', $request->nomUtilisateur.'.'.$image->extension());
+        
         $ouvrage = Ouvrage::create([
             'niveau' => $request["niveau"],
             'type'=>$request["type"],
