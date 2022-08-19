@@ -16,8 +16,8 @@ class CreateAuteurOuvrageTable extends Migration
         Schema::create('auteur_ouvrage', function (Blueprint $table) {
             $table->foreignId('auteur_id_auteur');
             $table->foreignId('ouvrage_id_ouvrage');
-            $table->string('lieu_edition')->nullable();
-            $table->date('date_apparution')->nullable();
+            $table->string('lieu_edition');
+            $table->integer('annee_apparution');
             $table->primary(['auteur_id_auteur', 'ouvrage_id_ouvrage']);
             $table->timestamps();
         });

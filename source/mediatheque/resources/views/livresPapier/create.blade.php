@@ -103,6 +103,10 @@
                 <label>Etat</label>
                 <input name="etat" type="text" value="" >
             </div>
+            <div>
+                <label>Emplacement</label>
+                <input name="id_classification_dewey_centaine" type="text" value="" >
+            </div>
         </fieldset>
         <button type="submit">Enregister</button>
     </form>
