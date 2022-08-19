@@ -65,7 +65,7 @@ class LivrePapierSeeder extends Seeder
             'ISBN'=>'12225555',
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
 
-        ]);
+        ]);*/
 
         $auteur1 = Auteur::Create([
             'nom'=>'LAYE',
@@ -75,13 +75,46 @@ class LivrePapierSeeder extends Seeder
             'date_decces'=>'04/02/1980'
         ]);
 
-        $auteur2 = Auteur::Create([
-            'nom'=>'BASQUIN',
-            'prenom'=>'Rene',
-            'titre'=>'Mecanique première partie',
-            'date_naissance'=> '01/01/1928',
-            'date_decces'=>'04/02/1980'
+        $ouvrage1 = Ouvrage::Create([
+           'niveau' => '2è degré',
+            'type'=>'Roman',
+            'image' => '',
+            'langue'=>'Français',
         ]);
 
+        $ouvrage1->auteur()->attach($auteur1->id_auteur, [
+            'date_apparution'=>'2004',
+            'lieu_edition'=>'Pocket',
+            'created_at'=> Carbon::now(),
+            'updated_at'=> Carbon::now()
+        ]);
+
+        $classificationCentaine1 = ClassificationDeweyCentaine::create([
+            'section'=>400,
+            'theme'=>'Langue'
+        ]);
+
+        $classificationDizaine1 = ClassificationDeweyDizaines::create([
+            'classe'=>440,
+            'matiere'=>'Langue romane française',
+            'id_classification_dewey_centaine'=>$classificationCentaine1->id_classification_dewey_centaine
+        ]);
+
+        $ouvragePhysique1 = OuvragesPhysique::Create([
+            'nombre_exemplaire' => 3,
+            'etat'=>'nouveau',
+            'disponibilite'=>true,
+            'id_ouvrage'=>$ouvrage1->id_ouvrage,
+            'id_classification_dewey_dizaine'=>$classificationDizaine1->id_classification_dewey_dizaine
+        ]);
+
+        $livrePapier1 = LivresPapier::Create([
+            'categorie'=> 'Litérature française',
+            'ISBN'=>'1',
+            'id_ouvrage_physique'=>$ouvragePhysique1->id_ouvrage_physique
+
+        ]);
     }
 }
+
+
