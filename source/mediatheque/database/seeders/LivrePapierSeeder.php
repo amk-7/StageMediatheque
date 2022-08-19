@@ -22,12 +22,12 @@ class LivrePapierSeeder extends Seeder
     {
         //
         $auteur = Auteur::Create([
-            'nom'=>'KONDI',
-            'prenom'=>'abdoul malik',
-            'date_naissance'=> '03-04-1985',
-            'date_decces'=>'05-08-2012'
+            'nom'=>'BONI',
+            'prenom'=>'nazi',
+            'date_naissance'=> '01-07-1912',
+            'date_decces'=>'16-06-1969'
         ]);
-        $ouvrage = Ouvrage::Create([
+        /*$ouvrage = Ouvrage::Create([
            'niveau' => '1er degré',
             'type'=>'Roman',
             'image' => '',
@@ -64,6 +64,7 @@ class LivrePapierSeeder extends Seeder
             'categorie'=> 'Litérature française',
             'ISBN'=>'12225555',
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
+
         ]);
 
         $auteur1 = Auteur::Create([
@@ -81,5 +82,6 @@ class LivrePapierSeeder extends Seeder
             'date_naissance'=> '01/01/1928',
             'date_decces'=>'04/02/1980'
         ]);
+
     }
 }
