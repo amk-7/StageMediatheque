@@ -19,6 +19,6 @@ class Emprunt extends Model
 
     public function ouvragePhysique()
     {
-        return $this->belongsToMany(OuvragePhysique::class)->using(OuvrageParEmprunt::class);
+        return $this->belongsToMany(OuvragesPhysique::class)->using(OuvrageEmprunt::class);
     }
 }

@@ -12,7 +12,7 @@ class ClassificationDeweyDizaines extends Model
     protected $primaryKey = 'id_classification_dewey_dizaine';
 
     public function ouvragePhysqique(){
-        return $this->hasMany(OuvragePhysique::class);
+        return $this->hasMany(OuvragesPhysique::class);
     }
 
     public function classificationDeweyCentaine(){

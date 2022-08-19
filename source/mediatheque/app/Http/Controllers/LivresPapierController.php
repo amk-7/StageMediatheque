@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LivrePapier;
+use App\Models\LivresPapier;
 use Illuminate\Http\Request;
 
-class LivrePapierController extends Controller
+class LivresPapierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class LivrePapierController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LivrePapier  $livrePapier
+     * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function show(LivrePapier $livrePapier)
+    public function show(LivresPapier $livresPapier)
     {
         //
     }
@@ -52,10 +52,10 @@ class LivrePapierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LivrePapier  $livrePapier
+     * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function edit(LivrePapier $livrePapier)
+    public function edit(LivresPapier $livresPapier)
     {
         //
     }
@@ -64,10 +64,10 @@ class LivrePapierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LivrePapier  $livrePapier
+     * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LivrePapier $livrePapier)
+    public function update(Request $request, LivresPapier $livresPapier)
     {
         //
     }
@@ -75,10 +75,10 @@ class LivrePapierController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LivrePapier  $livrePapier
+     * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LivrePapier $livrePapier)
+    public function destroy(LivresPapier $livresPapier)
     {
         //
     }

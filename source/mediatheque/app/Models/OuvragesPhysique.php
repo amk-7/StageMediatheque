@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OuvragePhysique extends Model
+class OuvragesPhysique extends Model
 {
     use HasFactory;
     protected $fillable = ['nombre_exemplaire', 'etat', 'disponibilite', 'id_ouvrage', 'id_classification_dewey_dizaine'];
@@ -26,13 +26,13 @@ class OuvragePhysique extends Model
 
     public function restitution(){
         return $this->belongsToMany(Restitution::class)->using(OuvragesParRestitution::class);
-    }    
+    }
     public function emprunt()
     {
-        return $this->belongsToMany(Emprunt::class)->using(OuvrageParEmprunt::class);
+        return $this->belongsToMany(Emprunt::class)->using(OuvrageEmprunt::class);
     }
     public function reservation()
     {
-        return $this->belongsToMany(Reservation::class)->using(OuvrageParReservation::class);
+        return $this->belongsToMany(Reservation::class)->using(OuvrageReservation::class);
     }
 }
