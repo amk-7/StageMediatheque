@@ -24,7 +24,29 @@ class LivresPapierController extends Controller
      */
     public function create()
     {
-        return view('livresPapier.create');
+        $niveaus = [
+            '1er degré', '2è degré', '3è degré', 'université'
+        ];
+
+        $types = [
+            'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle'
+        ];
+        $langues = [
+            'français', 'anglais', 'allemend'
+        ];
+
+        $categories = [
+            'français', 'anglais', 'allemand', 'physique', 'education',
+            'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
+            'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
+        ];
+
+        return view('livresPapier.create')->with([
+            'niveaus'=> $niveaus,
+            'types'=>$types,
+            'langues'=>$langues,
+            'categories'=>$categories
+        ]);
     }
 
     /**
@@ -36,6 +58,7 @@ class LivresPapierController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request->all());
     }
 
     /**
