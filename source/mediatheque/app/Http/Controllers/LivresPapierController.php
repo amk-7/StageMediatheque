@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\OuvrageHelper;
 use App\Models\Auteur;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
@@ -64,9 +65,13 @@ class LivresPapierController extends Controller
     public function store(Request $request)
     {
         //
-
+        if (OuvrageHelper::ouvrageExist('')){
+            dd('Ouvrage exists');
+        } else {
+            dd('Ouvrage inexistant');
+        }
         dd($request->all());
-        
+
         $auteur = Auteur::create([
             'nom'=>$request["nom"],
             'prenom'=>$request["prenom"],
@@ -84,7 +89,7 @@ class LivresPapierController extends Controller
         ]);
 
         $ouvrage->auteur()->attach($auteur->id_auteur, [
-            'date_apparution'=>$request["date_apparution"],
+            'annee_apparution'=>$request["annee_apparution"],
             'lieu_edition'=>$request["lieu_edition"],
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
@@ -94,7 +99,7 @@ class LivresPapierController extends Controller
             'section'=>$request["section"],
             'theme'=>$request["theme"]
         ]);
-        
+
         $classificationDizaine = ClassificationDeweyDizaines::create([
             'classe'=>$request["classe"],
             'matiere'=>$request["matiere"],
