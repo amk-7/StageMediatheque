@@ -64,13 +64,21 @@ class LivresPapierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*
         if (OuvrageHelper::ouvrageExist('')){
             dd('Ouvrage exists');
         } else {
             dd('Ouvrage inexistant');
-        }
-        dd($request->all());
+        }*/
+        //dd($request->image_livre);
+
+        // Récupérer l'image.
+        dd($request->file('image_livre'));
+        $image = $request->file('image_livre');
+        // Stocker l'image
+        $chemin_image = $image->store('images_livre', $request->titre.'.'.$image->extension());
+        //$chemin_image = $image->
+        dd($chemin_image);
 
         $auteur = Auteur::create([
             'nom'=>$request["nom"],
@@ -81,7 +89,7 @@ class LivresPapierController extends Controller
         ]);
         $image = $request->file('avatar');
         $chemin_image = $image->storeAs('profils', $request->nomUtilisateur.'.'.$image->extension());
-        
+
         $ouvrage = Ouvrage::create([
             'niveau' => $request["niveau"],
             'type'=>$request["type"],
