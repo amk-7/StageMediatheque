@@ -71,6 +71,7 @@ class LivresPapierController extends Controller
             dd('Ouvrage inexistant');
         }
         dd($request->all());
+     
 
         $auteur = Auteur::create([
             'nom'=>$request["nom"],
@@ -79,7 +80,7 @@ class LivresPapierController extends Controller
             'date_naissance'=> $request["date_naissance"],
             'date_decces'=>$request["date_decces"]
         ]);
-        $image = $request->file('avatar');
+        $image = $request->file('image');
         $chemin_image = $image->storeAs('profils', $request->nomUtilisateur.'.'.$image->extension());
         
         $ouvrage = Ouvrage::create([
