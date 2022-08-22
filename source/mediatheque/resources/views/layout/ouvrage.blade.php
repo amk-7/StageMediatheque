@@ -1,7 +1,7 @@
 @extends('layout.base')
 @section('content')
     <h1>{{$title}}</h1>
-    <form action="{{route($action)}}" method="{{$methode}}">
+    <form action="{{route($action)}}" method="{{$methode}}" enctype="multipart/form-data">
         @csrf
         <fieldset>
             <legend>Ouvrage</legend>

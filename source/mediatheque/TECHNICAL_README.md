@@ -47,3 +47,13 @@
     
 ### Usage
     `php artisan ide-helper:generate`    
+
+## Installation de Tailwindcss
+    NB: Pour plus d'information allez sur la doc
+    de tailwindcss => https://tailwindcss.com/docs/guides/laravel
+   
+    sudo apt update
+    sudo apt install nodejs npm
+
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
