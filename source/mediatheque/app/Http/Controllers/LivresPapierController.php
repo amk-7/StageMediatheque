@@ -73,10 +73,10 @@ class LivresPapierController extends Controller
         //dd($request->image_livre);
 
         // Récupérer l'image.
-        dd($request->file('image_livre'));
+        //dd($request->file('image_livre'));
         $image = $request->file('image_livre');
         // Stocker l'image
-        $chemin_image = $image->store('images_livre', $request->titre.'.'.$image->extension());
+        $chemin_image = $image->storeAs('images_livre', $request->titre.'.'.$image->extension());
         //$chemin_image = $image->
         dd($chemin_image);
 
