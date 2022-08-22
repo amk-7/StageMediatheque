@@ -16,6 +16,8 @@ class AbonneController extends Controller
     public function index()
     {
         //
+        $abonne = Abonne::all();
+        return view('abonne.index')->with('abonne', $abonne);
     }
 
     /**
@@ -31,6 +33,8 @@ class AbonneController extends Controller
             $msg = "hello";
         }
         return $msg;
+
+        return view('abonne.create');
     }
 
     /**
@@ -42,6 +46,15 @@ class AbonneController extends Controller
     public function store(Request $request)
     {
         //
+        $abonne = Abonne::create([
+            'date_naissance' => $request->date_naissance,
+            'niveau_etude' => $request->niveau_etude,
+            'profession' => $request->profession,
+            'contact_a_prevenir' => $request->contact_a_prevenir,
+            'numero_carte' => $request->numero_carte,
+            'type_de_carte' => $request->type_de_carte
+        ]);
+        return redirect()->route('abonne.index');
     }
 
     /**
@@ -53,6 +66,7 @@ class AbonneController extends Controller
     public function show(Abonne $abonne)
     {
         //
+
     }
 
     /**
@@ -64,6 +78,7 @@ class AbonneController extends Controller
     public function edit(Abonne $abonne)
     {
         //
+        return view('abonne.edit')->with('abonne', $abonne);
     }
 
     /**
@@ -76,6 +91,26 @@ class AbonneController extends Controller
     public function update(Request $request, Abonne $abonne)
     {
         //
+        $abonne->update(array([
+            'date_naissance' => $request["date_naissance"],
+            'niveau_etude' => $request["niveau_etude"],
+            'profession' => $request["profession"],
+            'contact_a_prevenir' => $request["contact_a_prevenir"],
+            'numero_carte' => $request["numero_carte"],
+            'type_de_carte' => $request["type_de_carte"]           
+        ]));
+        
+        return redirect()->route('abonne.index');
+
+        /*
+        $abonne->date_naissance = $request["date_naissance"];
+        $abonne->niveau_etude = $request["niveau_etude"];
+        $abonne->profession = $request["profession"];
+        $abonne->contact_a_prevenir = $request["contact_a_prevenir"];
+        $abonne->numero_carte = $request["numero_carte"];
+        $abonne->type_de_carte = $request["type_de_carte"];
+        $abonne->save();
+        return redirect()->route('abonne.index');*/
     }
 
     /**
@@ -87,5 +122,7 @@ class AbonneController extends Controller
     public function destroy(Abonne $abonne)
     {
         //
+        $abonne->delete();
+        return redirect()->route('abonne.index');
     }
 }
