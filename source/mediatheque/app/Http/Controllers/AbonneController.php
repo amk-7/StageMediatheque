@@ -16,8 +16,9 @@ class AbonneController extends Controller
     public function index()
     {
         //
-        $abonne = Abonne::all();
-        return view('abonne.index')->with('abonne', $abonne);
+        //return 'salut';
+        $abonnes = Abonne::all();
+        return view('abonnes.index')->with('listeAbonnes', $abonnes);
     }
 
     /**
@@ -28,13 +29,13 @@ class AbonneController extends Controller
     public function create()
     {
         //
-        $msg = "---";
+        /*$msg = "---";
         if (UtilisateurHelper::verifierSiUtilisateurExist(null, null)){
             $msg = "hello";
         }
-        return $msg;
+        return $msg;*/
 
-        return view('abonne.create');
+        return view('abonnes.create');
     }
 
     /**
@@ -54,7 +55,7 @@ class AbonneController extends Controller
             'numero_carte' => $request->numero_carte,
             'type_de_carte' => $request->type_de_carte
         ]);
-        return redirect()->route('abonne.index');
+        return redirect()->route('abonnes.index');
     }
 
     /**
@@ -78,7 +79,7 @@ class AbonneController extends Controller
     public function edit(Abonne $abonne)
     {
         //
-        return view('abonne.edit')->with('abonne', $abonne);
+        return view('abonnes.edit')->with('abonne', $abonne);
     }
 
     /**
@@ -100,7 +101,7 @@ class AbonneController extends Controller
             'type_de_carte' => $request["type_de_carte"]           
         ]));
         
-        return redirect()->route('abonne.index');
+        return redirect()->route('abonnes.index');
 
         /*
         $abonne->date_naissance = $request["date_naissance"];
@@ -123,6 +124,6 @@ class AbonneController extends Controller
     {
         //
         $abonne->delete();
-        return redirect()->route('abonne.index');
+        return redirect()->route('abonnes.index');
     }
 }

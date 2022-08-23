@@ -15,6 +15,8 @@ class AuteurController extends Controller
     public function index()
     {
         //
+        $auteurs = Auteur::all();
+        return view('auteur.index')->with('auteurs', $auteurs);
     }
 
     /**
@@ -25,6 +27,7 @@ class AuteurController extends Controller
     public function create()
     {
         //
+        return view('auteur.create');
     }
 
     /**
@@ -36,6 +39,12 @@ class AuteurController extends Controller
     public function store(Request $request)
     {
         //
+        $auteur = Auteur::create([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'date_naissance' => $request->date_naissance,
+            'date_deces' => $request->date_deces
+        ]);
     }
 
     /**
@@ -58,6 +67,7 @@ class AuteurController extends Controller
     public function edit(Auteur $auteur)
     {
         //
+        return view('auteur.edit')->with('auteur', $auteur);
     }
 
     /**
@@ -70,6 +80,13 @@ class AuteurController extends Controller
     public function update(Request $request, Auteur $auteur)
     {
         //
+        $auteur->update(array(
+            'nom' => $request["nom"],
+            'prenom' => $request["prenom"],
+            'date_naissance' => $request["date_naissance"],
+            'date_deces' => $request["date_deces"]
+        ));
+        return redirect()->route('auteur.index');
     }
 
     /**
@@ -81,5 +98,7 @@ class AuteurController extends Controller
     public function destroy(Auteur $auteur)
     {
         //
+        $auteur->delete();
+        return redirect()->route('auteur.index');
     }
 }
