@@ -11,8 +11,8 @@
             </select>
         </div>
         <div>
-            <label>ISBN</label>
-            <input name="ISBN" type="text" value="" placeholder="Saisire l'ISBN de l'ouvrage">
+            <label>ISAN</label>
+            <input name="ISAN" type="text" value="" placeholder="Saisire l'ISBN de l'ouvrage">
         </div>
     </fieldset>
 @stop

@@ -12,6 +12,6 @@ class LivresPapier extends Model
     protected $primaryKey = 'id_livre_papier';
 
     public function ouvragePhysique(){
-        return $this->hasOne(OuvragesPhysique::class);
+        return $this->hasOne(OuvragesPhysique::class, "id_ouvrage_physique");
     }
 }

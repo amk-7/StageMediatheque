@@ -12,13 +12,13 @@ class OuvragesPhysique extends Model
     protected $primaryKey = 'id_ouvrage_physique';
 
     public function ouvrage(){
-        return $this->hasOne(Ouvrage::class);
+        return $this->hasOne(Ouvrage::class, "id_ouvrage");
     }
     public function classification_dewey_dizaine(){
         return $this->belongsTo(ClassificationDeweyDizaines::class);
     }
     public function livrePapier(){
-        return $this->belongsTo(LivrePapier::class);
+        return $this->belongsTo(LivrePapier::class, "id_livre_papier");
     }
     public function documentAudioVisuel(){
         return $this->belongsTo(DocumentAudioVisuel::class);

@@ -62,25 +62,33 @@
             <legend>Auteur</legend>
             <div>
                 <div>
-                    <label>Nom</label>
-                    <input name="nom" type="text" value="" placeholder="Saisire le nom de l'auteur">
+                    <div>
+                        <label>Nom</label>
+                        <input name="nom" type="text" value="" placeholder="Saisire le nom de l'auteur">
+                    </div>
+                    <div>
+                        <label>Prénom</label>
+                        <input name="prenom" type="text" value="" placeholder="Saisire le prénom de l'auteur">
+                    </div>
+                    <div>
+                        <label>Date de naissance</label>
+                        <input name="date_naissance" type="date" value="">
+                    </div>
+                    <div>
+                        <label>Date de decces</label>
+                        <input name="date_decces" type="date" value="" >
+                    </div>
                 </div>
                 <div>
-                    <label>Prénom</label>
-                    <input name="prenom" type="text" value="" placeholder="Saisire le prénom de l'auteur">
+                    <label>Auteurs : </label>
                 </div>
                 <div>
-                    <label>Date de naissance</label>
-                    <input name="date_naissance" type="date" value="">
-                </div>
-                <div>
-                    <label>Date de decces</label>
-                    <input name="date_decces" type="date" value="" >
+                    <button onclick="ajouterAuteur()">Ajouter</button>
                 </div>
             </div>
         </fieldset>
         @yield('stock')
-        <button type="submit">Enregister</button>
+        <input type="submit" name="enregister" value="Enregister"/>
     </form>
 
     <script type="text/javascript" async>
@@ -93,5 +101,4 @@
             }
         }
     </script>
-
 @stop
