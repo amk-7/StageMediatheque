@@ -84,6 +84,7 @@ class LivresPapierController extends Controller
             'date_naissance'=> $request["date_naissance"],
             'date_decces'=>$request["date_decces"]
         ]);
+        
         //dd($auteur);
         // Récupérer l'image.
         $image = $request->file('image_livre');

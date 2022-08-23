@@ -15,6 +15,8 @@ class PersonnelController extends Controller
     public function index()
     {
         //
+        $personnels = Personnel::all();
+        return view('personnel.index')->with('personnels', $personnels);
     }
 
     /**
@@ -25,6 +27,7 @@ class PersonnelController extends Controller
     public function create()
     {
         //
+        return view('personnel.create');
     }
 
     /**
@@ -36,6 +39,9 @@ class PersonnelController extends Controller
     public function store(Request $request)
     {
         //
+        $personnel = Personnel::create([
+            'statut' => $request->statut
+        ]);
     }
 
     /**
@@ -47,6 +53,7 @@ class PersonnelController extends Controller
     public function show(Personnel $personnel)
     {
         //
+        
     }
 
     /**
@@ -58,6 +65,7 @@ class PersonnelController extends Controller
     public function edit(Personnel $personnel)
     {
         //
+        return view('personnel.edit')->with('personnel', $personnel);
     }
 
     /**
@@ -70,6 +78,9 @@ class PersonnelController extends Controller
     public function update(Request $request, Personnel $personnel)
     {
         //
+        $personnel->statut = $request["statut"];
+        $personnel->save();
+        return redirect()->route('personnel.index');
     }
 
     /**
@@ -81,5 +92,7 @@ class PersonnelController extends Controller
     public function destroy(Personnel $personnel)
     {
         //
+        $personnel->delete();
+        return redirect()->route('personnel.index');
     }
 }
