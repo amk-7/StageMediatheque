@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OuvrageElectronique extends Model
+class OuvragesElectronique extends Model
 {
     use HasFactory;
     protected $fillable = ['url', 'id_ouvrage'];
@@ -16,7 +16,7 @@ class OuvrageElectronique extends Model
     }
 
     public function livreNumerique(){
-        return $this->belongsTo(LivreNumerique::class);
+        return $this->belongsTo(LivresNumerique::class);
     }
 
     public function documentAudioVisuelElectronique(){

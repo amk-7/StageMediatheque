@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ouvrage extends Model
 {
     use HasFactory;
-    protected $fillable = ['niveau', 'type', 'image', 'langue'];
+    protected $fillable = ['titre', 'niveau', 'type', 'image', 'langue'];
     protected $primaryKey = 'id_ouvrage';
 
 
@@ -16,7 +16,7 @@ class Ouvrage extends Model
         return $this->belongsTo(OuvragesPhysique::class);
     }
     public function OuvrageElectronique(){
-        return $this->belongsTo(OuvrageElectronique::class);
+        return $this->belongsTo(OuvragesElectronique::class);
     }
 
     public function auteur()

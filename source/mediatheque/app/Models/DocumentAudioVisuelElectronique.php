@@ -12,6 +12,6 @@ class DocumentAudioVisuelElectronique extends Model
     protected $primaryKey = 'id_document_audio_visuel_electronique';
 
     public function ouvrageElectronique(){
-        return $this->hasOne(OuvrageElectronique::class);
+        return $this->hasOne(OuvragesElectronique::class);
     }
 }

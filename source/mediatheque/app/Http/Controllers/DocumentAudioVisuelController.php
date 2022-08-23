@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\OuvragePhysiqueHelper;
+use App\Models\ClassificationDeweyCentaine;
+use App\Models\ClassificationDeweyDizaines;
 use App\Models\DocumentAudioVisuel;
+use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
 
 class DocumentAudioVisuelController extends Controller
@@ -14,7 +18,8 @@ class DocumentAudioVisuelController extends Controller
      */
     public function index()
     {
-        //
+        $documentAudioVisuel = DocumentAudioVisuel::all();
+        return view("documentAudioVisuel.index", compact("documentAudioVisuel"))->paginate(25);
     }
 
     /**
@@ -24,7 +29,34 @@ class DocumentAudioVisuelController extends Controller
      */
     public function create()
     {
-        //
+        $niveaus = [
+            '1er degré', '2è degré', '3è degré', 'université'
+        ];
+
+        $types = [
+
+        ];
+
+        $langues = [
+            'français', 'anglais', 'allemend'
+        ];
+
+        $categories = [
+
+        ];
+
+        $classification_dewey_centaines = ClassificationDeweyCentaine::all();
+
+        $classification_dewey_dizaines = ClassificationDeweyDizaines::all();
+
+        return view('documentAudioVisuel.create')->with([
+            'niveaus'=> $niveaus,
+            'types'=>$types,
+            'langues'=>$langues,
+            'categories'=>$categories,
+            'classification_dewey_centaines'=>$classification_dewey_centaines,
+            'classification_dewey_dizaines'=>$classification_dewey_dizaines
+        ]);
     }
 
     /**
@@ -35,7 +67,8 @@ class DocumentAudioVisuelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //--coder--
+        return redirect()->route("documentAudioVisuel.index");
     }
 
     /**
@@ -46,7 +79,7 @@ class DocumentAudioVisuelController extends Controller
      */
     public function show(DocumentAudioVisuel $documentAudioVisuel)
     {
-        //
+        return view("documentAudioVisuel.show", compact("documentAudioVisuel"));
     }
 
     /**
@@ -57,7 +90,7 @@ class DocumentAudioVisuelController extends Controller
      */
     public function edit(DocumentAudioVisuel $documentAudioVisuel)
     {
-        //
+        return view("documentAudioVisuel.edite", compact("documentAudioVisuel"));
     }
 
     /**
@@ -69,7 +102,10 @@ class DocumentAudioVisuelController extends Controller
      */
     public function update(Request $request, DocumentAudioVisuel $documentAudioVisuel)
     {
-        //
+        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $documentAudioVisuel->id_ouvrage_physique);
+        OuvragePhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
+
+        return redirect()->route("documentAudioVisuel.index");
     }
 
     /**
@@ -80,6 +116,6 @@ class DocumentAudioVisuelController extends Controller
      */
     public function destroy(DocumentAudioVisuel $documentAudioVisuel)
     {
-        //
+        $documentAudioVisuel->delete();
     }
 }
