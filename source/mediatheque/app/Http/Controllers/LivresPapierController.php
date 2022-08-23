@@ -75,7 +75,7 @@ class LivresPapierController extends Controller
     {
 
         if (LivrePapierHelper::ouvrageExist($request["ISBN"])){
-            return "Ouvrage existant";
+            return "OuvrageHelper existant";
         }
         //dd($request["titre"]);
         $auteur = Auteur::create([
@@ -84,7 +84,7 @@ class LivresPapierController extends Controller
             'date_naissance'=> $request["date_naissance"],
             'date_decces'=>$request["date_decces"]
         ]);
-        
+
         //dd($auteur);
         // Récupérer l'image.
         $image = $request->file('image_livre');
