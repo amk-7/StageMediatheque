@@ -8,7 +8,7 @@
             <div>
                 <div>
                     <label>Titre</label>
-                    <input type="text" name="titre" value="" placeholder="saisir le titre du livre">
+                    <input type="text" name="titre" value="{{$ouvragePhysique->titre}}" placeholder="saisir le titre du livre">
                 </div>
                 <div>
                     <label>Niveau</label>

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\OuvrageHelper;
+use App\Helpers\LivrePapierHelper;
+use App\Helpers\OuvragePhysiqueHelper;
 use App\Models\Auteur;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
@@ -21,7 +22,8 @@ class LivresPapierController extends Controller
      */
     public function index()
     {
-        //
+        $livresPapier = LivresPapier::all();
+        return view('livresPapier.index')->with('livresPapier', $livresPapier)->paginate(25);
     }
 
     /**
@@ -38,6 +40,7 @@ class LivresPapierController extends Controller
         $types = [
             'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle'
         ];
+
         $langues = [
             'français', 'anglais', 'allemend'
         ];
@@ -48,11 +51,17 @@ class LivresPapierController extends Controller
             'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
         ];
 
+        $classification_dewey_centaines = ClassificationDeweyCentaine::all();
+
+        $classification_dewey_dizaines = ClassificationDeweyDizaines::all();
+
         return view('livresPapier.create')->with([
             'niveaus'=> $niveaus,
             'types'=>$types,
             'langues'=>$langues,
-            'categories'=>$categories
+            'categories'=>$categories,
+            'classification_dewey_centaines'=>$classification_dewey_centaines,
+            'classification_dewey_dizaines'=>$classification_dewey_dizaines
         ]);
     }
 
@@ -64,42 +73,34 @@ class LivresPapierController extends Controller
      */
     public function store(Request $request)
     {
-        /*
-        if (OuvrageHelper::ouvrageExist('')){
-            dd('Ouvrage exists');
-        } else {
-            dd('Ouvrage inexistant');
+
+        if (LivrePapierHelper::ouvrageExist($request["ISBN"])){
+            return "OuvrageHelper existant";
         }
-        dd($request->all());
-
-        }*/
-        //dd($request->image_livre);
-
-        // Récupérer l'image.
-        //dd($request->file('image_livre'));
-        $image = $request->file('image_livre');
-        // Stocker l'image
-        $chemin_image = $image->storeAs('images_livre', $request->titre.'.'.$image->extension());
-        //$chemin_image = $image->
-        dd($chemin_image);
-
+        //dd($request["titre"]);
         $auteur = Auteur::create([
             'nom'=>$request["nom"],
             'prenom'=>$request["prenom"],
-            'titre'=>$request["titre"],
             'date_naissance'=> $request["date_naissance"],
             'date_decces'=>$request["date_decces"]
         ]);
-        $image = $request->file('image');
-        $chemin_image = $image->storeAs('profils', $request->nomUtilisateur.'.'.$image->extension());
 
+        //dd($auteur);
+        // Récupérer l'image.
+        $image = $request->file('image_livre');
+        // Stocker l'image
+        $chemin_image = $image->storeAs('images_livre', $request->titre.'.'.$image->extension());
+
+        //dd($request["titre"]);
         $ouvrage = Ouvrage::create([
+            'titre'=>$request["titre"],
             'niveau' => $request["niveau"],
             'type'=>$request["type"],
-            'image' => $chemin_image,
+            'image' => "",
             'langue'=>$request["langue"]
         ]);
 
+        //dd($ouvrage);
         $ouvrage->auteur()->attach($auteur->id_auteur, [
             'annee_apparution'=>$request["annee_apparution"],
             'lieu_edition'=>$request["lieu_edition"],
@@ -107,16 +108,8 @@ class LivresPapierController extends Controller
             'updated_at'=> Carbon::now()
         ]);
 
-        $classificationCentaine = ClassificationDeweyCentaine::create([
-            'section'=>$request["section"],
-            'theme'=>$request["theme"]
-        ]);
-
-        $classificationDizaine = ClassificationDeweyDizaines::create([
-            'classe'=>$request["classe"],
-            'matiere'=>$request["matiere"],
-            'id_classification_dewey_centaine'=>$classificationCentaine->id_classification_dewey_centaine
-        ]);
+        $classificationCentaine = ClassificationDeweyCentaine::all()->where("theme", $request["theme"]);
+        $classificationDizaine = ClassificationDeweyDizaines::all()->where("id_classification_dewey_centaine", $classificationCentaine->id_classification_dewey_centaine);
 
         $ouvragePhysique = OuvragesPhysique::Create([
             'nombre_exemplaire' => $request["nombre_exemplaire"],
@@ -132,6 +125,8 @@ class LivresPapierController extends Controller
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
         ]);
 
+        return redirect()->route("livresPapier.index");
+
     }
 
     /**
@@ -140,9 +135,9 @@ class LivresPapierController extends Controller
      * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function show(LivresPapier $livresPapier)
+    public function show(LivresPapier $livrePapier)
     {
-        //
+        return view('livresPapier.show')->with("livrePapier", $livrePapier);
     }
 
     /**
@@ -151,9 +146,9 @@ class LivresPapierController extends Controller
      * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function edit(LivresPapier $livresPapier)
+    public function edit(LivresPapier $livrePapier)
     {
-        //
+        return view('livresPapier.edite')->with("livrePapier", $livrePapier);
     }
 
     /**
@@ -163,9 +158,12 @@ class LivresPapierController extends Controller
      * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LivresPapier $livresPapier)
+    public function update(Request $request, LivresPapier $livrePapier)
     {
-        //
+        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livrePapier->id_ouvrage_physique);
+        OuvragePhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
+
+        return redirect()->route("livresPapier.index");
     }
 
     /**
@@ -176,6 +174,6 @@ class LivresPapierController extends Controller
      */
     public function destroy(LivresPapier $livresPapier)
     {
-        //
+        $livresPapier->delete();
     }
 }

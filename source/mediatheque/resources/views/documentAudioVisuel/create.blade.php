@@ -1,5 +1,5 @@
-@extends('layout.ouvragePhysique.ouvragePhysiqueCreate', ['action'=>"enregistementLivrePapier", 'methode'=>"post", 'title'=>"Ajouter un livre papier"])
-@section('particularite_papier')
+@extends('layout.ouvragePhysiqueCreate', ['action'=>"enregistementLivrePapier", 'methode'=>"post", 'title'=>"Ajouter un livre papier"])
+@section('particularite')
     <fieldset>
         <legend>Particularité</legend>
         <div>
