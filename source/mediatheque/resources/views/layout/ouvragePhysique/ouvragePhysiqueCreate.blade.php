@@ -1,4 +1,4 @@
-@extends('layout.ouvragePhysique.ouvrageCreate')
+@extends('layout.ouvrage.ouvrageCreate')
 @section('stock')
     <fieldset>
         <legend>Stock</legend>

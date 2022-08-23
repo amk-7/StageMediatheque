@@ -57,7 +57,7 @@
                 </div>
             </div>
         </fieldset>
-        @yield('particularite')
+        @yield('particularite_papier')
         <fieldset>
             <legend>Auteur</legend>
             <div>
