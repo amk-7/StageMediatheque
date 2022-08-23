@@ -15,6 +15,8 @@ class ClassificationDeweyCentaineController extends Controller
     public function index()
     {
         //
+        $classificationDeweyCentaines = ClassificationDeweyCentaine::all();
+        return view('classificationDeweyCentaine.index')->with('classificationDeweyCentaines', $classificationDeweyCentaines);
     }
 
     /**
@@ -25,6 +27,7 @@ class ClassificationDeweyCentaineController extends Controller
     public function create()
     {
         //
+        return view('classificationDeweyCentaine.create');
     }
 
     /**
@@ -36,6 +39,11 @@ class ClassificationDeweyCentaineController extends Controller
     public function store(Request $request)
     {
         //
+        $classificationDeweyCentaine = ClassificationDeweyCentaine::create([
+            'section' => $request->section,
+            'theme' => $request->theme
+        ]);
+        return redirect()->route('classificationDeweyCentaine.index');
     }
 
     /**
@@ -58,6 +66,7 @@ class ClassificationDeweyCentaineController extends Controller
     public function edit(ClassificationDeweyCentaine $classificationDeweyCentaine)
     {
         //
+        return view('classificationDeweyCentaine.edit')->with('classificationDeweyCentaine', $classificationDeweyCentaine);
     }
 
     /**
@@ -70,6 +79,11 @@ class ClassificationDeweyCentaineController extends Controller
     public function update(Request $request, ClassificationDeweyCentaine $classificationDeweyCentaine)
     {
         //
+        $classificationDeweyCentaine->update(array([
+            'section' => $request['section'],
+            'theme' => $request['theme']
+        ]));
+        return redirect()->route('classificationDeweyCentaine.index');
     }
 
     /**
@@ -81,5 +95,7 @@ class ClassificationDeweyCentaineController extends Controller
     public function destroy(ClassificationDeweyCentaine $classificationDeweyCentaine)
     {
         //
+        $classificationDeweyCentaine->delete();
+        return redirect()->route('classificationDeweyCentaine.index');
     }
 }

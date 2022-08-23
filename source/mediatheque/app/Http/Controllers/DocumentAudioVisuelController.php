@@ -15,6 +15,8 @@ class DocumentAudioVisuelController extends Controller
     public function index()
     {
         //
+        $documentAudioVisuels = DocumentAudioVisuel::all();
+        return view('documentAudioVisuel.index')->with('documentAudioVisuels', $documentAudioVisuels);
     }
 
     /**
@@ -25,6 +27,7 @@ class DocumentAudioVisuelController extends Controller
     public function create()
     {
         //
+        return view('documentAudioVisuel.create');
     }
 
     /**
@@ -36,6 +39,11 @@ class DocumentAudioVisuelController extends Controller
     public function store(Request $request)
     {
         //
+        $documentAudioVisuel = DocumentAudioVisuel::create([
+            'genre' => $request->genre,
+            'ISAN' => $request->ISAN
+        ]);
+        return redirect()->route('documentAudioVisuel.index');
     }
 
     /**
@@ -58,6 +66,7 @@ class DocumentAudioVisuelController extends Controller
     public function edit(DocumentAudioVisuel $documentAudioVisuel)
     {
         //
+        return view('documentAudioVisuel.edit')->with('documentAudioVisuel', $documentAudioVisuel);
     }
 
     /**
@@ -70,6 +79,11 @@ class DocumentAudioVisuelController extends Controller
     public function update(Request $request, DocumentAudioVisuel $documentAudioVisuel)
     {
         //
+        $documentAudioVisuel->update(array([
+            'genre' => $request['genre'],
+            'ISAN' => $request['ISAN']
+        ]));
+        return redirect()->route('documentAudioVisuel.index');
     }
 
     /**
@@ -81,5 +95,7 @@ class DocumentAudioVisuelController extends Controller
     public function destroy(DocumentAudioVisuel $documentAudioVisuel)
     {
         //
+        $documentAudioVisuel->delete();
+        return redirect()->route('documentAudioVisuel.index');
     }
 }

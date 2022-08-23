@@ -15,6 +15,8 @@ class EmpruntController extends Controller
     public function index()
     {
         //
+        $emprunts = Emprunt::all();
+        return view('emprunt.index')->with('emprunts', $emprunts);
     }
 
     /**
@@ -25,6 +27,7 @@ class EmpruntController extends Controller
     public function create()
     {
         //
+        return view('emprunt.create');
     }
 
     /**
@@ -36,6 +39,10 @@ class EmpruntController extends Controller
     public function store(Request $request)
     {
         //
+        $emprunt = Emprunt::create([
+            'date_emprunt' => $request->date_emprunt,
+            'date_retour' => $request->date_retour
+        ]);
     }
 
     /**
@@ -58,6 +65,7 @@ class EmpruntController extends Controller
     public function edit(Emprunt $emprunt)
     {
         //
+        return view('emprunt.edit')->with('emprunt', $emprunt);
     }
 
     /**
@@ -70,6 +78,10 @@ class EmpruntController extends Controller
     public function update(Request $request, Emprunt $emprunt)
     {
         //
+        $emprunt->update(array([
+            'date_emprunt' => $request['date_emprunt'],
+            'date_retour' => $request['date_retour']
+        ]));
     }
 
     /**
@@ -81,5 +93,7 @@ class EmpruntController extends Controller
     public function destroy(Emprunt $emprunt)
     {
         //
+        $emprunt->delete();
+        return redirect()->route('emprunt.index');
     }
 }

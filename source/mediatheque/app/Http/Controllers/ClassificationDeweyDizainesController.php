@@ -15,6 +15,8 @@ class ClassificationDeweyDizainesController extends Controller
     public function index()
     {
         //
+        $classificationDeweyDizaines = ClassificationDeweyDizaines::all();
+        return view('classificationDeweyDizaines.index')->with('classificationDeweyDizaines', $classificationDeweyDizaines);
     }
 
     /**
@@ -25,6 +27,7 @@ class ClassificationDeweyDizainesController extends Controller
     public function create()
     {
         //
+        return view('classificationDeweyDizaines.create');
     }
 
     /**
@@ -36,6 +39,11 @@ class ClassificationDeweyDizainesController extends Controller
     public function store(Request $request)
     {
         //
+        $classificationDeweyDizaines = ClassificationDeweyDizaines::create([
+            'classe' => $request->classe,
+            'matiere' => $request->matiere
+        ]);
+        return redirect()->route('classificationDeweyDizaines.index');
     }
 
     /**
@@ -58,6 +66,7 @@ class ClassificationDeweyDizainesController extends Controller
     public function edit(ClassificationDeweyDizaines $classificationDeweyDizaines)
     {
         //
+        return view('classificationDeweyDizaines.edit')->with('classificationDeweyDizaines', $classificationDeweyDizaines);
     }
 
     /**
@@ -70,6 +79,10 @@ class ClassificationDeweyDizainesController extends Controller
     public function update(Request $request, ClassificationDeweyDizaines $classificationDeweyDizaines)
     {
         //
+        $classificationDeweyDizaines->update(array([
+            'classe' => $request['classe'],
+            'matiere' => $request['matiere']
+        ]));
     }
 
     /**
@@ -81,5 +94,7 @@ class ClassificationDeweyDizainesController extends Controller
     public function destroy(ClassificationDeweyDizaines $classificationDeweyDizaines)
     {
         //
+        $classificationDeweyDizaines->delete();
+        return redirect()->route('classificationDeweyDizaines.index');
     }
 }

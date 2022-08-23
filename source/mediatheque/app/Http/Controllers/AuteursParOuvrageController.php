@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AuteursParOuvrage;
+use App\Models\Auteur;
+use App\Models\Ouvrage;
+use App\Models\AuteurParOuvrage;
 use Illuminate\Http\Request;
 
 class AuteursParOuvrageController extends Controller
@@ -15,6 +17,7 @@ class AuteursParOuvrageController extends Controller
     public function index()
     {
         //
+        
     }
 
     /**

@@ -15,6 +15,8 @@ class ApprovisionnementController extends Controller
     public function index()
     {
         //
+        $approvisionnements = Approvisionnement::all();
+        return view('approvisionnement.index')->with('approvisionnements', $approvisionnements);
     }
 
     /**
@@ -25,6 +27,7 @@ class ApprovisionnementController extends Controller
     public function create()
     {
         //
+        return view('approvisionnement.create');
     }
 
     /**
@@ -36,6 +39,11 @@ class ApprovisionnementController extends Controller
     public function store(Request $request)
     {
         //
+        $approvisionnement = Approvisionnement::create([
+            'nombre_exemplaire' => $request->nombre_exemplaire,
+            'date_approvisionnement' => $request->date_approvisionnement
+        ]);
+        return redirect()->route('approvisionnement.index');
     }
 
     /**
@@ -58,6 +66,7 @@ class ApprovisionnementController extends Controller
     public function edit(Approvisionnement $approvisionnement)
     {
         //
+        return view('approvisionnement.edit')->with('approvisionnement', $approvisionnement);
     }
 
     /**
@@ -70,6 +79,11 @@ class ApprovisionnementController extends Controller
     public function update(Request $request, Approvisionnement $approvisionnement)
     {
         //
+        $approvisionnement->update(array([
+            'nombre_exemplaire' => $request['nombre_exemplaire'],
+            'date_approvisionnement' => $request['date_approvisionnement']
+        ]));
+        return redirect()->route('approvisionnement.index');
     }
 
     /**
@@ -81,5 +95,8 @@ class ApprovisionnementController extends Controller
     public function destroy(Approvisionnement $approvisionnement)
     {
         //
+        $approvisionnement->delete();
+        return redirect()->route('approvisionnement.index');
+        
     }
 }

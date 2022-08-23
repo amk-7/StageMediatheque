@@ -15,6 +15,8 @@ class DocumentAudioVisuelElectroniqueController extends Controller
     public function index()
     {
         //
+        $documentAudioVisuelElectroniques = DocumentAudioVisuelElectronique::all();
+        return view('documentAudioVisuelElectronique.index')->with('documentAudioVisuelElectroniques', $documentAudioVisuelElectroniques);
     }
 
     /**
@@ -25,6 +27,7 @@ class DocumentAudioVisuelElectroniqueController extends Controller
     public function create()
     {
         //
+        return view('documentAudioVisuelElectronique.create');
     }
 
     /**
@@ -36,6 +39,10 @@ class DocumentAudioVisuelElectroniqueController extends Controller
     public function store(Request $request)
     {
         //
+        $documentAudioVisuelElectronique = DocumentAudioVisuelElectronique::create([
+            'genre' => $request->genre,
+            'ISAN' => $request->ISAN
+        ]);
     }
 
     /**
@@ -58,6 +65,7 @@ class DocumentAudioVisuelElectroniqueController extends Controller
     public function edit(DocumentAudioVisuelElectronique $documentAudioVisuelElectronique)
     {
         //
+        return view('documentAudioVisuelElectronique.edit')->with('documentAudioVisuelElectronique', $documentAudioVisuelElectronique);
     }
 
     /**
@@ -70,6 +78,10 @@ class DocumentAudioVisuelElectroniqueController extends Controller
     public function update(Request $request, DocumentAudioVisuelElectronique $documentAudioVisuelElectronique)
     {
         //
+        $documentAudioVisuelElectronique->update(array([
+            'genre' => $request['genre'],
+            'ISAN' => $request['ISAN']
+        ]));
     }
 
     /**
@@ -81,5 +93,7 @@ class DocumentAudioVisuelElectroniqueController extends Controller
     public function destroy(DocumentAudioVisuelElectronique $documentAudioVisuelElectronique)
     {
         //
+        $documentAudioVisuelElectronique->delete();
+        return redirect()->route('documentAudioVisuelElectronique.index');
     }
 }
