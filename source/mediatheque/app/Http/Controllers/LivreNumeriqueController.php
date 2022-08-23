@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LivreNumerique;
+use App\Models\LivresNumerique;
 use Illuminate\Http\Request;
 
 class LivreNumeriqueController extends Controller
@@ -42,10 +42,10 @@ class LivreNumeriqueController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LivreNumerique  $livreNumerique
+     * @param  \App\Models\LivresNumerique  $livreNumerique
      * @return \Illuminate\Http\Response
      */
-    public function show(LivreNumerique $livreNumerique)
+    public function show(LivresNumerique $livreNumerique)
     {
         //
     }
@@ -53,10 +53,10 @@ class LivreNumeriqueController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LivreNumerique  $livreNumerique
+     * @param  \App\Models\LivresNumerique  $livreNumerique
      * @return \Illuminate\Http\Response
      */
-    public function edit(LivreNumerique $livreNumerique)
+    public function edit(LivresNumerique $livreNumerique)
     {
         //
     }
@@ -65,10 +65,10 @@ class LivreNumeriqueController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LivreNumerique  $livreNumerique
+     * @param  \App\Models\LivresNumerique  $livreNumerique
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LivreNumerique $livreNumerique)
+    public function update(Request $request, LivresNumerique $livreNumerique)
     {
         //
     }
@@ -76,10 +76,10 @@ class LivreNumeriqueController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LivreNumerique  $livreNumerique
+     * @param  \App\Models\LivresNumerique  $livreNumerique
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LivreNumerique $livreNumerique)
+    public function destroy(LivresNumerique $livreNumerique)
     {
         //
     }
