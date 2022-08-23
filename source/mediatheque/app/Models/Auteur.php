@@ -14,6 +14,12 @@ class Auteur extends Model
 
     public function ouvrage()
     {
-        return $this->belongsToMany(Ouvrage::class)->using(AuteurOuvrage::class) ;
+        return $this->belongsToMany(Ouvrage::class, "auteur_ouvrage", "id_ouvrage", "id_auteur")->using(AuteurOuvrage::class) ;
+    }
+
+    public static function getAllByOuvrage(Ouvrage $ouvrage){
+        $auteur = $ouvrage->auteur()->get()->first();
+        $auteur_ouvrage = AuteurOuvrage::all()->where("id_auteur", $auteur->id_auteur)->where("id_ouvrage", $ouvrage->id_ouvrage);
+        return $auteur_ouvrage;
     }
 }

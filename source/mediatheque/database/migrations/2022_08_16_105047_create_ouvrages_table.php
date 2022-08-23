@@ -19,7 +19,7 @@ class CreateOuvragesTable extends Migration
             $table->enum('niveau', ['1er degré', '2è degré', '3è degré', 'universitaire']);
             $table->enum('type', ['roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle']);
             $table->string('image')->nullable();
-            $table->string('langue');
+            $table->string('langue')->nullable();
             $table->timestamps();
         });
     }

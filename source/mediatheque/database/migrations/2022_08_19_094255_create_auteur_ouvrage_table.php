@@ -14,11 +14,11 @@ class CreateAuteurOuvrageTable extends Migration
     public function up()
     {
         Schema::create('auteur_ouvrage', function (Blueprint $table) {
-            $table->foreignId('auteur_id_auteur');
-            $table->foreignId('ouvrage_id_ouvrage');
+            $table->foreignId('id_auteur');
+            $table->foreignId('id_ouvrage');
             $table->string('lieu_edition');
             $table->integer('annee_apparution');
-            $table->primary(['auteur_id_auteur', 'ouvrage_id_ouvrage']);
+            $table->primary(['id_auteur', 'id_ouvrage']);
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@ class LivresPapierController extends Controller
     public function index()
     {
         $livresPapier = LivresPapier::all();
-        return view('livresPapier.index')->with('livresPapier', $livresPapier)->paginate(25);
+        return view('livresPapier.index')->with('livresPapier', $livresPapier);
     }
 
     /**
@@ -74,7 +74,7 @@ class LivresPapierController extends Controller
     public function store(Request $request)
     {
 
-        if (LivrePapierHelper::ouvrageExist($request["ISBN"])){
+        /*if (LivrePapierHelper::ouvrageExist($request["ISBN"])){
             return "OuvrageHelper existant";
         }
         //dd($request["titre"]);
@@ -123,9 +123,9 @@ class LivresPapierController extends Controller
             'catetegorie'=>$request["catetegorie"],
             'ISBN'=>$request["ISBN"],
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
-        ]);
+        ]);*/
 
-        return redirect()->route("livresPapier.index");
+        return redirect()->route("listeLivresPapier");
 
     }
 
@@ -135,9 +135,10 @@ class LivresPapierController extends Controller
      * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function show(LivresPapier $livrePapier)
+    public function show(LivresPapier $livresPapier)
     {
-        return view('livresPapier.show')->with("livrePapier", $livrePapier);
+        //ddd($livresPapier->id_livre_papier);
+        return view('livresPapier.show')->with("livrePapier", $livresPapier);
     }
 
     /**
@@ -146,9 +147,41 @@ class LivresPapierController extends Controller
      * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function edit(LivresPapier $livrePapier)
+    public function edit(LivresPapier $livresPapier)
     {
-        return view('livresPapier.edite')->with("livrePapier", $livrePapier);
+        $niveaus = [
+            '1er degré', '2è degré', '3è degré', 'université'
+        ];
+
+        $types = [
+            'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle'
+        ];
+
+        $langues = [
+            'français', 'anglais', 'allemend'
+        ];
+
+        $categories = [
+            'français', 'anglais', 'allemand', 'physique', 'education',
+            'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
+            'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
+        ];
+
+        $classification_dewey_centaines = ClassificationDeweyCentaine::all();
+
+        $classification_dewey_dizaines = ClassificationDeweyDizaines::all();
+
+        //dd($livresPapier->id_livre_papier);
+
+        return view('livresPapier.edite')->with([
+            "livrePapier" => $livresPapier,
+            'niveaus'=> $niveaus,
+            'types'=>$types,
+            'langues'=>$langues,
+            'categories'=>$categories,
+            'classification_dewey_centaines'=>$classification_dewey_centaines,
+            'classification_dewey_dizaines'=>$classification_dewey_dizaines
+        ]);
     }
 
     /**
@@ -163,7 +196,7 @@ class LivresPapierController extends Controller
         $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livrePapier->id_ouvrage_physique);
         OuvragePhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
 
-        return redirect()->route("livresPapier.index");
+        return redirect()->route('listeLivresPapier');
     }
 
     /**
@@ -174,6 +207,8 @@ class LivresPapierController extends Controller
      */
     public function destroy(LivresPapier $livresPapier)
     {
-        $livresPapier->delete();
+        //$livresPapier->delete();
+        //dd("suppression");
+        return redirect()->route('listeLivresPapier');
     }
 }

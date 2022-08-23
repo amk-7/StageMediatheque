@@ -27,6 +27,14 @@ class LivrePapierSeeder extends Seeder
             'date_naissance'=> '01-07-1912',
             'date_decces'=>'16-06-1969'
         ]);
+
+        $auteurn = Auteur::Create([
+            'nom'=>'KONDI',
+            'prenom'=>'Abdoul',
+            'date_naissance'=> '01-07-1912',
+            'date_decces'=>'16-06-1969'
+        ]);
+
         $ouvrage5 = Ouvrage::Create([
             'titre'=>'Crepuscule des temps anciens EPA',
             'niveau' => '3è degré',
@@ -36,6 +44,12 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         $ouvrage5->auteur()->attach($auteur5->id_auteur, [
+            'annee_apparution'=>'1994',
+            'lieu_edition'=>'DAKAR',
+            'created_at'=> Carbon::now(),
+            'updated_at'=> Carbon::now()
+        ]);
+        $ouvrage5->auteur()->attach($auteurn->id_auteur, [
             'annee_apparution'=>'1994',
             'lieu_edition'=>'DAKAR',
             'created_at'=> Carbon::now(),
