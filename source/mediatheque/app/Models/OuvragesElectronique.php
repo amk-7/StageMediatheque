@@ -12,15 +12,15 @@ class OuvragesElectronique extends Model
     protected $primaryKey = 'id_ouvrage_electronique';
 
     public function ouvrage(){
-        return $this->hasOne(Ouvrage::class);
+        return $this->hasOne(Ouvrage::class, "id_ouvrage");
     }
 
     public function livreNumerique(){
-        return $this->belongsTo(LivresNumerique::class);
+        return $this->belongsTo(LivresNumerique::class, 'id_livre_numerique');
     }
 
     public function documentAudioVisuelElectronique(){
-        return $this->belongsTo(DocumentAudioVisuelElectronique::class);
+        return $this->belongsTo(DocumentAudioVisuelElectronique::class, 'id_document_audio_visuel_electronique');
     }
 
 }
