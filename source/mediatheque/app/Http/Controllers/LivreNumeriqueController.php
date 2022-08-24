@@ -15,7 +15,9 @@ class LivreNumeriqueController extends Controller
     public function index()
     {
         //
-        return "livres electronique";
+        //return "livres electronique";
+        $livresNumeriques = LivresNumerique::all();
+        return view('livresNumerique.index')->with('livresNumeriques', $livresNumeriques);
     }
 
     /**
@@ -26,6 +28,7 @@ class LivreNumeriqueController extends Controller
     public function create()
     {
         //
+        return view('livresNumerique.create');
     }
 
     /**
@@ -37,6 +40,10 @@ class LivreNumeriqueController extends Controller
     public function store(Request $request)
     {
         //
+        $livreNumerique = LivresNumerique::create([
+            'catégorie' => $request->categorie,
+            'ISBN' => $request->ISBN
+        ]);
     }
 
     /**
@@ -59,6 +66,7 @@ class LivreNumeriqueController extends Controller
     public function edit(LivresNumerique $livreNumerique)
     {
         //
+        return view('livresNumerique.edit')->with('livreNumerique', $livreNumerique);
     }
 
     /**
@@ -71,6 +79,10 @@ class LivreNumeriqueController extends Controller
     public function update(Request $request, LivresNumerique $livreNumerique)
     {
         //
+        $livreNumerique->update(array([
+            'catégorie' => $request->categorie,
+            'ISBN' => $request->ISBN
+        ]));
     }
 
     /**
@@ -82,5 +94,7 @@ class LivreNumeriqueController extends Controller
     public function destroy(LivresNumerique $livreNumerique)
     {
         //
+        $livreNumerique->delete();
+        return redirect()->route('livresNumerique.index');
     }
 }
