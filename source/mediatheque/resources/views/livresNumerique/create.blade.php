@@ -15,3 +15,4 @@
             <input name="ISBN" type="text" value="" placeholder="Saisire l'ISBN de l'ouvrage">
         </div>
     </fieldset>
+@stop

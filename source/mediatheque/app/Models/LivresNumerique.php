@@ -12,6 +12,6 @@ class LivresNumerique extends Model
     protected $primaryKey = 'id_livre_numerique';
 
     public function ouvrageElectronique(){
-        return $this->hasOne(OuvragesElectronique::class);
+        return $this->hasOne(OuvragesElectronique::class, 'id_ouvrage_electronique');
     }
 }

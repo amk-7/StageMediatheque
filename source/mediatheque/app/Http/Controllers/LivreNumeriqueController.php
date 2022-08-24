@@ -28,7 +28,32 @@ class LivreNumeriqueController extends Controller
     public function create()
     {
         //
-        return view('livresNumerique.create');
+        $niveaus = [
+            '1er degré', '2è degré', '3è degré', 'université'
+        ];
+
+        $types = [
+            'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle'
+        ];
+
+        $langues = [
+            'français', 'anglais', 'allemand'
+        ];
+
+        $categories = [
+            'français', 'anglais', 'allemand', 'physique', 'education',
+            'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
+            'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
+        ];
+
+        return view('livresNumerique.create')->with([
+            'niveaus'=> $niveaus,
+            'types'=>$types,
+            'langues'=>$langues,
+            'categories'=>$categories
+        ]);
+
+        //return view('livresNumerique.create');
     }
 
     /**
@@ -40,10 +65,12 @@ class LivreNumeriqueController extends Controller
     public function store(Request $request)
     {
         //
+        /*
         $livreNumerique = LivresNumerique::create([
             'catégorie' => $request->categorie,
             'ISBN' => $request->ISBN
-        ]);
+        ]);*/
+        return redirect()->route('livresNumerique.index');
     }
 
     /**
@@ -55,6 +82,7 @@ class LivreNumeriqueController extends Controller
     public function show(LivresNumerique $livreNumerique)
     {
         //
+        return view('livresNumerique.show')->with('livreNumerique', $livreNumerique);
     }
 
     /**
@@ -66,7 +94,33 @@ class LivreNumeriqueController extends Controller
     public function edit(LivresNumerique $livreNumerique)
     {
         //
-        return view('livresNumerique.edit')->with('livreNumerique', $livreNumerique);
+        //return view('livresNumerique.edit')->with('livreNumerique', $livreNumerique);
+
+        $niveaus = [
+            '1er degré', '2è degré', '3è degré', 'université'
+        ];
+
+        $types = [
+            'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle'
+        ];
+
+        $langues = [
+            'français', 'anglais', 'allemand'
+        ];
+
+        $categories = [
+            'français', 'anglais', 'allemand', 'physique', 'education',
+            'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
+            'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
+        ];
+
+        return view('livresNumerique.edit')->with([
+            'livreNumerique'=>$livreNumerique,
+            'niveaus'=> $niveaus,
+            'types'=>$types,
+            'langues'=>$langues,
+            'categories'=>$categories
+        ]);
     }
 
     /**
