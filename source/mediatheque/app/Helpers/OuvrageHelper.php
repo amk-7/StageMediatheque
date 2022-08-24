@@ -8,7 +8,7 @@ class OuvrageHelper
 {
     public static function afficherAuteurs(Ouvrage $ouvrage){
         $resultat = "";
-        $auteurs = $ouvrage->auteur()->get();
+        $auteurs = $ouvrage->auteurs()->get();
         foreach ($auteurs as $auteur){
             //dd($auteur);
             $resultat .= $auteur->nom."|";

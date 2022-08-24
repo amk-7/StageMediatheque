@@ -32,8 +32,8 @@
                 <td> <img src="" alt="image du livre"> </td>
                 <td> {{ $livresPapier->ouvragePhysique->ouvrage->titre }} </td>
                 <td> {{ \App\Helpers\OuvrageHelper::afficherAuteurs( $livresPapier->ouvragePhysique->ouvrage) }} </td>
-                <td></td>
-                <td></td>
+                <td> {{ $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->lieu_edition }} </td>
+                <td> {{ $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->annee_apparution }} </td>
                 <td> {{ $livresPapier->ouvragePhysique->ouvrage->niveau }} </td>
                 <td> {{ $livresPapier->ouvragePhysique->ouvrage->type }} </td>
                 <td> {{ $livresPapier->categorie }} </td>

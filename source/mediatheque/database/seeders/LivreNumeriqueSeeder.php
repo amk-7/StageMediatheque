@@ -33,7 +33,7 @@ class LivreNumeriqueSeeder extends Seeder
             'langue'=>'Français',
         ]);
 
-        $ouvrage5->auteur()->attach($auteur5->id_auteur, [
+        $ouvrage5->auteurs()->attach($auteur5->id_auteur, [
             'annee_apparution'=>'1994',
             'lieu_edition'=>'DAKAR',
             'created_at'=> Carbon::now(),

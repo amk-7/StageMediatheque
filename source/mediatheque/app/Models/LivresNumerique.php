@@ -15,3 +15,4 @@ class LivresNumerique extends Model
         return $this->hasOne(OuvragesElectronique::class, 'id_ouvrage_electronique');
     }
 }
+

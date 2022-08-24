@@ -43,13 +43,13 @@ class LivrePapierSeeder extends Seeder
             'langue'=>'Français',
         ]);
 
-        $ouvrage5->auteur()->attach($auteur5->id_auteur, [
+        $ouvrage5->auteurs()->attach($auteur5->id_auteur, [
             'annee_apparution'=>'1994',
             'lieu_edition'=>'DAKAR',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        $ouvrage5->auteur()->attach($auteurn->id_auteur, [
+        $ouvrage5->auteurs()->attach($auteurn->id_auteur, [
             'annee_apparution'=>'1994',
             'lieu_edition'=>'DAKAR',
             'created_at'=> Carbon::now(),
@@ -73,7 +73,7 @@ class LivrePapierSeeder extends Seeder
             'ISBN'=>'12225555',
             'id_ouvrage_physique'=>$ouvragePhysique5->id_ouvrage_physique
         ]);
-
+/*
         $auteur1 = Auteur::Create([
             'nom'=>'LAYE',
             'prenom'=>'Camara',
@@ -89,7 +89,7 @@ class LivrePapierSeeder extends Seeder
             'langue'=>'français',
         ]);
 
-        $ouvrage1->auteur()->attach($auteur1->id_auteur, [
+        $ouvrage1->auteurs()->attach($auteur1->id_auteur, [
             'annee_apparution'=>'2004',
             'lieu_edition'=>'Pocket',
             'created_at'=> Carbon::now(),
@@ -111,7 +111,7 @@ class LivrePapierSeeder extends Seeder
             'ISBN'=>'1',
             'id_ouvrage_physique'=>$ouvragePhysique1->id_ouvrage_physique
 
-        ]);
+        ]);*/
     }
 }
 

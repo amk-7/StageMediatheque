@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuteurOuvrageTable extends Migration
+class CreateAuteursOuvragesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAuteurOuvrageTable extends Migration
      */
     public function up()
     {
-        Schema::create('auteur_ouvrage', function (Blueprint $table) {
+        Schema::create('auteurs_ouvrages', function (Blueprint $table) {
             $table->foreignId('id_auteur');
             $table->foreignId('id_ouvrage');
             $table->string('lieu_edition');
@@ -30,6 +30,6 @@ class CreateAuteurOuvrageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auteur_ouvrage');
+        Schema::dropIfExists('auteurs_ouvrages');
     }
 }

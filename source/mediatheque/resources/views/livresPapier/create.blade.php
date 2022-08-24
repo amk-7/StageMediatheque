@@ -4,11 +4,13 @@
         <legend>Particularité</legend>
         <div>
             <label>Catégorie</label>
-            <select name="categorie">
+            <select name="categorie" id="ajouterCategorie">
+                <option>--Selectionner--</option>
                 @foreach($categories as $categorie)
                     <option value="{{$categorie}}">{{$categorie}}</option>
                 @endforeach
             </select>
+            <div id="listeCategorie"></div>
         </div>
         <div>
             <label>ISBN</label>

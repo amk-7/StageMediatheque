@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ouvrage extends Model
 {
     use HasFactory;
-    protected $fillable = ['titre', 'niveau', 'type', 'image', 'langue'];
+    protected $fillable = ['titre', 'resume', 'niveau', 'type', 'image', 'langue'];
     protected $primaryKey = 'id_ouvrage';
 
 
@@ -19,9 +19,18 @@ class Ouvrage extends Model
         return $this->belongsTo(OuvragesElectronique::class, "id_ouvrage_electronique");
     }
 
-    public function auteur()
+    public function auteurs()
     {
-        return $this->belongsToMany(Auteur::class, "auteur_ouvrage", "id_ouvrage", "id_auteur")->using(AuteurOuvrage::class);
+        return $this->belongsToMany(Auteur::class, "auteurs_ouvrages", "id_ouvrage", "id_auteur")
+                    ->withTimestamps()
+                    ->withPivot(['annee_apparution', 'lieu_edition']);
+
     }
+
+    /*public function auteur_ouvrage(){
+        $auteur = $this->auteur()->get()->first();
+        $auteur_ouvrage = AuteurOuvrage::all()->where("id_auteur", $auteur->id_auteur)->where("id_ouvrage", $this->id_ouvrage);
+        return $auteur_ouvrage;
+    }*/
 
 }

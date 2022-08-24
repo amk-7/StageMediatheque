@@ -12,14 +12,12 @@ class Auteur extends Model
     protected $primaryKey = 'id_auteur';
     protected $dates = ['date_naissance', 'date_decces'];
 
-    public function ouvrage()
+    public function ouvrages()
     {
-        return $this->belongsToMany(Ouvrage::class, "auteur_ouvrage", "id_ouvrage", "id_auteur")->using(AuteurOuvrage::class) ;
+        return $this->belongsToMany(Ouvrage::class, "auteur_ouvrage", "id_ouvrage", "id_auteur")
+                    ->withTimestamps()
+                    ->withPivot(['annee_apparution', 'lieu_edition']);
+
     }
 
-    public static function getAllByOuvrage(Ouvrage $ouvrage){
-        $auteur = $ouvrage->auteur()->get()->first();
-        $auteur_ouvrage = AuteurOuvrage::all()->where("id_auteur", $auteur->id_auteur)->where("id_ouvrage", $ouvrage->id_ouvrage);
-        return $auteur_ouvrage;
-    }
 }

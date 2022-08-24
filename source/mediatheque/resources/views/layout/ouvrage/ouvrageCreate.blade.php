@@ -11,16 +11,23 @@
                     <input type="text" name="titre" value="" placeholder="saisir le titre du livre">
                 </div>
                 <div>
+                    <input type="text" id="auteurs" name="nbAuteur" value=""/>
+                    <input type="text" id="categories" name="nbCategorie" value=""/>
+                </div>
+                <div>
                     <label>Niveau</label>
-                    <select name="niveau">
+                    <select id="ajouterNiveau" name="niveau">
+                        <option>--Selectionner--</option>
                         @foreach($niveaus as $niveau)
                             <option value="{{$niveau}}">{{$niveau}}</option>
                         @endforeach
                     </select>
+                    <div id="listeNiveau"></div>
                 </div>
                 <div>
                     <label>Type</label>
                     <select name="type">
+                        <option>--Selectionner--</option>
                         @foreach($types as $type)
                             <option value="{{$type}}">{{$type}}</option>
                         @endforeach
@@ -38,6 +45,7 @@
                 <div>
                     <label>langue</label>
                     <select name="langue">
+                        <option>--Selectionner--</option>
                         @foreach($langues as $langue)
                             <option value="{{$langue}}">{{$langue}}</option>
                         @endforeach
@@ -57,38 +65,50 @@
                 </div>
             </div>
         </fieldset>
-        @yield('particularite_papier')
         <fieldset>
             <legend>Auteur</legend>
             <div>
                 <div>
                     <div>
                         <label>Nom</label>
-                        <input name="nom" type="text" value="" placeholder="Saisire le nom de l'auteur">
+                        <input name="nom" id="nom" type="text" value="" placeholder="Saisire le nom de l'auteur">
                     </div>
                     <div>
                         <label>Prénom</label>
-                        <input name="prenom" type="text" value="" placeholder="Saisire le prénom de l'auteur">
+                        <input name="prenom" id="prenom" type="text" placeholder="Saisire le prénom de l'auteur">
                     </div>
                     <div>
                         <label>Date de naissance</label>
-                        <input name="date_naissance" type="date" value="">
+                        <input name="date_naissance" id="date_naissance" type="date" value="">
                     </div>
                     <div>
                         <label>Date de decces</label>
-                        <input name="date_decces" type="date" value="" >
+                        <input name="date_decces" id="date_decces" type="date" value="" >
                     </div>
                 </div>
-                <div>
+                <div id="auteurs">
                     <label>Auteurs : </label>
+                    <div id="listeAuteurs"></div>
                 </div>
                 <div>
-                    <button onclick="ajouterAuteur()">Ajouter</button>
+                    <button id="ajouterAuteur">Ajouter</button>
                 </div>
             </div>
         </fieldset>
+        @yield('particularite_papier')
+        <div id="motCle" name="mot_cle">
+            <table border="1">
+                <tbody>
+                    <tr><td></td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <fieldset>
+            <label>Résumé de l'ouvrage : </label><br>
+            <textarea name="resume" rows="10" cols="100"></textarea>
+        </fieldset>
         @yield('stock')
-        <input type="submit" name="enregister" value="Enregister"/>
+        <input type="submit" id="enregistrer" name="enregister" value="Enregister"/>
     </form>
 
     <script type="text/javascript" async>
@@ -101,4 +121,5 @@
             }
         }
     </script>
+    <script src="{{ url('mediatheque_js/ouvrage/_ouvrage.js') }}" async></script>
 @stop

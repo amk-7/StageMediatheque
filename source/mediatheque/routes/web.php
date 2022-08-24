@@ -23,7 +23,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 // Path: Abonne routes/web.php
 Route::get('liste_des_abonnes', 'App\Http\Controllers\AbonneController@index')->name('listeAbonnes');
 Route::get('affiche_abonne', 'App\Http\Controllers\AbonneController@show')->name('showAbonne');

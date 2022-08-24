@@ -73,6 +73,9 @@ class LivresPapierController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
+
+        //Récupérer les auteurs .
 
         /*if (LivrePapierHelper::ouvrageExist($request["ISBN"])){
             return "OuvrageHelper existant";
