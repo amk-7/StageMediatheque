@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class AuteurOuvrage extends Pivot
 {
     use HasFactory;
-    protected $fillable = ['date_apparution', 'lieu_edition'];
+    protected $fillable = ['annee_apparution', 'lieu_edition'];
     protected $primaryKey = ['id_auteur', 'id_ouvrage'];
-    protected $dates = ['date_apparution'];
+    protected $dates = ['annee_apparution'];
 
 }

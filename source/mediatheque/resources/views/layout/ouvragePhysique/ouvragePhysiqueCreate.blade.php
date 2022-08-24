@@ -14,7 +14,8 @@
             <label>Emplacement</label>
             <div>
                 <label>Rayons</label>
-                <select name="id_classification_dewey_centaine">
+                <select id="id_classification_dewey_centaine" name="id_classification_dewey_centaine">
+                    <option>--Selectionner--</option>
                     @foreach($classification_dewey_centaines as $classification_dewey_centaine)
                         <option>{{$classification_dewey_centaine->theme}}</option>
                     @endforeach
@@ -22,10 +23,7 @@
             </div>
             <div>
                 <label>Etagère</label>
-                <select name="id_classification_dewey_centaine">
-                    @foreach($classification_dewey_dizaines as $classification_dewey_dizaine)
-                        <option>{{$classification_dewey_dizaine->matiere}}</option>
-                    @endforeach
+                <select id="id_classification_dewey_dizaine" name="id_classification_dewey_dizaine">
                 </select>
             </div>
         </div>
