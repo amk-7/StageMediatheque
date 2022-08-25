@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\LivrePapierHelper;
+use App\Helpers\OuvrageHelper;
 use App\Helpers\OuvragePhysiqueHelper;
 use App\Models\Auteur;
 use App\Models\LivresPapier;
@@ -12,6 +13,7 @@ use App\Models\OuvragesPhysique;
 use App\Models\ClassificationDeweyCentaine;
 use App\Models\ClassificationDeweyDizaines;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Exception;
 
 class LivresPapierController extends Controller
 {
@@ -22,8 +24,8 @@ class LivresPapierController extends Controller
      */
     public function index()
     {
-        $livresPapier = LivresPapier::all();
-        return view('livresPapier.index')->with('livresPapier', $livresPapier);
+        $livresPapier = LivresPapier::paginate(1);
+        return view('livresPapier.index')->with('livresPapiers', $livresPapier);
     }
 
     /**
@@ -73,7 +75,12 @@ class LivresPapierController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        dd(OuvrageHelper::convertDataToArray($request, "auteur"));
+        $list_categories= OuvrageHelper::convertDataToArray($request, "categorie");
+        $list_mot_cles = OuvrageHelper::convertDataToArray($request, "motCle");
+        $list_auteurss = OuvrageHelper::convertDataToArray($request, "auteur");
+
+
 
         //Récupérer les auteurs .
 
@@ -213,5 +220,10 @@ class LivresPapierController extends Controller
         //$livresPapier->delete();
         //dd("suppression");
         return redirect()->route('listeLivresPapier');
+    }
+
+    public function echoclassification_dewey_dizaines(){
+
+        echo json_encode(ClassificationDeweyDizaines::all())."|";
     }
 }

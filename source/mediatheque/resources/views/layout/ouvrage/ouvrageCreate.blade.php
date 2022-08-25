@@ -1,6 +1,6 @@
 @extends('layout.base')
 @section('content')
-    <h1>{{$title}}</h1>
+    <h1 class="font-bold">{{$title}}</h1>
     <form action="{{route($action)}}" method="{{$methode}}" enctype="multipart/form-data">
         @csrf
         <fieldset>
@@ -9,10 +9,6 @@
                 <div>
                     <label>Titre</label>
                     <input type="text" name="titre" value="" placeholder="saisir le titre du livre">
-                </div>
-                <div>
-                    <input type="text" id="auteurs" name="nbAuteur" value=""/>
-                    <input type="text" id="categories" name="nbCategorie" value=""/>
                 </div>
                 <div>
                     <label>Niveau</label>
@@ -96,21 +92,35 @@
             </div>
         </fieldset>
         @yield('particularite_papier')
-        <div id="motCle" name="mot_cle">
-            <table border="1">
-                <tbody>
-                    <tr><td></td><td></td></tr>
-                </tbody>
-            </table>
-        </div>
         <fieldset>
-            <label>Résumé de l'ouvrage : </label><br>
+            <legend>Mots clé </legend>
+            <div id="motCle" name="mot_cle">
+                <table id="tableMotCle">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <input name="" id="inputMotCle" type="text" value="" placeholder="Entrez un mot clé"/>
+                                    <button id="ajouterMotCle">+</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="listeBtns"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Résumé de l'ouvrage </legend>
             <textarea name="resume" rows="10" cols="100"></textarea>
         </fieldset>
         @yield('stock')
         <input type="submit" id="enregistrer" name="enregister" value="Enregister"/>
     </form>
-
     <script type="text/javascript" async>
         var image = document.getElementById("profil_livre");
         var types = ["image/jpg", "image/jpeg", "image/png"];
