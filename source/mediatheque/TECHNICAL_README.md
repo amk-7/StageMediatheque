@@ -57,3 +57,6 @@
 
     npm install -D tailwindcss postcss autoprefixer
     npx tailwindcss init -p
+
+## Pagination with tailwindcss
+    npm i tailwindcss-plugins -D

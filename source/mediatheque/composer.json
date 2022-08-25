@@ -12,7 +12,9 @@
         "laravel/helpers": "^1.5",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "mercuryseries/laravel-helpers": "^1.0"
+        "mercuryseries/laravel-helpers": "^1.0",
+      "ext-mysql_xdevapi": "*",
+      "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "*",
