@@ -37,6 +37,11 @@ class LivrePapierSeeder extends Seeder
 
         $ouvrage5 = Ouvrage::Create([
             'titre'=>'Crepuscule des temps anciens EPA',
+            'mot_cle'=> [
+                "mot_cle_0"=>"temps",
+                "mot_cle_1"=>"anciens"
+            ],
+            'resume' => "Pas de résumé .",
             'niveau' => '3è degré',
             'type'=>'roman',
             'image' => '',
@@ -73,7 +78,7 @@ class LivrePapierSeeder extends Seeder
             'ISBN'=>'12225555',
             'id_ouvrage_physique'=>$ouvragePhysique5->id_ouvrage_physique
         ]);
-/*
+
         $auteur1 = Auteur::Create([
             'nom'=>'LAYE',
             'prenom'=>'Camara',
@@ -111,7 +116,7 @@ class LivrePapierSeeder extends Seeder
             'ISBN'=>'1',
             'id_ouvrage_physique'=>$ouvragePhysique1->id_ouvrage_physique
 
-        ]);*/
+        ]);
     }
 }
 

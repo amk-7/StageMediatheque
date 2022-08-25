@@ -18,18 +18,17 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nom', 
-        'prenom', 
-        'nom_utilisateur', 
-        'email', 
-        'password', 
-        'contact', 
-        'photo_profil', 
-        'adresse', 
-        'sexe'        
+        'nom',
+        'prenom',
+        'nom_utilisateur',
+        'email',
+        'password',
+        'contact',
+        'photo_profil',
+        'adresse',
+        'sexe'
     ];
     protected $primaryKey = 'id_utilisateur';
-    protected $cast = ['adresse' => 'array'];
 
     public function abonne()
     {
@@ -58,5 +57,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'adresse' => 'array'
     ];
 }

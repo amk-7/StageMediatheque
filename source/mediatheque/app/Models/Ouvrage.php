@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Ouvrage extends Model
 {
     use HasFactory;
-    protected $fillable = ['titre', 'resume', 'niveau', 'type', 'image', 'langue'];
+    protected $fillable = ['titre', 'mot_cle', 'resume', 'niveau', 'type', 'image', 'langue'];
     protected $primaryKey = 'id_ouvrage';
-
+    protected $casts = [
+        'mot_cle'=>'array'
+    ];
 
     public function OuvragePhysique(){
         return $this->belongsTo(OuvragesPhysique::class, "id_ouvrage_physique");
@@ -26,11 +28,5 @@ class Ouvrage extends Model
                     ->withPivot(['annee_apparution', 'lieu_edition']);
 
     }
-
-    /*public function auteur_ouvrage(){
-        $auteur = $this->auteur()->get()->first();
-        $auteur_ouvrage = AuteurOuvrage::all()->where("id_auteur", $auteur->id_auteur)->where("id_ouvrage", $this->id_ouvrage);
-        return $auteur_ouvrage;
-    }*/
 
 }
