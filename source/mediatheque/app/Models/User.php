@@ -29,7 +29,7 @@ class User extends Authenticatable
         'sexe'        
     ];
     protected $primaryKey = 'id_utilisateur';
-    protected $cast = ['adresse' => 'array'];
+    
 
     public function abonne()
     {
@@ -58,5 +58,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'adresse' => 'array'
     ];
 }
