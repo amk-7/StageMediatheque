@@ -23,6 +23,7 @@
             <th> Contact a prevenir </th>
             <th> Numero de Carte </th>
             <th> Type de Carte </th>
+            <th> Action </th>
         </tr>
     @forelse ($listeAbonnes as $abonne)
             <tr>
@@ -48,5 +49,8 @@
             <tr><td><label>Il n y a pas d Abonne</label></td></tr>
     @endforelse
     </table>
+    <form method="GET" action="{{route('createAbonne')}}">
+        <button type="Submit">Ajouter un Abonne</button>
+    </form>
 </div>
 

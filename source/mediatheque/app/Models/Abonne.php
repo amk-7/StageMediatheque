@@ -14,7 +14,7 @@ class Abonne extends Model
 
 
     public function utilisateur(){
-        return $this->belongsTo('App\Models\Utilisateur', 'id_utilisateur');
+        return $this->belongsTo('App\Models\User', 'id_utilisateur');
     }
 
     public function registration(){

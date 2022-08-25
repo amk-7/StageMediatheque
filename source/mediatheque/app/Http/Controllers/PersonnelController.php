@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Personnel;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PersonnelController extends Controller
@@ -16,7 +17,7 @@ class PersonnelController extends Controller
     {
         //
         $personnels = Personnel::all();
-        return view('personnel.index')->with('personnels', $personnels);
+        return view('personnels.index')->with('listePersonnels', $personnels);
     }
 
     /**
@@ -27,7 +28,7 @@ class PersonnelController extends Controller
     public function create()
     {
         //
-        return view('personnel.create');
+        return view('personnels.create');
     }
 
     /**
@@ -39,9 +40,27 @@ class PersonnelController extends Controller
     public function store(Request $request)
     {
         //
-        $personnel = Personnel::create([
-            'statut' => $request->statut
+        $request['adresse'] = array(
+            'ville' => $request->ville,
+            'quartier' => $request->quartier
+        );
+        $utilisateur = User::create([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'nom_utilisateur' => $request->nom_utilisateur,
+            'email' => $request->email,
+            'password' => $request->password,
+            'contact' => $request->contact,
+            'photo_profil' => $request->photo_profil,
+            'adresse' => $request->adresse,
+            'sexe' => $request->sexe
         ]);
+        
+        $personnel = Personnel::create([
+            'statut' => $request->statut,
+            'id_utilisateur' => $utilisateur->id_utilisateur
+        ]);
+        return redirect()->route('listePersonnels');
     }
 
     /**
@@ -65,7 +84,7 @@ class PersonnelController extends Controller
     public function edit(Personnel $personnel)
     {
         //
-        return view('personnel.edit')->with('personnel', $personnel);
+        return view('personnels.edit')->with('personnel', $personnel);
     }
 
     /**
@@ -78,9 +97,10 @@ class PersonnelController extends Controller
     public function update(Request $request, Personnel $personnel)
     {
         //
-        $personnel->statut = $request["statut"];
-        $personnel->save();
-        return redirect()->route('personnel.index');
+        $personnel->update(array([
+            'statut' => $request->statut
+        ]));
+        return redirect()->route('listePersonnels');
     }
 
     /**
@@ -93,6 +113,6 @@ class PersonnelController extends Controller
     {
         //
         $personnel->delete();
-        return redirect()->route('personnel.index');
+        return redirect()->route('listePersonnels');
     }
 }

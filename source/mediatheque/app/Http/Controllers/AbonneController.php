@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\UtilisateurHelper;
+
 use App\Models\Abonne;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AbonneController extends Controller
@@ -47,15 +49,34 @@ class AbonneController extends Controller
     public function store(Request $request)
     {
         //
+        $request['adresse'] = array(
+            'ville' => $request->ville,
+            'quartier' => $request->quartier
+        );
+
+        $utilisateur = User::create([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'nom_utilisateur' => $request->nom_utilisateur,
+            'email' => $request->email,
+            'password' => $request->password,
+            'contact' => $request->contact,
+            'photo_profil' => $request->photo_profil,
+            'adresse' => $request->adresse,
+            'sexe' => $request->sexe
+        ]);
+
         $abonne = Abonne::create([
             'date_naissance' => $request->date_naissance,
             'niveau_etude' => $request->niveau_etude,
             'profession' => $request->profession,
             'contact_a_prevenir' => $request->contact_a_prevenir,
             'numero_carte' => $request->numero_carte,
-            'type_de_carte' => $request->type_de_carte
+            'type_de_carte' => $request->type_de_carte,
+            'id_utilisateur' => $utilisateur->id_utilisateur
+            
         ]);
-        return redirect()->route('abonnes.index');
+        return redirect()->route('listeAbonnes');
     }
 
     /**
@@ -98,10 +119,10 @@ class AbonneController extends Controller
             'profession' => $request["profession"],
             'contact_a_prevenir' => $request["contact_a_prevenir"],
             'numero_carte' => $request["numero_carte"],
-            'type_de_carte' => $request["type_de_carte"]           
+            'type_de_carte' => $request["type_de_carte"]          
         ]));
         
-        return redirect()->route('abonnes.index');
+        return redirect()->route('listeAbonnes');
 
         /*
         $abonne->date_naissance = $request["date_naissance"];
@@ -124,6 +145,6 @@ class AbonneController extends Controller
     {
         //
         $abonne->delete();
-        return redirect()->route('abonnes.index');
+        return redirect()->route('listeAbonnes');
     }
 }
