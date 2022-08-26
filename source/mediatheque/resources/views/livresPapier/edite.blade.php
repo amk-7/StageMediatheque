@@ -107,7 +107,8 @@
                 <label>Emplacement</label>
                 <div>
                     <label>Rayons</label>
-                    <select name="id_classification_dewey_centaine">
+                    <select id="id_classification_dewey_centaine" name="id_classification_dewey_centaine">
+                        <option>--Sélectionner--</option>
                         @foreach($classification_dewey_centaines as $classification_dewey_centaine)
                             <option>{{$classification_dewey_centaine->theme}}</option>
                         @endforeach
@@ -115,10 +116,8 @@
                 </div>
                 <div>
                     <label>Etagère</label>
-                    <select name="id_classification_dewey_centaine">
-                        @foreach($classification_dewey_dizaines as $classification_dewey_dizaine)
-                            <option>{{$classification_dewey_dizaine->matiere}}</option>
-                        @endforeach
+                    <select id="id_classification_dewey_centaine" name="id_classification_dewey_centaine">
+                        <option>--Sélectionner--</option>
                     </select>
                 </div>
             </div>
@@ -134,7 +133,52 @@
             if (types.includes(picture.type)){
                 image_livre.src = URL.createObjectURL(picture);
             }
+        };
+    </script>
+    <script type="text/javascript" async>
+        const selectRayons = document.getElementById("id_classification_dewey_centaine");
+        const selectEtagere = document.getElementById("id_classification_dewey_dizaine");
+        console.log(selectRayons);
+
+        const selected_value = "{!! $livrePapier->ouvragePhysique->classificationDeweyDizaine->classificationDeweyCentaine->first()->theme !!}";
+        console.log(selectRayons.options);
+
+        for (let i=0; i<selectRayons.options.length; i++){
+            if (selectRayons.options[i].value == selected_value){
+                selectRayons.selectedIndex = selectRayons.options[i].index;
+            }
         }
+
+        const liste_etager = {!! $classification_dewey_dizaines  !!};
+
+        selectRayons.addEventListener("change", function updateListEtager(e){
+            e.stopPropagation();
+            console.log(liste_etager);
+            console.log(selectRayons.options[selectRayons.selectedIndex].id);
+            let i, size = selectEtagere.options.length - 1;
+            for (let i = size ; i >= 0 ; i--) {
+                selectEtagere.remove(i);
+                console.log(i);
+            }
+            console.log(selectRayons.children);
+            let option = document.createElement("option");
+            option.innerText = "--Selectionner--";
+            selectEtagere.appendChild(option);
+
+            for (let i = 0; i < liste_etager.length ; i++) {
+                console.log(liste_etager[i].id_classification_dewey_centaine);
+                let idRayon = selectRayons.options[selectRayons.selectedIndex].value;
+                let idRayonEtagere = liste_etager[i].id_classification_dewey_centaine;
+                if(idRayon == idRayonEtagere){
+                    //console.log("Ok");
+                    let option = document.createElement("option");
+                    option.value = liste_etager[i].id_classification_dewey_dizaine;
+                    option.innerText = liste_etager[i].matiere;
+                    selectEtagere.appendChild(option);
+                }
+            }
+        });
+
     </script>
 
 @stop

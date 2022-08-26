@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClassificationDeweyDizaines;
+use App\Models\ClassificationDeweyDizaine;
 use Illuminate\Http\Request;
 
 class ClassificationDeweyDizainesController extends Controller
@@ -15,7 +15,7 @@ class ClassificationDeweyDizainesController extends Controller
     public function index()
     {
         //
-        $classificationDeweyDizaines = ClassificationDeweyDizaines::all();
+        $classificationDeweyDizaines = ClassificationDeweyDizaine::all();
         return view('classificationDeweyDizaines.index')->with('classificationDeweyDizaines', $classificationDeweyDizaines);
     }
 
@@ -39,7 +39,7 @@ class ClassificationDeweyDizainesController extends Controller
     public function store(Request $request)
     {
         //
-        $classificationDeweyDizaines = ClassificationDeweyDizaines::create([
+        $classificationDeweyDizaines = ClassificationDeweyDizaine::create([
             'classe' => $request->classe,
             'matiere' => $request->matiere
         ]);
@@ -49,10 +49,10 @@ class ClassificationDeweyDizainesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ClassificationDeweyDizaines  $classificationDeweyDizaines
+     * @param  \App\Models\ClassificationDeweyDizaine  $classificationDeweyDizaines
      * @return \Illuminate\Http\Response
      */
-    public function show(ClassificationDeweyDizaines $classificationDeweyDizaines)
+    public function show(ClassificationDeweyDizaine $classificationDeweyDizaines)
     {
         //
     }
@@ -60,10 +60,10 @@ class ClassificationDeweyDizainesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ClassificationDeweyDizaines  $classificationDeweyDizaines
+     * @param  \App\Models\ClassificationDeweyDizaine  $classificationDeweyDizaines
      * @return \Illuminate\Http\Response
      */
-    public function edit(ClassificationDeweyDizaines $classificationDeweyDizaines)
+    public function edit(ClassificationDeweyDizaine $classificationDeweyDizaines)
     {
         //
         return view('classificationDeweyDizaines.edit')->with('classificationDeweyDizaines', $classificationDeweyDizaines);
@@ -73,10 +73,10 @@ class ClassificationDeweyDizainesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ClassificationDeweyDizaines  $classificationDeweyDizaines
+     * @param  \App\Models\ClassificationDeweyDizaine  $classificationDeweyDizaines
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClassificationDeweyDizaines $classificationDeweyDizaines)
+    public function update(Request $request, ClassificationDeweyDizaine $classificationDeweyDizaines)
     {
         //
         $classificationDeweyDizaines->update(array([
@@ -88,10 +88,10 @@ class ClassificationDeweyDizainesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ClassificationDeweyDizaines  $classificationDeweyDizaines
+     * @param  \App\Models\ClassificationDeweyDizaine  $classificationDeweyDizaines
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ClassificationDeweyDizaines $classificationDeweyDizaines)
+    public function destroy(ClassificationDeweyDizaine $classificationDeweyDizaines)
     {
         //
         $classificationDeweyDizaines->delete();

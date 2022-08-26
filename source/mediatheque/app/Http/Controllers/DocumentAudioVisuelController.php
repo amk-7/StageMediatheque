@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\OuvragePhysiqueHelper;
 use App\Models\ClassificationDeweyCentaine;
-use App\Models\ClassificationDeweyDizaines;
+use App\Models\ClassificationDeweyDizaine;
 use App\Models\DocumentAudioVisuel;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
@@ -57,7 +57,7 @@ class DocumentAudioVisuelController extends Controller
 
         $classification_dewey_centaines = ClassificationDeweyCentaine::all();
 
-        $classification_dewey_dizaines = ClassificationDeweyDizaines::all();
+        $classification_dewey_dizaines = ClassificationDeweyDizaine::all();
 
         return view('documentAudioVisuel.create')->with([
             'niveaus'=> $niveaus,

@@ -5,7 +5,6 @@ let id_oject = 0;
 //============== Initialisation des composant ====================
 const addCategorieSelect = document.getElementById("ajouterCategorie");
 const addAuteurBtn = document.getElementById("ajouterAuteur");
-const selectRayons = document.getElementById("id_classification_dewey_centaine");
 const addkeyWord = document.getElementById("ajouterMotCle");
 const inputSave = document.getElementById("enregistrer");
 
@@ -43,6 +42,7 @@ addkeyWord.addEventListener('click', function addKeyWord(e){
         div_ligne_mot_cle.removeChild(btn);
     });
 
+    input_mot_cle.value = "";
     div_ligne_mot_cle.appendChild(mot_cle_canvas);
     div_ligne_mot_cle.appendChild(remove_mot_cle_btn);
 });
@@ -87,24 +87,9 @@ inputSave.addEventListener('click', function addDataBeforeSend(e){
         }
     }
 
+    verifieIfAuteurFiledIsNotEmpty();
+    verifieIfMotCleFieldIsNotEmpty();
     //console.log(div_auteurs.children);
-})
-let json_rayon_par_etager ;
-//console.log(JSON.parse('{"id_classification_dewey_dizaine":1,"classe":10,"matiere":"bibliographie","id_classification_dewey_centaine":1,"created_at":"2022-08-24T18:49:47.000000Z","updated_at":"2022-08-24T18:49:47.000000Z"}'));
-
-selectRayons.addEventListener('change', function addEtagerInSelect(e){
-    e.preventDefault();
-    console.log("OK");
-    let xhr = new XMLHttpRequest();
-    xhr.open("get", "data_class_dizaine");
-    xhr.onload = function (){
-        let json_rayon_par_etager_str = this.response.split("|");
-        console.log(json_rayon_par_etager_str[0]);
-        console.log(JSON.parse(json_rayon_par_etager_str));
-        /*json_rayon_par_etager = JSON.parse(json_rayon_par_etager);
-        console.log(json_rayon_par_etager);*/
-    };
-    xhr.send();
 });
 
 addCategorieSelect.addEventListener('change', function addCategorie(e){
@@ -135,6 +120,8 @@ addCategorieSelect.addEventListener('change', function addCategorie(e){
     div_categorie.appendChild(categorie_canvas);
     div_categorie.appendChild(remove_categorie_btn);
 
+    addCategorieSelect.value = addCategorieSelect.options[0].innerText
+
     e.preventDefault();
     e.stopPropagation();
 });
@@ -151,9 +138,7 @@ addAuteurBtn.addEventListener('click', function addAuteur(e){
     const date_decces = document.getElementById("date_decces");
 
     let div_auteurs = document.getElementById("listeAuteurs");
-
     //console.log(nom_auteur.value);
-
     let auteur_canvas = document.createElement("input");
     auteur_canvas.value = `${nom_auteur.value}, ${prenom_auteur.value}, ${date_naiss.value}, ${date_decces.value}`;
     auteur_canvas.className = "auteur_information";
@@ -182,3 +167,20 @@ addAuteurBtn.addEventListener('click', function addAuteur(e){
     date_decces.value = "";
 
 });
+
+function verifieIfAuteurFiledIsNotEmpty(){
+    const nom_auteur = document.getElementById("nom");
+    const prenom_auteur = document.getElementById("prenom");
+
+    if (nom_auteur != "" && prenom_auteur != ""){
+       nom_auteur.setAttribute("name", "auteur0")
+    }
+}
+
+function verifieIfMotCleFieldIsNotEmpty(){
+    let input_mot_cle = document.getElementById("inputMotCle");
+
+    if (input_mot_cle.value != ""){
+        input_mot_cle.setAttribute("name", "mot_cle_0");
+    }
+}

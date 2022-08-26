@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AuteurHelpers;
 use App\Helpers\LivrePapierHelper;
 use App\Helpers\OuvrageHelper;
 use App\Helpers\OuvragePhysiqueHelper;
@@ -11,9 +12,10 @@ use App\Models\Ouvrage;
 use Carbon\Carbon;
 use App\Models\OuvragesPhysique;
 use App\Models\ClassificationDeweyCentaine;
-use App\Models\ClassificationDeweyDizaines;
+use App\Models\ClassificationDeweyDizaine;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
+use Ramsey\Uuid\Type\Integer;
 
 class LivresPapierController extends Controller
 {
@@ -24,7 +26,8 @@ class LivresPapierController extends Controller
      */
     public function index()
     {
-        $livresPapier = LivresPapier::paginate(1);
+        //dd( ClassificationDeweyCentaine::all()->first()->classificationDeweyDizaines);
+        $livresPapier = LivresPapier::paginate(5);
         return view('livresPapier.index')->with('livresPapiers', $livresPapier);
     }
 
@@ -35,35 +38,17 @@ class LivresPapierController extends Controller
      */
     public function create()
     {
-        $niveaus = [
-            '1er degré', '2è degré', '3è degré', 'université'
-        ];
-
-        $types = [
-            'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle'
-        ];
-
-        $langues = [
-            'français', 'anglais', 'allemend'
-        ];
-
-        $categories = [
-            'français', 'anglais', 'allemand', 'physique', 'education',
-            'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
-            'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
-        ];
-
-        $classification_dewey_centaines = ClassificationDeweyCentaine::all();
-
-        $classification_dewey_dizaines = ClassificationDeweyDizaines::all();
+        $niveausTypesLangues = OuvrageHelper::getNiveausTypesLangues();
+        $categories = LivrePapierHelper::getCategories();
+        $classifications_dewey = OuvragePhysiqueHelper::getClassificationsDewey();
 
         return view('livresPapier.create')->with([
-            'niveaus'=> $niveaus,
-            'types'=>$types,
-            'langues'=>$langues,
+            'niveaus'=> $niveausTypesLangues[0],
+            'types'=>$niveausTypesLangues[1],
+            'langues'=>$niveausTypesLangues[2],
             'categories'=>$categories,
-            'classification_dewey_centaines'=>$classification_dewey_centaines,
-            'classification_dewey_dizaines'=>$classification_dewey_dizaines
+            'classification_dewey_centaines'=>$classifications_dewey[0],
+            'classification_dewey_dizaines'=>$classifications_dewey[1]
         ]);
     }
 
@@ -75,66 +60,48 @@ class LivresPapierController extends Controller
      */
     public function store(Request $request)
     {
-        dd(OuvrageHelper::convertDataToArray($request, "auteur"));
-        $list_categories= OuvrageHelper::convertDataToArray($request, "categorie");
-        $list_mot_cles = OuvrageHelper::convertDataToArray($request, "motCle");
-        $list_auteurss = OuvrageHelper::convertDataToArray($request, "auteur");
+        //Verifier si les champs par défaut d'un auteur sont remplie.
 
+        //dd($request);
+        $request->validate([
+            'titre'=> 'required',
+            'niveau'=>'required|not_in:--Selectionner--',
+            'type'=>'required|not_in:--Selectionner--',
+            'annee_apparution'=>'required',
+            'lieu_edition'=>'required',
+            'auteur0'=>'required',
+            'categorie0'=>'required|not_in:--Selectionner--',
+            'ISBN'=>'required',
+            'resume'=>'required',
+            'nombre_exemplaire'=>'required',
+            'etat'=>'required',
+            'id_classification_dewey_centaine'=>'required|not_in:--Selectionner--',
+            'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
 
+        ]);
 
-        //Récupérer les auteurs .
+        $livres_papier = LivrePapierHelper::livrePapierExist($request["ISBN"], $request["titre"], (Integer) $request["annee_apparution"]);
 
-        /*if (LivrePapierHelper::ouvrageExist($request["ISBN"])){
-            return "OuvrageHelper existant";
+        if ($livres_papier!=null){
+            return redirect()->route("formulaireModificationLivrePapier", compact("livres_papier"));
         }
-        //dd($request["titre"]);
-        $auteur = Auteur::create([
-            'nom'=>$request["nom"],
-            'prenom'=>$request["prenom"],
-            'date_naissance'=> $request["date_naissance"],
-            'date_decces'=>$request["date_decces"]
-        ]);
 
-        //dd($auteur);
-        // Récupérer l'image.
-        $image = $request->file('image_livre');
-        // Stocker l'image
-        $chemin_image = $image->storeAs('images_livre', $request->titre.'.'.$image->extension());
-
-        //dd($request["titre"]);
-        $ouvrage = Ouvrage::create([
-            'titre'=>$request["titre"],
-            'niveau' => $request["niveau"],
-            'type'=>$request["type"],
-            'image' => "",
-            'langue'=>$request["langue"]
-        ]);
-
-        //dd($ouvrage);
-        $ouvrage->auteur()->attach($auteur->id_auteur, [
-            'annee_apparution'=>$request["annee_apparution"],
-            'lieu_edition'=>$request["lieu_edition"],
-            'created_at'=> Carbon::now(),
-            'updated_at'=> Carbon::now()
-        ]);
-
-        $classificationCentaine = ClassificationDeweyCentaine::all()->where("theme", $request["theme"]);
-        $classificationDizaine = ClassificationDeweyDizaines::all()->where("id_classification_dewey_centaine", $classificationCentaine->id_classification_dewey_centaine);
-
-        $ouvragePhysique = OuvragesPhysique::Create([
-            'nombre_exemplaire' => $request["nombre_exemplaire"],
-            'etat'=>$request["etat"],
-            'disponibilite'=>true,
-            'id_ouvrage'=>$ouvrage->id_ouvrage,
-            'id_classification_dewey_dizaines'=>$classificationDizaine->id_classification_dewey_dizaines
-        ]);
-
-        $livresPapier = LivresPapier::create([
-            'catetegorie'=>$request["catetegorie"],
-            'ISBN'=>$request["ISBN"],
-            'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
-        ]);*/
-
+        // Creation d'un ou des auteurs .
+        $auteurs = AuteurHelpers::enregistrerAuteur($request);
+        // Creation de l'ouvrage
+        $ouvrage = OuvrageHelper::enregisterOuvrage($request, $auteurs);
+        // Création d'un ouvrage physique
+        $ouvragePhysique = OuvragePhysiqueHelper::enregisterOuvragePhysique($request, $ouvrage);
+        //dd($ouvragePhysique);
+        $list_categories = OuvrageHelper::convertDataToArray($request, "categorie");
+        //dd($list_categories);
+        $categories = OuvrageHelper::convertObjetToArray($list_categories, "categorie");
+        //dd($categories);
+        LivresPapier::create([
+           'categorie'=>$categories,
+           'ISBN'=>$request["ISBN"],
+           'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
+       ]);
         return redirect()->route("listeLivresPapier");
 
     }
@@ -155,42 +122,24 @@ class LivresPapierController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\LivresPapier  $livresPapier
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(LivresPapier $livresPapier)
     {
-        $niveaus = [
-            '1er degré', '2è degré', '3è degré', 'université'
-        ];
+        //dd($livresPapier);
+        $niveausTypesLangues = OuvrageHelper::getNiveausTypesLangues();
+        $categories = LivrePapierHelper::getCategories();
+        $classifications_dewey = OuvragePhysiqueHelper::getClassificationsDewey();
 
-        $types = [
-            'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle'
-        ];
-
-        $langues = [
-            'français', 'anglais', 'allemend'
-        ];
-
-        $categories = [
-            'français', 'anglais', 'allemand', 'physique', 'education',
-            'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
-            'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
-        ];
-
-        $classification_dewey_centaines = ClassificationDeweyCentaine::all();
-
-        $classification_dewey_dizaines = ClassificationDeweyDizaines::all();
-
-        //dd($livresPapier->id_livre_papier);
 
         return view('livresPapier.edite')->with([
             "livrePapier" => $livresPapier,
-            'niveaus'=> $niveaus,
-            'types'=>$types,
-            'langues'=>$langues,
+            'niveaus'=> $niveausTypesLangues[0],
+            'types'=>$niveausTypesLangues[1],
+            'langues'=>$niveausTypesLangues[2],
             'categories'=>$categories,
-            'classification_dewey_centaines'=>$classification_dewey_centaines,
-            'classification_dewey_dizaines'=>$classification_dewey_dizaines
+            'classification_dewey_centaines'=>$classifications_dewey[0],
+            'classification_dewey_dizaines'=>$classifications_dewey[1]
         ]);
     }
 
@@ -224,6 +173,24 @@ class LivresPapierController extends Controller
 
     public function echoclassification_dewey_dizaines(){
 
-        echo json_encode(ClassificationDeweyDizaines::all())."|";
+        $class_centaines = ClassificationDeweyDizaine::all()->toJson();
+        echo json_encode($class_centaines)."|";
+        //$class_dizaines = [];
+        /*$class_dizaines_str = "";
+        for ($i=0; $i<1; $i++){
+            //array_push($class_dizaines, $class_centaines[$i]->classificationDeweyDizaines->toArray());
+            $class_dewey_dizaines = $class_centaines[$i]->classificationDeweyDizaines;
+            $matiers = "";
+            / *foreach ($class_dewey_dizaines as $cdd){
+                //dd($cdd->matiere);
+                $matiers .= $cdd->matiere.",";
+            } * /
+            //dd($matiers);
+            $class_dizaines_str .= "{".$class_centaines[$i]->theme.":[".$matiers."]},";
+        }
+        $class_dizaines_str .= "{".$class_centaines[1]->theme.":[".$matiers."]}";
+        //$class_dizaines_str .= "]";
+        //dd(json_encode($class_dizaines));
+        echo json_encode($class_dizaines_str)."|";*/
     }
 }
