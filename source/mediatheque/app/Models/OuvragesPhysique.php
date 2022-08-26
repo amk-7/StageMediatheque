@@ -14,8 +14,8 @@ class OuvragesPhysique extends Model
     public function ouvrage(){
         return $this->hasOne(Ouvrage::class, "id_ouvrage");
     }
-    public function classification_dewey_dizaine(){
-        return $this->belongsTo(ClassificationDeweyDizaines::class);
+    public function classificationDeweyDizaine(){
+        return $this->belongsTo(ClassificationDeweyDizaine::class, "id_ouvrage_physique");
     }
     public function livrePapier(){
         return $this->belongsTo(LivrePapier::class, "id_livre_papier");

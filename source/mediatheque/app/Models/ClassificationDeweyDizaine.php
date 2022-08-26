@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ClassificationDeweyDizaines extends Model
+class ClassificationDeweyDizaine extends Model
 {
     use HasFactory;
     protected $fillable = ['classe', 'matiere', 'id_classification_dewey_centaine'];
     protected $primaryKey = 'id_classification_dewey_dizaine';
 
-    public function ouvragePhysqique(){
-        return $this->hasMany(OuvragesPhysique::class);
+    public function ouvragePhysqiques(){
+        return $this->hasMany(OuvragesPhysique::class, "id_classification_dewey_dizaine");
     }
 
     public function classificationDeweyCentaine(){
-        return $this->hasOne(ClassificationDeweyCentaine::class);
+        return $this->belongsTo(ClassificationDeweyCentaine::class, "id_classification_dewey_dizaine");
     }
 }

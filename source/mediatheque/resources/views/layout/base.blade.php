@@ -7,6 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--link href="/css/app.css" rel="stylesheet"-->
     <title>enregister un ouvrage</title>
+    @yield("style")
+    <style>
+        .alert {
+            background: red;
+        }
+    </style>
 </head>
 <body>
     <header>

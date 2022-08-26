@@ -15,13 +15,13 @@ class ClassificationDeweyCentaineSeeder extends Seeder
     public function run()
     {
         ClassificationDeweyCentaine::create([
-            'section'=> 000,
-            'theme'=>'géneralités'
+            'section'=> 0,
+            'theme'=>"generalites"
         ]);
 
         ClassificationDeweyCentaine::create([
             'section'=> 100,
-            'theme'=>'phylosophie et pyschologie'
+            'theme'=>"phylosophie et pyschologie"
         ]);
 
         ClassificationDeweyCentaine::create([
@@ -50,7 +50,7 @@ class ClassificationDeweyCentaineSeeder extends Seeder
         ]);
         ClassificationDeweyCentaine::create([
             'section'=> 900,
-            'theme'=>'géoraphie et histoire'
+            'theme'=>'georaphie et histoire'
         ]);
     }
 }

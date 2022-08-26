@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Auteur;
-use App\Models\ClassificationDeweyDizaines;
+use App\Models\ClassificationDeweyDizaine;
 use App\Models\LivresNumerique;
 use App\Models\Ouvrage;
 use App\Models\OuvragesElectronique;

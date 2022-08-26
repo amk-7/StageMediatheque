@@ -1,6 +1,61 @@
 @extends('layout.base')
+@section("style")
+    <style type="text/css">
+        img {
+            height: 3rem;
+            width: 4rem;
+        }
+    </style>
+@stop
 @section('content')
     <h1> Livres papier </h1>
+    <div>
+        <form action="" method="">
+            <ul id="searchModTabs">
+                <li class="active">
+                    <a class="change_search_mode" href="">Recherche génerale</a>
+                </li>
+                <li class="">
+                    <a class="change_seache_mode" href="">Recherche plien text</a>
+                </li>
+            </ul>
+            <div class="">
+                <div class="input">
+                    <input type="text"  name="search" id="searchFieldx" value="" placeholder="Recherche par titre, auteur, ISBN, éditeur, md5...">
+                    <button type="submit">Rechercher</button>
+                </div>
+            </div>
+            <div class="" id="searchParametersField">
+                <p>Paramètre de recherche</p>
+                <div>
+                    <select name="annee_parution_debut">
+                        <option value="all">Toute annee</option>
+                    </select>
+                    <select name="annee_parution_fin">
+                        <option value="all">Toute annee</option>
+                    </select>
+                    <select name="langue">
+                        <option value="all">Toute langue</option>
+                    </select>
+                    <select name="type">
+                        <option value="all">Tous type</option>
+                    </select>
+                    <select name="domaine">
+                        <option value="all">Tous domaine</option>
+                    </select>
+                    <select name="forme_ouvrage">
+                        <option value="all">Toute forme</option>
+                    </select>
+                    <select name="nature_ouvrage">
+                        <option value="all">Toute nature</option>
+                    </select>
+                    <select name="niveau">
+                        <option value="all">Toute niveau</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
     <div>
         <td>
             <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
@@ -27,20 +82,16 @@
             <tbody>
             @foreach($livresPapiers as $livresPapier)
                 <tr>
-                    <td> <img src="" alt="image du livre"> </td>
+                    <td> <img src="{{ asset('storage/images/images_livre/'.$livresPapier->ouvragePhysique->ouvrage->image) }}" alt="{{$livresPapier->ouvragePhysique->ouvrage->image}}"> </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->titre }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->niveau }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->type }} </td>
-                    <td> {{ $livresPapier->categorie }} </td>
+                    <td> <!--{--{ \App\Helpers\LivrePapierHelper::showArray($livresPapier->categorie, "categorie") }--} --></td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->langue }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->nombre_exemplaire }} </td>
-                    <td> {{ $livresPapier->ouvragePhysique->etat }} </td>
-                    <td> {{ $livresPapier->ouvragePhysique->disponibilite }} </td>
-                    <!--td> {--{ \App\Helpers\OuvrageHelper::afficherAuteurs( $livresPapier->ouvragePhysique->ouvrage) }--} </td>
-                    <td> {--{ $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->lieu_edition }--} </td>
-                    <td> {--{ $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->annee_apparution }--} </td-->
+                    <td> {{ \App\Helpers\OuvragePhysiqueHelper::afficherEtat($livresPapier->ouvragePhysique) }} </td>
+                    <td> {{ \App\Helpers\OuvragePhysiqueHelper::formatAvaible($livresPapier->ouvragePhysique) }} </td>
                     <td> {{ $livresPapier->ISBN }} </td>
-                    <!--td> {--{ $livresPapier->ouvragePhysique->ouvrage->mot_cle["mot_cle_0"] }--} </td-->
                     <td>
                         <form action="{{route('affichageLivrePapier', $livresPapier)}}" method="get">
                             @csrf

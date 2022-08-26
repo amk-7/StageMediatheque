@@ -13,6 +13,6 @@ class ClassificationDeweyCentaine extends Model
 
     public function classificationDeweyDizaines()
     {
-        return $this->hasMany('App\Models\ClassificationDeweyDizaines', 'id_classification_dewey_dizaine');
+        return $this->hasMany(ClassificationDeweyDizaine::class, "id_classification_dewey_centaine");
     }
 }

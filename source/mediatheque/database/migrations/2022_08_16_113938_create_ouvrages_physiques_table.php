@@ -16,7 +16,7 @@ class CreateOuvragesPhysiquesTable extends Migration
         Schema::create('ouvrages_physiques', function (Blueprint $table) {
             $table->bigIncrements('id_ouvrage_physique');
             $table->integer('nombre_exemplaire');
-            $table->enum("etat", ["bon etat", "mauvais etat", "nouveau"])->default("bon etat");
+            $table->enum("etat", [1, 2, 3, 4, 5])->default(5);
             $table->boolean('disponibilite');
             $table->bigInteger('id_ouvrage');
             $table->bigInteger('id_classification_dewey_dizaine');

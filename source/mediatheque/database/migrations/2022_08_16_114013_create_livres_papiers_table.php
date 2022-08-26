@@ -15,9 +15,7 @@ class CreateLivresPapiersTable extends Migration
     {
         Schema::create('livres_papiers', function (Blueprint $table) {
             $table->bigIncrements('id_livre_papier');
-            $table->enum('categorie', ['français', 'anglais', 'allemand', 'physique', 'education',
-                'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
-                'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit']);
+            $table->json('categorie');
             $table->string('ISBN')->unique();
             $table->bigInteger('id_ouvrage_physique');
             $table->timestamps();

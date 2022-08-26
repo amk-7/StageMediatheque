@@ -8,18 +8,21 @@
         </div>
         <div class="informations_livre">
             <label>Titre : {{$livrePapier->ouvragePhysique->ouvrage->titre }} </label><br>
-            <label>Auteurs :  </label><br>
-            <label>Lieu d'édition :  </label><br>
-            <label>Année d'édition :  </label><br>
+            <label>Auteurs :  {{ \App\Helpers\OuvrageHelper::afficherAuteurs( $livrePapier->ouvragePhysique->ouvrage) }} </label><br>
+            <label>Lieu d'édition : {{ $livrePapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->lieu_edition }} </label><br>
+            <label>Année d'édition : {{ $livrePapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->annee_apparution }} </label><br>
             <label>Niveau : {{ $livrePapier->ouvragePhysique->ouvrage->niveau }} </label><br>
             <label>Type : {{ $livrePapier->ouvragePhysique->ouvrage->type }} </label><br>
-            <label>Domaine : {{ $livrePapier->categorie }} </label><br>
+            <label>Domaine : {{ \App\Helpers\LivrePapierHelper::convertArrayToString($livrePapier->categorie, "categorie") }} </label><br>
             <label>ISBN : {{ $livrePapier->ISBN }} </label><br>
             <label>Langue : {{ $livrePapier->ouvragePhysique->ouvrage->langue }} </label><br>
-            <label>Nombre d'exemplaire : {{ $livrePapier->ouvragePhysique->ouvrage->nombre_exemplaire }} </label><br>
-            <label>Etat : {{ $livrePapier->ouvragePhysique->ouvrage->etat }} </label><br>
-            <label>Disponibilité : {{ $livrePapier->ouvragePhysique->ouvrage->disponibilite }} </label><br>
+            <label>Nombre d'exemplaire : {{ $livrePapier->ouvragePhysique->nombre_exemplaire }} </label><br>
+            <label>Etat : {{ $livrePapier->ouvragePhysique->etat }} </label><br>
+            <label>Disponibilité : {{ \App\Helpers\OuvragePhysiqueHelper::formatAvaible($livrePapier->ouvragePhysique) }} </label><br>
             <label>La cote : </label><br>
+            <label>Mots clè : {{ \App\Helpers\LivrePapierHelper::convertArrayToString($livrePapier->ouvragePhysique->ouvrage->mot_cle, "mot_cle_") }} </label><br>
+            <label>Rayon : {{ $livrePapier->ouvragePhysique->classificationDeweyDizaine->first()->classificationDeweyCentaine->theme }}</label><br>
+            <label>Etager : {{ $livrePapier->ouvragePhysique->classificationDeweyDizaine->first()->matiere }}</label>
         </div>
         <div>
             <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
