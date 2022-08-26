@@ -9,7 +9,13 @@
         <input type="date" name="date_naissance" value="{{ $abonne->date_naissance }}">
     </label></br>
     <label for="niveau_etude">Niveau d'étude
-        <input type="text" name="niveau_etude" value="{{ $abonne->niveau_etude }}">
+        <select name="niveau_etude" id="niveau_etude">
+            <option value="1er dégré">1er dégré</option>
+            <option value="2è dégré">2è dégré</option>
+            <option value="3è dégré">3è dégré</option>
+            <option value="Université">Université</option>
+        </select>
+
     </label></br>
     <div class="form-group">
         <label for="profession">profession</label>
