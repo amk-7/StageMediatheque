@@ -113,15 +113,21 @@ class AbonneController extends Controller
     public function update(Request $request, Abonne $abonne)
     {
         //
-        $abonne->update(array([
+        /*$abonne->update(array([
             'date_naissance' => $request["date_naissance"],
             'niveau_etude' => $request["niveau_etude"],
             'profession' => $request["profession"],
             'contact_a_prevenir' => $request["contact_a_prevenir"],
             'numero_carte' => $request["numero_carte"],
             'type_de_carte' => $request["type_de_carte"]          
-        ]));
-        
+        ]));*/
+        $abonne->date_naissance = $request["date_naissance"];
+        $abonne->niveau_etude = $request["niveau_etude"];
+        $abonne->profession = $request["profession"];
+        $abonne->contact_a_prevenir = $request["contact_a_prevenir"];
+        $abonne->numero_carte = $request["numero_carte"];
+        $abonne->type_de_carte = $request["type_de_carte"];
+        $abonne->save();        
         return redirect()->route('listeAbonnes');
 
         /*
