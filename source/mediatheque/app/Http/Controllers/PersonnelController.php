@@ -97,9 +97,14 @@ class PersonnelController extends Controller
     public function update(Request $request, Personnel $personnel)
     {
         //
-        $personnel->update(array([
-            'statut' => $request->statut
-        ]));
+        //dd($request["statut"]);
+        
+        /*$personnel->update(array([
+            'statut' => $request["statut"]
+        ]));*/
+        $personnel->statut = $request["statut"];
+        $personnel->save();
+        //dd($personnel);
         return redirect()->route('listePersonnels');
     }
 

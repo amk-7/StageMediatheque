@@ -26,18 +26,18 @@ Route::get('/', function () {
 // Path: Abonne routes/web.php
 Route::get('liste_des_abonnes', 'App\Http\Controllers\AbonneController@index')->name('listeAbonnes');
 Route::get('affiche_abonne', 'App\Http\Controllers\AbonneController@show')->name('showAbonne');
-Route::get('formulaire_edition_des_abonnes', 'App\Http\Controllers\AbonneController@edit')->name('editAbonne');
-Route::put('mise_a_jour_des_abonnes', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
-Route::delete('suppression_des_abonnes', 'App\Http\Controllers\AbonneController@destroy')->name('destroyAbonne');
+Route::get('formulaire_edition_des_abonnes/{abonne}/edit', 'App\Http\Controllers\AbonneController@edit')->name('editAbonne');
+Route::put('mise_a_jour_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
+Route::delete('suppression_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@destroy')->name('destroyAbonne');
 Route::get('formulaire_Abonne', 'App\Http\Controllers\AbonneController@create')->name('createAbonne');
 Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
 
 // Path: Personnel routes/web.php
 Route::get('liste_des_personnels', 'App\Http\Controllers\PersonnelController@index')->name('listePersonnels');
 Route::get('affiche_personnel', 'App\Http\Controllers\PersonnelController@show')->name('showPersonnel');
-Route::get('formulaire_edition_des_personnels', 'App\Http\Controllers\PersonnelController@edit')->name('editPersonnel');
-Route::put('mise_a_jour_des_personnels', 'App\Http\Controllers\PersonnelController@update')->name('updatePersonnel');
-Route::delete('suppression_des_personnels', 'App\Http\Controllers\PersonnelController@destroy')->name('destroyPersonnel');
+Route::get('formulaire_edition_des_personnels/{personnel}/edition', 'App\Http\Controllers\PersonnelController@edit')->name('editPersonnel');
+Route::put('mise_a_jour_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@update')->name('updatePersonnel');
+Route::delete('suppression_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@destroy')->name('destroyPersonnel');
 Route::get('formulaire_Personnel', 'App\Http\Controllers\PersonnelController@create')->name('createPersonnel');
 Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelController@store')->name('storePersonnel');
 
