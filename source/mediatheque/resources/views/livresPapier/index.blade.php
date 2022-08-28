@@ -63,6 +63,12 @@
                 <input type="submit" name="ajouter" value="ajouter">
             </form>
         </td>
+        <td>
+            <form action="{{route('formulaireEnregistrementApprovisionnement')}}" method="get">
+                @csrf
+                <input type="submit" name="approvisionnement" value="Approvisionner">
+            </form>
+        </td>
     </div>
     @if(!empty($livresPapiers) && $livresPapiers->count())
         <table border="1">
@@ -86,7 +92,7 @@
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->titre }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->niveau }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->type }} </td>
-                    <td> <!--{--{ \App\Helpers\LivrePapierHelper::showArray($livresPapier->categorie, "categorie") }--} --></td>
+                    <td> {{ \App\Helpers\LivrePapierHelper::showArray($livresPapier->categorie, "categorie") }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->langue }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->nombre_exemplaire }} </td>
                     <td> {{ \App\Helpers\OuvragePhysiqueHelper::afficherEtat($livresPapier->ouvragePhysique) }} </td>

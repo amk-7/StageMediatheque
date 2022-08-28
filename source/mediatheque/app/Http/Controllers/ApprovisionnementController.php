@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approvisionnement;
+use App\Models\OuvragesPhysique;
+use App\Models\Personnel;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Integer;
 
 class ApprovisionnementController extends Controller
 {
@@ -22,12 +25,16 @@ class ApprovisionnementController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
-        return view('approvisionnement.create');
+        $ouvragesPhysique = OuvragesPhysique::all();
+        $personnels = Personnel::all();
+        return view('approvisionnement.create')->with([
+            "ouvragesPhysique"=>$ouvragesPhysique,
+            "personnels"=>$personnels
+        ]);
     }
 
     /**
@@ -38,10 +45,18 @@ class ApprovisionnementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+
+        //Rechercher L'ouvrage physique.
+        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $request["id_ouvrage_physique"]);
+
+        $ouvragePhysique->nombre_exemplaie += $request["nombre_exemmplaire"];
+
         $approvisionnement = Approvisionnement::create([
             'nombre_exemplaire' => $request->nombre_exemplaire,
-            'date_approvisionnement' => $request->date_approvisionnement
+            'date_approvisionnement' => $request->date_approvisionnement,
+            'id_personnel'=>$request["id_personnel"],
+            'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
         ]);
         return redirect()->route('approvisionnement.index');
     }
@@ -97,6 +112,6 @@ class ApprovisionnementController extends Controller
         //
         $approvisionnement->delete();
         return redirect()->route('approvisionnement.index');
-        
+
     }
 }

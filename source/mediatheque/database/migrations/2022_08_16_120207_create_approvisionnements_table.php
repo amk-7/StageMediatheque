@@ -17,10 +17,10 @@ class CreateApprovisionnementsTable extends Migration
             $table->bigIncrements('id_approvisonnement');
             $table->integer('nombre_exemplaire');
             $table->timestamp('date_approvisioement')->default('now()');
-            $table->bigInteger('id_ouvrage');
+            $table->bigInteger('id_ouvrage_physique');
             $table->bigInteger('id_personnel');
             $table->timestamps();
-            $table->foreign('id_ouvrage')->references('id_ouvrage')->on('ouvrages');
+            $table->foreign('id_ouvrage_physique')->references('id_ouvrage_physique')->on('ouvrages_physiques');
             $table->foreign('id_personnel')->references('id_personnel')->on('personnels');
         });
     }

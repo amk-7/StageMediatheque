@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Approvisionnement extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre_exemplaire', 'id_ouvrage', 'id_personnel', 'date_approvisonnement'];
+    protected $fillable = ['nombre_exemplaire', 'id_ouvrage_physique', 'id_personnel', 'date_approvisonnement'];
     protected $primaryKey = 'id_approvisionnement';
-    protected $dates = ['id_approvisionnement'];
+    protected $dates = ['date_approvisonnement'];
 }

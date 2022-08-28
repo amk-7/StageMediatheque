@@ -37,10 +37,10 @@ class LivrePapierSeeder extends Seeder
 
         $ouvrage5 = Ouvrage::Create([
             'titre'=>'Crepuscule des temps anciens EPA',
-            'mot_cle'=> array([
+            'mot_cle'=> array(
                 "mot_cle_0"=>"temps",
                 "mot_cle_1"=>"anciens"
-            ]),
+            ),
             'resume' => "Pas de résumé .",
             'niveau' => '3è degré',
             'type'=>'roman',
@@ -70,9 +70,9 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         LivresPapier::Create([
-            'categorie'=> array([
+            'categorie'=> array(
                 "categorie0"=>"français"
-            ]),
+            ),
             'ISBN'=>'12225555',
             'id_ouvrage_physique'=>$ouvragePhysique5->id_ouvrage_physique
         ]);
@@ -112,10 +112,10 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         LivresPapier::Create([
-            'categorie'=> array([
+            'categorie'=> array(
                 "categorie0"=>"français",
                 "categorie1"=>"anglais"
-            ]),
+            ),
             'ISBN'=>'1',
             'id_ouvrage_physique'=>$ouvragePhysique1->id_ouvrage_physique
 

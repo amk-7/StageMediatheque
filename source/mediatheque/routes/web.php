@@ -127,7 +127,7 @@ Route::get('formulaire_enregistrement_livre_papier', [LivresPapierController::cl
 Route::post('enregistrement_livre_papier', [LivresPapierController::class, 'store'])->name('enregistementLivrePapier');
 Route::get('affichage_livre_papier/{livres_papier}', [LivresPapierController::class, 'show'])->name('affichageLivrePapier');
 Route::get('formulaire_modification_livres_papier/{livres_papier}/modifier', [LivresPapierController::class, 'edit'])->name('formulaireModificationLivrePapier');
-Route::post('modification_livre_papier/{livres_papier}', [LivresPapierController::class, 'update'])->name('modificationLivrePapier');
+Route::put('modification_livre_papier/{livres_papier}', [LivresPapierController::class, 'update'])->name('modificationLivrePapier');
 Route::delete('suppression_livre_papier/{livres_papier}', [LivresPapierController::class, 'destroy'])->name('suppressionLivrePapier');
 Route::get('data_class_dizaine', [LivresPapierController::class, 'echoclassification_dewey_dizaines'])->name('dataClassDizain');
 

@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--link href="/css/app.css" rel="stylesheet"-->
     <title>enregister un ouvrage</title>
+    @yield("livewire_style_content")
     @yield("style")
     <style>
         .alert {
@@ -18,6 +19,8 @@
     <header>
     </header>
     @yield('content')
+    @yield("load_json_data")
+    @yield("livewire_script_content")
     <footer>
     </footer>
 </body>

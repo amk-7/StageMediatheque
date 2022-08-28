@@ -28,6 +28,11 @@ class OuvragePhysiqueHelper
     }
 
     public static function updateOuvrage(OuvragesPhysique $ouvragePhysique, $nombre_exemplaire, $etat, $disponibilite){
+        if ($disponibilite=="1"){
+            $disponibilite = true;
+        }else {
+            $disponibilite = false;
+        }
         $ouvragePhysique->nombre_exemplaire = $nombre_exemplaire;
         $ouvragePhysique->etat = $etat;
         $ouvragePhysique->disponibilite = $disponibilite;
@@ -57,6 +62,19 @@ class OuvragePhysiqueHelper
 
         return $etats[$ouvragesPhysique->etat];
     }
+    public static function demanderEtat()
+    {
+        $etats = [
+            5 => "Nouveau",
+            4 => "Moins nouveau",
+            3 => "Normal",
+            2 => "Mauvais état",
+            1 => "Très mauvais état"
+        ];
+
+        return $etats;
+    }
+
 }
 
 ?>

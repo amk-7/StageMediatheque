@@ -2,13 +2,49 @@
 
 namespace App\Helpers;
 
+use App\Models\Auteur;
 use App\Models\Ouvrage;
+use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Integer;
 
 class OuvrageHelper
 {
-    public static function getNiveausTypesLangues(){
+    public static function updateOuvrage(Request $request, OuvragesPhysique $ouvragesPhysique)
+    {
+        $ouvrage = Ouvrage::all()->where("id_ouvrage", $ouvragesPhysique->id_ouvrage)->first();
+
+        $motCle = [];
+
+        if (empty($request["mot_cle_0"])){
+            if (is_string($request["mot_cle_0"])){
+                $motCle = array([$request["mot_cle_0"]]);
+            }else{
+                $list_mot_cles = OuvrageHelper::convertDataToArray($request, "motCle");
+                $motCle = OuvrageHelper::convertObjetToArray($list_mot_cles, "mot_cle");
+            }
+        }
+
+        // Récupérer l'image.
+        $image = $request->file('image_livre');
+
+        if (! $image==null){
+            // Stocker l'image
+            $chemin_image = $image->storeAs('public/images/images_livre', $request->titre.'.'.$image->extension());
+        } else {
+            $image = "default_book_image.png";
+        }
+
+        $ouvrage['titre'] = $request["titre"];
+        $ouvrage['niveau'] = $request["niveau"];
+        $ouvrage['type'] = $request["type"];
+        $ouvrage['image'] = $image;
+        $ouvrage['langue'] = $request["langue"];
+        $ouvrage['resume'] = $request["resume"];
+        $ouvrage['mot_cle'] = $motCle;
+        $ouvrage->save();
+    }
+    public static function getNiveausTypesLanguesAuteurs(){
         $niveaus = [
             '1er degré', '2è degré', '3è degré', 'université'
         ];
@@ -20,7 +56,7 @@ class OuvrageHelper
         $langues = [
             'français', 'anglais', 'allemend'
         ];
-        return [$niveaus, $types, $langues];
+        return [$niveaus, $types, $langues, Auteur::all()->toJson()];
     }
     public static function ouvrageExist(String $titre, int $annee_apparution)
     {

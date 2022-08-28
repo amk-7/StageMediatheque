@@ -32,25 +32,23 @@ class LivrePapierHelper
         } return $livre;
     }
 
-    public static function convertArrayToString(Array $array, String $keyName){
+   /* public static function convertArrayToString(Array $array, String $keyName){
         $string = "";
         for($i=0; $i<count($array[0])-1; $i++){
             $string .= $array[0][$keyName.$i].",";
         }
         $string .= $array[0][$keyName.(count($array[0])-1)];
         return $string;
-    }
+    }*/
 
     public static function showArray(Array $array, String $keyName){
-        $string_array = Array([]);
+        //dd($array);
         $string = "";
-        $i = 0;
-        foreach ($array as $a){
-            echo var_dump($a);
-            array_push($string_array, $a["'".$keyName.$i."'"]);
-            dd($a["categorie0"]);
+        for($i=0; $i<count($array)-1; $i++){
+            $string .= $array["$keyName$i"].",";
         }
-
+        $last = count($array)-1;
+        $string .= $array["$keyName$last"];
         return $string;
     }
 }

@@ -34,18 +34,19 @@ class LivresPapierController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        $niveausTypesLangues = OuvrageHelper::getNiveausTypesLangues();
+        $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
         $categories = LivrePapierHelper::getCategories();
         $classifications_dewey = OuvragePhysiqueHelper::getClassificationsDewey();
 
         return view('livresPapier.create')->with([
-            'niveaus'=> $niveausTypesLangues[0],
-            'types'=>$niveausTypesLangues[1],
-            'langues'=>$niveausTypesLangues[2],
+            'niveaus'=> $niveausTypesLanguesAuteurs[0],
+            'types'=>$niveausTypesLanguesAuteurs[1],
+            'langues'=>$niveausTypesLanguesAuteurs[2],
+            'auteurs'=>$niveausTypesLanguesAuteurs[3],
             'categories'=>$categories,
             'classification_dewey_centaines'=>$classifications_dewey[0],
             'classification_dewey_dizaines'=>$classifications_dewey[1]
@@ -127,19 +128,20 @@ class LivresPapierController extends Controller
     public function edit(LivresPapier $livresPapier)
     {
         //dd($livresPapier);
-        $niveausTypesLangues = OuvrageHelper::getNiveausTypesLangues();
+        $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
         $categories = LivrePapierHelper::getCategories();
         $classifications_dewey = OuvragePhysiqueHelper::getClassificationsDewey();
 
 
         return view('livresPapier.edite')->with([
-            "livrePapier" => $livresPapier,
-            'niveaus'=> $niveausTypesLangues[0],
-            'types'=>$niveausTypesLangues[1],
-            'langues'=>$niveausTypesLangues[2],
+            "livresPapier" => $livresPapier,
+            'niveaus'=> $niveausTypesLanguesAuteurs[0],
+            'types'=>$niveausTypesLanguesAuteurs[1],
+            'langues'=>$niveausTypesLanguesAuteurs[2],
+            'auteurs'=>$niveausTypesLanguesAuteurs[3],
             'categories'=>$categories,
             'classification_dewey_centaines'=>$classifications_dewey[0],
-            'classification_dewey_dizaines'=>$classifications_dewey[1]
+            'classification_dewey_dizaines'=>$classifications_dewey[1],
         ]);
     }
 
@@ -150,10 +152,13 @@ class LivresPapierController extends Controller
      * @param  \App\Models\LivresPapier  $livresPapier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LivresPapier $livrePapier)
+    public function update(Request $request, LivresPapier $livresPapier)
     {
-        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livrePapier->id_ouvrage_physique);
+        // Pouvoir modifier les auteurs.
+        dd($request);
+        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livresPapier->id_ouvrage_physique)->first();
         OuvragePhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
+        OuvrageHelper::updateOuvrage($request, $ouvragePhysique);
 
         return redirect()->route('listeLivresPapier');
     }
@@ -166,31 +171,14 @@ class LivresPapierController extends Controller
      */
     public function destroy(LivresPapier $livresPapier)
     {
-        //$livresPapier->delete();
+        $id_ouvrage = $livresPapier->ouvragePhysique->ouvrage->id_ouvrage;
+        $id_ouvrage_physique =  $livresPapier->ouvragePhysique->id_ouvrage_physique;
+
+        $livresPapier->delete();
+        OuvragesPhysique::all()->where("id_ouvrage_physique", $id_ouvrage_physique)->first()->delete();
+        Ouvrage::all()->where("id_ouvrage", $id_ouvrage)->first()->delete();
         //dd("suppression");
         return redirect()->route('listeLivresPapier');
     }
-
-    public function echoclassification_dewey_dizaines(){
-
-        $class_centaines = ClassificationDeweyDizaine::all()->toJson();
-        echo json_encode($class_centaines)."|";
-        //$class_dizaines = [];
-        /*$class_dizaines_str = "";
-        for ($i=0; $i<1; $i++){
-            //array_push($class_dizaines, $class_centaines[$i]->classificationDeweyDizaines->toArray());
-            $class_dewey_dizaines = $class_centaines[$i]->classificationDeweyDizaines;
-            $matiers = "";
-            / *foreach ($class_dewey_dizaines as $cdd){
-                //dd($cdd->matiere);
-                $matiers .= $cdd->matiere.",";
-            } * /
-            //dd($matiers);
-            $class_dizaines_str .= "{".$class_centaines[$i]->theme.":[".$matiers."]},";
-        }
-        $class_dizaines_str .= "{".$class_centaines[1]->theme.":[".$matiers."]}";
-        //$class_dizaines_str .= "]";
-        //dd(json_encode($class_dizaines));
-        echo json_encode($class_dizaines_str)."|";*/
-    }
 }
+
