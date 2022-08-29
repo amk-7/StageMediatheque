@@ -13,13 +13,13 @@
             <input type="text" name="nom_utilisateur" id="nom_utilisateur">
         </label></br>
         <label for="email">Email
-            <input type="text" name="email" id="email">
+            <input type="email" name="email" id="email">
         </label></br>
         <label for="mot_de_passe">Mot de passe
             <input type="password" name="password" id="password">
         </label></br>
         <label for="contact">Contact
-            <input type="text" name="contact" id="contact">
+            <input type="tel" name="contact" id="contact">
         </label></br>
         <label for="photo_profil">Photo de profil
             <input type="text" name="photo_profil" id="photo_profil">
