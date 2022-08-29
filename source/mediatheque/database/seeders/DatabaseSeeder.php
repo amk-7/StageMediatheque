@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ClassificationDeweyDizaineSeeder::class);
         $this->call(LivrePapierSeeder::class);
         $this->call(PersonnelSeeder::class);
+        $this->call(AbonneSeeder::class);
         //$this->call(LivreNumeriqueSeeder::class);
     }
 }

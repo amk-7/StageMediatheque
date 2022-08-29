@@ -40,6 +40,24 @@ class PersonnelController extends Controller
     public function store(Request $request)
     {
         //
+
+        //dd($request);
+        
+        $request->validate([
+            'nom' => 'required',
+            'prenom' => 'required',
+            'nom_utilisateur' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'contact' => 'required',
+            'ville' => 'required',
+            'quartier' => 'required',
+            'sexe' => 'required',
+            'statut' => 'required'
+        ]);
+
+
+
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier
@@ -55,11 +73,13 @@ class PersonnelController extends Controller
             'adresse' => $request->adresse,
             'sexe' => $request->sexe
         ]);
-        
+
         $personnel = Personnel::create([
             'statut' => $request->statut,
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
+
+        $personnel->save();
         return redirect()->route('listePersonnels');
     }
 
@@ -72,6 +92,7 @@ class PersonnelController extends Controller
     public function show(Personnel $personnel)
     {
         //
+        return view('personnels.show')->with('personnel', $personnel);
         
     }
 

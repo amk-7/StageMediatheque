@@ -49,6 +49,25 @@ class AbonneController extends Controller
     public function store(Request $request)
     {
         //
+       
+        $request->validate([
+            'nom' => 'required',
+            'prenom' => 'required',
+            'nom_utilisateur' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'contact' => 'required',
+            'ville' => 'required',
+            'quartier' => 'required',
+            'sexe' => 'required',
+            'date_naissance' => 'required',
+            'niveau_etude' => 'required',
+            'profession' => 'required',
+            'contact_a_prevenir' => 'required',
+            'numero_carte' => 'required',
+            'type_de_carte' => 'required'
+        ]);
+
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier
@@ -76,6 +95,7 @@ class AbonneController extends Controller
             'id_utilisateur' => $utilisateur->id_utilisateur
             
         ]);
+        $abonne->save();
         return redirect()->route('listeAbonnes');
     }
 
@@ -88,6 +108,7 @@ class AbonneController extends Controller
     public function show(Abonne $abonne)
     {
         //
+        return view('abonnes.show')->with('abonne', $abonne);
 
     }
 
@@ -113,6 +134,8 @@ class AbonneController extends Controller
     public function update(Request $request, Abonne $abonne)
     {
         //
+
+
         /*$abonne->update(array([
             'date_naissance' => $request["date_naissance"],
             'niveau_etude' => $request["niveau_etude"],
@@ -130,15 +153,7 @@ class AbonneController extends Controller
         $abonne->save();        
         return redirect()->route('listeAbonnes');
 
-        /*
-        $abonne->date_naissance = $request["date_naissance"];
-        $abonne->niveau_etude = $request["niveau_etude"];
-        $abonne->profession = $request["profession"];
-        $abonne->contact_a_prevenir = $request["contact_a_prevenir"];
-        $abonne->numero_carte = $request["numero_carte"];
-        $abonne->type_de_carte = $request["type_de_carte"];
-        $abonne->save();
-        return redirect()->route('abonne.index');*/
+       
     }
 
     /**

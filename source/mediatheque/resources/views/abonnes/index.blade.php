@@ -38,6 +38,11 @@
                     <form method="GET" action="{{route('editAbonne', $abonne->id_abonne)}}">
                         <button type="Submit">Modifier</button>
                     </form>
+                    
+                    <form methode="GET" action="{{route('showAbonne', $abonne->id_abonne)}}">
+                        <button type="Submit">Afficher</button>
+                    </form>
+
                     <form method="POST" action="{{route('destroyAbonne', $abonne->id_abonne)}}">
                         @csrf
                         @method("DELETE")
