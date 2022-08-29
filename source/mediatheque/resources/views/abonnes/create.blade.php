@@ -4,31 +4,55 @@
     <form method="POST" action="{{route('storeAbonne')}}">
         @csrf
         <label for="nom">Nom
-            <input type="text" name="nom" id="nom">
+            <input type="text" name="nom" id="nom" class="@error('nom') is-invalid @enderror">
+            @error('nom')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </label></br>
         <label for="prenom">Prenom
-            <input type="text" name="prenom" id="prenom">
+            <input type="text" class="form-control" id="prenom" name="prenom" class="@error('prenom') is-invalid @enderror">
+            @error('prenom')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </label></br>
         <label for="nom_utilisateur">Nom d'utilisateur
-            <input type="text" name="nom_utilisateur" id="nom_utilisateur">
+            <input type="text" class="form-control" id="nom_utilisateur" name="nom_utilisateur" class="@error('nom_utilisateur') is-invalid @enderror">
+            @error('nom_utilisateur')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </label></br>
         <label for="email">Email
-            <input type="text" name="email" id="email">
+            <input type="text" class="form-control" id="email" name="email" class="@error('email') is-invalid @enderror">
+            @error('email')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </label></br>
-        <label for="mot_de_passe">Mot de passe
-            <input type="password" name="password" id="password">
+        <label for="password">Mot de passe
+            <input type="password" class="form-control" id="password" name="password" class="@error('password') is-invalid @enderror">
+            @error('password')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </label></br>
         <label for="contact">Contact
-            <input type="text" name="contact" id="contact">
+            <input type="tel" class="form-control" id="contact" name="contact" class="@error('contact') is-invalid @enderror">
+            @error('contact')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </label></br>
-        <label for="photo_profil">Photo de profil
-            <input type="text" name="photo_profil" id="photo_profil">
+        <label for="profil">Photo_profil
+            <input type="text" class="form-control" id="photo_profil" name="photo_profil">
         </label></br>
         <label for="ville">Ville
-            <input type="text" name="ville" id="ville">
+            <input type="text" class="form-control" id="ville" name="ville" class="@error('ville') is-invalid @enderror">
+            @error('ville')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </label></br>
         <label for="quartier">Quartier
-            <input type="text" name="quartier" id="quartier">
+            <input type="text" class="form-control" id="quartier" name="quartier" class="@error('quartier') is-invalid @enderror">
+            @error('quartier')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </label></br>
         <label for="sexe">Sexe
             <select name="sexe" id="sexe">

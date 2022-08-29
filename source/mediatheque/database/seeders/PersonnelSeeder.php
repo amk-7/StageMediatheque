@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Personnel;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class PersonnelSeeder extends Seeder
@@ -15,5 +16,23 @@ class PersonnelSeeder extends Seeder
     public function run()
     {
         //
+        $utilisateur = User::create([
+            'nom' => 'Daiki',
+            'prenom' => 'Alhasan',
+            'nom_utilisateur' => 'Shin06',
+            'email' => 'Alhassan.tuto@gmail.com',
+            'password' => '256398741',
+            'contact' => '91767676',
+            'photo_profil' => 'image.jpg',
+            'adresse' => array(
+                'ville' => 'Dakar',
+                'quartier' => 'Sédhiou'),
+            'sexe' => 'Masculin'
+        ]);
+        
+        Personnel::create([
+            'statut' => 'Administrateur',
+            'id_utilisateur' => $utilisateur->id_utilisateur
+        ]);
     }
 }
