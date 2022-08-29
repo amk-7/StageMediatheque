@@ -41,7 +41,7 @@ class LivrePapierSeeder extends Seeder
             'niveau' => '3è degré',
             'type'=>'roman',
             'image' => 'default_book_image.png',
-            'langue'=>'Français',
+            'langue'=>'français',
         ]);
 
         $ouvrage5->auteurs()->attach($auteur5->id_auteur, [
@@ -79,7 +79,7 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         $ouvrage1 = Ouvrage::Create([
-            'titre'=>'L\'enfant noir',
+            'titre'=>"L'enfant noir",
             'mot_cle'=> [
                 "mot_cle_0"=>"temps",
             ],

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AuteurHelpers;
+use App\Helpers\LivreHelper;
 use App\Helpers\LivrePapierHelper;
 use App\Helpers\OuvrageHelper;
-use App\Helpers\OuvragePhysiqueHelper;
+use App\Helpers\OuvragesPhysiqueHelper;
 use App\Models\Auteur;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
@@ -39,8 +40,8 @@ class LivresPapierController extends Controller
     public function create()
     {
         $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
-        $categories = LivrePapierHelper::getCategories();
-        $classifications_dewey = OuvragePhysiqueHelper::getClassificationsDewey();
+        $categories = LivreHelper::getCategories();
+        $classifications_dewey = OuvragesPhysiqueHelper::getClassificationsDewey();
 
         return view('livresPapier.create')->with([
             'niveaus'=> $niveausTypesLanguesAuteurs[0],
@@ -92,7 +93,7 @@ class LivresPapierController extends Controller
         // Creation de l'ouvrage
         $ouvrage = OuvrageHelper::enregisterOuvrage($request, $auteurs);
         // Création d'un ouvrage physique
-        $ouvragePhysique = OuvragePhysiqueHelper::enregisterOuvragePhysique($request, $ouvrage);
+        $ouvragePhysique = OuvragesPhysiqueHelper::enregisterOuvragePhysique($request, $ouvrage);
         //dd($ouvragePhysique);
         $list_categories = OuvrageHelper::convertDataToArray($request, "categorie");
         //dd($list_categories);
@@ -100,7 +101,7 @@ class LivresPapierController extends Controller
         //dd($categories);
         LivresPapier::create([
            'categorie'=>$categories,
-           'ISBN'=>$request["ISBN"],
+           'ISBN'=>strtoupper($request["ISBN"]),
            'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
        ]);
         return redirect()->route("listeLivresPapier");
@@ -130,7 +131,7 @@ class LivresPapierController extends Controller
         //dd($livresPapier);
         $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
         $categories = LivrePapierHelper::getCategories();
-        $classifications_dewey = OuvragePhysiqueHelper::getClassificationsDewey();
+        $classifications_dewey = OuvragesPhysiqueHelper::getClassificationsDewey();
 
 
         return view('livresPapier.edite')->with([
@@ -154,10 +155,24 @@ class LivresPapierController extends Controller
      */
     public function update(Request $request, LivresPapier $livresPapier)
     {
-        // Pouvoir modifier les auteurs.
-        dd($request);
+        $request->validate([
+            'titre'=> 'required',
+            'niveau'=>'required|not_in:--Selectionner--',
+            'type'=>'required|not_in:--Selectionner--',
+            'annee_apparution'=>'required',
+            'lieu_edition'=>'required',
+            'auteur0'=>'required',
+            'categorie0'=>'required|not_in:--Selectionner--',
+            'ISBN'=>'required',
+            'resume'=>'required',
+            'nombre_exemplaire'=>'required',
+            'etat'=>'required',
+            'id_classification_dewey_centaine'=>'required|not_in:--Selectionner--',
+            'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
+        ]);
+
         $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livresPapier->id_ouvrage_physique)->first();
-        OuvragePhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
+        OuvragesPhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
         OuvrageHelper::updateOuvrage($request, $ouvragePhysique);
 
         return redirect()->route('listeLivresPapier');

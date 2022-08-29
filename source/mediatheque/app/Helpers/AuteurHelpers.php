@@ -10,10 +10,13 @@ class AuteurHelpers
         $auteurs = [];
         if(!empty($request["auteur0"]) && !empty($request["prenom"])){
             $request["nom"] = $request["auteur0"];
-            $auteur = Auteur::Create([
-                "nom"=>$request["nom"],
-                "prenom"=>$request["prenom"]
-            ]);
+            $auteur = AuteurHelpers::auteur($request["nom"], $request["prenom"]);
+            if($auteur == null){
+                $auteur = Auteur::Create([
+                    "nom"=>strtoupper($request["nom"]),
+                    "prenom"=>strtolower($request["prenom"])
+                ]);
+            }
             array_push($auteurs, $auteur);
         }else{
             $list_auteurs = OuvrageHelper::convertDataToArray($request, "auteur");
@@ -27,16 +30,24 @@ class AuteurHelpers
          $liste_auteurs = [];
          for($i=0; $i<count($auteurs)-1; $i++){
              $attributs_auteur = explode(",", $auteurs[$i]);
-
-             $auteur = Auteur::Create([
-                 "nom"=>$attributs_auteur[0],
-                 "prenom"=>$attributs_auteur[1],
-             ]);
+             $auteur = AuteurHelpers::auteur($attributs_auteur[0], $attributs_auteur[1]);
+             if($auteur == null){
+                 $auteur = Auteur::Create([
+                     "nom"=>strtoupper($attributs_auteur[0]),
+                     "prenom"=>strtolower($attributs_auteur[1]),
+                 ]);
+             }
              array_push($liste_auteurs, $auteur);
          }
 
          //dd($liste_auteurs);
          return $liste_auteurs;
+    }
+
+    public static function auteur(String $nom, string $prenom)
+    {
+        $auteur = Auteur::all()->where("nom", $nom)->where("preonm", $prenom)->first();
+        return $auteur ;
     }
 
     public static function estVide(String $str)

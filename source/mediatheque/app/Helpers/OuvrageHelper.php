@@ -43,6 +43,13 @@ class OuvrageHelper
         $ouvrage['resume'] = $request["resume"];
         $ouvrage['mot_cle'] = $motCle;
         $ouvrage->save();
+
+        $ouvrage->auteurs()->detach();
+        // Creation d'un ou des auteurs .
+        $auteurs = AuteurHelpers::enregistrerAuteur($request);
+        OuvrageHelper::definireAuteur($request, $ouvrage, $auteurs);
+        dd($auteurs);
+
     }
     public static function getNiveausTypesLanguesAuteurs(){
         $niveaus = [
@@ -54,7 +61,7 @@ class OuvrageHelper
         ];
 
         $langues = [
-            'français', 'anglais', 'allemend'
+            'français', 'anglais', 'allemand'
         ];
         return [$niveaus, $types, $langues, Auteur::all()->toJson()];
     }
@@ -94,7 +101,7 @@ class OuvrageHelper
         }
 
         $ouvrage = Ouvrage::create([
-            'titre'=>$request["titre"],
+            'titre'=>ucfirst($request["titre"]),
             'niveau' => $request["niveau"],
             'type'=>$request["type"],
             'image' => $image,
@@ -104,16 +111,20 @@ class OuvrageHelper
         ]);
 
         // Definire les auteurs de l'ouvrage
+        OuvrageHelper::definireAuteur($request, $ouvrage, $auteurs);
+        return $ouvrage;
+    }
+
+    public static function definireAuteur($request, $ouvrage, $auteurs)
+    {
+        // Definire les auteurs de l'ouvrage
         foreach ($auteurs as $auteur){
             $ouvrage->auteurs()->attach($auteur->id_auteur, [
                 'annee_apparution'=>$request["annee_apparution"],
                 'lieu_edition'=>$request["lieu_edition"],
             ]);
         }
-
-        return $ouvrage;
     }
-
     public static function afficherAuteurs(Ouvrage $ouvrage)
     {
         $resultat = "";
@@ -140,8 +151,8 @@ class OuvrageHelper
                 $continuer = false;
             }
         }
-        echo $list_objet_str;
-        $liste_objects = explode(";",$list_objet_str);
+        //dd($list_objet_str);
+        $liste_objects = explode(";",strtolower($list_objet_str));
         //dd($liste_objects);
 
         return $liste_objects;

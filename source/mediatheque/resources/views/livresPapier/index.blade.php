@@ -21,7 +21,8 @@
             </ul>
             <div class="">
                 <div class="input">
-                    <input type="text"  name="search" id="searchFieldx" value="" placeholder="Recherche par titre, auteur, ISBN, éditeur, md5...">
+                    <input type="text" name="search" id="searchFieldx" value=""
+                           placeholder="Recherche par titre, auteur, ISBN, éditeur, md5...">
                     <button type="submit">Rechercher</button>
                 </div>
             </div>
@@ -73,30 +74,32 @@
     @if(!empty($livresPapiers) && $livresPapiers->count())
         <table border="1">
             <thead>
-                <th>Image</th>
-                <th>Titre</th>
-                <th>Niveau</th>
-                <th>Type</th>
-                <th>Domaine</th>
-                <th>Langue</th>
-                <th>Nombre d'exemplaire</th>
-                <th>Etat</th>
-                <th>Disponibilité</th>
-                <th>ISBN</th>
-                <th>Action</th>
+            <th>Image</th>
+            <th>Titre</th>
+            <th>Niveau</th>
+            <th>Type</th>
+            <th>Domaine</th>
+            <th>Langue</th>
+            <th>Nombre d'exemplaire</th>
+            <th>Etat</th>
+            <th>Disponibilité</th>
+            <th>ISBN</th>
+            <th>Action</th>
             </thead>
             <tbody>
             @foreach($livresPapiers as $livresPapier)
                 <tr>
-                    <td> <img src="{{ asset('storage/images/images_livre/'.$livresPapier->ouvragePhysique->ouvrage->image) }}" alt="{{$livresPapier->ouvragePhysique->ouvrage->image}}"> </td>
+                    <td>
+                        <img src="{{ asset('storage/images/images_livre/'.$livresPapier->ouvragePhysique->ouvrage->image) }}"
+                             alt="{{$livresPapier->ouvragePhysique->ouvrage->image}}"></td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->titre }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->niveau }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->type }} </td>
                     <td> {{ \App\Helpers\LivrePapierHelper::showArray($livresPapier->categorie, "categorie") }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->langue }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->nombre_exemplaire }} </td>
-                    <td> {{ \App\Helpers\OuvragePhysiqueHelper::afficherEtat($livresPapier->ouvragePhysique) }} </td>
-                    <td> {{ \App\Helpers\OuvragePhysiqueHelper::formatAvaible($livresPapier->ouvragePhysique) }} </td>
+                    <td> {{ \App\Helpers\OuvragesPhysiqueHelper::afficherEtat($livresPapier->ouvragePhysique) }} </td>
+                    <td> {{ \App\Helpers\OuvragesPhysiqueHelper::formatAvaible($livresPapier->ouvragePhysique) }} </td>
                     <td> {{ $livresPapier->ISBN }} </td>
                     <td>
                         <form action="{{route('affichageLivrePapier', $livresPapier)}}" method="get">

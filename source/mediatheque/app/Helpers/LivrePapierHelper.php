@@ -8,15 +8,7 @@ use PhpParser\Node\Expr\Array_;
 
 class LivrePapierHelper
 {
-    public static function getCategories(){
-        $categories = [
-            'français', 'anglais', 'allemand', 'physique', 'education',
-            'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
-            'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
-        ];
 
-        return $categories;
-    }
     public static function livrePapierExist(String $ISBN, String $titre, int $annee_apparution)
     {
         $livre = LivresPapier::all()->where('ISBN',$ISBN)->first();

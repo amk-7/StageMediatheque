@@ -139,13 +139,13 @@ Route::get('formulaire_modification_document_audio_visuels_electroniques', [Docu
 Route::post('modification_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'update'])->name('modificationDocumentAudioVisuelsElectroniques');
 Route::delete('suppression_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'destroy'])->name('suppressionDocumentAudioVisuelsElectroniques');
 
-Route::get('liste_documents_audio_visuels', [DocumentAudioVisuelController::class, 'index'])->name('listeDocumentsAudioVisuelsElectroniques');
-Route::get('formulaire_enregistrement_document_audio_visuels', [DocumentAudioVisuelController::class, 'create'])->name('formulaireEnregistrementDocumentAudioVisuelsElectroniques');
-Route::post('enregistrement_document_audio_visuels', [DocumentAudioVisuelController::class, 'store'])->name('enregistementDocumentAudioVisuelsElectroniques');
-Route::get('affichage_document_audio_visuels', [DocumentAudioVisuelController::class, 'show'])->name('affichageDocumentAudioVisuelsElectroniques');
-Route::get('formulaire_modification_document_audio_visuels', [DocumentAudioVisuelController::class, 'edit'])->name('formulaireModificationDocumentAudioVisuelsElectroniques');
-Route::post('modification_document_audio_visuels', [DocumentAudioVisuelController::class, 'update'])->name('modificationDocumentAudioVisuelsElectroniques');
-Route::delete('suppression_document_audio_visuels', [DocumentAudioVisuelController::class, 'destroy'])->name('suppressionDocumentAudioVisuelsElectroniques');
+Route::get('liste_documents_audio_visuels', [DocumentAudioVisuelController::class, 'index'])->name('listeDocumentsAudioVisuels');
+Route::get('formulaire_enregistrement_document_audio_visuels', [DocumentAudioVisuelController::class, 'create'])->name('formulaireEnregistrementDocumentAudioVisuels');
+Route::post('enregistrement_document_audio_visuels', [DocumentAudioVisuelController::class, 'store'])->name('enregistementDocumentAudioVisuels');
+Route::get('affichage_document_audio_visuels', [DocumentAudioVisuelController::class, 'show'])->name('affichageDocumentAudioVisuels');
+Route::get('formulaire_modification_document_audio_visuels', [DocumentAudioVisuelController::class, 'edit'])->name('formulaireModificationDocumentAudioVisuels');
+Route::post('modification_document_audio_visuels', [DocumentAudioVisuelController::class, 'update'])->name('modificationDocumentAudioVisuels');
+Route::delete('suppression_document_audio_visuels', [DocumentAudioVisuelController::class, 'destroy'])->name('suppressionDocumentAudioVisuels');
 
 
 Route::get('liste_approvisionnements', [ApprovisionnementController::class, 'index'])->name('listeApprovisionnements');
