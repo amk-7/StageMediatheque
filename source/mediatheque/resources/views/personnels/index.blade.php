@@ -28,6 +28,11 @@
                     <form method="GET" action="{{route('editPersonnel', $personnel->id_personnel)}}">
                         <button type="Submit">Modifier</button>
                     </form>
+
+                    <form methode="GET" action="{{route('showPersonnel', $personnel->id_personnel)}}">
+                        <button type="Submit">Afficher</button>
+                    </form>
+
                     <form method="POST" action="{{route('destroyPersonnel', $personnel->id_personnel)}}">
                         @csrf
                         @method("DELETE")
