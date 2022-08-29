@@ -21,7 +21,7 @@ class OuvragesPhysique extends Model
         return $this->belongsTo(LivrePapier::class, "id_livre_papier");
     }
     public function documentAudioVisuel(){
-        return $this->belongsTo(DocumentAudioVisuel::class);
+        return $this->belongsTo(DocumentsAudioVisuel::class);
     }
 
     public function restitution(){

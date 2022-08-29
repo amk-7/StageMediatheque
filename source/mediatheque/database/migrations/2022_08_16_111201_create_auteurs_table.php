@@ -17,8 +17,6 @@ class CreateAuteursTable extends Migration
             $table->bigIncrements('id_auteur');
             $table->string('nom');
             $table->string('prenom')->nullable();
-            $table->timestamp('date_naissance')->nullable();
-            $table->timestamp('date_decces')->nullable();
             $table->timestamps();
         });
     }

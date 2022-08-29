@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DocumentAudioVisuel extends Model
+class DocumentsAudioVisuel extends Model
 {
     use HasFactory;
     protected $fillable = ['genre', 'ISAN', 'id_ouvrage_physique'];

@@ -1,9 +1,9 @@
 @section("load_json_data")
 <script type="text/javascript" async>
-    const liste_auteurs =  {!! $auteurs !!};
+    //const liste_auteurs =  {--!! $auteurs !!--};
     const liste_etagers = {!! $classification_dewey_dizaines  !!};
 
-    sessionStorage.setItem("liste_auteurs", JSON.stringify(liste_auteurs));
+    //sessionStorage.setItem("liste_auteurs", JSON.stringify(liste_auteurs));
     sessionStorage.setItem("liste_etagers", JSON.stringify(liste_etagers))
 
     //console.log(JSON.parse(sessionStorage.getItem("liste_etagers")));

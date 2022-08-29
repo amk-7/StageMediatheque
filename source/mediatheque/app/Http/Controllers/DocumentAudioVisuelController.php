@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\OuvragePhysiqueHelper;
 use App\Models\ClassificationDeweyCentaine;
 use App\Models\ClassificationDeweyDizaine;
-use App\Models\DocumentAudioVisuel;
+use App\Models\DocumentsAudioVisuel;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
 
@@ -20,10 +20,10 @@ class DocumentAudioVisuelController extends Controller
     {
 
         //
-        $documentAudioVisuels = DocumentAudioVisuel::all();
+        $documentAudioVisuels = DocumentsAudioVisuel::all();
         return view('documentAudioVisuel.index')->with('documentAudioVisuels', $documentAudioVisuels);
 
-        $documentAudioVisuel = DocumentAudioVisuel::all();
+        $documentAudioVisuel = DocumentsAudioVisuel::all();
         return view("documentAudioVisuel.index", compact("documentAudioVisuel"))->paginate(25);
 
     }
@@ -36,8 +36,6 @@ class DocumentAudioVisuelController extends Controller
     public function create()
     {
 
-        //
-        return view('documentAudioVisuel.create');
 
         $niveaus = [
             '1er degré', '2è degré', '3è degré', 'université'
@@ -51,7 +49,7 @@ class DocumentAudioVisuelController extends Controller
             'français', 'anglais', 'allemend'
         ];
 
-        $categories = [
+        $genres = [
 
         ];
 
@@ -63,7 +61,7 @@ class DocumentAudioVisuelController extends Controller
             'niveaus'=> $niveaus,
             'types'=>$types,
             'langues'=>$langues,
-            'categories'=>$categories,
+            'genres'=>$genres,
             'classification_dewey_centaines'=>$classification_dewey_centaines,
             'classification_dewey_dizaines'=>$classification_dewey_dizaines
         ]);
@@ -79,7 +77,7 @@ class DocumentAudioVisuelController extends Controller
     {
 
         //
-        $documentAudioVisuel = DocumentAudioVisuel::create([
+        $documentAudioVisuel = DocumentsAudioVisuel::create([
             'genre' => $request->genre,
             'ISAN' => $request->ISAN
         ]);
@@ -92,10 +90,10 @@ class DocumentAudioVisuelController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DocumentAudioVisuel  $documentAudioVisuel
+     * @param  \App\Models\DocumentsAudioVisuel  $documentAudioVisuel
      * @return \Illuminate\Http\Response
      */
-    public function show(DocumentAudioVisuel $documentAudioVisuel)
+    public function show(DocumentsAudioVisuel $documentAudioVisuel)
     {
         return view("documentAudioVisuel.show", compact("documentAudioVisuel"));
     }
@@ -103,10 +101,10 @@ class DocumentAudioVisuelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DocumentAudioVisuel  $documentAudioVisuel
+     * @param  \App\Models\DocumentsAudioVisuel  $documentAudioVisuel
      * @return \Illuminate\Http\Response
      */
-    public function edit(DocumentAudioVisuel $documentAudioVisuel)
+    public function edit(DocumentsAudioVisuel $documentAudioVisuel)
     {
         //
         return view('documentAudioVisuel.edit')->with('documentAudioVisuel', $documentAudioVisuel);
@@ -119,10 +117,10 @@ class DocumentAudioVisuelController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DocumentAudioVisuel  $documentAudioVisuel
+     * @param  \App\Models\DocumentsAudioVisuel  $documentAudioVisuel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DocumentAudioVisuel $documentAudioVisuel)
+    public function update(Request $request, DocumentsAudioVisuel $documentAudioVisuel)
     {
 
         //
@@ -142,10 +140,10 @@ class DocumentAudioVisuelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DocumentAudioVisuel  $documentAudioVisuel
+     * @param  \App\Models\DocumentsAudioVisuel  $documentAudioVisuel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DocumentAudioVisuel $documentAudioVisuel)
+    public function destroy(DocumentsAudioVisuel $documentAudioVisuel)
     {
 
         //

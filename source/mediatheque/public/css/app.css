@@ -575,6 +575,9 @@ video {
 .hidden {
   display: none;
 }
+.h-32 {
+  height: 8rem;
+}
 .h-5 {
   height: 1.25rem;
 }
@@ -622,6 +625,9 @@ video {
 }
 .overflow-hidden {
   overflow: hidden;
+}
+.overflow-y-auto {
+  overflow-y: auto;
 }
 .rounded-lg {
   border-radius: 0.5rem;

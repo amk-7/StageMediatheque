@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Auteur extends Model
 {
     use HasFactory;
-    protected $fillable = ['nom', 'prenom', 'date_naissance', 'date_decces'];
+    protected $fillable = ['nom', 'prenom'];
     protected $primaryKey = 'id_auteur';
-    protected $dates = ['date_naissance', 'date_decces'];
 
     public function ouvrages()
     {

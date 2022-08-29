@@ -134,13 +134,11 @@ addAuteurBtn.addEventListener('click', function addAuteur(e){
 
     const nom_auteur = document.getElementById("nom");
     const prenom_auteur = document.getElementById("prenom");
-    const date_naiss = document.getElementById("date_naissance");
-    const date_decces = document.getElementById("date_decces");
 
     let div_auteurs = document.getElementById("listeAuteurs");
     //console.log(nom_auteur.value);
     let auteur_canvas = document.createElement("input");
-    auteur_canvas.value = `${nom_auteur.value}, ${prenom_auteur.value}, ${date_naiss.value}, ${date_decces.value}`;
+    auteur_canvas.value = `${nom_auteur.value}, ${prenom_auteur.value}`;
     auteur_canvas.className = "auteur_information";
     let remove_auteur_btn = document.createElement("button");
     remove_auteur_btn.innerText = 'x'

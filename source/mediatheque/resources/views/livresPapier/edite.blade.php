@@ -107,7 +107,7 @@
             </div>
             <div id="liste_auteur">
                 @foreach($livresPapier->ouvragePhysique->ouvrage->auteurs as $auteur)
-                    <input type="text" name="auteur{{$loop->index}}" value="{{ $auteur->nom }}, {{ $auteur->prenom }}, {{$auteur->date_naissance->format("d-m-Y")}}, {{ $auteur->date_decces->format("d-m-y") }}"/>
+                    <input type="text" name="auteur{{$loop->index}}" value="{{ $auteur->nom }}, {{ $auteur->prenom }}"/>
                     <button>x</button>
                 @endforeach
             </div>

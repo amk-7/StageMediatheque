@@ -15,3 +15,5 @@
             <input name="ISAN" type="text" value="" placeholder="Saisire l'ISBN de l'ouvrage">
         </div>
     </fieldset>
+
+@stop

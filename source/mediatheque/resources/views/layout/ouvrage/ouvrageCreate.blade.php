@@ -88,14 +88,6 @@
                         <label>Prénom</label>
                         <input name="prenom" id="prenom" type="text" value="abdoul" placeholder="Saisire le prénom de l'auteur">
                     </div>
-                    <div>
-                        <label>Date de naissance</label>
-                        <input name="date_naissance" id="date_naissance" type="date" value="1987-06-01">
-                    </div>
-                    <div>
-                        <label>Date de decces</label>
-                        <input name="date_decces" id="date_decces" type="date" value="2004-06-02" >
-                    </div>
                 </div>
                 @error('auteur0')
                     <div class="alert">{{ $message }}</div>
@@ -118,7 +110,7 @@
                         <tr>
                             <td>
                                 <div>
-                                    <input name="mot_cle" id="inputMotCle" type="text" value="mot" placeholder="Entrez un mot clé"/>
+                                    <input name="mot_cle_" id="inputMotCle" type="text" value="mot" placeholder="Entrez un mot clé"/>
                                     <button id="ajouterMotCle">+</button>
                                 </div>
                             </td>

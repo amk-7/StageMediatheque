@@ -23,5 +23,6 @@
     @yield("livewire_script_content")
     <footer>
     </footer>
+    @yield("js")
 </body>
 </html>

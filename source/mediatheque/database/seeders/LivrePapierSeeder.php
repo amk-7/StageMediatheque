@@ -24,15 +24,11 @@ class LivrePapierSeeder extends Seeder
         $auteur5 = Auteur::Create([
             'nom'=>'BONI',
             'prenom'=>'nazi',
-            'date_naissance'=> '01-07-1912',
-            'date_decces'=>'16-06-1969'
         ]);
 
         $auteurn = Auteur::Create([
             'nom'=>'KONDI',
             'prenom'=>'Abdoul',
-            'date_naissance'=> '01-07-1912',
-            'date_decces'=>'16-06-1969'
         ]);
 
         $ouvrage5 = Ouvrage::Create([
@@ -79,9 +75,7 @@ class LivrePapierSeeder extends Seeder
 
         $auteur1 = Auteur::Create([
             'nom'=>'LAYE',
-            'prenom'=>'Camara',
-            'date_naissance'=> '01/01/1928',
-            'date_decces'=>'04/02/1980'
+            'prenom'=>'Camara'
         ]);
 
         $ouvrage1 = Ouvrage::Create([
