@@ -4,6 +4,7 @@ let id_oject = 0;
 
 //============== Initialisation des composant ====================
 const addCategorieSelect = document.getElementById("ajouterCategorie");
+const addGenreSelect = document.getElementById("ajouterGenre");
 const addAuteurBtn = document.getElementById("ajouterAuteur");
 const addkeyWord = document.getElementById("ajouterMotCle");
 const inputSave = document.getElementById("enregistrer");
@@ -92,40 +93,42 @@ inputSave.addEventListener('click', function addDataBeforeSend(e){
     //console.log(div_auteurs.children);
 });
 
-addCategorieSelect.addEventListener('change', function addCategorie(e){
-    e.preventDefault();
-    e.stopPropagation();
-    //console.log(addCategorieSelect.value);
-    let div_categorie = document.getElementById("listeCategorie");
-    let categorie_canvas = document.createElement("input");
-    categorie_canvas.value = `${addCategorieSelect.value}`;
-    categorie_canvas.className = "categorie_information";
-    let remove_categorie_btn = document.createElement("button");
-    remove_categorie_btn.innerText = 'x'
-    remove_categorie_btn.id = `${addCategorieSelect.value}`;
-
-    remove_categorie_btn.addEventListener('click', function removeCategorie(e){
-
+if (addCategorieSelect != null){
+    addCategorieSelect.addEventListener('change', function addCategorie(e){
+        e.preventDefault();
+        e.stopPropagation();
+        //console.log(addCategorieSelect.value);
         let div_categorie = document.getElementById("listeCategorie");
-        let btn = e.explicitOriginalTarget;
-        let removeBtn = btn.previousSibling;
-        div_categorie.removeChild(removeBtn);
-        div_categorie.removeChild(btn);
-        //console.log(removeBtn);
+        let categorie_canvas = document.createElement("input");
+        categorie_canvas.value = `${addCategorieSelect.value}`;
+        categorie_canvas.className = "categorie_information";
+        let remove_categorie_btn = document.createElement("button");
+        remove_categorie_btn.innerText = 'x'
+        remove_categorie_btn.id = `${addCategorieSelect.value}`;
+
+        remove_categorie_btn.addEventListener('click', function removeCategorie(e){
+
+            let div_categorie = document.getElementById("listeCategorie");
+            let btn = e.explicitOriginalTarget;
+            let removeBtn = btn.previousSibling;
+            div_categorie.removeChild(removeBtn);
+            div_categorie.removeChild(btn);
+            //console.log(removeBtn);
+
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        div_categorie.appendChild(categorie_canvas);
+        div_categorie.appendChild(remove_categorie_btn);
+
+        addCategorieSelect.value = addCategorieSelect.options[0].innerText
 
         e.preventDefault();
         e.stopPropagation();
     });
 
-    div_categorie.appendChild(categorie_canvas);
-    div_categorie.appendChild(remove_categorie_btn);
-
-    addCategorieSelect.value = addCategorieSelect.options[0].innerText
-
-    e.preventDefault();
-    e.stopPropagation();
-});
-
+}
 
 addAuteurBtn.addEventListener('click', function addAuteur(e){
     e.preventDefault();
@@ -161,8 +164,6 @@ addAuteurBtn.addEventListener('click', function addAuteur(e){
 
     nom_auteur.value = "";
     prenom_auteur.value = "";
-    date_naiss.value = "";
-    date_decces.value = "";
 
 });
 

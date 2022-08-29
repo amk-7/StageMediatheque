@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\OuvragePhysiqueHelper;
+use App\Helpers\AuteurHelpers;
+use App\Helpers\DocumentsAudioVisuelHelper;
+use App\Helpers\OuvrageHelper;
+use App\Helpers\OuvragesPhysiqueHelper;
 use App\Models\ClassificationDeweyCentaine;
 use App\Models\ClassificationDeweyDizaine;
 use App\Models\DocumentsAudioVisuel;
@@ -36,34 +39,18 @@ class DocumentAudioVisuelController extends Controller
     public function create()
     {
 
-
-        $niveaus = [
-            '1er degré', '2è degré', '3è degré', 'université'
-        ];
-
-        $types = [
-
-        ];
-
-        $langues = [
-            'français', 'anglais', 'allemend'
-        ];
-
-        $genres = [
-
-        ];
-
-        $classification_dewey_centaines = ClassificationDeweyCentaine::all();
-
-        $classification_dewey_dizaines = ClassificationDeweyDizaine::all();
+        $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
+        $genres = DocumentsAudioVisuelHelper::getGenre();
+        $classifications_dewey = OuvragesPhysiqueHelper::getClassificationsDewey();
 
         return view('documentAudioVisuel.create')->with([
-            'niveaus'=> $niveaus,
-            'types'=>$types,
-            'langues'=>$langues,
+            'niveaus'=> $niveausTypesLanguesAuteurs[0],
+            'types'=>$niveausTypesLanguesAuteurs[1],
+            'langues'=>$niveausTypesLanguesAuteurs[2],
+            'auteurs'=>$niveausTypesLanguesAuteurs[3],
             'genres'=>$genres,
-            'classification_dewey_centaines'=>$classification_dewey_centaines,
-            'classification_dewey_dizaines'=>$classification_dewey_dizaines
+            'classification_dewey_centaines'=>$classifications_dewey[0],
+            'classification_dewey_dizaines'=>$classifications_dewey[1]
         ]);
     }
 
@@ -75,15 +62,42 @@ class DocumentAudioVisuelController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'titre'=> 'required',
+            'niveau'=>'required|not_in:--Selectionner--',
+            'type'=>'required|not_in:--Selectionner--',
+            'annee_apparution'=>'required',
+            'lieu_edition'=>'required',
+            'auteur0'=>'required',
+            'genre0'=>'required|not_in:--Selectionner--',
+            'ISAN'=>'required',
+            'resume'=>'required',
+            'nombre_exemplaire'=>'required',
+            'etat'=>'required',
+            'id_classification_dewey_centaine'=>'required|not_in:--Selectionner--',
+            'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
 
-        //
+        ]);
+
+        // Creation d'un ou des auteurs .
+        $auteurs = AuteurHelpers::enregistrerAuteur($request);
+        // Creation de l'ouvrage
+        $ouvrage = OuvrageHelper::enregisterOuvrage($request, $auteurs);
+        // Création d'un ouvrage physique
+        $ouvragePhysique = OuvragesPhysiqueHelper::enregisterOuvragePhysique($request, $ouvrage);
+        //dd($ouvragePhysique);
+        $list_genre = OuvrageHelper::convertDataToArray($request, "genre");
+        //dd($list_genre);
+        $genres = OuvrageHelper::convertObjetToArray($list_genre, "genre");
+        //dd($genres);
+
         $documentAudioVisuel = DocumentsAudioVisuel::create([
-            'genre' => $request->genre,
+            'genre' => $request->genres,
             'ISAN' => $request->ISAN
         ]);
-        return redirect()->route('documentAudioVisuel.index');
 
-        //--coder--
+        //-- verifier si l'objet n'exist pas --
+
         return redirect()->route("documentAudioVisuel.index");
     }
 
@@ -131,7 +145,7 @@ class DocumentAudioVisuelController extends Controller
         return redirect()->route('documentAudioVisuel.index');
 
         $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $documentAudioVisuel->id_ouvrage_physique);
-        OuvragePhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
+        OuvragesPhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
 
         return redirect()->route("documentAudioVisuel.index");
 

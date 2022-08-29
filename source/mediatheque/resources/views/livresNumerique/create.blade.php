@@ -1,4 +1,4 @@
-@extends('layout.ouvrageElectronique.ouvrageElectroniqueCreate', ['action'=>"enregistementLivreNumerique", 'methode'=>"post", 'title'=>"Ajouter un livre numérique"])
+@extends('layout.ouvrage.ouvrageElectronique.ouvrageElectroniqueCreate', ['action'=>"enregistementLivreNumerique", 'methode'=>"post", 'title'=>"Ajouter un livre numérique"])
 @section('particularite_numerique')
     <fieldset>
         <legend>Particularité</legend>

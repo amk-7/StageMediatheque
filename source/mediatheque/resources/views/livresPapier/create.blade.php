@@ -1,4 +1,4 @@
-@extends('layout.ouvragePhysique.ouvragePhysiqueCreate', ['action'=>"enregistementLivrePapier", 'methode'=>"post", 'title'=>"Ajouter un livre papier"])
+@extends('layout.ouvrage.ouvragePhysique.ouvragePhysiqueCreate', ['action'=>"enregistementLivrePapier", 'title'=>"Ajouter un livre papier"])
 @section('particularite_papier')
     <fieldset>
         <legend>Particularité</legend>
@@ -11,16 +11,17 @@
                 @endforeach
             </select>
             @error('categorie0')
-                <div class="alert">{{ $message }}</div>
+            <div class="alert">{{ $message }}</div>
             @enderror
             <div id="listeCategorie"></div>
         </div>
         <div>
             <label>ISBN</label>
-            <input name="ISBN" type="text" value="ISBN13" placeholder="Saisire l'ISBN de l'ouvrage" class="@error('ISBN') is-invalid @enderror">
+            <input name="ISBN" type="text" value="ISBN13" placeholder="Saisire l'ISBN de l'ouvrage"
+                   class="@error('ISBN') is-invalid @enderror">
         </div>
         @error('ISBN')
-            <div class="alert">{{ $message }}</div>
+        <div class="alert">{{ $message }}</div>
         @enderror
     </fieldset>
 @stop

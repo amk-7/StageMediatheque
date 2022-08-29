@@ -1,18 +1,20 @@
 @extends('layout.base')
 @section('content')
-    <h1>{{$title}}</h1>
-    <form action="{{route($action)}}" method="{{$methode}}" enctype="multipart/form-data">
+    <h1>Edition du livre {{$livresPapier->ouvragePhysique->ouvrage->titre }} </h1>
+    <form action="{{ route($action, $livresPapier) }}" method="post" enctype="multipart/form-data">
         @csrf
+        @method("put")
         <fieldset>
             <legend>Ouvrage</legend>
             <div>
                 <div>
                     <label>Titre</label>
-                    <input type="text" name="titre" value="{{$ouvragePhysique->titre}}" placeholder="saisir le titre du livre">
+                    <input type="text" name="titre" value="{{$livresPapier->ouvragePhysique->ouvrage->titre }}" placeholder="saisir le titre du livre">
                 </div>
                 <div>
                     <label>Niveau</label>
-                    <select name="niveau">
+                    <select name="niveau" id="niveau">
+                        <option>--Sélectionner niveau--</option>
                         @foreach($niveaus as $niveau)
                             <option value="{{$niveau}}">{{$niveau}}</option>
                         @endforeach
@@ -20,7 +22,8 @@
                 </div>
                 <div>
                     <label>Type</label>
-                    <select name="type">
+                    <select name="type" id="type">
+                        <option>--Sélectionner type--</option>
                         @foreach($types as $type)
                             <option value="{{$type}}">{{$type}}</option>
                         @endforeach
@@ -37,7 +40,8 @@
                 </div>
                 <div>
                     <label>langue</label>
-                    <select name="langue">
+                    <select name="langue" id="langue">
+                        <option>--Sélectionner langue--</option>
                         @foreach($langues as $langue)
                             <option value="{{$langue}}">{{$langue}}</option>
                         @endforeach
@@ -45,7 +49,8 @@
                 </div>
                 <div>
                     <label>Année d'apparution</label>
-                    <select name="annee_apparution">
+                    <select name="annee_apparution" id="annee_apparution">
+                        <option>--Sélectionner annee--</option>
                         @for($annee=1970; $annee<2023; $annee++)
                             <option value="{{$annee}}">{{$annee}}</option>
                         @endfor
@@ -53,34 +58,67 @@
                 </div>
                 <div>
                     <label>Lieu d'édition</label>
-                    <input name="lieu_edition"type="text"  value="" placeholder="Saisire le lieu d'édition">
+                    <input name="lieu_edition" id="lieu_edition" type="text"  value="{{ $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->lieu_edition }}" placeholder="Saisire le lieu d'édition">
                 </div>
             </div>
         </fieldset>
-        @yield('particularite')
+        @yield("particularite")
         <fieldset>
             <legend>Auteur</legend>
             <div>
                 <div>
                     <label>Nom</label>
-                    <input name="nom" type="text" value="" placeholder="Saisire le nom de l'auteur">
+                    <input id="nom" name="nom" type="text" value="" placeholder="Saisire le nom de l'auteur">
                 </div>
                 <div>
                     <label>Prénom</label>
-                    <input name="prenom" type="text" value="" placeholder="Saisire le prénom de l'auteur">
+                    <input id="prenom" name="prenom" type="text" value="" placeholder="Saisire le prénom de l'auteur">
                 </div>
-                <div>
-                    <label>Date de naissance</label>
-                    <input name="date_naissance" type="date" value="">
-                </div>
-                <div>
-                    <label>Date de decces</label>
-                    <input name="date_decces" type="date" value="" >
-                </div>
+                <button id="ajouterAuteur">Ajouter</button>
+            </div>
+            <div id="listeAuteurs">
+                @foreach($livresPapier->ouvragePhysique->ouvrage->auteurs as $auteur)
+                    <input type="text" id="auteur{{$loop->index}}" name="auteur{{$loop->index}}" value="{{ $auteur->nom }}, {{ $auteur->prenom }}"/>
+                    <button onclick="removeAuteur('auteur{{$loop->index}}')">x</button>
+                @endforeach
             </div>
         </fieldset>
-        @yield('stock')
-        <button type="submit">Enregister</button>
+        <fieldset>
+            <legend>Mots clé </legend>
+            <div id="motCle" name="">
+                <table id="tableMotCle">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div>
+                                <input name="mot_cle" id="inputMotCle" type="text" value="mot" placeholder="Entrez un mot clé"/>
+                                <button id="ajouterMotCle">+</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="listeBtns">
+                                @foreach($livresPapier->ouvragePhysique->ouvrage->mot_cle as $mot_cle)
+                                    <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}" value="{{ $mot_cle }}"/>
+                                    <button onclick="removeKeyWord('mot_cle_{{$loop->index}}')">x</button>
+                                @endforeach
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Résumé de l'ouvrage </legend>
+            <textarea name="resume" rows="10" cols="100" placeholder="Saisir le résumé de l'ouvrage" class="@error('resume') is-invalid @enderror">Résumé</textarea>
+            @error('resume')
+            <div class="alert">{{ $message }}</div>
+            @enderror
+        </fieldset>
+        @yield("stock")
+        <button id="enregistrer" type="submit">Enregister</button>
     </form>
 
     <script type="text/javascript" async>
@@ -91,7 +129,11 @@
             if (types.includes(picture.type)){
                 image_livre.src = URL.createObjectURL(picture);
             }
-        }
+        };
     </script>
-
+    @include("layout.ouvrage.ouvrageData")
+    <!--Mettre à jour les select box-->
+    @include("layout.ouvrage.ouvrageJS.ouvrageEdite")
+    @include("layout.ouvrage.ouvrageJS.ouvrageSendDataFormat")
 @stop
+

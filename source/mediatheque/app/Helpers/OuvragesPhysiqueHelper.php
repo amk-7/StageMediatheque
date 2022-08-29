@@ -7,7 +7,7 @@ use App\Models\Ouvrage;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
 
-class OuvragePhysiqueHelper
+class OuvragesPhysiqueHelper
 {
     public static function getClassificationsDewey(){
         return [ClassificationDeweyCentaine::all(), ClassificationDeweyDizaine::all()->toJson()];

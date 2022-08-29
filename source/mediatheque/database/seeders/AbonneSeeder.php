@@ -39,5 +39,6 @@ class AbonneSeeder extends Seeder
             'type_de_carte' => 'Identité',
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
+
     }
 }
