@@ -32,13 +32,13 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         $ouvrage5 = Ouvrage::Create([
-            'titre'=>'Crepuscule des temps anciens EPA',
+            'titre'=>'CREPUSCUL DES TEMPS ANCIEN EPA',
             'mot_cle'=> array(
                 "mot_cle_0"=>"temps",
                 "mot_cle_1"=>"anciens"
             ),
-            'resume' => "Pas de résumé .",
-            'niveau' => '3è degré',
+            'resume' => "pas de résumé .",
+            'niveau' => '3',
             'type'=>'roman',
             'image' => 'default_book_image.png',
             'langue'=>'français',
@@ -79,12 +79,12 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         $ouvrage1 = Ouvrage::Create([
-            'titre'=>"L'enfant noir",
+                'titre'=>"L'ENFANT NOIR",
             'mot_cle'=> [
                 "mot_cle_0"=>"temps",
             ],
-            'resume' => "Pas de résumé .",
-           'niveau' => '2è degré',
+            'resume' => "pas de résumé .",
+           'niveau' => '2',
             'type'=>'roman',
             'image' => 'default_book_image.png',
             'langue'=>'français',

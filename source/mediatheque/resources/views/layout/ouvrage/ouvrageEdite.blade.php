@@ -9,7 +9,8 @@
             <div>
                 <div>
                     <label>Titre</label>
-                    <input type="text" name="titre" value="{{$livresPapier->ouvragePhysique->ouvrage->titre }}" placeholder="saisir le titre du livre">
+                    <input type="text" name="titre" value="{{$livresPapier->ouvragePhysique->ouvrage->titre }}"
+                           placeholder="saisir le titre du livre">
                 </div>
                 <div>
                     <label>Niveau</label>
@@ -35,7 +36,8 @@
                     </div>
                     <div>
                         <label>image</label>
-                        <input type="file" onchange="previewPicture(this)" name="image_livre" id="" value="" accept="image/jpg, image/jpeg, image/png, image/jpeg"><br>
+                        <input type="file" onchange="previewPicture(this)" name="image_livre" id="" value=""
+                               accept="image/jpg, image/jpeg, image/png, image/jpeg"><br>
                     </div>
                 </div>
                 <div>
@@ -58,7 +60,9 @@
                 </div>
                 <div>
                     <label>Lieu d'édition</label>
-                    <input name="lieu_edition" id="lieu_edition" type="text"  value="{{ $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->lieu_edition }}" placeholder="Saisire le lieu d'édition">
+                    <input name="lieu_edition" id="lieu_edition" type="text"
+                           value="{{ $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->lieu_edition }}"
+                           placeholder="Saisire le lieu d'édition">
                 </div>
             </div>
         </fieldset>
@@ -78,20 +82,22 @@
             </div>
             <div id="listeAuteurs">
                 @foreach($livresPapier->ouvragePhysique->ouvrage->auteurs as $auteur)
-                    <input type="text" id="auteur{{$loop->index}}" name="auteur{{$loop->index}}" value="{{ $auteur->nom }}, {{ $auteur->prenom }}"/>
+                    <input type="text" id="auteur{{$loop->index}}" name="auteur{{$loop->index}}"
+                           value="{{ $auteur->nom }}, {{ $auteur->prenom }}"/>
                     <button onclick="removeAuteur('auteur{{$loop->index}}')">x</button>
                 @endforeach
             </div>
         </fieldset>
         <fieldset>
-            <legend>Mots clé </legend>
+            <legend>Mots clé</legend>
             <div id="motCle" name="">
                 <table id="tableMotCle">
                     <tbody>
                     <tr>
                         <td>
                             <div>
-                                <input name="mot_cle" id="inputMotCle" type="text" value="mot" placeholder="Entrez un mot clé"/>
+                                <input name="mot_cle" id="inputMotCle" type="text" value="mot"
+                                       placeholder="Entrez un mot clé"/>
                                 <button id="ajouterMotCle">+</button>
                             </div>
                         </td>
@@ -100,7 +106,8 @@
                         <td>
                             <div class="listeBtns">
                                 @foreach($livresPapier->ouvragePhysique->ouvrage->mot_cle as $mot_cle)
-                                    <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}" value="{{ $mot_cle }}"/>
+                                    <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}"
+                                           value="{{ $mot_cle }}"/>
                                     <button onclick="removeKeyWord('mot_cle_{{$loop->index}}')">x</button>
                                 @endforeach
                             </div>
@@ -111,8 +118,9 @@
             </div>
         </fieldset>
         <fieldset>
-            <legend>Résumé de l'ouvrage </legend>
-            <textarea name="resume" rows="10" cols="100" placeholder="Saisir le résumé de l'ouvrage" class="@error('resume') is-invalid @enderror">Résumé</textarea>
+            <legend>Résumé de l'ouvrage</legend>
+            <textarea name="resume" rows="10" cols="100" placeholder="Saisir le résumé de l'ouvrage"
+                      class="@error('resume') is-invalid @enderror">Résumé</textarea>
             @error('resume')
             <div class="alert">{{ $message }}</div>
             @enderror
@@ -124,16 +132,16 @@
     <script type="text/javascript" async>
         var image = document.getElementById("profil_livre");
         var types = ["image/jpg", "image/jpeg", "image/png"];
-        var previewPicture = function(e){
+        var previewPicture = function (e) {
             const [picture] = e.files;
-            if (types.includes(picture.type)){
+            if (types.includes(picture.type)) {
                 image_livre.src = URL.createObjectURL(picture);
             }
         };
     </script>
     @include("layout.ouvrage.ouvrageData")
     <!--Mettre à jour les select box-->
-    @include("layout.ouvrage.ouvrageJS.ouvrageEdite")
-    @include("layout.ouvrage.ouvrageJS.ouvrageSendDataFormat")
+    @include("layout.ouvrageZJS.ouvrageEdite")
+    @include("layout.ouvrageZJS.ouvrageSendDataFormat")
 @stop
 

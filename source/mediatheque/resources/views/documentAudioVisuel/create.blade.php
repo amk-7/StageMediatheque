@@ -1,4 +1,4 @@
-@extends('layout.ouvrage.ouvragePhysique.ouvragePhysiqueCreate', [
+@extends('layout.ouvragePhysique.ouvragePhysiqueCreate', [
     'action'=>"enregistementDocumentAudioVisuels",
     'title'=>"Ajouter un document audio visuel"
     ])
