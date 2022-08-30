@@ -5,7 +5,7 @@
         <h1>Livre : {{$livrePapier->ouvragePhysique->ouvrage->titre }}</h1>
         <div class="image_livre">
             <img src="{{ asset('storage/images/images_livre/'.$livrePapier->ouvragePhysique->ouvrage->image) }}"
-                 alt="{{$livrePapier->ouvragePhysique->ouvrage->image}}"
+                 alt="{{$livrePapier->ouvragePhysique->ouvrage->image}}"/>
         </div>
         <div class="informations_livre">
             <label>Titre : {{$livrePapier->ouvragePhysique->ouvrage->titre }} </label><br>

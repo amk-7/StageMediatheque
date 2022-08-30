@@ -1,57 +1,13 @@
-@extends("layout.base")
+@extends('layout.user.userShow', ['action'=>"showAbonne", 'title'=>"Afficher un abonne", 'utilisateur'=>$abonne->utilisateur, 'model'=>$abonne])
 
-@section("content")
+@section('abonne')
 
-    <style>
-        td, th {border: 2px solid black;}
+        <label> Date Naissance : {{$abonne->date_naissance}}</label></br>
+        <label> Niveau Etude : {{$abonne->niveau_etude}}</label></br>
+        <label> Profession : {{$abonne->profession}}</label></br>
+        <label> Contact à prevenir : {{$abonne->contact_a_prevenir}}</label></br>
+        <label> Numero Carte : {{$abonne->numero_carte}}</label></br>
+        <label> Type de Carte : {{$abonne->type_de_carte}}</label></br>
 
-        caption {background-color: deepskyblue;}
 
-        label {background-color: red;}
-
-        th {background-color: chartreuse;}
-
-        td {background-color: burlywood;}
-    </style>
-
-    <h1>Liste des abonnes</h1>
-    <div>
-        <table>
-            <caption>Information sur les abonnes</caption>
-            <tr>
-                <th>identifiant de l'abonné</th>
-                <th>date naissance</th>
-                <th>Niveau Etude</th>
-                <th>Profession</th>
-                <th>Contact à prevenir</th>
-                <th>Numero de Carte</th>
-                <th>Type de Carte</th>
-                <th>Action</th>
-            </tr>
-            <tr>
-                <td>{{$abonne->id_abonne}}</td>
-                <td>{{$abonne->date_naissance}}</td>
-                <td>{{$abonne->niveau_etude}}</td>
-                <td>{{$abonne->profession}}</td>
-                <td>{{$abonne->contact_a_prevenir}}</td>
-                <td>{{$abonne->numero_carte}}</td>
-                <td>{{$abonne->type_de_carte}}</td>
-                <td>
-                    <form action="{{route('editAbonne', $abonne->id_abonne)}}" method="get">
-                        @csrf
-                        <button type="submit">Modifier</button>
-                    </form>
-                    <form action="{{route('destroyAbonne', $abonne->id_abonne)}}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Supprimer</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
-        <form action="{{route('listeAbonnes')}}" method="get">
-            @csrf
-            <button type="submit">Retour</button>
-        </form>
-    </div>
 @endsection

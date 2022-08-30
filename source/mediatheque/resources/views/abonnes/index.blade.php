@@ -12,22 +12,43 @@
 </style>
 
 <h1>Liste des Abonnes</h1>
+<form method="GET" action="{{route('createAbonne')}}">
+    <button type="Submit">Ajouter un Abonne</button>
+</form>
 <div>
     <table>
         <caption>Informations sur les Abonnes</caption>
         <tr>
-            <th> Identifiant de l'Abonne </th>
-            <th> Date Naissance </th>
-            <th> Niveau Etude </th>
-            <th> Profession </th>
-            <th> Contact a prevenir </th>
-            <th> Numero de Carte </th>
-            <th> Type de Carte </th>
-            <th> Action </th>
+            <th>Identifiant de l'utilisateur :</th>
+            <th>Nom :</th>
+            <th>Prenom :</th>
+            <th>Nom d'utilisateur :</th>
+            <th>Email :</th>
+            <th>Contact :</th>
+            <th>Photo_profil :</th>
+            <th>Ville :</th>
+            <th>Quartier :</th>
+            <th>Sexe :</th>
+            <th>Date Naissance</th>
+            <th>Niveau Etude</th>
+            <th>Profession</th>
+            <th>Contact a prevenir</th>
+            <th>Numero de Carte</th>
+            <th>Type de Carte</th>
+            <th>Action</th>
         </tr>
     @forelse ($listeAbonnes as $abonne)
             <tr>
-                <td>{{$abonne->id_abonne}}</td>
+                <td>{{$abonne->utilisateur->id_utilisateur}}</td>
+                <td>{{$abonne->utilisateur->nom}}</td>
+                <td>{{$abonne->utilisateur->prenom}}</td>
+                <td>{{$abonne->utilisateur->nom_utilisateur}}</td>
+                <td>{{$abonne->utilisateur->email}}</td>
+                <td>{{$abonne->utilisateur->contact}}</td>
+                <td>{{$abonne->utilisateur->photo_profil}}</td>
+                <td>{{$abonne->utilisateur->ville}}</td>
+                <td>{{$abonne->utilisateur->quartier}}</td>
+                <td>{{$abonne->utilisateur->sexe}}</td>
                 <td>{{$abonne->date_naissance}}</td>
                 <td>{{$abonne->niveau_etude}}</td>
                 <td>{{$abonne->profession}}</td>
@@ -51,11 +72,9 @@
                 </td>
             </tr>
     @empty
-            <tr><td><label>Il n y a pas d Abonne</label></td></tr>
+        <span>Aucun Abonne</span>
     @endforelse
     </table>
-    <form method="GET" action="{{route('createAbonne')}}">
-        <button type="Submit">Ajouter un Abonne</button>
-    </form>
+
 </div>
 

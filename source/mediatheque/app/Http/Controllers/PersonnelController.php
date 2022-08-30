@@ -105,7 +105,7 @@ class PersonnelController extends Controller
     public function edit(Personnel $personnel)
     {
         //
-        return view('personnels.edit')->with('personnel', $personnel);
+        return view('personnels.edit')->with(['personnel'=> $personnel]);
     }
 
     /**
