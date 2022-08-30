@@ -12,12 +12,12 @@
 
     <div>
         <label for="niveau_etude">Niveau d'étude</label>
-            <select name="niveau_etude" id="niveau_etude">
-                <option value="1er dégré">1er dégré</option>
-                <option value="2è dégré">2è dégré</option>
-                <option value="3è dégré">3è dégré</option>
-                <option value="Université">Université</option>
-            </select>
+            <div>
+                <input type="radio" name="niveau_etude" value="Primaire">Primaire
+                <input type="radio" name="niveau_etude" value="Collège">Collège
+                <input type="radio" name="niveau_etude" value="Lycée">Lycée
+                <input type="radio" name="niveau_etude" value="Université">Université
+            </div>
     </div>
 
     <div>
