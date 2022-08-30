@@ -55,7 +55,7 @@
     </div>
 
     <div>
-        <label for="profil">Photo_profil</label>
+        <label for="profil">Photo de profil</label>
             <input type="text" class="form-control" id="photo_profil" name="photo_profil" class="@error('ville') is-invalid @enderror">
             @error('photo_profil')
                 <div class="alert">{{ $message }}</div>

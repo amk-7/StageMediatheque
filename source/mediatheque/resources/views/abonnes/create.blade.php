@@ -1,88 +1,24 @@
 @extends('layout.user.userCreate', ['action'=>"storeAbonne", 'title'=>"Ajouter un abonné"])
 
 @section('abonne')
-    <form method="POST" action="{{route('storeAbonne')}}">
-        @csrf
-        <div>
-            <label for="nom">Nom</label>
-            <input type="text" name="nom" id="nom" class="@error('nom') is-invalid @enderror">
-            @error('nom')
+    
+    <div>    
+        <label for="date_naissance">Date de naissance</label>
+            <input type="date" name="date_naissance" id="date_naissance" class="@error('date_naissance') is-invalid @enderror">
+            @error('date_naissance')
                 <div class="alert">{{ $message }}</div>
             @enderror
-        </div>
-        <div>
-        <label for="prenom">Prenom</label>
-            <input type="text" class="form-control" id="prenom" name="prenom" class="@error('prenom') is-invalid @enderror">
-            @error('prenom')
-            <div class="alert">{{ $message }}</div>
-            @enderror
-        </div>
-        <div>
-        <label for="nom_utilisateur">Nom d'utilisateur</label>
-            <input type="text" class="form-control" id="nom_utilisateur" name="nom_utilisateur" class="@error('nom_utilisateur') is-invalid @enderror">
-            @error('nom_utilisateur')
-            <div class="alert">{{ $message }}</div>
-            @enderror
-        </div>
-        <div>
-        <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" name="email" class="@error('email') is-invalid @enderror">
-            @error('email')
-            <div class="alert">{{ $message }}</div>
-            @enderror
-        </div>
-        <div>
-        <label for="password">Mot de passe</label>
-            <input type="password" class="form-control" id="password" name="password" class="@error('password') is-invalid @enderror">
-            @error('password')
-            <div class="alert">{{ $message }}</div>
-            @enderror
-        </div>
-        <div>
-        <label for="contact">Contact</label>
-            <input type="tel" class="form-control" id="contact" name="contact" class="@error('contact') is-invalid @enderror">
-            @error('contact')
-            <div class="alert">{{ $message }}</div>
-            @enderror
-        </div>
-        <div>
-        <label for="profil">Photo_profil</label>
-            <input type="text" class="form-control" id="photo_profil" name="photo_profil">
-        </div>
-        <div>
-        <label for="ville">Ville</label
-            <input type="text" class="form-control" id="ville" name="ville" class="@error('ville') is-invalid @enderror">
-            @error('ville')
-            <div class="alert">{{ $message }}</div>
-            @enderror
-        </div>
-        <div>
-        <label for="quartier">Quartier</label>
-            <input type="text" class="form-control" id="quartier" name="quartier" class="@error('quartier') is-invalid @enderror">
-            @error('quartier')
-            <div class="alert">{{ $message }}</div>
-            @enderror
-        </div>
-        <div>
-        <label for="sexe">Sexe<label>
-            <select name="sexe" id="sexe">
-                <option value="Masculin">Masculin</option>
-                <option value="Feminin">Feminin</option>
-            </select>
-        </div>
-        <div>
-        <label for="date_naissance">Date de naissance</label>
-            <input type="date" name="date_naissance" id="date_naissance">
-        </div>
-        <div>
+    </div>
+
+    <div>
         <label for="niveau_etude">Niveau d'étude</label>
-            <select name="niveau_etude" id="niveau_etude">
-                <option value="1er dégré">1er dégré</option>
-                <option value="2è dégré">2è dégré</option>
-                <option value="3è dégré">3è dégré</option>
-                <option value="Université">Université</option>
-            </select>
-        </div>
+            <div>
+                <input type="radio" name="niveau_etude" value="Primaire">Primaire
+                <input type="radio" name="niveau_etude" value="Collège">Collège
+                <input type="radio" name="niveau_etude" value="Lycée">Lycée
+                <input type="radio" name="niveau_etude" value="Université">Université
+            </div>
+    </div>
 
     <div>
         <label for="profession">Profession</label>
