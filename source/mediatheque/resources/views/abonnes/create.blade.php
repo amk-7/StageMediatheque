@@ -3,12 +3,13 @@
 <div>
     <form method="POST" action="{{route('storeAbonne')}}">
         @csrf
-        <label for="nom">Nom
+        <div>
+            <label for="nom">Nom</label>
             <input type="text" name="nom" id="nom" class="@error('nom') is-invalid @enderror">
             @error('nom')
-            <div class="alert">{{ $message }}</div>
+                <div class="alert">{{ $message }}</div>
             @enderror
-        </label></br>
+        </div>
         <label for="prenom">Prenom
             <input type="text" class="form-control" id="prenom" name="prenom" class="@error('prenom') is-invalid @enderror">
             @error('prenom')

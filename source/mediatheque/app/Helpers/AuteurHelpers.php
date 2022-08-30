@@ -14,7 +14,7 @@ class AuteurHelpers
             if($auteur == null){
                 $auteur = Auteur::Create([
                     "nom"=>strtoupper($request["nom"]),
-                    "prenom"=>strtolower($request["prenom"])
+                    "prenom"=>ucfirst($request["prenom"])
                 ]);
             }
             array_push($auteurs, $auteur);
@@ -34,7 +34,7 @@ class AuteurHelpers
              if($auteur == null){
                  $auteur = Auteur::Create([
                      "nom"=>strtoupper($attributs_auteur[0]),
-                     "prenom"=>strtolower($attributs_auteur[1]),
+                     "prenom"=>ucfirst($attributs_auteur[1]),
                  ]);
              }
              array_push($liste_auteurs, $auteur);
