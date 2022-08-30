@@ -92,7 +92,7 @@ class DocumentAudioVisuelController extends Controller
         //dd($genres);
 
         $documentAudioVisuel = DocumentsAudioVisuel::create([
-            'genre' => $request->genres,
+            'genre' => $genres,
             'ISAN' => $request->ISAN
         ]);
 

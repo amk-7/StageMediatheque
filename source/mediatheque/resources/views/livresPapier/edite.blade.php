@@ -1,4 +1,4 @@
-@extends('layout.ouvrage.ouvragePhysique.ouvragePhysiqueEdite', ['livresPapier'=>$livresPapier, 'action'=>"modificationLivrePapier"])
+@extends('layout.ouvragePhysique.ouvragePhysiqueEdite', ['livresPapier'=>$livresPapier, 'action'=>"modificationLivrePapier"])
 @section("particularite")
     <fieldset>
         <legend>Particularité</legend>

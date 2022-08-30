@@ -35,12 +35,12 @@ class OuvrageHelper
             $image = "default_book_image.png";
         }
 
-        $ouvrage['titre'] = $request["titre"];
-        $ouvrage['niveau'] = $request["niveau"];
-        $ouvrage['type'] = $request["type"];
+        $ouvrage['titre'] = strtoupper($request["titre"]);
+        $ouvrage['niveau'] = strtolower($request["niveau"]);
+        $ouvrage['type'] = strtolower($request["type"]);
         $ouvrage['image'] = $image;
-        $ouvrage['langue'] = $request["langue"];
-        $ouvrage['resume'] = $request["resume"];
+        $ouvrage['langue'] = strtolower($request["langue"]);
+        $ouvrage['resume'] = ucfirst($request["resume"]);
         $ouvrage['mot_cle'] = $motCle;
         $ouvrage->save();
 
@@ -63,7 +63,7 @@ class OuvrageHelper
         $langues = [
             'français', 'anglais', 'allemand'
         ];
-        return [$niveaus, $types, $langues, Auteur::all()->toJson()];
+        return [$niveaus, $types, $langues, Auteur::all()];
     }
     public static function ouvrageExist(String $titre, int $annee_apparution)
     {
@@ -102,11 +102,11 @@ class OuvrageHelper
 
         $ouvrage = Ouvrage::create([
             'titre'=>ucfirst($request["titre"]),
-            'niveau' => $request["niveau"],
-            'type'=>$request["type"],
+            'niveau' => strtolower($request["niveau"]),
+            'type'=>strtolower($request["type"]),
             'image' => $image,
-            'langue'=>$request["langue"],
-            'resume'=>$request["resume"],
+            'langue'=>strtolower($request["langue"]),
+            'resume'=>ucfirst($request["resume"]),
             'mot_cle'=>$motCle
         ]);
 

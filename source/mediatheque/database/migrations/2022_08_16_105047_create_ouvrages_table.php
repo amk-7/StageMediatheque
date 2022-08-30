@@ -18,7 +18,7 @@ class CreateOuvragesTable extends Migration
             $table->string('titre');
             $table->json("mot_cle")->nullable();
             $table->string('resume')->nullable();
-            $table->enum('niveau', ['1er degré', '2è degré', '3è degré', 'universitaire']);
+            $table->enum('niveau', ['1', '2', '3', 'universitaire']);
             $table->enum('type', ['roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle']);
             $table->string('image')->nullable();
             $table->string('langue')->nullable();

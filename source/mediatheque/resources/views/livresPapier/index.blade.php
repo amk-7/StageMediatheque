@@ -1,13 +1,5 @@
 @extends('layout.base')
-@section("style")
-    <style type="text/css">
-        img {
-            height: 3rem;
-            width: 4rem;
-        }
-    </style>
-@stop
-@section('content')
+<div>
     <h1> Livres papier </h1>
     <div>
         <form action="" method="">
@@ -22,7 +14,7 @@
             <div class="">
                 <div class="input">
                     <input type="text" name="search" id="searchFieldx" value=""
-                           placeholder="Recherche par titre, auteur, ISBN, éditeur, md5...">
+                           placeholder="Recherche par titre">
                     <button type="submit">Rechercher</button>
                 </div>
             </div>
@@ -32,6 +24,7 @@
                     <select name="annee_parution_debut">
                         <option value="all">Toute annee</option>
                     </select>
+                    <label>-</label>
                     <select name="annee_parution_fin">
                         <option value="all">Toute annee</option>
                     </select>
@@ -43,12 +36,6 @@
                     </select>
                     <select name="domaine">
                         <option value="all">Tous domaine</option>
-                    </select>
-                    <select name="forme_ouvrage">
-                        <option value="all">Toute forme</option>
-                    </select>
-                    <select name="nature_ouvrage">
-                        <option value="all">Toute nature</option>
                     </select>
                     <select name="niveau">
                         <option value="all">Toute niveau</option>
@@ -71,10 +58,18 @@
             </form>
         </td>
     </div>
-    @if(!empty($livresPapiers) && $livresPapiers->count())
+    <div>
+        <select  id="par_page">
+            @for($i = 5; $i <= 25; $i = $i+5)
+                <option value="{{ $i }}">{{ $i }}</option>
+            @endfor
+        </select>
+        <label for="par_page">par page</label>
+    </div>
+    @if(!empty($livresPapiers ?? "") && $livresPapiers->count())
         <table border="1">
             <thead>
-            <th>Image</th>
+            <th>Numéro</th>
             <th>Titre</th>
             <th>Niveau</th>
             <th>Type</th>
@@ -89,9 +84,7 @@
             <tbody>
             @foreach($livresPapiers as $livresPapier)
                 <tr>
-                    <td>
-                        <img src="{{ asset('storage/images/images_livre/'.$livresPapier->ouvragePhysique->ouvrage->image) }}"
-                             alt="{{$livresPapier->ouvragePhysique->ouvrage->image}}"></td>
+                    <td>{{ $livresPapier->id_livre_papier }}</td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->titre }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->niveau }} </td>
                     <td> {{ $livresPapier->ouvragePhysique->ouvrage->type }} </td>
@@ -102,10 +95,14 @@
                     <td> {{ \App\Helpers\OuvragesPhysiqueHelper::formatAvaible($livresPapier->ouvragePhysique) }} </td>
                     <td> {{ $livresPapier->ISBN }} </td>
                     <td>
-                        <form action="{{route('affichageLivrePapier', $livresPapier)}}" method="get">
-                            @csrf
-                            <input type="submit" name="consulter" value="Consulter">
-                        </form>
+                        <div>
+                            <div>
+                                <form action="{{route('affichageLivrePapier', $livresPapier)}}" method="get">
+                                    @csrf
+                                    <input type="submit" name="consulter" value="Consulter">
+                                </form>
+                            </div>
+                        </div>
                         <form action="{{route('formulaireModificationLivrePapier', $livresPapier)}}" method="get">
                             @csrf
                             <input type="submit" name="editer" value="Éditer">
@@ -123,5 +120,5 @@
     @else
         <h3>Il n'y a aucun ouvrage.</h3>
     @endif
-    {!! $livresPapiers->links() !!}
-@stop
+    {--!! $livresPapiers->links() !!--}
+</div>

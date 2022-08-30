@@ -23,13 +23,23 @@ class LivresPapierController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        //dd( ClassificationDeweyCentaine::all()->first()->classificationDeweyDizaines);
-        $livresPapier = LivresPapier::paginate(5);
-        return view('livresPapier.index')->with('livresPapiers', $livresPapier);
+        /*$annee = Carbon::now();
+        dd($annee);*/
+        $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
+        $categories = LivreHelper::getCategories();
+
+        return view('livresPapier.index')->with([
+            'niveaus'=> $niveausTypesLanguesAuteurs[0],
+            'types'=>$niveausTypesLanguesAuteurs[1],
+            'langues'=>$niveausTypesLanguesAuteurs[2],
+            'auteurs'=>$niveausTypesLanguesAuteurs[3],
+            'categories'=>$categories,
+            'livresPapiers'=>array()
+        ]);
     }
 
     /**
@@ -39,6 +49,7 @@ class LivresPapierController extends Controller
      */
     public function create()
     {
+
         $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
         $categories = LivreHelper::getCategories();
         $classifications_dewey = OuvragesPhysiqueHelper::getClassificationsDewey();
@@ -79,7 +90,6 @@ class LivresPapierController extends Controller
             'etat'=>'required',
             'id_classification_dewey_centaine'=>'required|not_in:--Selectionner--',
             'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
-
         ]);
 
         $livres_papier = LivrePapierHelper::livrePapierExist($request["ISBN"], $request["titre"], (Integer) $request["annee_apparution"]);
