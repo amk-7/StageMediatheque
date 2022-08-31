@@ -37,8 +37,8 @@
             <td>{{$utilisateur->email}}</td>
             <td>{{$utilisateur->contact}}</td>
             <td>{{$utilisateur->photo_profil}}</td>
-            <td>{{$utilisateur->ville}}</td>
-            <td>{{$utilisateur->quartier}}</td>
+            <td>{{$utilisateur->adresse["ville"]}}</td>
+            <td>{{$utilisateur->adresse["quartier"]}}</td>
             <td>{{$utilisateur->sexe}}</td>
         </tr>
 
