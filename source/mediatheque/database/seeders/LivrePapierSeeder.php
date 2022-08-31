@@ -34,8 +34,8 @@ class LivrePapierSeeder extends Seeder
         $ouvrage5 = Ouvrage::Create([
             'titre'=>'CREPUSCUL DES TEMPS ANCIEN EPA',
             'mot_cle'=> array(
-                "mot_cle_0"=>"temps",
-                "mot_cle_1"=>"anciens"
+                "temps",
+                "anciens"
             ),
             'resume' => "pas de résumé .",
             'niveau' => '3',
@@ -81,7 +81,7 @@ class LivrePapierSeeder extends Seeder
         $ouvrage1 = Ouvrage::Create([
                 'titre'=>"L'ENFANT NOIR",
             'mot_cle'=> [
-                "mot_cle_0"=>"temps",
+               "temps",
             ],
             'resume' => "pas de résumé .",
            'niveau' => '2',

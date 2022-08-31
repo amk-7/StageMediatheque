@@ -9,30 +9,6 @@ use PhpParser\Node\Expr\Array_;
 class LivrePapierHelper
 {
 
-    public static function livrePapierExist(String $ISBN, String $titre, int $annee_apparution)
-    {
-        $livre = LivresPapier::all()->where('ISBN',$ISBN)->first();
-        $ouvrage = OuvrageHelper::ouvrageExist($titre, $annee_apparution);
-
-        if ($livre==null){
-            if ($ouvrage==null){
-                return null;
-            }
-            $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage", $ouvrage->id_ouvrage)->first();
-            $livre = LivresPapier::all()->where('id_ouvrage_physque', $ouvragePhysique->id_ouvrage_physique)->first();
-            return $livre;
-        } return $livre;
-    }
-
-   /* public static function convertArrayToString(Array $array, String $keyName){
-        $string = "";
-        for($i=0; $i<count($array[0])-1; $i++){
-            $string .= $array[0][$keyName.$i].",";
-        }
-        $string .= $array[0][$keyName.(count($array[0])-1)];
-        return $string;
-    }*/
-
     public static function showArray(Array $array, String $keyName){
         //dd($array);
         $string = "";

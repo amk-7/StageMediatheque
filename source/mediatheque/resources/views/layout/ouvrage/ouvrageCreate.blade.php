@@ -8,7 +8,7 @@
             <div>
                 <div>
                     <label>Titre</label>
-                    <input type="text" name="titre" value="Titre test" placeholder="saisir le titre du livre"
+                    <input type="text" name="titre" id="titre" value="Titre test" placeholder="saisir le titre du livre"
                            class="@error('titre') is-invalid @enderror">
                     @error('titre')
                     <div class="alert">{{ $message }}</div>
@@ -29,7 +29,7 @@
                 </div>
                 <div>
                     <label>Type</label>
-                    <select name="type" class="@error('type') is-invalid @enderror">
+                    <select name="type" id="type" class="@error('type') is-invalid @enderror">
                         <option>--Selectionner--</option>
                         @foreach($types as $type)
                             <option value="{{$type}}">{{$type}}</option>
@@ -60,7 +60,7 @@
                 </div>
                 <div>
                     <label>Année d'apparution</label>
-                    <select name="annee_apparution" class="@error('annee_apparution') is-invalid @enderror">
+                    <select name="annee_apparution" id="annee_apparution" class="@error('annee_apparution') is-invalid @enderror">
                         <option>--Séléctionner année--</option>
                         @for($annee=1970; $annee<2023; $annee++)
                             <option value="{{$annee}}">{{$annee}}</option>
@@ -72,7 +72,7 @@
                 </div>
                 <div>
                     <label>Lieu d'édition</label>
-                    <input name="lieu_edition" type="text" value="Sokodé" placeholder="Saisire le lieu d'édition"
+                    <input name="lieu_edition" id="lieu_edition" type="text" value="Sokodé" placeholder="Saisire le lieu d'édition"
                            class="@error('lieu_edition') is-invalid @enderror">
                     @error('lieu_edition')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -90,7 +90,6 @@
                             <input name="nom" id="nom" type="text" value="KONDI"
                                    placeholder="Saisire le nom de l'auteur"
                                    class="@error('auteur0') is-invalid @enderror">
-                            <input name="id_auteur" id="id_auteur" type="number">
                             <ul id="searche_options">
                                 @foreach($auteurs as $auteur)
                                     <li class="auteurs" id="{{$auteur->id_auteur}}">{{ $auteur->nom }}
@@ -161,8 +160,8 @@
 
 @stop
 
-@section("js")
-    <script type="text/javascript">
+
+    <!--script type="text/javascript">
         let id_search_bar = "nom";
         let id_hidden_search_bar = "id_auteur";
         let options_class_name = "auteurs";
@@ -207,5 +206,5 @@
             select_prenom.value = nom_prenom[1];
             input_hidden.value = id_elt;
         }
-    </script>
-@stop
+    </script-->
+
