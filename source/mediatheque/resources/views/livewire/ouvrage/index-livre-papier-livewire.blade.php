@@ -1,7 +1,7 @@
 <div>
     <h1> Livres papier </h1>
     <div>
-        <form wire:submit.prevent="searchBy">
+        <form>
             <ul id="searchModTabs">
                 <li class="active">
                     <a class="change_search_mode" href="">Recherche génerale</a>
@@ -12,10 +12,9 @@
             </ul>
             <div class="">
                 <div class="input">
-                    <input wire:model="titre" type="text" name="search" id="searchFieldx" value=""
-                           placeholder="Recherche par titre">
+                    <input wire:model="search" type="text" name="text" id="searchFieldx" placeholder="Recherche par titre" autocomplete="false">
                     <button type="submit">Rechercher</button>
-                    {{ $titre }}
+                    {{ $search }}
                 </div>
             </div>
             <div class="" id="searchParametersField">
@@ -87,7 +86,7 @@
                     <td> {{ $livresPapier["titre"] }} </td>
                     <td> {{ $livresPapier["niveau"] }} </td>
                     <td> {{ $livresPapier["type"] }} </td>
-                    <td> {{ \App\Helpers\LivrePapierHelper::showArray($livresPapier["categorie"], "categorie") }} </td>
+                    <td> {{ \App\Helpers\LivrePapierHelper::showArray($livresPapier["categorie"]) }} </td>
                     <td> {{ $livresPapier["langue"] }} </td>
                     <td> {{ $livresPapier["nombre_exemplaire"] }} </td>
                     <td> {{ $livresPapier["disponibilite"] }} </td>
