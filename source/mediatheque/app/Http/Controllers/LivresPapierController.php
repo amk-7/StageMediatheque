@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\AuteurHelpers;
-use App\Helpers\LivreHelper;
-use App\Helpers\LivrePapierHelper;
-use App\Helpers\OuvrageHelper;
-use App\Helpers\OuvragesPhysiqueHelper;
-use App\Models\Auteur;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
-use Carbon\Carbon;
+use App\Service\AuteurServices;
+use App\Service\LivresPapierService;
+use App\Service\OuvrageService;
+use App\Service\OuvragesPhysiqueService;
 use App\Models\OuvragesPhysique;
-use App\Models\ClassificationDeweyCentaine;
-use App\Models\ClassificationDeweyDizaine;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Exception;
-use Ramsey\Uuid\Type\Integer;
 
 class LivresPapierController extends Controller
 {
@@ -29,8 +22,9 @@ class LivresPapierController extends Controller
     {
         /*$annee = Carbon::now();
         dd($annee);*/
-        $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
-        $categories = LivreHelper::getCategories();
+        $niveausTypesLanguesAuteurs = OuvrageService::getNiveausTypesLanguesAuteurs();
+        $categories = LivresPapierService::getCategories();
+        $livresPapiers = LivresPapierService::getAll();
 
         return view('livresPapier.index')->with([
             'niveaus'=> $niveausTypesLanguesAuteurs[0],
@@ -38,7 +32,7 @@ class LivresPapierController extends Controller
             'langues'=>$niveausTypesLanguesAuteurs[2],
             'auteurs'=>$niveausTypesLanguesAuteurs[3],
             'categories'=>$categories,
-            'livresPapiers'=>array()
+            'livresPapiers'=>$livresPapiers
         ]);
     }
 
@@ -50,9 +44,9 @@ class LivresPapierController extends Controller
     public function create()
     {
 
-        $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
-        $categories = LivreHelper::getCategories();
-        $classifications_dewey = OuvragesPhysiqueHelper::getClassificationsDewey();
+        $niveausTypesLanguesAuteurs = OuvrageService::getNiveausTypesLanguesAuteurs();
+        $categories = LivresPapierService::getCategories();
+        $classifications_dewey = OuvragesPhysiqueService::getClassificationsDewey();
 
         return view('livresPapier.create')->with([
             'niveaus'=> $niveausTypesLanguesAuteurs[0],
@@ -92,29 +86,27 @@ class LivresPapierController extends Controller
             'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
         ]);
 
-        $livres_papier = LivrePapierHelper::livrePapierExist($request["ISBN"], $request["titre"], (Integer) $request["annee_apparution"]);
+        $livres_papier = LivresPapierService::exist($request["ISBN"]);
 
-        if ($livres_papier!=null){
-            return redirect()->route("formulaireModificationLivrePapier", compact("livres_papier"));
+        if (! $livres_papier){
+            // Creation d'un ou des auteurs .
+            $auteurs = AuteurServices::enregistrerAuteur($request);
+            // Creation de l'ouvrage
+            $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
+            // Création d'un ouvrage physique
+            $ouvragePhysique = OuvragesPhysiqueService::enregisterOuvragePhysique($request, $ouvrage);
+            //dd($ouvragePhysique);
+            $list_categories = OuvrageService::convertDataToArray($request, "categorie");
+            //dd($list_categories);
+            $categories = OuvrageService::convertObjetToArray($list_categories, "categorie");
+            //dd($categories);
+            LivresPapier::create([
+                'categorie'=>$categories,
+                'ISBN'=>strtoupper($request["ISBN"]),
+                'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
+            ]);
+            return redirect()->route("listeLivresPapier");
         }
-
-        // Creation d'un ou des auteurs .
-        $auteurs = AuteurHelpers::enregistrerAuteur($request);
-        // Creation de l'ouvrage
-        $ouvrage = OuvrageHelper::enregisterOuvrage($request, $auteurs);
-        // Création d'un ouvrage physique
-        $ouvragePhysique = OuvragesPhysiqueHelper::enregisterOuvragePhysique($request, $ouvrage);
-        //dd($ouvragePhysique);
-        $list_categories = OuvrageHelper::convertDataToArray($request, "categorie");
-        //dd($list_categories);
-        $categories = OuvrageHelper::convertObjetToArray($list_categories, "categorie");
-        //dd($categories);
-        LivresPapier::create([
-           'categorie'=>$categories,
-           'ISBN'=>strtoupper($request["ISBN"]),
-           'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
-       ]);
-        return redirect()->route("listeLivresPapier");
 
     }
 
@@ -139,9 +131,9 @@ class LivresPapierController extends Controller
     public function edit(LivresPapier $livresPapier)
     {
         //dd($livresPapier);
-        $niveausTypesLanguesAuteurs = OuvrageHelper::getNiveausTypesLanguesAuteurs();
-        $categories = LivrePapierHelper::getCategories();
-        $classifications_dewey = OuvragesPhysiqueHelper::getClassificationsDewey();
+        $niveausTypesLanguesAuteurs = OuvrageService::getNiveausTypesLanguesAuteurs();
+        $categories = LivresPapierService::getCategories();
+        $classifications_dewey = OuvragesPhysiqueService::getClassificationsDewey();
 
 
         return view('livresPapier.edite')->with([
@@ -182,8 +174,8 @@ class LivresPapierController extends Controller
         ]);
 
         $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livresPapier->id_ouvrage_physique)->first();
-        OuvragesPhysiqueHelper::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
-        OuvrageHelper::updateOuvrage($request, $ouvragePhysique);
+        OuvragesPhysiqueService::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
+        OuvrageService::updateOuvrage($request, $ouvragePhysique);
 
         return redirect()->route('listeLivresPapier');
     }

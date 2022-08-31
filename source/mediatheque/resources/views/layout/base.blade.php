@@ -19,10 +19,9 @@
     <header>
     </header>
     @yield('content')
-    @yield("load_json_data")
-    @yield("livewire_script_content")
     <footer>
     </footer>
     @yield("js")
+    @yield("livewire_script_content")
 </body>
 </html>

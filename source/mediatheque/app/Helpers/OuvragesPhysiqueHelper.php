@@ -9,45 +9,25 @@ use Illuminate\Http\Request;
 
 class OuvragesPhysiqueHelper
 {
-    public static function getClassificationsDewey(){
-        return [ClassificationDeweyCentaine::all(), ClassificationDeweyDizaine::all()->toJson()];
-    }
-    public static function enregisterOuvragePhysique(Request $request, Ouvrage $ouvrage)
+    public static function alertStock(OuvragesPhysique $ouvragesPhysique)
     {
-        $classificationDizaine = ClassificationDeweyDizaine::all()->where("id_classification_dewey_dizaine", $request["id_classification_dewey_dizaine"])->first();
-
-        $ouvragePhysique = OuvragesPhysique::Create([
-            'nombre_exemplaire' => $request["nombre_exemplaire"],
-            'etat'=>$request["etat"],
-            'disponibilite'=>true,
-            'id_ouvrage'=>$ouvrage->id_ouvrage,
-            'id_classification_dewey_dizaine'=>$classificationDizaine->id_classification_dewey_dizaine
-        ]);
-
-        return $ouvragePhysique ;
-    }
-
-    public static function updateOuvrage(OuvragesPhysique $ouvragePhysique, $nombre_exemplaire, $etat, $disponibilite){
-        if ($disponibilite=="1"){
-            $disponibilite = true;
-        }else {
-            $disponibilite = false;
-        }
-        $ouvragePhysique->nombre_exemplaire = $nombre_exemplaire;
-        $ouvragePhysique->etat = $etat;
-        $ouvragePhysique->disponibilite = $disponibilite;
-        $ouvragePhysique->save();
-    }
-
-    public static function formatAvaible(OuvragesPhysique $ouvragesPhysique){
-        if($ouvragesPhysique->disponibilite){
-            return "disponible";
-        } return "nom disponible";
+        if ($ouvragesPhysique->nombre_exemplaire > 5)
+        {
+            return "<p class=''>$ouvragesPhysique->nombre_exemplaire<p>";
+        } return "<p class='text-red-800'>$ouvragesPhysique->nombre_exemplaire<p>";
     }
     public static function generateCote(OuvragesPhysique $ouvragesPhysique){
         $cote = "";
         $cote .= $ouvragesPhysique->id_classification_dewey_dizaine;
         $cote .= substr("");
+    }
+
+    public static function afficherDisponibilite(OuvragesPhysique $ouvragesPhysique)
+    {
+        if ($ouvragesPhysique->disponibilite)
+        {
+            return "<p class='text-green-800'>Disponible<p>";
+        } return "<p class='text-red-800'>Disponible<p>";
     }
 
     public static function afficherEtat(OuvragesPhysique $ouvragesPhysique)

@@ -26,3 +26,16 @@
     </fieldset>
 @stop
 
+@section("js")
+    <script type="text/javascript">
+        let id_search_bar = "nom";
+        let id_hidden_search_bar = "id_auteur";
+        let options_class_name = "auteurs";
+        let id_select_prenom = "prenom";
+        let input_searche_bar = document.getElementById(id_search_bar);
+        let hidden_input_searche_bar = document.getElementById(id_hidden_search_bar);
+        let select_prenom = document.getElementById(id_select_prenom);
+
+
+    </script>
+@stop
