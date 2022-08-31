@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\LivresPapier;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use phpDocumentor\Reflection\Types\Boolean;
 
@@ -21,8 +22,30 @@ class LivresPapierService
         });
     }
 
+    public static function searchByMainAttribute(array $id_auteurs, String $categorie, String $ISBN)
+    {
+        $livre_papier = DB::table('livres_papiers')
+            ->select('id_livre_papier')
+            ->whereJsonContains('categorie', ["'".$categorie."'"])
+            ->orWhere('ISBN', $ISBN)
+            ->orWhereIn('id_livre_papier', $id_auteurs)
+            ->get();
+        $id_livre_papier = array();
+
+        foreach ($livre_papier as $lp)
+        {
+            array_push($id_livre_papier, $lp->id_ouvrage);
+        }
+
+        $livresPapierCollection = LivresPapier::all()->whereIn("id_livre_papier", $id_livre_papier);
+        dd($livresPapierCollection);
+
+        return $livresPapierCollection;
+    }
+
     public static function getAll()
     {
+        //if ($livresPapierCollection == null)
         $livresPapierCollection = LivresPapier::all();
         $livresPapier = array();
         foreach ($livresPapierCollection as $livrePapier)

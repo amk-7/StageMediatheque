@@ -6,10 +6,30 @@ use App\Models\Auteur;
 use App\Models\Ouvrage;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Self_;
 
 class OuvrageService
 {
+    public static function searchByMainAttribute(String $titre, String $langue, String $niveau, String $mot_cle)
+    {
+        $ouvrages = DB::table('ouvrages')
+            ->select('id_ouvrage')
+            ->whereJsonContains('mot_cle', ['temps'])
+            ->orWhere('titre', $titre)
+            ->orWhere('langue', $langue)
+            ->orWhere('niveau', $niveau)
+            ->get();
+        $id_ouvrages = array();
+
+        foreach ($ouvrages as $o)
+        {
+            array_push($id_ouvrages, $o->id_ouvrage);
+        }
+
+        return $id_ouvrages;
+    }
+
     public static function updateOuvrage(Request $request, OuvragesPhysique $ouvragesPhysique)
     {
         $ouvrage = Ouvrage::all()->where("id_ouvrage", $ouvragesPhysique->id_ouvrage)->first();

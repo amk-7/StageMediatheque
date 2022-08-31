@@ -59,7 +59,6 @@ class LivrePapierSeeder extends Seeder
 
         $ouvragePhysique5 = OuvragesPhysique::Create([
             'nombre_exemplaire' => 4,
-            'etat'=>5,
             'disponibilite'=>true,
             'id_ouvrage'=>$ouvrage5->id_ouvrage,
             'id_classification_dewey_dizaine'=>$classificationDizaine5->id_classification_dewey_dizaine
@@ -67,7 +66,7 @@ class LivrePapierSeeder extends Seeder
 
         LivresPapier::Create([
             'categorie'=> array(
-                "categorie0"=>"français"
+                "français"
             ),
             'ISBN'=>'12225555',
             'id_ouvrage_physique'=>$ouvragePhysique5->id_ouvrage_physique
@@ -99,7 +98,6 @@ class LivrePapierSeeder extends Seeder
 
         $ouvragePhysique1 = OuvragesPhysique::Create([
             'nombre_exemplaire' => 3,
-            'etat'=>5,
             'disponibilite'=>true,
             'id_ouvrage'=>$ouvrage1->id_ouvrage,
             'id_classification_dewey_dizaine'=>$classificationDizaine1->id_classification_dewey_dizaine
@@ -107,8 +105,8 @@ class LivrePapierSeeder extends Seeder
 
         LivresPapier::Create([
             'categorie'=> array(
-                "categorie0"=>"français",
-                "categorie1"=>"anglais"
+               "français",
+                "anglais"
             ),
             'ISBN'=>'1',
             'id_ouvrage_physique'=>$ouvragePhysique1->id_ouvrage_physique

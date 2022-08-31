@@ -9,14 +9,13 @@ use PhpParser\Node\Expr\Array_;
 class LivrePapierHelper
 {
 
-    public static function showArray(Array $array, String $keyName){
-        //dd($array);
+    public static function showArray(Array $array){
         $string = "";
         for($i=0; $i<count($array)-1; $i++){
-            $string .= $array["$keyName$i"].",";
+            $string .= $array[$i].",";
         }
         $last = count($array)-1;
-        $string .= $array["$keyName$last"];
+        $string .= $array[$last];
         return $string;
     }
 }
