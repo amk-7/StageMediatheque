@@ -25,7 +25,7 @@
             <th>Nom d'utilisateur :</th>
             <th>Email :</th>
             <th>Contact :</th>
-            <th>Photo_profil :</th>
+            <th>Photo de profil :</th>
             <th>Ville :</th>
             <th>Quartier :</th>
             <th>Sexe :</th>
@@ -46,8 +46,8 @@
                 <td>{{$abonne->utilisateur->email}}</td>
                 <td>{{$abonne->utilisateur->contact}}</td>
                 <td>{{$abonne->utilisateur->photo_profil}}</td>
-                <td>{{$abonne->utilisateur->ville}}</td>
-                <td>{{$abonne->utilisateur->quartier}}</td>
+                <td>{{$abonne->utilisateur->adresse["ville"]}}</td>
+                <td>{{$abonne->utilisateur->adresse["quartier"]}}</td>
                 <td>{{$abonne->utilisateur->sexe}}</td>
                 <td>{{$abonne->date_naissance}}</td>
                 <td>{{$abonne->niveau_etude}}</td>

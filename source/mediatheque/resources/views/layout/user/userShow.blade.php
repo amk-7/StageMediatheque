@@ -15,8 +15,8 @@
     <label>Mot de passe : {{$utilisateur->password}}</label></br>
     <label>Contact : {{$utilisateur->contact}}</label></br>
     <label>Photo_profil : {{$utilisateur->photo_profil}}</label></br>
-    <label>Ville : {{$utilisateur->ville}}</label></br>
-    <label>Quartier : {{$utilisateur->quartier}}</label></br>
+    <label>Ville : {{$utilisateur->adresse["ville"]}}</label></br>
+    <label>Quartier : {{$utilisateur->adresse["quartier"]}}</label></br>
     <label>Sexe : {{$utilisateur->sexe}}</label></br>
 
     @yield('abonne')

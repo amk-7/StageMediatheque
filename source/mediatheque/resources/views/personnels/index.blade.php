@@ -41,8 +41,8 @@
                 <td>{{$personnel->utilisateur->email}}</td>
                 <td>{{$personnel->utilisateur->contact}}</td>
                 <td>{{$personnel->utilisateur->photo_profil}}</td>
-                <td>{{$personnel->utilisateur->ville}}</td>
-                <td>{{$personnel->utilisateur->quartier}}</td>
+                <td>{{$personnel->utilisateur->adresse["ville"]}}</td>
+                <td>{{$personnel->utilisateur->adresse["quartier"]}}</td>
                 <td>{{$personnel->utilisateur->sexe}}</td>
                 <td>{{$personnel->statut}}</td>
                 <td>
