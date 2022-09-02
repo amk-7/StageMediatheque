@@ -8,13 +8,13 @@
     </div>
 
     <div>
-    <label for="niveau_etude">Niveau d'étude</label>
-        <select name="niveau_etude" id="niveau_etude">
-            <option value="1er dégré">1er dégré</option>
-            <option value="2è dégré">2è dégré</option>
-            <option value="3è dégré">3è dégré</option>
-            <option value="Université">Université</option>
-        </select>
+        <label for="niveau_etude">Niveau d'étude</label>
+            <div>
+                <input type="radio" name="niveau_etude" value="Primaire">Primaire
+                <input type="radio" name="niveau_etude" value="Collège">Collège
+                <input type="radio" name="niveau_etude" value="Lycée">Lycée
+                <input type="radio" name="niveau_etude" value="Université">Université
+            </div>
     </div>
 
     <div>
@@ -28,14 +28,16 @@
     </div>
 
     <div>
-    <label for="numero_carte">Numéro de carte</label>
-        <input type="text" name="numero_carte" value="{{ $abonne->numero_carte }}">
+        <label for="type_de_carte">Type de carte</label>
+            <div>
+                <input type="radio" name="type_de_carte" value="Identité">Identité
+                <input type="radio" name="type_de_carte" value="Scolaire">Scolaire
+            </div>
     </div>
 
     <div>
-    <label for="type_de_carte">Type de carte
-        <input type="text" name="type_de_carte" value="{{ $abonne->type_de_carte }}">
-    </label></br>
+    <label for="numero_carte">Numéro de carte</label>
+        <input type="text" name="numero_carte" value="{{ $abonne->numero_carte }}">
     </div>
 </form>
 @endsection

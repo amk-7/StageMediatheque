@@ -1,12 +1,16 @@
 @extends('layout.user.userCreate', ['action'=>"storePersonnel", 'title'=>"Ajouter un personnel"])
 
 @section('personnel')
+
+
     <div>
-        <label for="statut">Statut</label>
-            <input type="text" class="form-control" id="statut" name="statut" class="@error('statut') is-invalid @enderror">
-            @error('statut')
-                <div class="alert">{{ $message }}</div>
-            @enderror
+        <label for="statut">Statut : </label>
+            <div>
+                    <input type="radio" name="statut" value="Bibliothècaire">Bibliothècaire</br>
+                    <input type="radio" name="statut" value="Directeur">Directeur</br>
+                    <input type="radio" name="statut" value="Directeur Général">Directeur Général</br>
+                    <input type="radio" name="statut" value="-------">-------</br>
+            </div>
     </div>
 @endsection
 
