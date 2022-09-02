@@ -19,28 +19,28 @@
     <table>
         <caption>Informations sur les Personnels</caption>
         <tr>
-            <th>Identifiant de l'utilisateur :</th>
-            <th>Nom :</th>
-            <th>Prenom :</th>
-            <th>Nom d'utilisateur :</th>
-            <th>Email :</th>
-            <th>Contact :</th>
-            <th>Photo_profil :</th>
-            <th>Ville :</th>
-            <th>Quartier :</th>
-            <th>Sexe :</th>
+            <th>Identifiant de l'utilisateur</th>
+            <th>Photo_profil</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Ville</th>
+            <th>Quartier</th>
+            <th>Sexe</th>
             <th> Statut </th>
             <th> Action </th>
         </tr>
     @forelse ($listePersonnels as $personnel)
             <tr>
                 <td>{{$personnel->utilisateur->id_utilisateur}}</td>
+                <td>{{$personnel->utilisateur->photo_profil}}</td>
                 <td>{{$personnel->utilisateur->nom}}</td>
                 <td>{{$personnel->utilisateur->prenom}}</td>
                 <td>{{$personnel->utilisateur->nom_utilisateur}}</td>
                 <td>{{$personnel->utilisateur->email}}</td>
                 <td>{{$personnel->utilisateur->contact}}</td>
-                <td>{{$personnel->utilisateur->photo_profil}}</td>
                 <td>{{$personnel->utilisateur->adresse["ville"]}}</td>
                 <td>{{$personnel->utilisateur->adresse["quartier"]}}</td>
                 <td>{{$personnel->utilisateur->sexe}}</td>

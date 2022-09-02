@@ -6,6 +6,15 @@
 @csrf
 <fieldset>
     <legend>{{$title}}</legend>
+
+    <div>
+        <label for="profil">Photo de profil</label>
+            <input type="text" class="form-control" id="photo_profil" name="photo_profil" class="@error('ville') is-invalid @enderror">
+            @error('photo_profil')
+                <div class="alert">{{ $message }}</div>
+            @enderror
+    </div>
+    
     <div>
         <label for="nom">Nom</label>
             <input type="text" name="nom" id="nom" class="@error('nom') is-invalid @enderror">
@@ -50,14 +59,6 @@
         <label for="contact">Contact</label>
             <input type="tel" class="form-control" id="contact" name="contact" class="@error('contact') is-invalid @enderror">
             @error('contact')
-                <div class="alert">{{ $message }}</div>
-            @enderror
-    </div>
-
-    <div>
-        <label for="profil">Photo de profil</label>
-            <input type="text" class="form-control" id="photo_profil" name="photo_profil" class="@error('ville') is-invalid @enderror">
-            @error('photo_profil')
                 <div class="alert">{{ $message }}</div>
             @enderror
     </div>
