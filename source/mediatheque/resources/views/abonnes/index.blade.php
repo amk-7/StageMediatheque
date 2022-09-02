@@ -20,12 +20,12 @@
         <caption>Informations sur les Abonnes</caption>
         <tr>
             <th>Identifiant de l'utilisateur</th>
+            <th>Photo de profil</th>
             <th>Nom</th>
             <th>Prenom</th>
             <th>Nom d'utilisateur</th>
             <th>Email</th>
             <th>Contact</th>
-            <th>Photo de profil</th>
             <th>Ville</th>
             <th>Quartier</th>
             <th>Sexe</th>
@@ -40,12 +40,12 @@
     @forelse ($listeAbonnes as $abonne)
             <tr>
                 <td>{{$abonne->utilisateur->id_utilisateur}}</td>
+                <td>{{$abonne->utilisateur->photo_profil}}</td>
                 <td>{{$abonne->utilisateur->nom}}</td>
                 <td>{{$abonne->utilisateur->prenom}}</td>
                 <td>{{$abonne->utilisateur->nom_utilisateur}}</td>
                 <td>{{$abonne->utilisateur->email}}</td>
                 <td>{{$abonne->utilisateur->contact}}</td>
-                <td>{{$abonne->utilisateur->photo_profil}}</td>
                 <td>{{$abonne->utilisateur->adresse["ville"]}}</td>
                 <td>{{$abonne->utilisateur->adresse["quartier"]}}</td>
                 <td>{{$abonne->utilisateur->sexe}}</td>

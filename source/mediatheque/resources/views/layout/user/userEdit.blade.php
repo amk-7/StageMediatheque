@@ -6,6 +6,12 @@
 <fieldset>
     {{csrf_field()}}
     {{ method_field('PUT') }}
+
+    <div>
+        <label for="photo_profil">Photo_profil</label>
+        <input type="text" name="photo_profil" value="{{$utilisateur->photo_profil}}">
+    </div>
+    
     <div>
         <label for="nom">Nom</label>
         <input type="text" name="nom" value="{{$utilisateur->nom}}">
@@ -34,11 +40,6 @@
     <div>
         <label for="contact">Contact</label>
         <input type="tel" name="contact" value="{{$utilisateur->contact}}">
-    </div>
-
-    <div>
-        <label for="photo_profil">Photo_profil</label>
-        <input type="text" name="photo_profil" value="{{$utilisateur->photo_profil}}">
     </div>
 
     <div>
