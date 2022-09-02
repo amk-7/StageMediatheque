@@ -63,7 +63,7 @@
     </div>
 
     <div>
-        <label for="adresse">Adresse</label>
+        <label for="adresse">Adresse : </label>
             <div>
                 <label for="ville">Ville</label>
                 <input type="text" class="form-control" id="ville" name="ville" class="@error('ville') is-invalid @enderror">
@@ -80,10 +80,10 @@
     </div>
 
     <div>
-        <label for="sexe">Sexe</label>
+        <label for="sexe">Sexe : </label>
             <div>
-                <input type="radio" name="sexe" value="Masculin">Masculin
-                <input type="radio" name="sexe" value="Feminin">Feminin
+                <input type="radio" name="sexe" value="Masculin">Masculin</br>
+                <input type="radio" name="sexe" value="Feminin">Feminin</br>
             </div>
     </div>
 

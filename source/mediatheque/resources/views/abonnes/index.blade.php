@@ -19,16 +19,16 @@
     <table>
         <caption>Informations sur les Abonnes</caption>
         <tr>
-            <th>Identifiant de l'utilisateur :</th>
-            <th>Nom :</th>
-            <th>Prenom :</th>
-            <th>Nom d'utilisateur :</th>
-            <th>Email :</th>
-            <th>Contact :</th>
-            <th>Photo de profil :</th>
-            <th>Ville :</th>
-            <th>Quartier :</th>
-            <th>Sexe :</th>
+            <th>Identifiant de l'utilisateur</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Photo de profil</th>
+            <th>Ville</th>
+            <th>Quartier</th>
+            <th>Sexe</th>
             <th>Date Naissance</th>
             <th>Niveau Etude</th>
             <th>Profession</th>

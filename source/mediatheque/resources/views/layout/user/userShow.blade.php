@@ -24,5 +24,7 @@
 
 </fieldset>
 </form>
+<button type="Submit">Retour</button>
+<button type="Submit">Suivant</button>
 
 @endsection
