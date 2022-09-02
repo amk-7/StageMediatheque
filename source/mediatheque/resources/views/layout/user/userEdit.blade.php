@@ -45,10 +45,10 @@
         <label for="adresss">Adresss</label>
         <div>
             <label for="ville">Ville</label>
-            <input type="text" name="ville" value="{{$utilisateur->ville}}">
+            <input type="text" name="ville" value="{{$utilisateur->adresse['ville']}}">
         
             <label for="quartier">Quartier</label>
-            <input type="text" name="quartier" value="{{$utilisateur->quartier}}">
+            <input type="text" name="quartier" value="{{$utilisateur->adresse['quartier']}}">
         </div>
     </div>
 
