@@ -2,15 +2,12 @@
     console.log("Ok");
 
     let id_oject = 0;
-
     //============== Initialisation des composant ====================
     const addCategorieSelect = document.getElementById("ajouterCategorie");
     const addGenreSelect = document.getElementById("ajouterGenre");
     const addAuteurBtn = document.getElementById("ajouterAuteur");
     const addkeyWord = document.getElementById("ajouterMotCle");
     const inputSave = document.getElementById("enregistrer");
-
-    //console.log(addCategorieSelect);
 
     //============== Ajout des event listener ========================
 

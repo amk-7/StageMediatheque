@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LivrePapierHelper;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
 use App\Service\AuteurServices;
@@ -10,6 +11,8 @@ use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class LivresPapierController extends Controller
 {
@@ -22,17 +25,18 @@ class LivresPapierController extends Controller
     {
         /*$annee = Carbon::now();
         dd($annee);*/
-        $niveausTypesLanguesAuteurs = OuvrageService::getNiveausTypesLanguesAuteurs();
+        $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
         $categories = LivresPapierService::getCategories();
-        $livresPapiers = LivresPapierService::getAll();
+        $livresPapiers = LivresPapier::all();
 
         return view('livresPapier.index')->with([
-            'niveaus'=> $niveausTypesLanguesAuteurs[0],
-            'types'=>$niveausTypesLanguesAuteurs[1],
-            'langues'=>$niveausTypesLanguesAuteurs[2],
-            'auteurs'=>$niveausTypesLanguesAuteurs[3],
+            'niveaus'=> $niveausTypesLanguesAuteursAnnee[0],
+            'types'=>$niveausTypesLanguesAuteursAnnee[1],
+            'langues'=>$niveausTypesLanguesAuteursAnnee[2],
+            'auteurs'=>$niveausTypesLanguesAuteursAnnee[3],
             'categories'=>$categories,
-            'livresPapiers'=>$livresPapiers
+            'annees' => $niveausTypesLanguesAuteursAnnee[4],
+            'id_livre_papier'=>LivresPapierService::getAllIDLivrePapier($livresPapiers)
         ]);
     }
 
@@ -44,18 +48,19 @@ class LivresPapierController extends Controller
     public function create()
     {
 
-        $niveausTypesLanguesAuteurs = OuvrageService::getNiveausTypesLanguesAuteurs();
+        $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
         $categories = LivresPapierService::getCategories();
         $classifications_dewey = OuvragesPhysiqueService::getClassificationsDewey();
 
         return view('livresPapier.create')->with([
-            'niveaus'=> $niveausTypesLanguesAuteurs[0],
-            'types'=>$niveausTypesLanguesAuteurs[1],
-            'langues'=>$niveausTypesLanguesAuteurs[2],
-            'auteurs'=>$niveausTypesLanguesAuteurs[3],
+            'niveaus'=> $niveausTypesLanguesAuteursAnnee[0],
+            'types'=>$niveausTypesLanguesAuteursAnnee[1],
+            'langues'=>$niveausTypesLanguesAuteursAnnee[2],
+            'auteurs'=>$niveausTypesLanguesAuteursAnnee[3],
             'categories'=>$categories,
-            'classification_dewey_centaines'=>$classifications_dewey[0],
-            'classification_dewey_dizaines'=>$classifications_dewey[1]
+            'classification_dewey_dizaines'=> $classifications_dewey[1],
+            'classification_dewey_centaines'=> $classifications_dewey[0],
+            'annees' => $niveausTypesLanguesAuteursAnnee[4],
         ]);
     }
 
@@ -70,6 +75,16 @@ class LivresPapierController extends Controller
         //Verifier si les champs par défaut d'un auteur sont remplie.
 
         //dd($request);
+        Validator::make($request->all(), [
+            'ISBN'=>['required',
+                function ($attribute, $value, $flail){
+                    if (LivresPapierService::exist($value)!=null){
+                        $flail("L' ".$attribute." existe déjà");
+                    }
+                }
+            ],
+        ])->validate();
+
         $request->validate([
             'titre'=> 'required',
             'niveau'=>'required|not_in:--Selectionner--',
@@ -78,36 +93,27 @@ class LivresPapierController extends Controller
             'lieu_edition'=>'required',
             'auteur0'=>'required',
             'categorie0'=>'required|not_in:--Selectionner--',
-            'ISBN'=>'required',
             'resume'=>'required',
             'nombre_exemplaire'=>'required',
-            'etat'=>'required',
             'id_classification_dewey_centaine'=>'required|not_in:--Selectionner--',
             'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
         ]);
 
-        $livres_papier = LivresPapierService::exist($request["ISBN"]);
-
-        if (! $livres_papier){
-            // Creation d'un ou des auteurs .
-            $auteurs = AuteurServices::enregistrerAuteur($request);
-            // Creation de l'ouvrage
-            $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
-            // Création d'un ouvrage physique
-            $ouvragePhysique = OuvragesPhysiqueService::enregisterOuvragePhysique($request, $ouvrage);
-            //dd($ouvragePhysique);
-            $list_categories = OuvrageService::convertDataToArray($request, "categorie");
-            //dd($list_categories);
-            $categories = OuvrageService::convertObjetToArray($list_categories, "categorie");
-            //dd($categories);
-            LivresPapier::create([
-                'categorie'=>$categories,
-                'ISBN'=>strtoupper($request["ISBN"]),
-                'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
-            ]);
-            return redirect()->route("listeLivresPapier");
-        }
-
+        // Creation d'un ou des auteurs .
+        $auteurs = AuteurServices::enregistrerAuteur($request);
+        // Creation de l'ouvrage
+        $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
+        // Création d'un ouvrage physique
+        $ouvragePhysique = OuvragesPhysiqueService::enregisterOuvragePhysique($request, $ouvrage);
+        //dd($ouvragePhysique);
+        $categories = OuvrageService::convertDataToArray($request, "categorie");
+        //dd($categories);
+        LivresPapier::create([
+            'categorie'=>$categories,
+            'ISBN'=>strtoupper($request["ISBN"]),
+            'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
+        ]);
+        return redirect()->route("listeLivresPapier");
     }
 
     /**
@@ -131,20 +137,21 @@ class LivresPapierController extends Controller
     public function edit(LivresPapier $livresPapier)
     {
         //dd($livresPapier);
-        $niveausTypesLanguesAuteurs = OuvrageService::getNiveausTypesLanguesAuteurs();
+        $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
         $categories = LivresPapierService::getCategories();
         $classifications_dewey = OuvragesPhysiqueService::getClassificationsDewey();
 
 
         return view('livresPapier.edite')->with([
             "livresPapier" => $livresPapier,
-            'niveaus'=> $niveausTypesLanguesAuteurs[0],
-            'types'=>$niveausTypesLanguesAuteurs[1],
-            'langues'=>$niveausTypesLanguesAuteurs[2],
-            'auteurs'=>$niveausTypesLanguesAuteurs[3],
+            'niveaus'=> $niveausTypesLanguesAuteursAnnee[0],
+            'types'=>$niveausTypesLanguesAuteursAnnee[1],
+            'langues'=>$niveausTypesLanguesAuteursAnnee[2],
+            'auteurs'=>$niveausTypesLanguesAuteursAnnee[3],
             'categories'=>$categories,
             'classification_dewey_centaines'=>$classifications_dewey[0],
             'classification_dewey_dizaines'=>$classifications_dewey[1],
+            'annees' => $niveausTypesLanguesAuteursAnnee[4],
         ]);
     }
 
@@ -153,7 +160,7 @@ class LivresPapierController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\LivresPapier  $livresPapier
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, LivresPapier $livresPapier)
     {
@@ -168,13 +175,12 @@ class LivresPapierController extends Controller
             'ISBN'=>'required',
             'resume'=>'required',
             'nombre_exemplaire'=>'required',
-            'etat'=>'required',
             'id_classification_dewey_centaine'=>'required|not_in:--Selectionner--',
             'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
         ]);
 
         $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livresPapier->id_ouvrage_physique)->first();
-        OuvragesPhysiqueService::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"], $request["etat"], $request["disponibilite"]);
+        OuvragesPhysiqueService::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"]);
         OuvrageService::updateOuvrage($request, $ouvragePhysique);
 
         return redirect()->route('listeLivresPapier');
@@ -184,18 +190,18 @@ class LivresPapierController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\LivresPapier  $livresPapier
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(LivresPapier $livresPapier)
     {
-        $id_ouvrage = $livresPapier->ouvragePhysique->ouvrage->id_ouvrage;
-        $id_ouvrage_physique =  $livresPapier->ouvragePhysique->id_ouvrage_physique;
+        $id_ouvrage = $livresPapier->id_livre_papier;
 
         $livresPapier->delete();
-        OuvragesPhysique::all()->where("id_ouvrage_physique", $id_ouvrage_physique)->first()->delete();
+        OuvragesPhysique::all()->where("id_ouvrage_physique", $id_ouvrage)->first()->delete();
         Ouvrage::all()->where("id_ouvrage", $id_ouvrage)->first()->delete();
         //dd("suppression");
         return redirect()->route('listeLivresPapier');
     }
+
 }
 

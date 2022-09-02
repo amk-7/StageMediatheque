@@ -19,8 +19,6 @@ class OuvragesPhysiqueService
 
         $ouvragePhysique = OuvragesPhysique::Create([
             'nombre_exemplaire' => $request["nombre_exemplaire"],
-            'etat'=>$request["etat"],
-            'disponibilite'=>true,
             'id_ouvrage'=>$ouvrage->id_ouvrage,
             'id_classification_dewey_dizaine'=>$classificationDizaine->id_classification_dewey_dizaine
         ]);
@@ -28,21 +26,8 @@ class OuvragesPhysiqueService
         return $ouvragePhysique ;
     }
 
-    public static function updateOuvrage(OuvragesPhysique $ouvragePhysique, $nombre_exemplaire, $etat, $disponibilite){
-        if ($disponibilite=="1"){
-            $disponibilite = true;
-        }else {
-            $disponibilite = false;
-        }
+    public static function updateOuvrage(OuvragesPhysique $ouvragePhysique, $nombre_exemplaire){
         $ouvragePhysique->nombre_exemplaire = $nombre_exemplaire;
-        $ouvragePhysique->etat = $etat;
-        $ouvragePhysique->disponibilite = $disponibilite;
         $ouvragePhysique->save();
-    }
-
-    public static function formatAvaible(OuvragesPhysique $ouvragesPhysique){
-        if($ouvragesPhysique->disponibilite){
-            return "disponible";
-        } return "nom disponible";
     }
 }

@@ -8,8 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class OuvragesPhysique extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre_exemplaire', 'etat', 'disponibilite', 'id_ouvrage', 'id_classification_dewey_dizaine'];
+    protected $fillable = ['nombre_exemplaire', 'id_ouvrage', 'id_classification_dewey_dizaine'];
     protected $primaryKey = 'id_ouvrage_physique';
+
+    public function estDisponible()
+    {
+        if($this->nombre_exemplaire > 0){
+            return true;
+        } return false;
+    }
+
+    public function augmenterNombreExemplaire($nombre_exemplaire)
+    {
+        $this->nombre_exemplaire = $this->nombre_exemplaire + $nombre_exemplaire;
+    }
 
     public function ouvrage(){
         return $this->hasOne(Ouvrage::class, "id_ouvrage");

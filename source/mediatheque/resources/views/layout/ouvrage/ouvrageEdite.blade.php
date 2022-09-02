@@ -17,7 +17,9 @@
                     <select name="niveau" id="niveau">
                         <option>--Sélectionner niveau--</option>
                         @foreach($niveaus as $niveau)
-                            <option value="{{$niveau}}">{{$niveau}}</option>
+                            <option value="{{$niveau}}" {{ $niveau == $livresPapier->ouvragePhysique->ouvrage->niveau ? 'selected' : '' }}>
+                                {{ \App\Helpers\OuvrageHelper::afficherNiveau($niveau) }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -26,7 +28,7 @@
                     <select name="type" id="type">
                         <option>--Sélectionner type--</option>
                         @foreach($types as $type)
-                            <option value="{{$type}}">{{$type}}</option>
+                            <option value="{{$type}}" {{ $type == $livresPapier->ouvragePhysique->ouvrage->type ? 'selected' : '' }}>{{$type}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -45,7 +47,7 @@
                     <select name="langue" id="langue">
                         <option>--Sélectionner langue--</option>
                         @foreach($langues as $langue)
-                            <option value="{{$langue}}">{{$langue}}</option>
+                            <option value="{{$langue}}" {{ $niveau == $livresPapier->ouvragePhysique->ouvrage->niveau ? 'selected' : '' }}>{{$langue}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -53,8 +55,8 @@
                     <label>Année d'apparution</label>
                     <select name="annee_apparution" id="annee_apparution">
                         <option>--Sélectionner annee--</option>
-                        @for($annee=1970; $annee<2023; $annee++)
-                            <option value="{{$annee}}">{{$annee}}</option>
+                        @for($annee=$annees; $annee<date('Y'); $annee++)
+                            <option value="{{$annee}}" {{ $annee == $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->annee_apparution ? 'selected' : '' }}>{{$annee}}</option>
                         @endfor
                     </select>
                 </div>
@@ -106,9 +108,11 @@
                         <td>
                             <div class="listeBtns">
                                 @foreach($livresPapier->ouvragePhysique->ouvrage->mot_cle as $mot_cle)
-                                    <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}"
-                                           value="{{ $mot_cle }}"/>
-                                    <button onclick="removeKeyWord('mot_cle_{{$loop->index}}')">x</button>
+                                    @if(! empty($mot_cle))
+                                        <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}"
+                                               value="{{ $mot_cle }}"/>
+                                        <button onclick="removeKeyWord('mot_cle_{{$loop->index}}')">x</button>
+                                    @endif
                                 @endforeach
                             </div>
                         </td>
@@ -139,9 +143,12 @@
             }
         };
     </script>
-    @include("layout.ouvrage.ouvrageData")
+@stop
+
+@section('js')
     <!--Mettre à jour les select box-->
     @include("layout.ouvrageZJS.ouvrageEdite")
     @include("layout.ouvrageZJS.ouvrageSendDataFormat")
+    @yield('ouvrage_content_js')
+    @yield('ouvrage_physique_content_js')
 @stop
-

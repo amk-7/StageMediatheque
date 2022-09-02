@@ -28,14 +28,15 @@ class LivrePapierSeeder extends Seeder
 
         $auteurn = Auteur::Create([
             'nom'=>'KONDI',
-            'prenom'=>'Abdoul',
+            'prenom'=>'abdoul',
         ]);
 
         $ouvrage5 = Ouvrage::Create([
             'titre'=>'CREPUSCUL DES TEMPS ANCIEN EPA',
             'mot_cle'=> array(
                 "temps",
-                "anciens"
+                "anciens",
+                ""
             ),
             'resume' => "pas de résumé .",
             'niveau' => '3',
@@ -59,14 +60,14 @@ class LivrePapierSeeder extends Seeder
 
         $ouvragePhysique5 = OuvragesPhysique::Create([
             'nombre_exemplaire' => 4,
-            'disponibilite'=>true,
             'id_ouvrage'=>$ouvrage5->id_ouvrage,
             'id_classification_dewey_dizaine'=>$classificationDizaine5->id_classification_dewey_dizaine
         ]);
 
         LivresPapier::Create([
             'categorie'=> array(
-                "français"
+                "français",
+                ""
             ),
             'ISBN'=>'12225555',
             'id_ouvrage_physique'=>$ouvragePhysique5->id_ouvrage_physique
@@ -74,19 +75,20 @@ class LivrePapierSeeder extends Seeder
 
         $auteur1 = Auteur::Create([
             'nom'=>'LAYE',
-            'prenom'=>'Camara'
+            'prenom'=>'camara'
         ]);
 
         $ouvrage1 = Ouvrage::Create([
                 'titre'=>"L'ENFANT NOIR",
             'mot_cle'=> [
                "temps",
+                ""
             ],
             'resume' => "pas de résumé .",
            'niveau' => '2',
-            'type'=>'roman',
+            'type'=>'nouvelle',
             'image' => 'default_book_image.png',
-            'langue'=>'français',
+            'langue'=>'anglais',
         ]);
 
         $ouvrage1->auteurs()->attach($auteur1->id_auteur, [
@@ -98,7 +100,6 @@ class LivrePapierSeeder extends Seeder
 
         $ouvragePhysique1 = OuvragesPhysique::Create([
             'nombre_exemplaire' => 3,
-            'disponibilite'=>true,
             'id_ouvrage'=>$ouvrage1->id_ouvrage,
             'id_classification_dewey_dizaine'=>$classificationDizaine1->id_classification_dewey_dizaine
         ]);
@@ -106,7 +107,8 @@ class LivrePapierSeeder extends Seeder
         LivresPapier::Create([
             'categorie'=> array(
                "français",
-                "anglais"
+                "anglais",
+                ""
             ),
             'ISBN'=>'1',
             'id_ouvrage_physique'=>$ouvragePhysique1->id_ouvrage_physique

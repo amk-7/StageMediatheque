@@ -1,14 +1,19 @@
 @extends('layout.base')
-@section("livewire_style_content")
+@section("livewire_styles_content")
     @livewireStyles
-@stop
-@section("livewire_style_content")
-    @livewireScripts
 @stop
 @section("content")
     @livewire('ouvrage.index-livre-papier-livewire', [
-        'livresPapiers'=>$livresPapiers
+        'annees'=>$annees,
+        'niveaus'=> $niveaus,
+        'types'=>$types,
+        'langues'=>$langues,
+        'categories'=>$categories,
+        'id_livre_papier'=>$id_livre_papier
     ])
+@stop
+@section("livewire_scripts_content")
+    @livewireScripts
 @stop
 
 

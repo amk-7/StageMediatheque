@@ -3,8 +3,6 @@
     let selectRayon = document.getElementById("id_classification_dewey_centaine");
     let selectEtagere = document.getElementById("id_classification_dewey_dizaine");
 
-    //console.log(JSON.parse(sessionStorage.getItem("liste_etagers")));
-
     const rayon_selected_value = "{!! $livresPapier->ouvragePhysique->classificationDeweyDizaine->classificationDeweyCentaine->first()->theme !!}";
     const etager_selected_value = "{!! $livresPapier->ouvragePhysique->classificationDeweyDizaine->id_classification_dewey_dizaine !!}";
 
@@ -36,7 +34,6 @@
     let niveau = "{!! $livresPapier->ouvragePhysique->ouvrage->niveau !!}";
     let type = "{!! $livresPapier->ouvragePhysique->ouvrage->type  !!}";
     let langue = "{!! $livresPapier->ouvragePhysique->ouvrage->langue !!}";
-    let etat = {!! $livresPapier->ouvragePhysique->etat !!};
     let disponibilite = "{!! $livresPapier->ouvragePhysique->disponibilite !!}";
 
 

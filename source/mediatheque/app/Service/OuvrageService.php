@@ -7,27 +7,46 @@ use App\Models\Ouvrage;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Self_;
+
 
 class OuvrageService
 {
-    public static function searchByMainAttribute(String $titre, String $langue, String $niveau, String $mot_cle)
-    {
-        $ouvrages = DB::table('ouvrages')
-            ->select('id_ouvrage')
-            ->whereJsonContains('mot_cle', ['temps'])
-            ->orWhere('titre', $titre)
-            ->orWhere('langue', $langue)
-            ->orWhere('niveau', $niveau)
-            ->get();
-        $id_ouvrages = array();
 
+    public static function searchByTitreMotCle(String $value)
+    {
+        $id_ouvrages = DB::table('ouvrages')
+            ->select('id_ouvrage')
+            ->whereJsonContains('mot_cle', [strtolower($value)])
+            ->orWhere('titre', 'like', '%'.strtoupper($value).'%')
+            ->get();
+
+        return self::id_ouvrage_from_array($id_ouvrages);
+    }
+
+    public static function id_ouvrage_from_array($ouvrages)
+    {
+        $id_ouvrages = array();
         foreach ($ouvrages as $o)
         {
             array_push($id_ouvrages, $o->id_ouvrage);
         }
 
-        return $id_ouvrages;
+        return$id_ouvrages;
+    }
+
+    public static function searchByParamaters($annee_debut, $annee_fin, $langue, $niveau, $type)
+    {
+        $id_ouvrages = DB::select("Select id_ouvrage from auteurs_ouvrages where annee_apparution between $annee_debut and $annee_fin");
+
+        $id_ouvrages = DB::table('ouvrages')
+            ->select("id_ouvrage")
+            ->where('langue', 'like', '%'.$langue.'%')
+            ->where('niveau', 'like', '%'.$niveau.'%')
+            ->where('type', 'like', '%'.$type.'%')
+            ->whereIn('id_ouvrage', self::id_ouvrage_from_array($id_ouvrages))
+            ->get();
+        //dd($id_ouvrages);
+        return self::id_ouvrage_from_array($id_ouvrages);
     }
 
     public static function updateOuvrage(Request $request, OuvragesPhysique $ouvragesPhysique)
@@ -68,12 +87,12 @@ class OuvrageService
         // Creation d'un ou des auteurs .
         $auteurs = AuteurServices::enregistrerAuteur($request);
         self::definireAuteur($request, $ouvrage, $auteurs);
-        dd($auteurs);
+        //dd($auteurs);
 
     }
-    public static function getNiveausTypesLanguesAuteurs(){
+    public static function getNiveausTypesLanguesAuteursAnnee(){
         $niveaus = [
-            '1er degré', '2è degré', '3è degré', 'université'
+            '1', '2', '3', 'université'
         ];
 
         $types = [
@@ -83,44 +102,46 @@ class OuvrageService
         $langues = [
             'français', 'anglais', 'allemand'
         ];
-        return [$niveaus, $types, $langues, Auteur::all()];
+
+        return [$niveaus, $types, $langues, Auteur::all(), 1900];
     }
 
     public static function enregisterOuvrage(Request $request, Array $auteurs)
     {
         $motCle = [];
 
-        if (empty($request["mot_cle_0"])){
+        //dd($request);
+        if (! empty($request["mot_cle_0"])){
             if (is_string($request["mot_cle_0"])){
-                $motCle = array([$request["mot_cle_0"]]);
-            }else{
-                $list_mot_cles = self::convertDataToArray($request, "motCle");
-                $motCle = self::convertObjetToArray($list_mot_cles, "mot_cle");
+                $motCle = array($request["mot_cle_0"]);
             }
+        } else {
+            $motCle = self::convertDataToArray($request, "motCle");
         }
-
         // Récupérer l'image.
         $image = $request->file('image_livre');
 
         if (! $image==null){
             // Stocker l'image
-            $chemin_image = $image->storeAs('public/images/images_livre', $request->titre.'.'.$image->extension());
+            $chemin_image = strtolower($request->titre).'.'.$image->extension();
+            $image->storeAs('public/images/images_livre', $chemin_image);
         } else {
-            $image = "default_book_image.png";
+            $chemin_image = "default_book_image.png";
         }
 
         $ouvrage = Ouvrage::create([
-            'titre'=>ucfirst($request["titre"]),
+            'titre'=>strtoupper($request["titre"]),
             'niveau' => strtolower($request["niveau"]),
             'type'=>strtolower($request["type"]),
-            'image' => $image,
+            'image' => $chemin_image,
             'langue'=>strtolower($request["langue"]),
-            'resume'=>ucfirst($request["resume"]),
+            'resume'=>strtolower($request["resume"]),
             'mot_cle'=>$motCle
         ]);
 
         // Definire les auteurs de l'ouvrage
         OuvrageService::definireAuteur($request, $ouvrage, $auteurs);
+        //dd($ouvrage->auteurs()->first());
         return $ouvrage;
     }
 
@@ -149,9 +170,7 @@ class OuvrageService
                 $continuer = false;
             }
         }
-        //dd($list_objet_str);
-        $liste_objects = explode(";",strtolower($list_objet_str));
-        //dd($liste_objects);
+        $liste_objects = explode(";",strtolower($list_objet_str.";"));
 
         return $liste_objects;
     }
@@ -163,5 +182,27 @@ class OuvrageService
             $objectsJson["$object$i"] = $objects[$i];
         }
         return $objectsJson;
+    }
+
+    public static function convertAnneeForResearch($debut, $fin, String $default_debut)
+    {
+        if (empty($debut)){
+            $debut = (int) $default_debut;
+        }
+        if (empty($fin)){
+            $fin = (int) date('Y');
+        }
+
+        if (! empty($debut) and ! empty($fin)){
+            $debut = (int) $debut;
+            $fin = (int) $fin;
+            if ($debut > $fin){
+                $value = $fin ;
+                $fin = $debut ;
+                $debut = $value ;
+            }
+        }
+
+        return array($debut, $fin);
     }
 }
