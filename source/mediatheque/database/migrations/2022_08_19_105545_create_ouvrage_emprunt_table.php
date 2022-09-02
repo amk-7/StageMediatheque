@@ -16,6 +16,7 @@ class CreateOuvrageEmpruntTable extends Migration
         Schema::create('ouvrage_emprunt', function (Blueprint $table) {
             $table->foreignId('ouvrage_physique_id_ouvrage_physique');
             $table->foreignId('emprunt_id_emprunt');
+            $table->enum("etat", [1, 2, 3, 4, 5]);
             $table->timestamps();
             $table->primary(['ouvrage_physique_id_ouvrage_physique', 'emprunt_id_emprunt']);
         });

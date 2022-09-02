@@ -17,6 +17,7 @@ class CreateRestitutionOuvragePhysiqueTable extends Migration
             $table->string('etat_ouvrage');
             $table->foreignId('id_ouvrage_physique');
             $table->foreignId('id_restitution');
+            $table->enum("etat", [1, 2, 3, 4, 5]);
             $table->primary(['id_restitution', 'id_ouvrage_physique']);
             $table->timestamps();
         });

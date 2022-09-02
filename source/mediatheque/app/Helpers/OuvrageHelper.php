@@ -25,14 +25,16 @@ class OuvrageHelper
 
     public static function afficherNiveau(String $niveau)
     {
-        if (! $niveau == "universite"){
-            if ($niveau == "1"){
-                $niveau = $niveau."er";
-            } else{
-                $niveau = $niveau."è";
-            }
-            $niveau = $niveau." degrès";
+       if ($niveau==1){
+           return "primaire";
+       }
+        if ($niveau==2){
+            return "collège";
         }
+        if ($niveau==3){
+            return "lycée";
+        }
+        return $niveau;
     }
 
 }

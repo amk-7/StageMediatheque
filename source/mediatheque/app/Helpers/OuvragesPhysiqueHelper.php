@@ -24,10 +24,10 @@ class OuvragesPhysiqueHelper
 
     public static function afficherDisponibilite(OuvragesPhysique $ouvragesPhysique)
     {
-        if ($ouvragesPhysique->disponibilite)
+        if ($ouvragesPhysique->estDisponible())
         {
             return "<p class='text-green-800'>Disponible<p>";
-        } return "<p class='text-red-800'>Disponible<p>";
+        } return "<p class='text-red-800'> Pas disponible<p>";
     }
 
     public static function afficherEtat(OuvragesPhysique $ouvragesPhysique)
@@ -53,6 +53,12 @@ class OuvragesPhysiqueHelper
         ];
 
         return $etats;
+    }
+
+    public static function formatAvaible(OuvragesPhysique $ouvragesPhysique){
+        if($ouvragesPhysique->estDisponible()){
+            return "disponible";
+        } return "nom disponible";
     }
 
 }

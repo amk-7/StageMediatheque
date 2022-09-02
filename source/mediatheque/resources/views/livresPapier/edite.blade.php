@@ -12,9 +12,11 @@
             </select>
             <div id="listeCategorie">
                 @foreach($livresPapier->categorie as $categorie)
-                    <input id="categorie{{$loop->index}}" type="text" name="categorie{{$loop->index}}"
-                           value="{{ $categorie }}"/>
-                    <button onclick="removeCategorie('categorie{{$loop->index}}')">x</button>
+                    @if(! empty($categorie))
+                        <input id="categorie{{$loop->index}}" type="text" name="categorie{{$loop->index}}"
+                               value="{{ $categorie }}"/>
+                        <button onclick="removeCategorie('categorie{{$loop->index}}')">x</button>
+                    @endif
                 @endforeach
             </div>
         </div>

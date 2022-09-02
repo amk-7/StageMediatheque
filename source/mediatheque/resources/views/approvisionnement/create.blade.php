@@ -1,29 +1,21 @@
 @extends("layout.base")
-@section("livewire_style_content")
+@section("livewire_styles_content")
     @livewireStyles
 @stop
-
-@section("livewire_script_content")
+@section("livewire_scripts_content")
     @livewireScripts
 @stop
-
 @section("content")
-    <h1>Approvisionnement d'un ouvrage</h1>
-    <form action="{{ route('enregistementApprovisionnement') }}" method="post">
-        @csrf
-        @livewire('approvisionement.create', [
-        'ouvragesPhysique' => $ouvragesPhysique,
-        'personnels' => $personnels
-        ])
-        <input type="submit" name="action_approvisionnement" value="Approvisionner">
-    </form>
+    @livewire('approvisionnement.create-approvisionement-livewire', [
+    'personnels'=>$personnels,
+    'ouvragesPhysique'=>$ouvragesPhysique
+    ])
 @stop
 @section("js")
-    <script type="text/javascript">
+    <!--script type="text/javascript">
         let input_searche_bar_ouvrage_physique = document.getElementById("searche_ouvrgae_physique");
         let hidden_input_searche_bar_ouvrage_physique = document.getElementById("searche_ouvrgae_physique_cle");
         let input_annee_apparution = document.getElementById("annee_apparution");
-
 
         input_searche_bar_ouvrage_physique.addEventListener("keyup", function (){
             search_object("searche_ouvrgae_physique", "ouvrages_physique");
@@ -65,5 +57,5 @@
             input_hidden.value = id;
             input_annee.value = annee;
         }
-    </script>
+    </script-->
 @stop

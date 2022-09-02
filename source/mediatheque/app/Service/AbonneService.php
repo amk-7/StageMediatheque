@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Service;
 
 use App\Models\Abonne;
 
 
-class AbonneHelper
+class AbonneService
 {
     public static function verifierSiAbonneExist($nom, $prenom){
         Abonne::all()->where('nom', $nom)->where('prenom', $prenom);

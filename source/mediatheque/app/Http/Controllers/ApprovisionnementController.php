@@ -13,13 +13,12 @@ class ApprovisionnementController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        //
         $approvisionnements = Approvisionnement::all();
-        return view('approvisionnement.index')->with('approvisionnements', $approvisionnements);
+        return view('listeApprovisionnements.index')->with('approvisionnements', $approvisionnements);
     }
 
     /**
@@ -41,24 +40,24 @@ class ApprovisionnementController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //dd($request);
-
         //Rechercher L'ouvrage physique.
-        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $request["id_ouvrage_physique"]);
+        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $request->id_ouvrage)->first();
 
-        $ouvragePhysique->nombre_exemplaie += $request["nombre_exemmplaire"];
-
-        $approvisionnement = Approvisionnement::create([
+        $ouvragePhysique->augmenterNombreExemplaire($request->nombre_exemplaire);
+        $ouvragePhysique->save();
+        //dd($request);
+       Approvisionnement::create([
             'nombre_exemplaire' => $request->nombre_exemplaire,
             'date_approvisionnement' => $request->date_approvisionnement,
-            'id_personnel'=>$request["id_personnel"],
+            'id_personnel'=>$request->id_personnel,
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
         ]);
-        return redirect()->route('approvisionnement.index');
+
+        return redirect()->route('listeApprovisionnements.index');
     }
 
     /**
