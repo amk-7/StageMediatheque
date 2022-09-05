@@ -23,7 +23,7 @@ class AbonneSeeder extends Seeder
             'email' => 'Alhassan.blog@gmail.com',
             'password' => 'moprte789654',
             'contact' => '91817907',
-            'photo_profil' => 'photo.jpg',
+            'photo_profil' => 'personne.jpg',
             'adresse' => array(
                 'ville' => 'Sokode',
                 'quartier' => 'Lome'),

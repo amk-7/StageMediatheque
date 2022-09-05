@@ -38,9 +38,10 @@
             <th>Action</th>
         </tr>
     @forelse ($listeAbonnes as $abonne)
+    {{--dd($abonne->date_naissance->format('d/m/Y'))--}}
             <tr>
                 <td>{{$abonne->utilisateur->id_utilisateur}}</td>
-                <td>{{$abonne->utilisateur->photo_profil}}</td>
+                <td><img src="{{--asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil--}}"></td>
                 <td>{{$abonne->utilisateur->nom}}</td>
                 <td>{{$abonne->utilisateur->prenom}}</td>
                 <td>{{$abonne->utilisateur->nom_utilisateur}}</td>
@@ -49,7 +50,7 @@
                 <td>{{$abonne->utilisateur->adresse["ville"]}}</td>
                 <td>{{$abonne->utilisateur->adresse["quartier"]}}</td>
                 <td>{{$abonne->utilisateur->sexe}}</td>
-                <td>{{$abonne->date_naissance}}</td>
+                <td>{{$abonne->date_naissance->format('d/m/Y')}}</td>
                 <td>{{$abonne->niveau_etude}}</td>
                 <td>{{$abonne->profession}}</td>
                 <td>{{$abonne->contact_a_prevenir}}</td>
@@ -59,7 +60,7 @@
                     <form method="GET" action="{{route('editAbonne', $abonne->id_abonne)}}">
                         <button type="Submit">Modifier</button>
                     </form>
-                    
+                
                     <form methode="GET" action="{{route('showAbonne', $abonne->id_abonne)}}">
                         <button type="Submit">Afficher</button>
                     </form>

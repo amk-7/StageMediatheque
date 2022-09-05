@@ -20,7 +20,7 @@
         <caption>Informations sur les Personnels</caption>
         <tr>
             <th>Identifiant de l'utilisateur</th>
-            <th>Photo_profil</th>
+            <th>Photo de profil</th>
             <th>Nom</th>
             <th>Prenom</th>
             <th>Nom d'utilisateur</th>
@@ -35,7 +35,7 @@
     @forelse ($listePersonnels as $personnel)
             <tr>
                 <td>{{$personnel->utilisateur->id_utilisateur}}</td>
-                <td>{{$personnel->utilisateur->photo_profil}}</td>
+                <td><img src="{{--asset('storage/images/image_utilisateur').'/'.$personnel->utilisateur->photo_profil--}}"></td>
                 <td>{{$personnel->utilisateur->nom}}</td>
                 <td>{{$personnel->utilisateur->prenom}}</td>
                 <td>{{$personnel->utilisateur->nom_utilisateur}}</td>

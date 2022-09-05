@@ -6,6 +6,7 @@ use App\Helpers\UtilisateurHelper;
 
 use App\Models\Abonne;
 use App\Models\User;
+use App\Service\UserService;
 use DB;
 use Illuminate\Http\Request;
 
@@ -111,20 +112,10 @@ class AbonneController extends Controller
 
         $utilisateurs = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom);
         if(count($utilisateurs)!=0){
-            return 'cet utilisateur exist deja';
+
         }else{
-            $utilisateur = User::create([
-                'nom' => $request->nom,
-                'prenom' => $request->prenom,
-                'nom_utilisateur' => $request->nom_utilisateur,
-                'email' => $request->email,
-                'password' => $request->password,
-                'contact' => $request->contact,
-                'photo_profil' => $request->photo_profil,
-                'adresse' => $request->adresse,
-                'sexe' => $request->sexe
-            ]);
     
+            $utilisateur = UserService::enregistrerUtilisateur($request);
             $abonne = Abonne::create([
                 'date_naissance' => $request->date_naissance,
                 'niveau_etude' => $request->niveau_etude,
@@ -135,8 +126,9 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
                 
             ]);
+            $abonne->save();
         }
-        $abonne->save();
+        
         return redirect()->route('listeAbonnes');
     }
 

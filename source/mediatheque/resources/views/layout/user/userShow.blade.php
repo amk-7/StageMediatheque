@@ -5,10 +5,12 @@
 <form method="GET" action="{{route($action, $model)}}">
     {{--dd($utilisateur->adresse)--}}
 @csrf
+
 <fieldset>
     <legend>{{$title}}</legend>
     <label>Identifiant de l'utilisateur : {{$utilisateur->id_utilisateur}}</label></br>
-    <label>Photo_profil : {{$utilisateur->photo_profil}}</label></br>
+    <label>Photo de profil : </label></br>
+    <img src="{{asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil}}"></br>
     <label>Nom : {{$utilisateur->nom}}</label></br>
     <label>Prenom : {{$utilisateur->prenom}}</label></br>
     <label>Nom d'utilisateur : {{$utilisateur->nom_utilisateur}}</label></br>
