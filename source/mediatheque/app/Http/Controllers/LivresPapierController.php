@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\LivrePapierHelper;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
-use App\Service\AuteurServices;
+use App\Service\AuteurService;
 use App\Service\LivresPapierService;
 use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
@@ -100,7 +100,7 @@ class LivresPapierController extends Controller
         ]);
 
         // Creation d'un ou des auteurs .
-        $auteurs = AuteurServices::enregistrerAuteur($request);
+        $auteurs = AuteurService::enregistrerAuteur($request);
         // Creation de l'ouvrage
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
         // Création d'un ouvrage physique
@@ -164,6 +164,7 @@ class LivresPapierController extends Controller
      */
     public function update(Request $request, LivresPapier $livresPapier)
     {
+        //dd($request);
         $request->validate([
             'titre'=> 'required',
             'niveau'=>'required|not_in:--Selectionner--',

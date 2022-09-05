@@ -16,6 +16,7 @@ class CreateApprovisionnementsTable extends Migration
         Schema::create('approvisionnements', function (Blueprint $table) {
             $table->bigIncrements('id_approvisionnement');
             $table->integer('nombre_exemplaire');
+            $table->enum('type_ouvrage', ['livre_papier', 'documentAV']);
             $table->timestamp('date_approvisioement')->default('now()');
             $table->bigInteger('id_ouvrage_physique');
             $table->bigInteger('id_personnel');

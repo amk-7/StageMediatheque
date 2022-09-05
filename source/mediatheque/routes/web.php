@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Http\Controllers\ApprovisionnementController;
+use App\Http\Controllers\ApprovisionnementsController;
 use App\Http\Controllers\DocumentAudioVisuelController;
 use App\Http\Controllers\DocumentAudioVisuelElectroniqueController;
 use App\Http\Controllers\LivreNumeriqueController;
@@ -150,12 +150,14 @@ Route::post('modification_document_audio_visuels', [DocumentAudioVisuelControlle
 Route::delete('suppression_document_audio_visuels', [DocumentAudioVisuelController::class, 'destroy'])->name('suppressionDocumentAudioVisuels');
 
 
-Route::get('liste_approvisionnements', [ApprovisionnementController::class, 'index'])->name('listeApprovisionnements');
-Route::get('formulaire_enregistrement_approvisionnement', [ApprovisionnementController::class, 'create'])->name('formulaireEnregistrementApprovisionnement');
-Route::post('enregistrement_approvisionnement', [ApprovisionnementController::class, 'store'])->name('enregistementApprovisionnement');
-Route::get('affichage_approvisionnement', [ApprovisionnementController::class, 'show'])->name('affichageApprovisionnement');
-Route::get('formulaire_modification_approvisionnement', [ApprovisionnementController::class, 'edit'])->name('formulaireModificationApprovisionnement');
-Route::post('modification_approvisionnement', [ApprovisionnementController::class, 'update'])->name('modificationApprovisionnement');
-Route::delete('suppression_approvisionnement', [ApprovisionnementController::class, 'destroy'])->name('suppressionApprovisionnement');
+Route::get('liste_approvisionnements', [ApprovisionnementsController::class, 'index'])->name('listeApprovisionnements');
+Route::get('formulaire_enregistrement_approvisionnements', [ApprovisionnementsController::class, 'create'])->name('formulaireEnregistrementApprovisionnements');
+Route::post('enregistrement_approvisionnements', [ApprovisionnementsController::class, 'store'])->name('enregistementApprovisionnements');
+Route::get('affichage_approvisionnements', [ApprovisionnementsController::class, 'show'])->name('affichageApprovisionnements');
+Route::get('formulaire_modification_approvisionnements/{approvisionnements}/modification', [ApprovisionnementsController::class, 'edit'])->name('formulaireModificationApprovisionnements');
+Route::post('modification_approvisionnements', [ApprovisionnementsController::class, 'update'])->name('modificationApprovisionnements');
+Route::delete('suppression_approvisionnements', [ApprovisionnementsController::class, 'destroy'])->name('suppressionApprovisionnements');
 
-
+Route::get('/getCodeIDTitle', [\App\Service\OuvragesPhysiqueService::class, 'getCodeIDTitle'] );
+Route::get('/getCodeID', [\App\Service\OuvragesPhysiqueService::class, 'getCodeID'] );
+Route::get('/getOuvragePhysiqueByType', [\App\Service\OuvragesPhysiqueService::class, 'getOuvragePhysiqueByType'] );

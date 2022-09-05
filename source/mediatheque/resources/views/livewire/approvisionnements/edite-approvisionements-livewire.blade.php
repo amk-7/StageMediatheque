@@ -1,5 +1,5 @@
 <div>
-    <h1>Approvisionnement d'un ouvrage</h1>
+    <h1>Edition d'un ouvrage</h1>
     <form action="{{ route('enregistementApprovisionnement') }}" method="post">
         @csrf
         <fieldset>
@@ -9,7 +9,9 @@
                 <select wire:model="nom_personne" name="nom_personne" id="nom_personne">
                     <option value="">--Selectionner nom--</option>
                     @foreach($personnels as $personnel)
-                        <option value="{{ $personnel->utilisateur->nom }}">{{ $personnel->utilisateur->nom }}</option>
+                        <option value="{{ $personnel->utilisateur->nom }}" {{ $personnel->utilisateur->nom == $approvisionnement->personnel->utilisateur->nom ? 'selected' : '' }}>
+                            {{ $personnel->utilisateur->nom }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -18,7 +20,7 @@
                 <select name="id_personnel" id="prenom_personne">
                     <option value="">--Selectionner prenom--</option>
                     @foreach($prenoms_personnes as $personnel)
-                        <option value="{{ $personnel->id_utilisateur }}">{{ $personnel->prenom }}</option>
+                        <option value="{{ $personnel->id_personnel }}">{{ $personnel->prenom }}</option>
                     @endforeach
                 </select>
             </div>
