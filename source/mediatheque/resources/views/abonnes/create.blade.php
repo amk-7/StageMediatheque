@@ -11,29 +11,39 @@
     </div>
 
     <div>
-        <label for="niveau_etude">Niveau d'étude</label>
+        <label for="niveau_etude">Niveau d'étude : </label>
             <div>
-                <input type="radio" name="niveau_etude" value="Primaire">Primaire
-                <input type="radio" name="niveau_etude" value="Collège">Collège
-                <input type="radio" name="niveau_etude" value="Lycée">Lycée
-                <input type="radio" name="niveau_etude" value="Université">Université
+                <input type="radio" name="niveau_etude" value="Primaire">Primaire</br>
+                <input type="radio" name="niveau_etude" value="Collège">Collège</br>
+                <input type="radio" name="niveau_etude" value="Lycée">Lycée</br>
+                <input type="radio" name="niveau_etude" value="Université">Université</br>
             </div>
     </div>
 
     <div>
-        <label for="profession">Profession</label>
-            <input type="text" name="profession" id="profession" class="@error('profession') is-invalid @enderror">
-            @error('profession')
-                <div class="alert">{{ $message }}</div>
-            @enderror
+        <label for="profession">Profession : </label>
+            <div>
+                <input type="radio" name="profession" value="Elève">Elève</br>
+                <input type="radio" name="profession" value="Etudiant">Etudiant</br>
+                <input type="radio" name="profession" value="Fonctionnaire">Fonctionnaire</br>
+                <input type="radio" name="profession" value="Retraité">Retraité</br>
+            </div>
     </div>
-    
+
     <div>
         <label for="contact_a_prevenir">Contact à prévenir</label>
             <input type="text" name="contact_a_prevenir" id="contact_a_prevenir" class="@error('contact_a_prevenir') is-invalid @enderror">
             @error('contact_a_prevenir')
                 <div class="alert">{{ $message }}</div>
             @enderror
+    </div>
+
+    <div>
+        <label for="type_de_carte">Type de carte :</label>
+            <div>
+                <input type="radio" name="type_de_carte" value="Identité">Identité</br>
+                <input type="radio" name="type_de_carte" value="Scolaire">Scolaire</br>
+            </div>
     </div>
 
     <div>
@@ -44,12 +54,6 @@
             @enderror
     </div>
 
-    <div>
-        <label for="type_de_carte">Type de carte</label>
-            <input type="text" name="type_de_carte" id="type_de_carte" class="@error('type_de_carte') is-invalid @enderror">
-            @error('type_de_carte')
-                <div class="alert">{{ $message }}</div>
-            @enderror
-    </div>
+
 
 @endsection
