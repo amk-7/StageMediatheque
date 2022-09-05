@@ -23,7 +23,7 @@ class PersonnelSeeder extends Seeder
             'email' => 'Alhassan.tuto@gmail.com',
             'password' => '256398741',
             'contact' => '91767676',
-            'photo_profil' => 'image.jpg',
+            'photo_profil' => 'personne.jpg',
             'adresse' => array(
                 'ville' => 'Dakar',
                 'quartier' => 'Sédhiou'),
@@ -31,7 +31,7 @@ class PersonnelSeeder extends Seeder
         ]);
         
         Personnel::create([
-            'statut' => 'Administrateur',
+            'statut' => 'Responsable',
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
     }

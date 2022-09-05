@@ -4,9 +4,9 @@
     
     <div>    
         <label for="date_naissance">Date de naissance</label>
-            <input type="date" name="date_naissance" id="date_naissance" class="@error('date_naissance') is-invalid @enderror">
+            <input type="date" name="date_naissance" id="date_naissance" value="{{old('date_naissance')}}" class="@error('date_naissance') is-invalid @enderror">
             @error('date_naissance')
-                <div class="alert">{{ $message }}</div>
+                <div class="alert">{{ $message }}</div>}
             @enderror
     </div>
 
@@ -32,7 +32,7 @@
 
     <div>
         <label for="contact_a_prevenir">Contact à prévenir</label>
-            <input type="text" name="contact_a_prevenir" id="contact_a_prevenir" class="@error('contact_a_prevenir') is-invalid @enderror">
+            <input type="text" name="contact_a_prevenir" id="contact_a_prevenir" value="{{old('contact_a_prevenir')}}" class="@error('contact_a_prevenir') is-invalid @enderror">
             @error('contact_a_prevenir')
                 <div class="alert">{{ $message }}</div>
             @enderror
@@ -48,7 +48,7 @@
 
     <div>
         <label for="numero_carte">Numéro de carte</label>
-            <input type="text" name="numero_carte" id="numero_carte" class="@error('numero_carte') is-invalid @enderror">
+            <input type="text" name="numero_carte" id="numero_carte" value="{{old('numero_carte')}}"  class="@error('numero_carte') is-invalid @enderror">
             @error('numero_carte')
                 <div class="alert">{{ $message }}</div>
             @enderror
