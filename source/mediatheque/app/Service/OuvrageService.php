@@ -85,7 +85,7 @@ class OuvrageService
 
         $ouvrage->auteurs()->detach();
         // Creation d'un ou des auteurs .
-        $auteurs = AuteurServices::enregistrerAuteur($request);
+        $auteurs = AuteurService::enregistrerAuteur($request);
         self::definireAuteur($request, $ouvrage, $auteurs);
         //dd($auteurs);
 

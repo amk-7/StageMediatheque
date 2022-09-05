@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Approvisionnement;
 use App\Models\OuvragesPhysique;
 use App\Models\Personnel;
+use App\Service\ApprovisionnementService;
+use App\Service\OuvragesPhysiqueService;
+use App\Service\PersonnelService;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Integer;
 
-class ApprovisionnementController extends Controller
+class ApprovisionnementsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +21,7 @@ class ApprovisionnementController extends Controller
     public function index()
     {
         $approvisionnements = Approvisionnement::all();
-        return view('listeApprovisionnements.index')->with('approvisionnements', $approvisionnements);
+        return view('approvisionnements.index')->with('approvisionnements', $approvisionnements);
     }
 
     /**
@@ -28,11 +31,10 @@ class ApprovisionnementController extends Controller
      */
     public function create()
     {
-        $ouvragesPhysique = OuvragesPhysique::all();
-        $personnels = Personnel::all();
-        return view('approvisionnement.create')->with([
-            "ouvragesPhysique"=>$ouvragesPhysique,
-            "personnels"=>$personnels
+        return view('approvisionnements.create')->with([
+            "livre_papier"=>json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
+            "document_audio_visuel"=>json_encode(OuvragesPhysiqueService::getDocAVWithAllAttribute()),
+            "personnels"=>json_encode(PersonnelService::getPersonnelWithAllAttribut()),
         ]);
     }
 
@@ -44,20 +46,16 @@ class ApprovisionnementController extends Controller
      */
     public function store(Request $request)
     {
-        //Rechercher L'ouvrage physique.
-        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $request->id_ouvrage)->first();
-
-        $ouvragePhysique->augmenterNombreExemplaire($request->nombre_exemplaire);
-        $ouvragePhysique->save();
         //dd($request);
-       Approvisionnement::create([
-            'nombre_exemplaire' => $request->nombre_exemplaire,
-            'date_approvisionnement' => $request->date_approvisionnement,
-            'id_personnel'=>$request->id_personnel,
-            'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
+        $request->validate([
+            'nom_personne'=>'required',
+            'id_personnel'=>'required',
+            'date_approvisionnement'=>'required',
+            'data'=>'required',
         ]);
 
-        return redirect()->route('listeApprovisionnements.index');
+        ApprovisionnementService::enregistrerPlusieursApprosionnement($request->data, $request->id_personnel);
+        return redirect()->route('listeApprovisionnements');
     }
 
     /**
@@ -68,19 +66,22 @@ class ApprovisionnementController extends Controller
      */
     public function show(Approvisionnement $approvisionnement)
     {
-        //
+        return "Consultation";
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Approvisionnement  $approvisionnement
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Approvisionnement $approvisionnement)
     {
-        //
-        return view('approvisionnement.edit')->with('approvisionnement', $approvisionnement);
+        return view('approvisionnements.edite')->with([
+            'ouvragesPhysique'=>OuvragesPhysique::all(),
+            'personnels'=>Personnel::all(),
+            'approvisionnements'=> $approvisionnement,
+        ]);
     }
 
     /**
@@ -97,7 +98,8 @@ class ApprovisionnementController extends Controller
             'nombre_exemplaire' => $request['nombre_exemplaire'],
             'date_approvisionnement' => $request['date_approvisionnement']
         ]));
-        return redirect()->route('approvisionnement.index');
+
+        return redirect()->route('listeApprovisionnements');
     }
 
     /**
@@ -110,7 +112,7 @@ class ApprovisionnementController extends Controller
     {
         //
         $approvisionnement->delete();
-        return redirect()->route('approvisionnement.index');
+        return redirect()->route('approvisionnements.index');
 
     }
 }

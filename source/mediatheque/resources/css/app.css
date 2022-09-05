@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.search {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-3.5 focus:outline-none focus:border-green-500;
+}
+
+.input {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3.5 focus:outline-none focus:border-green-500;
+}
+
+.input_elt {
+@apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-3 focus:outline-none focus:border-green-500;
+}
+
+.button_remove_elt {
+    @apply text-white cursor-pointer rounded px-2 mr-2 uppercase;
+}
+
+.label {
+    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-gray-500;
+}
+
+.label_title {
+    @apply text-2xl;
+}
+
+.label_title_sub_title {
+    @apply text-lg font-bold
+}
+
+.label_show_value {
+    @apply text-lg
+}
+
+.select_btn {
+    @apply bg-gray-100 border border-gray-300 text-gray-600 rounded-lg p-3 focus:border-green-500
+}
+
+.button {
+    @apply text-white cursor-pointer rounded px-4 py-2 uppercase;
+}
+
+.button_plus {
+    @apply bg-green-600 m-auto;
+}
+
+.button_edite {
+    @apply bg-green-600;
+}
+
+.button_show {
+    @apply bg-blue-600;
+}
+
+.button_delete{
+    @apply bg-red-600;
+}
+
+.button_edite:hover, .button_plus:hover {
+    @apply bg-green-700;
+}
+
+.button_show:hover {
+    @apply bg-blue-700;
+}
+
+.button_delete:hover {
+    @apply bg-red-700;
+}

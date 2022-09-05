@@ -26,6 +26,12 @@ class OuvragesPhysique extends Model
     public function ouvrage(){
         return $this->hasOne(Ouvrage::class, "id_ouvrage");
     }
+
+    public function approvisonnements()
+    {
+        return $this->hasMany(Approvisionnement::class, 'id_approvisionnement');
+    }
+
     public function classificationDeweyDizaine(){
         return $this->belongsTo(ClassificationDeweyDizaine::class, "id_ouvrage_physique");
     }

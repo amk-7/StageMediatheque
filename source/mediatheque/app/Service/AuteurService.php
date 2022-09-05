@@ -6,14 +6,14 @@ use App\Helpers\OuvrageHelper;
 use App\Models\Auteur;
 use Illuminate\Http\Request;
 
-class AuteurServices
+class AuteurService
 {
     public static function enregistrerAuteur(Request $request)
     {
         $auteurs = [];
         if(!empty($request["auteur0"]) && !empty($request["prenom"])){
             $request["nom"] = $request["auteur0"];
-            $auteur = AuteurServices::auteur($request["nom"], $request["prenom"]);
+            $auteur = AuteurService::auteur($request["nom"], $request["prenom"]);
             if($auteur == null){
                 $auteur = Auteur::Create([
                     "nom"=>strtoupper($request["nom"]),
@@ -23,7 +23,7 @@ class AuteurServices
             array_push($auteurs, $auteur);
         }else{
             $list_auteurs = OuvrageService::convertDataToArray($request, "auteur");
-            $auteurs = AuteurServices::enregistrerPlusieursAuteurs($list_auteurs);
+            $auteurs = AuteurService::enregistrerPlusieursAuteurs($list_auteurs);
         }
 
         return $auteurs;
@@ -34,7 +34,7 @@ class AuteurServices
         for($i=0; $i<count($auteurs)-1; $i++){
             $attributs_auteur = explode(",", $auteurs[$i].',');
             if(! empty($attributs_auteur[0]) and ! empty($attributs_auteur[1])){
-                $auteur = AuteurServices::auteur($attributs_auteur[0], $attributs_auteur[1]);
+                $auteur = AuteurService::auteur($attributs_auteur[0], $attributs_auteur[1]);
                 if($auteur == null){
                     $auteur = Auteur::Create([
                         "nom"=>strtoupper($attributs_auteur[0]),

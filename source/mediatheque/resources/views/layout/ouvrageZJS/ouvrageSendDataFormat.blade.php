@@ -22,10 +22,12 @@
 
         let mot_cle_canvas = document.createElement("input");
         mot_cle_canvas.value = `${input_mot_cle.value}`;
-        mot_cle_canvas.className = "object_information";
+        mot_cle_canvas.className = "input_elt";
+        mot_cle_canvas.desable = true;
 
         let remove_mot_cle_btn = document.createElement("button");
         remove_mot_cle_btn.innerText = 'x';
+        remove_mot_cle_btn.className = "button_remove_elt button_delete"
 
         remove_mot_cle_btn.addEventListener('click', function removeKeyWord(e){
             e.preventDefault();
@@ -117,10 +119,12 @@
             let div_categorie = document.getElementById("listeCategorie");
             let categorie_canvas = document.createElement("input");
             categorie_canvas.value = `${addCategorieSelect.value}`;
-            categorie_canvas.className = "categorie_information";
+            categorie_canvas.className = "input_elt";
+            categorie_canvas.desable = true;
             let remove_categorie_btn = document.createElement("button");
             remove_categorie_btn.innerText = 'x'
             remove_categorie_btn.id = `${addCategorieSelect.value}`;
+            remove_categorie_btn.className = "button_remove_elt button_delete";
 
             remove_categorie_btn.addEventListener('click', function removeCategorie(e){
 
@@ -152,6 +156,7 @@
             let genre_canvas = document.createElement("input");
             genre_canvas.value = `${addGenreSelect.value}`;
             genre_canvas.className = "information";
+            genre_canvas.desable = true;
             let remove_genre_btn = document.createElement("button");
             remove_genre_btn.innerText = 'x'
             remove_genre_btn.id = `${addGenreSelect.value}`;
@@ -191,9 +196,11 @@
         //console.log(nom_auteur.value);
         let auteur_canvas = document.createElement("input");
         auteur_canvas.value = `${nom_auteur.value}, ${prenom_auteur.value}`;
-        auteur_canvas.className = "auteur_information";
+        auteur_canvas.className = "input_elt";
+        auteur_canvas.desable = true;
         let remove_auteur_btn = document.createElement("button");
-        remove_auteur_btn.innerText = 'x'
+        remove_auteur_btn.innerText = "x"
+        remove_auteur_btn.className = "button_remove_elt button_delete"
         remove_auteur_btn.id = `${nom_auteur.value}${prenom_auteur.value}`;
 
         remove_auteur_btn.addEventListener('click', function removeAuteur(e){

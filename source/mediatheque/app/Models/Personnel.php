@@ -17,6 +17,6 @@ class Personnel extends Model
     }
 
     public function approvisionnement(){
-        return $this->hasOne('App\Models\Approvisionnement', 'id_approvisionnement');
+        return $this->hasMany(Approvisionnement::class, 'id_approvisionnement');
     }
 }
