@@ -8,50 +8,59 @@ use Illuminate\Http\Request;
 
 class UserService
 {
-    public static function enregistrerUtilisateur(Request $request)
-    {
-        $utilisateur = [];
-        if(!empty($request["user0"]) && !empty($request["prenom"])){
-            $request["nom"] = $request["user0"];
-            $utilisateur = UserService::utilisateur($request["nom"], $request["prenom"]);
-            if($utilisateur == null){
-                $utilisateur = User::Create([
-                    "nom"=>strtoupper($request["nom"]),
-                    "prenom"=>ucfirst($request["prenom"])
-                ]);
-            }
-            array_push($utilisateurs, $utilisateur);
-            
+    public static function enregistrerUtilisateur(Request $request){
+        
+        //récuperation de l'image
+        $image = $request->file('photo_profil');
+        
+        if ($image != null){
+            //enregistrement de l'image
+            $chemin_image = strtolower($request->nom).strtolower($request->prenom).'.'.$image->extension();
+            $image->storeAs('public/images/image_utilisateur', $chemin_image);
         }
         else{
-            $list_utilisateurs = UtilisateurHelper::convertDataToArray($request, "user");
-            $utilisateurs = UserService::enregistrerPlusieursUtilisateurs($list_utilisateurs);
-        }    
-    }
-    public static function enregistrerPlusieursUtilisateurs(Array $utilisateurs)
-    {
-        $liste_utilisateurs = [];
-        for($i=0; $i<count($utilisateurs)-1; $i++){
-            $attributs_utilisateur = explode(",", $utilisateurs[$i]);
-            $utilisateur = UserService::utilisateur($attributs_utilisateur[0], $attributs_utilisateur[1]);
-            if($utilisateur == null){
-                $utilisateur = User::Create([
-                    "nom"=>strtoupper($attributs_utilisateur[0]),
-                    "prenom"=>ucfirst($attributs_utilisateur[1]),
-                ]);
-            }
-            array_push($liste_utilisateurs, $utilisateur);
+            $chemin_image = "personne.jpg";
         }
-        
-        //dd($liste_utilisateurs);
-        return $liste_utilisateurs;
+        $utilisateur = User::create([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'nom_utilisateur' => $request->nom_utilisateur,
+            'email' => $request->email,
+            'password' => $request->password,
+            'contact' => $request->contact,
+            'photo_profil' => $chemin_image,
+            'adresse' => $request->adresse,
+            'sexe' => $request->sexe
+        ]);
+
+        return $utilisateur;
     }
 
-    public static function utilisateur(String $nom, string $prenom)
-    {
-        $utilisateur = User::all()->where("nom", $nom)->where("preonm", $prenom)->first();
-        return $utilisateur ;
+    public static function modifierUtilisateur(Request $request, $id_utilisateur){
+        $utilisateur = User::find($id_utilisateur);
+        $utilisateur->nom = $request->nom;
+        $utilisateur->prenom = $request->prenom;
+        $utilisateur->nom_utilisateur = $request->nom_utilisateur;
+        $utilisateur->email = $request->email;
+        $utilisateur->password = $request->password;
+        $utilisateur->contact = $request->contact;
+        $utilisateur->adresse = $request->adresse;
+        $utilisateur->sexe = $request->sexe;
+
+        //récuperation de l'image
+        $image = $request->file('photo_profil');
+        
+        if ($image != null){
+            //enregistrement de l'image
+            $chemin_image = strtolower($request->nom).strtolower($request->prenom).'.'.$image->extension();
+            $image->storeAs('public/images/image_utilisateur', $chemin_image);
+            $utilisateur->photo_profil = $chemin_image;
+        }
+
+        $utilisateur->save();
+        return $utilisateur;
     }
+
 }
 
 ?>

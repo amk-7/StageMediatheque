@@ -44,5 +44,7 @@
 
         @yield('abonne')
         @yield('personnel')
+
+    
     </table>
 </form>

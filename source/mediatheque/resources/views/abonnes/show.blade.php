@@ -2,12 +2,35 @@
 
 @section('abonne')
 
-        <label> Date Naissance : {{$abonne->date_naissance}}</label></br>
-        <label> Niveau Etude : {{$abonne->niveau_etude}}</label></br>
-        <label> Profession : {{$abonne->profession}}</label></br>
-        <label> Contact à prevenir : {{$abonne->contact_a_prevenir}}</label></br>
-        <label> Numero Carte : {{$abonne->numero_carte}}</label></br>
-        <label> Type de Carte : {{$abonne->type_de_carte}}</label></br>
+        <label>
+                <span class="label_title_sub_title"> Date Naissance : </span>
+                <span class="label_show_value">{{$abonne->date_naissance->format('d/m/Y')}}</span>
+        </label></br>
+
+        <label>
+                <span class="label_title_sub_title"> Niveau Etude : </span>
+                <span class="label_show_value">{{$abonne->niveau_etude}}</span>
+        </label></br>
+        
+        <label>
+                <span class="label_title_sub_title"> Profession : </span>
+                <span class="label_show_value">{{$abonne->profession}}</span>
+        </label></br>
+
+        <label>
+                <span class="label_title_sub_title"> Contact à prevenir : </span>
+                <span class="label_show_value">{{$abonne->contact_a_prevenir}}</span>
+        </label></br>
+
+        <label>
+                <span class="label_title_sub_title"> Numero Carte : </span>
+                <span class="label_show_value">{{$abonne->numero_carte}}</span>
+        </label></br>
+
+        <label>
+                <span class="label_title_sub_title"> Type de Carte : </span>
+                <span class="label_show_value">{{$abonne->type_de_carte}}</span>
+        </label></br>
 
 
 @endsection

@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "ext-json": "*",
         "ext-mysql_xdevapi": "*",
+        "algolia/algoliasearch-client-php": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jantinnerezo/livewire-alert": "^2.2",

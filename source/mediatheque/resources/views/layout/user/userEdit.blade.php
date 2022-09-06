@@ -2,14 +2,14 @@
 
 @section('content')
 
-<form method="POST" action="{{route($action, $model)}}">
+<form method="POST" action="{{route($action, $model)}}" enctype="multipart/form-data" class="bg-white p-12 m-auto">
 <fieldset>
     {{csrf_field()}}
     {{ method_field('PUT') }}
-
     <div>
-        <label for="photo_profil">Photo_profil</label>
-        <input type="text" name="photo_profil" value="{{$utilisateur->photo_profil}}">
+        <label for="photo_profil">Photo de profil : </label></br>
+        <input type="file" name="photo_profil" value="{{$utilisateur->photo_profil}}">
+        <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}">
     </div>
     
     <div>
@@ -77,4 +77,5 @@
     <button type="Submit">Modifier</button>
 </fieldset>
 </form>
-@endsection
+@include("layout.ouvrageZJS.ouvrageLoadFile")
+@stop

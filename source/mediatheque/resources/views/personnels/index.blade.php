@@ -1,4 +1,5 @@
 <?php ?>
+
 <style>
     td, th {border: 2px solid black;}
 
@@ -10,7 +11,6 @@
 
     td {background-color: burlywood;}
 </style>
-
 <h1>Liste du Personnels</h1>
 <form method="GET" action="{{route('createPersonnel')}}">
         <button type="Submit">Ajouter un Personnel</button>
@@ -20,7 +20,7 @@
         <caption>Informations sur les Personnels</caption>
         <tr>
             <th>Identifiant de l'utilisateur</th>
-            <th>Photo_profil</th>
+            <th>Photo de profil</th>
             <th>Nom</th>
             <th>Prenom</th>
             <th>Nom d'utilisateur</th>
@@ -30,12 +30,14 @@
             <th>Quartier</th>
             <th>Sexe</th>
             <th> Statut </th>
-            <th> Action </th>
+            <th> Modifier </th>
+            <th> Afficher </th>
+            <th> Supprimer </th>
         </tr>
     @forelse ($listePersonnels as $personnel)
             <tr>
                 <td>{{$personnel->utilisateur->id_utilisateur}}</td>
-                <td>{{$personnel->utilisateur->photo_profil}}</td>
+                <td><img src="{{--asset('storage/images/image_utilisateur').'/'.$personnel->utilisateur->photo_profil--}}"></td>
                 <td>{{$personnel->utilisateur->nom}}</td>
                 <td>{{$personnel->utilisateur->prenom}}</td>
                 <td>{{$personnel->utilisateur->nom_utilisateur}}</td>
@@ -49,16 +51,19 @@
                     <form method="GET" action="{{route('editPersonnel', $personnel)}}">
                         <button type="Submit">Modifier</button>
                     </form>
-
+                </td>
+                <td>
                     <form methode="GET" action="{{route('showPersonnel', $personnel)}}">
                         <button type="Submit">Afficher</button>
                     </form>
-
+                </td>
+                <td>
                     <form method="POST" action="{{route('destroyPersonnel', $personnel)}}">
                         @csrf
                         @method("DELETE")
                         <button type="Submit">Supprimer</button>
                     </form>
+                </td>
                 </td>
             </tr>
     @empty
