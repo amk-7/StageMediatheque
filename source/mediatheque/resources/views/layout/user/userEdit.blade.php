@@ -9,7 +9,7 @@
     <div>
         <label for="photo_profil">Photo de profil : </label></br>
         <input type="file" name="photo_profil" value="{{$utilisateur->photo_profil}}">
-        <img src="{{asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil}}">
+        <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}">
     </div>
     
     <div>
@@ -78,4 +78,4 @@
 </fieldset>
 </form>
 @include("layout.ouvrageZJS.ouvrageLoadFile")
-@endsection
+@stop

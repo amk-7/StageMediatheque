@@ -1,4 +1,5 @@
 <?php ?>
+
 <style>
     td, th {border: 2px solid black;}
 
@@ -10,7 +11,6 @@
 
     td {background-color: burlywood;}
 </style>
-
 <h1>Liste du Personnels</h1>
 <form method="GET" action="{{route('createPersonnel')}}">
         <button type="Submit">Ajouter un Personnel</button>
@@ -30,7 +30,9 @@
             <th>Quartier</th>
             <th>Sexe</th>
             <th> Statut </th>
-            <th> Action </th>
+            <th> Modifier </th>
+            <th> Afficher </th>
+            <th> Supprimer </th>
         </tr>
     @forelse ($listePersonnels as $personnel)
             <tr>
@@ -49,16 +51,19 @@
                     <form method="GET" action="{{route('editPersonnel', $personnel)}}">
                         <button type="Submit">Modifier</button>
                     </form>
-
+                </td>
+                <td>
                     <form methode="GET" action="{{route('showPersonnel', $personnel)}}">
                         <button type="Submit">Afficher</button>
                     </form>
-
+                </td>
+                <td>
                     <form method="POST" action="{{route('destroyPersonnel', $personnel)}}">
                         @csrf
                         @method("DELETE")
                         <button type="Submit">Supprimer</button>
                     </form>
+                </td>
                 </td>
             </tr>
     @empty

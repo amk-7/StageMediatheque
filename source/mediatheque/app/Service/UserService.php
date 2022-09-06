@@ -36,6 +36,31 @@ class UserService
         return $utilisateur;
     }
 
+    public static function modifierUtilisateur(Request $request, $id_utilisateur){
+        $utilisateur = User::find($id_utilisateur);
+        $utilisateur->nom = $request->nom;
+        $utilisateur->prenom = $request->prenom;
+        $utilisateur->nom_utilisateur = $request->nom_utilisateur;
+        $utilisateur->email = $request->email;
+        $utilisateur->password = $request->password;
+        $utilisateur->contact = $request->contact;
+        $utilisateur->adresse = $request->adresse;
+        $utilisateur->sexe = $request->sexe;
+
+        //récuperation de l'image
+        $image = $request->file('photo_profil');
+        
+        if ($image != null){
+            //enregistrement de l'image
+            $chemin_image = strtolower($request->nom).strtolower($request->prenom).'.'.$image->extension();
+            $image->storeAs('public/images/image_utilisateur', $chemin_image);
+            $utilisateur->photo_profil = $chemin_image;
+        }
+
+        $utilisateur->save();
+        return $utilisateur;
+    }
+
 }
 
 ?>
