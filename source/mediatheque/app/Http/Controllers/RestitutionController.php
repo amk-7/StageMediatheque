@@ -64,11 +64,13 @@ class RestitutionController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Restitution  $restitution
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Restitution $restitution)
     {
-        return "Show ".$restitution->id_restitution;
+        return view('Restitution.show')->with([
+            'restitution' => $restitution,
+        ]);
     }
 
     /**

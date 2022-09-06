@@ -39,3 +39,4 @@ class Restitution extends Model
         return $this->belongsTo(Personnel::class, 'id_personnel');
     }
 }
+
