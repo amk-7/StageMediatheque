@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Helpers\OuvragesPhysiqueHelper;
 use App\Models\ClassificationDeweyCentaine;
 use App\Models\ClassificationDeweyDizaine;
 use App\Models\DocumentsAudioVisuel;
@@ -131,6 +132,7 @@ class OuvragesPhysiqueService
                 'id_livre'=>$lpc->id_livre_papier,
                 'titre'=>$lpc->ouvragePhysique->ouvrage->titre,
                 'ISBN'=>$lpc->ISBN,
+                'cote'=>$lpc->ouvragePhysique->cote,
                 'nombre_exemplaire'=>$lpc->ouvragePhysique->nombre_exemplaire,
             );
 
@@ -150,6 +152,7 @@ class OuvragesPhysiqueService
                 'id_document_audio_visuel'=>$dc->id_document_audio_visuel,
                 'titre'=>$dc->ouvragePhysique->ouvrage->titre,
                 'ISBN'=>$dc->ISAN,
+                'cote'=>$dc->ouvragePhysique->cote,
                 'nombre_exemplaire'=>$dc->ouvragePhysique->nombre_exemplaire,
             );
 
@@ -157,5 +160,26 @@ class OuvragesPhysiqueService
         }
 
         return $docsComplet;
+    }
+
+    public static function genererCoteNouvelleOuvrage(String $type_livre, $indice_dewey, array $auteurs, Ouvrage $ouvrage) : String
+    {
+        //type_livre+indice_dewey+AAA[+AAA]+t+id_ouvrage
+
+        if ($type_livre == 'livre_papier'){
+            $type_livre = "LP";
+        } elseif ($type_livre == 'document_av'){
+            $type_livre = "DA";
+        } else {
+            return "";
+        }
+
+        $cote = $type_livre;
+        $cote .= (String) $indice_dewey;
+        foreach ($auteurs as $auteur){
+            $cote .= strtoupper(substr($auteur->nom, 0, 3));
+        }
+        $cote .= strtolower(substr($ouvrage->titre, 0, 1)).$ouvrage->id_ouvrage;
+        return $cote;
     }
 }

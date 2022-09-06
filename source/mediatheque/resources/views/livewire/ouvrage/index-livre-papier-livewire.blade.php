@@ -73,17 +73,19 @@
             </div>
             <table class="w-full text-sm text-left text-white">
                 <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
-                <th class="border border-solid">Numéro</th>
-                <th class="border border-solid">Titre</th>
-                <th class="border border-solid">Niveau</th>
-                <th class="border border-solid">Type</th>
-                <th class="border border-solid">Langue</th>
-                <th class="border border-solid">Nombre d'exemplaire</th>
-                <th class="border border-solid">Disponibilité</th>
-                <th class="border border-solid">ISBN</th>
-                <th class="border border-solid">Consulter</th>
-                <th class="border border-solid">Editer</th>
-                <th class="border border-solid">Supprimer</th>
+                    <tr>
+                        <th class="border border-solid">Numéro</th>
+                        <th class="border border-solid">Titre</th>
+                        <th class="border border-solid">Niveau</th>
+                        <th class="border border-solid">Type</th>
+                        <th class="border border-solid">Langue</th>
+                        <th class="border border-solid">Nombre d'exemplaire</th>
+                        <th class="border border-solid">Disponibilité</th>
+                        <th class="border border-solid">ISBN</th>
+                        <th class="border border-solid">Consulter</th>
+                        <th class="border border-solid">Editer</th>
+                        <th class="border border-solid">Supprimer</th>
+                    </tr>
                 </thead>
                 <tbody class="all_data">
                 @foreach($livresPapiers as $livresPapier)

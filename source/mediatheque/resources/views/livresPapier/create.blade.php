@@ -4,7 +4,7 @@
         <legend>Particularité</legend>
         <div>
             <label class="label">Catégorie</label>
-            <select name="categorie" id="ajouterCategorie" class="select_btn @error('categorie0') is-invalid @enderror">
+            <select name="categorie0" id="ajouterCategorie" class="select_btn @error('categorie0') is-invalid @enderror">
                 <option>--Selectionner--</option>
                 @foreach($categories as $categorie)
                     <option value="{{$categorie}}" {{ old('categorie') == $categorie ? 'selected':'' }}>{{$categorie}}</option>

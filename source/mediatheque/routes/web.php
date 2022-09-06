@@ -6,6 +6,7 @@ use App\Http\Controllers\DocumentAudioVisuelController;
 use App\Http\Controllers\DocumentAudioVisuelElectroniqueController;
 use App\Http\Controllers\LivreNumeriqueController;
 use App\Http\Controllers\LivresPapierController;
+use App\Http\Controllers\RestitutionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -149,7 +150,6 @@ Route::get('formulaire_modification_document_audio_visuels', [DocumentAudioVisue
 Route::post('modification_document_audio_visuels', [DocumentAudioVisuelController::class, 'update'])->name('modificationDocumentAudioVisuels');
 Route::delete('suppression_document_audio_visuels', [DocumentAudioVisuelController::class, 'destroy'])->name('suppressionDocumentAudioVisuels');
 
-
 Route::get('liste_approvisionnements', [ApprovisionnementsController::class, 'index'])->name('listeApprovisionnements');
 Route::get('formulaire_enregistrement_approvisionnements', [ApprovisionnementsController::class, 'create'])->name('formulaireEnregistrementApprovisionnements');
 Route::post('enregistrement_approvisionnements', [ApprovisionnementsController::class, 'store'])->name('enregistementApprovisionnements');
@@ -158,6 +158,15 @@ Route::get('formulaire_modification_approvisionnements/{approvisionnements}/modi
 Route::post('modification_approvisionnements', [ApprovisionnementsController::class, 'update'])->name('modificationApprovisionnements');
 Route::delete('suppression_approvisionnements', [ApprovisionnementsController::class, 'destroy'])->name('suppressionApprovisionnements');
 
+Route::get('liste_restitutions', [RestitutionController::class, 'index'])->name('listeRestitutions');
+Route::get('formulaire_enregistrement_restitution', [RestitutionController::class, 'create'])->name('formulaireEnregistrementRestitution');
+Route::post('enregistrement_restitution', [RestitutionController::class, 'store'])->name('enregistementRestitution');
+Route::get('affichage_restitution/{restitution}/afficher', [RestitutionController::class, 'show'])->name('affichageRestitution');
+Route::get('formulaire_modification_restitution', [RestitutionController::class, 'edit'])->name('formulaireModificationRestitution');
+Route::post('modification_restitution', [RestitutionController::class, 'update'])->name('modificationRestitution');
+Route::delete('suppression_restitution', [RestitutionController::class, 'destroy'])->name('suppressionRestitution');
+
 Route::get('/getCodeIDTitle', [\App\Service\OuvragesPhysiqueService::class, 'getCodeIDTitle'] );
 Route::get('/getCodeID', [\App\Service\OuvragesPhysiqueService::class, 'getCodeID'] );
 Route::get('/getOuvragePhysiqueByType', [\App\Service\OuvragesPhysiqueService::class, 'getOuvragePhysiqueByType'] );
+

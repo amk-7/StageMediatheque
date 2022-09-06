@@ -21,6 +21,7 @@ class OuvragesPhysique extends Model
     public function augmenterNombreExemplaire($nombre_exemplaire)
     {
         $this->nombre_exemplaire = $this->nombre_exemplaire + $nombre_exemplaire;
+        $this->save();
     }
 
     public function ouvrage(){
@@ -42,8 +43,10 @@ class OuvragesPhysique extends Model
         return $this->belongsTo(DocumentsAudioVisuel::class);
     }
 
-    public function restitution(){
-        return $this->belongsToMany(Restitution::class)->using(RestitutionOuvragePhysique::class);
+    public function restitutions(){
+        return $this->belongsToMany(Restitution::class, "restitutions_ouvrages_physiques", "id_restitution", "id_ouvrage_physique")
+                    ->withTimestamps()
+                    ->withPivot(["etat_ouvrage"]);
     }
     public function emprunt()
     {

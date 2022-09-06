@@ -33,7 +33,7 @@ class PersonnelService
         $personnels = array();
         foreach ($result as $p){
             $personne = array(
-                'id_personnel'=>$p->id_personnel,
+                'id'=>$p->id_personnel,
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
             );

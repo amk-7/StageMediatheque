@@ -48,9 +48,8 @@ class ApprovisionnementsController extends Controller
     {
         //dd($request);
         $request->validate([
-            'nom_personne'=>'required',
-            'id_personnel'=>'required',
-            'date_approvisionnement'=>'required',
+            'nom'=>'required',
+            'prenom'=>'required',
             'data'=>'required',
         ]);
 
