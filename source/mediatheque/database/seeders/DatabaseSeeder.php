@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PersonnelSeeder::class);
         $this->call(AbonneSeeder::class);
         $this->call(RestitutionSeeder::class);
+        //$this->call()
         //$this->call(LivreNumeriqueSeeder::class);
     }
 }

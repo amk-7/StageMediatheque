@@ -28,7 +28,6 @@ class RestitutionSeeder extends Seeder
             ]
         );
 
-        $op->nombre_exemplaire += 1;
-        $op->save();
+        $op->decrementerNombreExemplaire();
     }
 }

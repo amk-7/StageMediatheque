@@ -29,20 +29,20 @@ class OuvragesPhysiqueHelper
             return "<p class='info'>Disponible<p>";
         } return "<p class='alert'> Pas disponible<p>";
     }
-    public static function afficherEtat(OuvragesPhysique $ouvragesPhysique)
+    public static function afficherEtat(String $etat)
     {
         $etats = self::demanderEtat();
 
-        return $etats[$ouvragesPhysique->etat];
+        return $etats[$etat];
     }
     public static function demanderEtat()
     {
         $etats = [
-            5 => "Bon",
-            4 => "Moins Bon",
-            3 => "Acceptable",
-            2 => "Mauvais état",
-            1 => "Très mauvais état"
+            5 => "Bon état",
+            4 => "Acceptable",
+            3 => "Mauvais état",
+            2 => "Déchiré",
+            1 => "Perdus"
         ];
 
         return $etats;
