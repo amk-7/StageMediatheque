@@ -3,7 +3,7 @@
 @section("content")
     <div>
         <h1>Emprunt</h1>
-        <form action="{{route('createEmprunt')}}" method="post">
+        <form action="{{route('storeEmprunt')}}" method="post">
             @csrf
             <fieldset>
                 <legend>Personnel</legend>
@@ -22,10 +22,6 @@
                 </div>
                 <div class="alert" >
                     <p id="prenom_erreur" hidden>Vous devez séléctionner le prenom</p>
-                </div>
-                <div>
-                    <label for="date_emprunt">Date</label>
-                    <input type="date" name="date_emprunt" id="date_emprunt" value="{{ date('Y-m-d') }}" disabled>
                 </div>
             </fieldset>
             <fieldset>
@@ -47,6 +43,7 @@
                     <p id="prenom_abonne_erreur" hidden>Vous devez séléctionner le prenom</p>
                 </div>
             </fieldset>
+
             <fieldset>
                 <legend>Ouvrage</legend>
                 <div>
@@ -80,17 +77,36 @@
                         <p id="etat_ouvrage_erreur" hidden>Le champ etat ouvrage est requis.</p>
                     </div>
                 </div>
+            </fieldset>
+            <fieldset>
+                <legend>Duree emprunt</legend>
                 <div>
-                    <button name="ajouter_emprunt" id="ajouter_emprunt">Ajouter</button>
-                    <input type="submit" id="action_emprunt" name="action_restituer" value="Restituer">
+                    <label for="date_emprunt">Date Emprunt</label>
+                    <input type="date" name="date_emprunt" id="date_emprunt" value="{{ date('Y-m-d') }}" disabled>
                 </div>
-                <div class="alert" >
-                    <p id="restitution_erreur" hidden>Veuillez ajouter cet d'ouvrage.</p>
+                <div>
+                    <label for="duree_emprunt">Duree Emprunt</label>
+                    <select name="duree_emprunt" id="duree_emprunt">
+                        <option>Sélectionner durée</option>
+                        @for($i=1; $i<=4; $i++)
+                            <option value="{{$i}}" {{ $i == 2 ? "selected" : "" }} > {{$i}} Semaines  </option>
+                        @endfor
+                    </select>
+
                 </div>
             </fieldset>
             <div>
-                <h3>Liste des restitutions</h3>
-                <table border="1" id="liste_restitution">
+                <div>
+                    <button name="ajouter_emprunt" id="ajouter_emprunt">Ajouter</button>
+                    <input type="submit" id="action_emprunter" name="action_emprunt" value="Emprunter">
+                </div>
+                <div class="alert" >
+                    <p id="emprunt_erreur" hidden>Veuillez ajouter cet d'ouvrage.</p>
+                </div>
+            </div>
+            <div>
+                <h3>Liste des Emprunts</h3>
+                <table border="1" id="liste_emprunt">
                     <thead>
                     <tr>
                         <th>N°</th>
@@ -104,8 +120,7 @@
                     <tbody></tbody>
                 </table>
             </div>
-        </form>
-        <div class="modal_editer" id="modal_editer" hidden>
+            <div class="modal_editer" id="modal_editer" hidden>
             <div>
                 <div>
                     <label for="">Etat ouvrage</label>
@@ -122,6 +137,7 @@
                 <button id="btn_modifier">modifier</button>
             </div>
         </div>
+        </form>
     </div>
 @stop
 @section("js")
@@ -140,8 +156,10 @@
         let titre = document.getElementById('titre_ouvrage');
         let etat_ouvrage = document.getElementById('etat_ouvrage');
         let donne = document.getElementById('data');
-        let btn_ajouter = document.getElementById('ajouter_restitution');
-        let submit_btn = document.getElementById('action_restituer');
+        let btn_ajouter = document.getElementById('ajouter_emprunt');
+        let submit_btn = document.getElementById('action_emprunter');
+        let duree_emprunt = document.getElementById('duree_emprunt');
+        
         //let btn_modifier = document.getElementById('btn_modifier');
 
         let nom_erreur = document.getElementById('nom_erreur');
@@ -149,13 +167,14 @@
         let cote_erreur = document.getElementById('cote_ouvrage_erreur');
         let cote_no_trouve = document.getElementById('cote_ouvrage_not_found');
         let etat_ouvragae_erreur = document.getElementById('etat_ouvrage_erreur');
-        let restitutions_erreur = document.getElementById('restitution_erreur');
+        let emprunts_erreur = document.getElementById('emprunt_erreur');
 
-        let numero_ligne_edite = -1;
 
         setLiteOptions(nom_personnes, personnels);
         setLiteOptions(nom_abonnes, abonnes);
         cleanALl();
+        
+        let numero_ligne_edite = -1;
 
         btn_modifier.addEventListener('click', function (e){
            stopPropagation(e);
@@ -214,21 +233,21 @@
         btn_ajouter.addEventListener('click', function addApprovisionnement(e){
             e.preventDefault();
             if(validate()) {
-                let table_body = document.getElementById('liste_restitution').children[1];
+                let table_body = document.getElementById('liste_emprunt').children[1];
                 let row = document.createElement('tr');
                 let cell_number = document.createElement('td');
                 let cell_code = document.createElement('td');
                 let cell_ouvrage = document.createElement('td');
                 let cell_etat_ouvrage = document.createElement('td');
-                let cell_editer = document.createElement('td');
                 let cell_supprimer = document.createElement('td');
+                let cell_editer = document.createElement('td');
 
                 let button_editer = document.createElement('button');
                 let button_supprimer = document.createElement('button');
 
                 button_editer.innerText = "Editer";
-                button_supprimer.innerText = "Supprimer";
                 button_editer.id = number - 1;
+                button_supprimer.innerText = "Supprimer";
                 button_supprimer.id = number - 1;
 
                 button_editer.addEventListener('click', function (e){
@@ -271,7 +290,7 @@
 
         function modifierEtatOuvrage(){
             //console.log("modification.... "+numero_ligne_edite);
-            let table_body = document.getElementById('liste_restitution').children[1];
+            let table_body = document.getElementById('liste_emprunt').children[1];
             let etat_ouvrage_edite = document.getElementById('etat_ouvrage_edite');
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
@@ -324,6 +343,7 @@
         }
 
         function rechercherTitreParCote() {
+            console.log("recherche....");
             let cote = cote_ouvrage.value;
             if (cote.substring(0, 2) === "LP"){
                 for (let i = 0; i < livres_papier.length; i++) {
@@ -347,7 +367,7 @@
         // format table before send
         function formatTableDataBeforeSend()
         {
-            let table_body = document.getElementById('liste_restitution').children[1];
+            let table_body = document.getElementById('liste_emprunt').children[1];
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
                 let line = lines[i].children;
@@ -399,7 +419,7 @@
                 return false;
             }
             if(cote_ouvrage.value !== "" || etat_ouvrage.value !== "Séléctionner etat"){
-                restitutions_erreur.hidden = false;
+                emprunts_erreur.hidden = false;
                 stopPropagation(e);
                 return false;
             }

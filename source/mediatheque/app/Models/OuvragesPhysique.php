@@ -52,10 +52,10 @@ class OuvragesPhysique extends Model
     {
         return $this->belongsToMany(Reservation::class)->using(OuvrageReservation::class);
     }
-    public function emprunt()
+    public function emprunts()
     {
         return $this->belongsToMany(Emprunt::class, 'ouvrage_emprunt', 'id_ouvrage_physique', 'id_emprunt')
                     ->withTimestamps()
-                    ->withPivot(['etat']);
+                    ->withPivot(['etat_sortie','disponibilite']);
     }
 }

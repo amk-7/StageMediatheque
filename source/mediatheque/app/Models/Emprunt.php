@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Emprunt extends Model
 {
     use HasFactory;
-    protected $fillable = ['date_emprunt', 'date_retour', 'etat_retour', 'id_abonne', 'id_ouvrage_physique'];
+    protected $fillable = ['date_emprunt', 'date_retour','id_abonne', 'id_personnel'];
     protected $primaryKey = 'id_emprunt';
     protected $dates = ['date_emprunt', 'date_retour'];
 
@@ -17,10 +17,10 @@ class Emprunt extends Model
         return $this->hasOne('App\Models\Abonne', 'id_abonne');
     }
 
-    public function ouvragePhysique()
+    public function ouvragePhysiques()
     {
         return $this->belongsToMany(OuvragesPhysique::class, 'ouvrage_emprunt', 'id_ouvrage_physique', 'id_emprunt')
                     ->withTimestamps()
-                    ->withPivot(['etat']);
+                    ->withPivot(['etat_sortie','disponibilite']);
     }
 }
