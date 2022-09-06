@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
 use Illuminate\Http\Request;
+use App\Service\OuvragesPhysiqueService;
+use App\Service\PersonnelService;
 
 class EmpruntController extends Controller
 {
@@ -27,7 +29,11 @@ class EmpruntController extends Controller
     public function create()
     {
         //
-        return view('emprunt.create');
+        return view('emprunt.create')->with([
+            "livre_papier"=>json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
+            "document_audio_visuel"=>json_encode(OuvragesPhysiqueService::getDocAVWithAllAttribute()),
+            "personnels"=>json_encode(PersonnelService::getPersonnelWithAllAttribut()),
+        ]);
     }
 
     /**
