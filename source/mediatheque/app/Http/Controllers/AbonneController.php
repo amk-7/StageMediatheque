@@ -177,6 +177,13 @@ class AbonneController extends Controller
             'numero_carte' => $request["numero_carte"],
             'type_de_carte' => $request["type_de_carte"]          
         ]));*/
+        $request['adresse'] = array(
+            'ville' => $request->ville,
+            'quartier' => $request->quartier
+        );
+
+        $utilisateurs = UserService::modifierUtilisateur($request, $abonne->id_utilisateur);
+        $utilisateurs->save();
         $abonne->date_naissance = $request["date_naissance"];
         $abonne->niveau_etude = $request["niveau_etude"];
         $abonne->profession = $request["profession"];

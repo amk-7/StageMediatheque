@@ -2,6 +2,9 @@
 
 @section('personnel')
 
-    <label>Statut : {{$personnel->statut}}</label></br>
+    <label>
+        <span>Statut : </span>
+        <span>{{$personnel->statut}}</span>
+    </label></br>
 
 @endsection

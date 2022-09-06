@@ -4,10 +4,10 @@
 
 
     <div>
-        <label for="statut">Statut : </label>
+        <label class="label" for="statut">Statut : </label>
             <div>
-                    <input type="radio" name="statut" value="Bibliothècaire">Bibliothècaire</br>
-                    <input type="radio" name="statut" value="Responsable">Responsable</br>
+                    <input type="radio" name="statut" value="Bibliothècaire">Bibliothècaire</input>
+                    <input type="radio" name="statut" value="Responsable">Responsable</input>
             </div>
     </div>
 @endsection

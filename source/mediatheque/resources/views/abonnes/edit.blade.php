@@ -4,7 +4,7 @@
 
     <div>
     <label for="date_naissance">Date de naissance</label>
-        <input type="date" name="date_naissance" value="{{ $abonne->date_naissance }}">
+        <input type="date" name="date_naissance" value="{{$abonne->date_naissance}}">
     </div>
 
     <div>
@@ -18,8 +18,13 @@
     </div>
 
     <div>
-        <label for="profession">profession</label>
-        <input type="text" class="form-control" id="profession" name="profession" value="{{ $abonne->profession }}">
+        <label class="label" for="profession">Profession : </label>
+            <div>
+                <input type="radio" name="profession" value="Elève">Elève</input>
+                <input type="radio" name="profession" value="Etudiant">Etudiant</input>
+                <input type="radio" name="profession" value="Fonctionnaire">Fonctionnaire</input>
+                <input type="radio" name="profession" value="Retraité">Retraité</input>
+            </div>
     </div>
 
     <div>
@@ -40,4 +45,4 @@
         <input type="text" name="numero_carte" value="{{ $abonne->numero_carte }}">
     </div>
 </form>
-@endsection
+@stop

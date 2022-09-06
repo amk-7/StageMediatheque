@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Personnel;
 use App\Models\User;
+use App\Service\UserService;
 use Illuminate\Http\Request;
 
 class PersonnelController extends Controller
@@ -123,6 +124,13 @@ class PersonnelController extends Controller
         /*$personnel->update(array([
             'statut' => $request["statut"]
         ]));*/
+        $request['adresse'] = array(
+            'ville' => $request->ville,
+            'quartier' => $request->quartier
+        );
+        
+        $utilisateurs = UserService::modifierUtilisateur($request, $personnel->id_utilisateur);
+        $utilisateurs->save();
         $personnel->statut = $request["statut"];
         $personnel->save();
         //dd($personnel);
