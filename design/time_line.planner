@@ -22,11 +22,30 @@
   <tasks>
     <task id="1" name="R&#xE9;alisation de l'application web" note="" work="1900800" start="20220801T000000Z" end="20220921T120000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
       <constraint type="must-start-on" time="20220802T000000Z"/>
+<<<<<<< Updated upstream
       <task id="2" name="R&#xE9;alisation du diagramme de cas d'utilisation." note="" work="259200" start="20220801T000000Z" end="20220805T120000Z" work-start="20220801T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="must-start-on" time="20220801T000000Z"/>
       </task>
       <task id="3" name="R&#xE9;alisation du diagramme de classe" note="" work="144000" start="20220808T000000Z" end="20220810T120000Z" work-start="20220808T080000Z" percent-complete="90" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="start-no-earlier-than" time="20220808T000000Z"/>
+=======
+    </task>
+    <task id="2" name="R&#xE9;alisation du diagramme de classe" note="" work="230400" start="20220804T000000Z" end="20220809T170000Z" work-start="20220804T080000Z" percent-complete="90" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220804T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="1" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="3" name="Rechercher les fonctions " note="" work="86400" start="20220810T000000Z" end="20220811T120000Z" work-start="20220810T080000Z" percent-complete="10" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220810T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="2" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="4" name="G&#xE9;n&#xE9;rer un nouveau projet laravel php" note="" work="10800" start="20220811T120000Z" end="20220812T090000Z" work-start="20220811T120000Z" percent-complete="5" priority="0" type="normal" scheduling="fixed-work">
+      <task id="5" name="Impl&#xE9;menter les Migrations.(La base de donn&#xE9;es) " note="" work="7200" start="20220811T120000Z" end="20220811T150000Z" work-start="20220811T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20220811T000000Z"/>
+>>>>>>> Stashed changes
         <predecessors>
           <predecessor id="1" predecessor-id="2" type="FS"/>
         </predecessors>
@@ -143,12 +162,69 @@
         </predecessors>
       </task>
     </task>
+<<<<<<< Updated upstream
     <task id="27" name="R&#xE9;alisation de l'application mobile (android et ios)" note="" work="144000" start="20220921T120000Z" end="20220923T170000Z" work-start="20220921T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
       <task id="28" name="R&#xE9;alisation de la charte graphique" note="" work="144000" start="20220921T120000Z" end="20220923T170000Z" work-start="20220921T120000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="26" type="FS"/>
         </predecessors>
       </task>
+=======
+    <task id="7" name="D&#xE9;claration des fonctions" note="" work="1800" start="20220818T000000Z" end="20220818T083000Z" work-start="20220818T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220818T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="6" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="8" name="D&#xE9;clarer les tests unitaire  associ&#xE9; aux fonctions" note="" work="1800" start="20220818T000000Z" end="20220818T083000Z" work-start="20220818T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220818T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="3" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="9" name="Impl&#xE9;menter le syst&#xE8;me d'Authentification" note="" work="57600" start="20220819T000000Z" end="20220822T170000Z" work-start="20220819T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20220819T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="4" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="10" name="D&#xE9;finition des tests unitaire" note="" work="28800" start="20220822T000000Z" end="20220822T170000Z" work-start="20220822T080000Z" percent-complete="16" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220822T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="8" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="11" name="Impl&#xE9;menter le Controlleur" note="" work="28800" start="20220823T000000Z" end="20220823T170000Z" work-start="20220823T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220823T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="10" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="12" name="Impl&#xE9;menter la Vue" note="" work="86400" start="20220824T000000Z" end="20220825T120000Z" work-start="20220824T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220824T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="11" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="13" name="D&#xE9;ployer l'application en ligne" note="" work="28800" start="20220830T000000Z" end="20220830T120000Z" work-start="20220830T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220830T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="9" type="FS"/>
+        <predecessor id="1" predecessor-id="12" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="14" name="Designer L'application" note="" work="57600" start="20220831T000000Z" end="20220831T170000Z" work-start="20220831T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220831T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="12" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="15" name="Ecriture du manuelle m&#xE9;tier d'utilisations de l'application " note="" work="28800" start="20220902T000000Z" end="20220902T120000Z" work-start="20220902T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20220902T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="13" type="FS"/>
+      </predecessors>
+>>>>>>> Stashed changes
     </task>
   </tasks>
   <resource-groups/>
@@ -157,6 +233,7 @@
     <resource id="2" name="NGANDEU Alhasan" short-name="ANN" type="1" units="0" email="" note="" std-rate="0"/>
   </resources>
   <allocations>
+<<<<<<< Updated upstream
     <allocation task-id="21" resource-id="1" units="100"/>
     <allocation task-id="20" resource-id="1" units="100"/>
     <allocation task-id="18" resource-id="1" units="100"/>
@@ -167,6 +244,12 @@
     <allocation task-id="17" resource-id="1" units="100"/>
     <allocation task-id="16" resource-id="1" units="100"/>
     <allocation task-id="13" resource-id="1" units="100"/>
+=======
+    <allocation task-id="15" resource-id="1" units="100"/>
+    <allocation task-id="14" resource-id="1" units="100"/>
+    <allocation task-id="13" resource-id="1" units="100"/>
+    <allocation task-id="9" resource-id="1" units="100"/>
+>>>>>>> Stashed changes
     <allocation task-id="12" resource-id="1" units="100"/>
     <allocation task-id="10" resource-id="1" units="100"/>
     <allocation task-id="9" resource-id="1" units="100"/>
@@ -178,6 +261,7 @@
     <allocation task-id="3" resource-id="1" units="100"/>
     <allocation task-id="2" resource-id="1" units="100"/>
     <allocation task-id="1" resource-id="1" units="100"/>
+<<<<<<< Updated upstream
     <allocation task-id="18" resource-id="2" units="100"/>
     <allocation task-id="28" resource-id="2" units="100"/>
     <allocation task-id="26" resource-id="2" units="100"/>
@@ -186,13 +270,19 @@
     <allocation task-id="23" resource-id="2" units="100"/>
     <allocation task-id="22" resource-id="2" units="100"/>
     <allocation task-id="17" resource-id="2" units="100"/>
+=======
+>>>>>>> Stashed changes
     <allocation task-id="15" resource-id="2" units="100"/>
     <allocation task-id="14" resource-id="2" units="100"/>
+    <allocation task-id="13" resource-id="2" units="100"/>
     <allocation task-id="12" resource-id="2" units="100"/>
     <allocation task-id="11" resource-id="2" units="100"/>
+<<<<<<< Updated upstream
     <allocation task-id="9" resource-id="2" units="100"/>
     <allocation task-id="8" resource-id="2" units="100"/>
     <allocation task-id="4" resource-id="2" units="100"/>
+=======
+>>>>>>> Stashed changes
     <allocation task-id="7" resource-id="2" units="100"/>
     <allocation task-id="6" resource-id="2" units="100"/>
     <allocation task-id="5" resource-id="2" units="100"/>
