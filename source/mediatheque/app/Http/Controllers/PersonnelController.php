@@ -67,6 +67,7 @@ class PersonnelController extends Controller
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'nom_utilisateur' => $request->nom_utilisateur,
+            'numero_maison' => $request->numero_maison,
             'email' => $request->email,
             'password' => $request->password,
             'contact' => $request->contact,
