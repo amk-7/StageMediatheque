@@ -6,6 +6,8 @@ use App\Models\Emprunt;
 use Illuminate\Http\Request;
 use App\Service\OuvragesPhysiqueService;
 use App\Service\PersonnelService;
+use App\Service\AbonneService;
+use App\Service\EmpruntService;
 
 class EmpruntController extends Controller
 {
@@ -30,9 +32,10 @@ class EmpruntController extends Controller
     {
         //
         return view('emprunt.create')->with([
-            "livre_papier"=>json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
-            "document_audio_visuel"=>json_encode(OuvragesPhysiqueService::getDocAVWithAllAttribute()),
-            "personnels"=>json_encode(PersonnelService::getPersonnelWithAllAttribut()),
+            "livre_papier" => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
+            "document_audio_visuel" => json_encode(OuvragesPhysiqueService::getDocAVWithAllAttribute()),
+            "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
+            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
         ]);
     }
 
@@ -45,10 +48,33 @@ class EmpruntController extends Controller
     public function store(Request $request)
     {
         //
-        $emprunt = Emprunt::create([
-            'date_emprunt' => $request->date_emprunt,
-            'date_retour' => $request->date_retour
+
+        //dd($request);
+
+        $request->validate([
+            'nom' => 'required',
+            'prenom' => 'required',
+            'nom_abonne'=>'required',
+            'prenom_abonne'=>'required',
+            'data'=>'required',
+            'duree_emprunt' => 'required',
+
         ]);
+
+        $nbjour = (int) $request->duree_emprunt;
+        $nbjour = $nbjour * 7;
+        $date = date_create();
+        date_add($date,date_interval_create_from_date_string("$nbjour days"));
+        $date_retour = date_format($date, 'Y-m-d');
+
+        $emprunt = Emprunt::create([
+            'date_emprunt' => date('Y-m-d'),
+            'date_retour' => $date_retour,
+            'id_abonne' => $request->prenom_abonne,
+            'id_personnel' => $request->prenom,
+        ]);
+
+        EmpruntService::enregistrerUnEmprunt($request->data, $emprunt);
     }
 
     /**

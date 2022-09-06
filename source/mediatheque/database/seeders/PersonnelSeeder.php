@@ -20,6 +20,7 @@ class PersonnelSeeder extends Seeder
             'nom' => 'Daiki',
             'prenom' => 'Alhasan',
             'nom_utilisateur' => 'Shin06',
+            'numero_maison'=>'N105',
             'email' => 'Alhassan.tuto@gmail.com',
             'password' => '256398741',
             'contact' => '91767676',

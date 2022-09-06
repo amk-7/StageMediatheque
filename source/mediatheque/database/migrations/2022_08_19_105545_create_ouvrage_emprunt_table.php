@@ -14,11 +14,12 @@ class CreateOuvrageEmpruntTable extends Migration
     public function up()
     {
         Schema::create('ouvrage_emprunt', function (Blueprint $table) {
-            $table->foreignId('ouvrage_physique_id_ouvrage_physique');
-            $table->foreignId('emprunt_id_emprunt');
-            $table->enum("etat", [1, 2, 3, 4, 5]);
+            $table->foreignId('id_ouvrage_physique');
+            $table->foreignId('id_emprunt');
+            $table->enum("etat_sortie", [1, 2, 3, 4, 5]);
+            $table->boolean("disponibilite");
             $table->timestamps();
-            $table->primary(['ouvrage_physique_id_ouvrage_physique', 'emprunt_id_emprunt']);
+            $table->primary(['id_ouvrage_physique', 'id_emprunt']);
         });
     }
 
