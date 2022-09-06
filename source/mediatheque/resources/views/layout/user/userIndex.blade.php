@@ -22,6 +22,7 @@
             <th>Nom :</th>
             <th>Prenom :</th>
             <th>Nom d'utilisateur :</th>
+            <th>Numero de maison :</th>
             <th>Email :</th>
             <th>Contact :</th>
             <th>Photo_profil :</th>
@@ -34,6 +35,7 @@
             <td>{{$utilisateur->nom}}</td>
             <td>{{$utilisateur->prenom}}</td>
             <td>{{$utilisateur->nom_utilisateur}}</td>
+            <td>{{$utilisateur->numero_maison}}</td>
             <td>{{$utilisateur->email}}</td>
             <td>{{$utilisateur->contact}}</td>
             <td>{{$utilisateur->photo_profil}}</td>

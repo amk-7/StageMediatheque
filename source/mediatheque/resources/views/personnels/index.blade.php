@@ -24,6 +24,7 @@
             <th>Nom</th>
             <th>Prenom</th>
             <th>Nom d'utilisateur</th>
+            <th>Numero de maison</th>
             <th>Email</th>
             <th>Contact</th>
             <th>Ville</th>
@@ -41,6 +42,7 @@
                 <td>{{$personnel->utilisateur->nom}}</td>
                 <td>{{$personnel->utilisateur->prenom}}</td>
                 <td>{{$personnel->utilisateur->nom_utilisateur}}</td>
+                <td>{{$personnel->utilisateur->numero_maison}}</td>
                 <td>{{$personnel->utilisateur->email}}</td>
                 <td>{{$personnel->utilisateur->contact}}</td>
                 <td>{{$personnel->utilisateur->adresse["ville"]}}</td>

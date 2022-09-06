@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class OuvrageEmprunt extends Pivot
 {
     use HasFactory;
-    protected $primaryKey = ['id_ouvrage', 'id_emprunt'];
+    protected $fillable =['etat', 'id_abonne'];
+    protected $primaryKey = ['id_ouvrage_physique', 'id_emprunt'];
 }
