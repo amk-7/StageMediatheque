@@ -21,7 +21,12 @@ class OuvrageRestitutionService
 
     public static function enregistrerUneRestitutionOuvrage($id_ouvrage, $etat_ouvrage, $id_personnel, $id_abonne){
         $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $id_ouvrage)->first();
-        $ouvragePhysique->augmenterNombreExemplaire(1);
+        $etat_ouvrage = array_search($etat_ouvrage, OuvragesPhysiqueHelper::demanderEtat());
+        if ((int) $etat_ouvrage == 1){
+            $ouvragePhysique->decrementerNombreExemplaire();
+        } else {
+            $ouvragePhysique->augmenterNombreExemplaire(1);
+        }
         $restitution = Restitution::create([
             'date_restitution' => date('d-m-Y'),
             'id_abonne' => $id_abonne,
@@ -30,7 +35,7 @@ class OuvrageRestitutionService
         $restitution->ouvragePhysiques()->attach(
             $ouvragePhysique->id_ouvrage_physique,
             [
-                'etat_ouvrage' => array_search($etat_ouvrage, OuvragesPhysiqueHelper::demanderEtat()) ,
+                'etat_ouvrage' => '' ,
             ]
         );
     }
