@@ -19,6 +19,8 @@ class Emprunt extends Model
 
     public function ouvragePhysique()
     {
-        return $this->belongsToMany(OuvragesPhysique::class)->using(OuvrageEmprunt::class);
+        return $this->belongsToMany(OuvragesPhysique::class, 'ouvrage_emprunt', 'id_ouvrage_physique', 'id_emprunt')
+                    ->withTimestamps()
+                    ->withPivot(['etat']);
     }
 }

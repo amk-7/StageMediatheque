@@ -48,12 +48,14 @@ class OuvragesPhysique extends Model
                     ->withTimestamps()
                     ->withPivot(["etat_ouvrage"]);
     }
-    public function emprunt()
-    {
-        return $this->belongsToMany(Emprunt::class)->using(OuvrageEmprunt::class);
-    }
     public function reservation()
     {
         return $this->belongsToMany(Reservation::class)->using(OuvrageReservation::class);
+    }
+    public function emprunt()
+    {
+        return $this->belongsToMany(Emprunt::class, 'ouvrage_emprunt', 'id_ouvrage_physique', 'id_emprunt')
+                    ->withTimestamps()
+                    ->withPivot(['etat']);
     }
 }
