@@ -87,6 +87,7 @@ class AbonneController extends Controller
         $elements = DB::table('users')->where('nom', $request->nom)->where('prenom', $request->prenom)->get();
         dd($elements);*/
 
+
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',

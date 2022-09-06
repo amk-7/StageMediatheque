@@ -28,6 +28,11 @@
     </div>
 
     <div>
+        <label for="numero_maison">Numero de maison</label>
+        <input type="text" name="numero_maison" value="{{$utilisateur->numero_maison}}">
+    </div>
+
+    <div>
         <label for="email">Email</label>
         <input type="text" name="email" value="{{$utilisateur->email}}">
     </div>

@@ -25,6 +25,7 @@
             <th>Nom</th>
             <th>Prenom</th>
             <th>Nom d'utilisateur</th>
+            <th>Numero de maison</th>
             <th>Email</th>
             <th>Contact</th>
             <th>Ville</th>
@@ -48,6 +49,7 @@
                 <td>{{$abonne->utilisateur->nom}}</td>
                 <td>{{$abonne->utilisateur->prenom}}</td>
                 <td>{{$abonne->utilisateur->nom_utilisateur}}</td>
+                <td>{{$abonne->utilisateur->numero_maison}}</td>
                 <td>{{$abonne->utilisateur->email}}</td>
                 <td>{{$abonne->utilisateur->contact}}</td>
                 <td>{{$abonne->utilisateur->adresse["ville"]}}</td>
