@@ -17,19 +17,23 @@ class Abonne extends Model
         return $this->belongsTo('App\Models\User', 'id_utilisateur');
     }
 
-    public function registration(){
+    public function restitutions(){
+        return $this->hasMany(Restitution::class, 'id_restitution');
+    }
+
+    public function registrations(){
         return $this->hasMany('App\Models\Registration', 'id_registraton');
     }
 
-    public function reservation(){
+    public function reservations(){
         return $this->hasMany('App\Models\Reservation', 'id_reservation');
     }
 
-    public function emprunt(){
+    public function emprunts(){
         return $this->hasMany('App\Models\Emprunt', 'id_emprunt');
     }
 
-    public function telechargement(){
+    public function telechargements(){
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
     }
 }

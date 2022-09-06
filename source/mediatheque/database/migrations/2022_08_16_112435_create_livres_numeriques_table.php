@@ -19,7 +19,7 @@ class CreateLivresNumeriquesTable extends Migration
             $table->string('ISBN')->unique();
             $table->bigInteger('id_ouvrage_electronique');
             $table->timestamps();
-            $table->foreign('id_ouvrage_electronique')->references('id_ouvrage_electronique')->on('ouvrages_electroniques');
+            $table->foreign('id_ouvrage_electronique')->references('id_ouvrage_electronique')->on('ouvrages_electroniques')->cascadeOnDelete();
         });
     }
 

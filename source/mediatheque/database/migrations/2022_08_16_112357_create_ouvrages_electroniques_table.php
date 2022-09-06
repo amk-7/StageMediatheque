@@ -18,7 +18,7 @@ class CreateOuvragesElectroniquesTable extends Migration
             $table->string('url');
             $table->bigInteger('id_ouvrage');
             $table->timestamps();
-            $table->foreign('id_ouvrage')->references('id_ouvrage')->on('ouvrages');
+            $table->foreign('id_ouvrage')->references('id_ouvrage')->on('ouvrages')->cascadeOnDelete();
         });
     }
 

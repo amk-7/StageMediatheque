@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRestitutionOuvragePhysiqueTable extends Migration
+class CreateRestitutionsOuvragesPhysiquesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateRestitutionOuvragePhysiqueTable extends Migration
      */
     public function up()
     {
-        Schema::create('restitution_ouvrage_physique', function (Blueprint $table) {
-            $table->string('etat_ouvrage');
+        Schema::create('restitutions_ouvrages_physiques', function (Blueprint $table) {
             $table->foreignId('id_ouvrage_physique');
             $table->foreignId('id_restitution');
-            $table->enum("etat", [1, 2, 3, 4, 5]);
+            $table->enum("etat_ouvrage", [1, 2, 3, 4, 5]);
             $table->primary(['id_restitution', 'id_ouvrage_physique']);
             $table->timestamps();
         });

@@ -23,7 +23,7 @@
         let mot_cle_canvas = document.createElement("input");
         mot_cle_canvas.value = `${input_mot_cle.value}`;
         mot_cle_canvas.className = "input_elt";
-        mot_cle_canvas.desable = true;
+        //mot_cle_canvas.disabled = true;
 
         let remove_mot_cle_btn = document.createElement("button");
         remove_mot_cle_btn.innerText = 'x';
@@ -52,8 +52,6 @@
     inputSave.addEventListener('click', function addDataBeforeSend(e){
         /*e.preventDefault();
         e.stopPropagation();*/
-
-
         let table_mot_cle = document.getElementById("tableMotCle");
         let div_ligne_mot_cle = table_mot_cle.children[0].children[1].children[0].children[0];
         let div_auteurs = document.getElementById("listeAuteurs");
@@ -63,8 +61,6 @@
         let div_ligne_mot_cle_children = div_ligne_mot_cle.children;
         let div_auteurs_chilidren = div_auteurs.children;
 
-
-        //console.log(div_auteurs_chilidren);
         for(let i=0; i<div_auteurs_chilidren.length; i++){
             if (div_auteurs_chilidren[i].type=="text"){
                 console.log(div_auteurs_chilidren[i].value);
@@ -72,6 +68,8 @@
                 id_oject++;
             }
         }
+        console.log(div_auteurs_chilidren);
+
         if(div_categorie != null){
             let div_categories_chilidren = div_categorie.children;
             id_oject = 0;
@@ -109,9 +107,10 @@
 
         verifieIfAuteurFiledIsNotEmpty();
         verifieIfMotCleFieldIsNotEmpty();
-        console.log(div_auteurs.children);
+        //console.log(div_auteurs.children);
+        /*let btn_save = document.getElementById('enregistrer');
+        btn_save.disabled = false;*/
     });
-
     if (addCategorieSelect != null){
         addCategorieSelect.addEventListener('change', function addCategorie(e){
 
@@ -120,7 +119,7 @@
             let categorie_canvas = document.createElement("input");
             categorie_canvas.value = `${addCategorieSelect.value}`;
             categorie_canvas.className = "input_elt";
-            categorie_canvas.desable = true;
+            //categorie_canvas.disabled = true;
             let remove_categorie_btn = document.createElement("button");
             remove_categorie_btn.innerText = 'x'
             remove_categorie_btn.id = `${addCategorieSelect.value}`;
@@ -149,14 +148,13 @@
         });
 
     }
-
     if (addGenreSelect != null){
         addGenreSelect.addEventListener('change', function addCategorie(e){
             let div_genre = document.getElementById("listeGenre");
             let genre_canvas = document.createElement("input");
             genre_canvas.value = `${addGenreSelect.value}`;
             genre_canvas.className = "information";
-            genre_canvas.desable = true;
+            genre_canvas.disabled = true;
             let remove_genre_btn = document.createElement("button");
             remove_genre_btn.innerText = 'x'
             remove_genre_btn.id = `${addGenreSelect.value}`;
@@ -188,7 +186,6 @@
 
     addAuteurBtn.addEventListener('click', function addAuteur(e){
         console.log("event");
-
         const nom_auteur = document.getElementById("nom");
         const prenom_auteur = document.getElementById("prenom");
 
@@ -197,7 +194,7 @@
         let auteur_canvas = document.createElement("input");
         auteur_canvas.value = `${nom_auteur.value}, ${prenom_auteur.value}`;
         auteur_canvas.className = "input_elt";
-        auteur_canvas.desable = true;
+        //auteur_canvas.disabled = true;
         let remove_auteur_btn = document.createElement("button");
         remove_auteur_btn.innerText = "x"
         remove_auteur_btn.className = "button_remove_elt button_delete"
@@ -207,13 +204,14 @@
             console.log(e);
             let div_auteurs = document.getElementById("listeAuteurs");
             let btn = e.explicitOriginalTarget;
-            let removeBtn = btn.previousSibling;
+            let removeBtn = btn.previousSibling; //voici le souci sur chrome
+            //console.log(removeBtn);
             div_auteurs.removeChild(removeBtn);
             div_auteurs.removeChild(btn);
-
             e.preventDefault();
             e.stopPropagation();
-        });
+
+        } , {capture: true});
 
         div_auteurs.appendChild(auteur_canvas);
         div_auteurs.appendChild(remove_auteur_btn);
@@ -224,7 +222,7 @@
         e.preventDefault();
         e.stopPropagation();
 
-    });
+    }, {capture: true});
 
     function verifieIfAuteurFiledIsNotEmpty(){
         const nom_auteur = document.getElementById("nom");

@@ -95,7 +95,7 @@
                        <div>
                            <label class="label">Nom</label>
                            <div class="flex flex-col">
-                               <input name="nom" id="nom" type="text" value="{{ old('nom') }}"
+                               <input name="auteur0" id="nom" type="text" value="{{ old('nom') }}"
                                       placeholder="Saisire le nom de l'auteur"
                                       class="input @error('auteur0') is-invalid @enderror" autocomplete="off">
                                <ul id="searche_options" class="overflow-y-auto h-16 bg-gray-50 border border-gray-300
@@ -161,18 +161,17 @@
                @enderror
            </fieldset>
            @yield('stock')
-           <div>
+           <div class="flex space-x-3">
                <input class="button button_edite w-full mt-12" type="submit" id="enregistrer" name="enregister" value="Enregister"/>
            </div>
        </form>
    </main>
-    <!--script src="{--{ url('mediatheque_js/ouvrage/_ouvrage.js') }--}" async></script-->
 @stop
 
 @section("js")
-    @include("layout.ouvrageZJS.ouvrageLoadFile")
     @include("layout.ouvrageZJS.ouvrageSendDataFormat")
     @include('layout.ouvrageZJS.ouvrageCreate')
+    @include("layout.ouvrageZJS.ouvrageLoadFile")
     @yield('ouvrage_content_js')
     @yield('ouvrage_physique_content_js')
 @stop

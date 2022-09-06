@@ -8,14 +8,34 @@ use Illuminate\Database\Eloquent\Model;
 class Restitution extends Model
 {
     use HasFactory;
-    protected $fillable = ['date_restitution', 'id_abonne'];
+    protected $fillable = ['date_restitution', 'id_abonne', 'id_personnel'];
     protected $primaryKey = 'id_restitution';
 
-    public function OuvragePhysique(){
-<<<<<<< HEAD
-        return $this->belongsToMany(OuvragePhysique::class)->using(RestitutionOuvragePhysique::class);
-=======
-        return $this->belongsToMany(OuvragesPhysique::class)->using(OuvragesParRestitution::class);
->>>>>>> 2b7acce2c9bebd6c0d1c218e13fd1151a5add263
+    public function ouvragePhysiques(){
+        return $this->belongsToMany(OuvragesPhysique::class, 'restitutions_ouvrages_physiques', 'id_ouvrage_physique', 'id_restitution')
+                    ->withTimestamps()
+                    ->withPivot(['etat_ouvrage']);
+    }
+
+    public function getAbonneFullNameAttribute()
+    {
+        return $this->abonne->utilisateur->nom." ".$this->abonne->utilisateur->prenom;
+    }
+
+    public function getPersonnelFullNameAttribute()
+    {
+        return $this->personnel->utilisateur->nom." ".$this->personnel->utilisateur->prenom;
+    }
+
+    public function getNombreOuvragesAttribute(){
+        return $this->ouvragePhysiques()->count();
+    }
+
+    public function abonne(){
+        return $this->belongsTo(Abonne::class, 'id_abonne');
+    }
+
+    public function personnel(){
+        return $this->belongsTo(Personnel::class, 'id_personnel');
     }
 }

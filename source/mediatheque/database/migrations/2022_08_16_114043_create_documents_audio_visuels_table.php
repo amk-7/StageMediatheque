@@ -19,7 +19,7 @@ class CreateDocumentsAudioVisuelsTable extends Migration
             $table->string('ISAN')->unique();
             $table->bigInteger('id_ouvrage_physique');
             $table->timestamps();
-            $table->foreign('id_ouvrage_physique')->references('id_ouvrage_physique')->on('ouvrages_physiques');
+            $table->foreign('id_ouvrage_physique')->references('id_ouvrage_physique')->on('ouvrages_physiques')->cascadeOnDelete();
         });
     }
 

@@ -2,8 +2,8 @@
 
 @section("content")
     <div>
-        <h1>Approvisionnements</h1>
-        <form action="{{route('enregistementApprovisionnements')}}" method="post">
+        <h1>Restitution</h1>
+        <form action="{{route('enregistementRestitution')}}" method="post">
             @csrf
             <fieldset>
                 <legend>Personnel</legend>
@@ -24,8 +24,27 @@
                     <p id="prenom_erreur" hidden>Vous devez séléctionner le prenom</p>
                 </div>
                 <div>
-                    <label for="date_approvisionement">Date</label>
-                    <input type="date" name="date_approvisionnement" id="date_approvisionnement" value="{{ date('Y-m-d') }}" disabled>
+                    <label for="date_restitution">Date</label>
+                    <input type="date" name="date_restitution" id="date_restitution" value="{{ date('Y-m-d') }}" disabled>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Abonné</legend>
+                <div>
+                    <label for="nom_abonnee">Nom</label>
+                    <select name="nom_abonne" id="nom_abonnes"></select>
+                </div>
+                <div class="alert" >
+                    <p id="nom_abonne_erreur" hidden>Vous devez séléctionner le nom</p>
+                </div>
+                <div>
+                    <label for="prenom_abonne">Prenom</label>
+                    <select name="prenom_abonne" id="prenom_abonnes">
+                        <option>Séléctionner prénom</option>
+                    </select>
+                </div>
+                <div class="alert">
+                    <p id="prenom_abonne_erreur" hidden>Vous devez séléctionner le prenom</p>
                 </div>
             </fieldset>
             <fieldset>
@@ -33,7 +52,7 @@
                 <div>
                     <div>
                         <label for="ouvrage_cote">Cote</label>
-                        <input type="text" name="ouvrage_cote" id="ouvrage_cote" placeholder="Saisire l'idendifiant la cote de l'ouvrage">
+                        <input type="text" name="ouvrage_cote" id="ouvrage_cote" placeholder="Saisire l'idendifiant la cote de l'ouvrage" autocomplete="off">
                         <div class="alert" >
                             <p  id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
                             <p  id="cote_ouvrage_not_found" hidden>Cet ouvrage n'existe pas</p>
@@ -49,28 +68,35 @@
                 </div>
                 <div>
                     <div>
-                        <label for="nombre_exemplaire">Nombre d'exemplaire</label>
-                        <input type="number" name="nombre_exemplaire" id="nombre_exemplaire" placeholder="Saisire le nombre d'exemplaire.">
+                        <label for="etat_ouvrage">Etat ouvrage</label>
+                        <select name="etat_ouvrage" id="etat_ouvrage">
+                            <option selected>Séléctionner etat</option>
+                           @for($i=5; $i>0; $i--)
+                               <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
+                            @endfor
+                        </select>
                     </div>
                     <div class="alert" >
-                        <p id="nombre_exemplaire_erreur" hidden>Vous devez indiquer le nombre d'exemplaire approvisionné</p>
-                        <p id="nombre_exemplaire_valeur_erreur" hidden>Le nombre d'exemplaire approvisionné doit être supérieure à 0</p>
+                        <p id="etat_ouvrage_erreur" hidden>Le champ etat ouvrage est requis.</p>
                     </div>
                 </div>
                 <div>
-                    <button name="ajouter_approvisionnement" id="ajouter_approvisionnement">Ajouter</button>
-                    <input type="submit" id="action_approvisionnement" name="action_approvisionnement" value="Approvisionner">
+                    <button name="ajouter_restitution" id="ajouter_restitution">Ajouter</button>
+                    <input type="submit" id="action_restituer" name="action_restituer" value="Restituer">
+                </div>
+                <div class="alert" >
+                    <p id="restitution_erreur" hidden>Veuillez ajouter cet d'ouvrage.</p>
                 </div>
             </fieldset>
             <div>
-                <h3>Liste des approvisionnements</h3>
-                <table border="1" id="liste_approvisionnement">
+                <h3>Liste des restitutions</h3>
+                <table border="1" id="liste_restitution">
                     <thead>
                     <tr>
                         <th>N°</th>
                         <th>Cote</th>
                         <th>Titre ouvrage</th>
-                        <th>Nombres d'exempalire</th>
+                        <th>Etat de l'ouvrage</th>
                         <th>Editer</th>
                         <th>Supprimer</th>
                     </tr>
@@ -82,12 +108,16 @@
         <div class="modal_editer" id="modal_editer" hidden>
             <div>
                 <div>
-                    <label for="nombre_exemplaire_edite">Nombre d'exemplaire</label>
-                    <input type="number" id="nombre_exemplaire_edite" placeholder="Saisire le nombre d'exemplaire.">
+                    <label for="">Etat ouvrage</label>
+                    <select name="" id="etat_ouvrage_edite">
+                        <option selected>Séléctionner etat</option>
+                        @for($i=5; $i>0; $i--)
+                            <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
+                        @endfor
+                    </select>
                 </div>
                 <div class="alert" >
-                    <p id="nombre_exemplaire_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire approvisionné</p>
-                    <p id="nombre_exemplaire_modif_valeur_erreur" hidden>Le nombre d'exemplaire approvisionné doit être supérieure à 0</p>
+                    <p id="etat_ouvrage_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire approvisionné</p>
                 </div>
                 <button id="btn_modifier">modifier</button>
             </div>
@@ -98,35 +128,38 @@
     <script type="text/javascript" async>
 
         let personnels = {!! $personnels !!};
+        let abonnes = {!! $abonnes !!};
         let livres_papier = {!! $livre_papier !!};
         let doc_av = {!! $document_audio_visuel !!};
 
         let nom_personnes = document.getElementById('nom_personnes');
         let prenom_personnes = document.getElementById('prenom_personnes');
+        let nom_abonnes = document.getElementById('nom_abonnes');
+        let prenom_abonnes = document.getElementById('prenom_abonnes');
         let cote_ouvrage = document.getElementById('ouvrage_cote');
         let titre = document.getElementById('titre_ouvrage');
-        let nb_exemplaire = document.getElementById('nombre_exemplaire');
+        let etat_ouvrage = document.getElementById('etat_ouvrage');
         let donne = document.getElementById('data');
-        let terminate_btn = document.getElementById('ajouter_donnee'); //????????
-        let btn_ajouter = document.getElementById('ajouter_approvisionnement');
-        let submit_btn = document.getElementById('action_approvisionnement');
-        let btn_modifier = document.getElementById('btn_modifier');
+        let btn_ajouter = document.getElementById('ajouter_restitution');
+        let submit_btn = document.getElementById('action_restituer');
+        //let btn_modifier = document.getElementById('btn_modifier');
 
         let nom_erreur = document.getElementById('nom_erreur');
         let prenom_erreur = document.getElementById('prenom_erreur');
         let cote_erreur = document.getElementById('cote_ouvrage_erreur');
         let cote_no_trouve = document.getElementById('cote_ouvrage_not_found');
-        let nb_exemplaire_erreur = document.getElementById('nombre_exemplaire_erreur');
-        let nb_exemplaire_valeur_erreur = document.getElementById('nombre_exemplaire_valeur_erreur');
+        let etat_ouvragae_erreur = document.getElementById('etat_ouvrage_erreur');
+        let restitutions_erreur = document.getElementById('restitution_erreur');
 
         let numero_ligne_edite = -1;
 
-        setLiteNoms(nom_personnes);
+        setLiteOptions(nom_personnes, personnels);
+        setLiteOptions(nom_abonnes, abonnes);
         cleanALl();
 
         btn_modifier.addEventListener('click', function (e){
            stopPropagation(e);
-           modifierNbExemplaire();
+           modifierEtatOuvrage();
         });
 
         cote_ouvrage.addEventListener('keyup', function (e){
@@ -134,36 +167,45 @@
         });
 
         nom_personnes.addEventListener('change', function (e){
-            while (prenom_personnes.firstChild) {
-                prenom_personnes.removeChild(prenom_personnes.firstChild);
+            mettreListePrenomParNom(prenom_personnes, nom_personnes.value, personnels);
+        });
+
+        nom_abonnes.addEventListener('change', function (e){
+            mettreListePrenomParNom(prenom_abonnes, nom_abonnes.value, abonnes);
+        });
+
+        function mettreListePrenomParNom(balise, elt, liste){
+            while (balise.firstChild) {
+                balise.removeChild(balise.firstChild);
             }
             let option = document.createElement('option');
             option.innerText = "Séléctionner prénom";
-            prenom_personnes.appendChild(option);
-            for (let i = 0; i < personnels.length; i++) {
-                if(nom_personnes.value==personnels[i]['nom']){
+            balise.appendChild(option);
+            for (let i = 0; i < liste.length; i++) {
+                if(elt === liste[i]['nom']){
                     let option = document.createElement('option');
-                    option.value = personnels[i]['id_personnel'];
-                    option.innerText = personnels[i]['prenom'];
-                    prenom_personnes.appendChild(option);
+                    option.value = liste[i]['id'];
+                    console.log(option.value)
+                    option.innerText = liste[i]['prenom'];
+                    balise.appendChild(option);
                 }
             }
-        });
+        }
 
         function stopPropagation(e) {
             e.preventDefault();
             e.stopPropagation();
         }
 
-        function setLiteNoms(nom_personnes){
+        function setLiteOptions(elt, liste){
             let option = document.createElement('option');
             option.innerText = "Séléctionner nom";
-            nom_personnes.appendChild(option);
-            for (let i = 0; i < personnels.length; i++) {
+            elt.appendChild(option);
+            for (let i = 0; i < liste.length; i++) {
                 let option = document.createElement('option');
-                option.value = personnels[i]['nom'];
+                option.value = liste[i]['nom'];
                 option.innerText = option.value;
-                nom_personnes.appendChild(option);
+                elt.appendChild(option);
             }
         }
 
@@ -172,12 +214,12 @@
         btn_ajouter.addEventListener('click', function addApprovisionnement(e){
             e.preventDefault();
             if(validate()) {
-                let table_body = document.getElementById('liste_approvisionnement').children[1];
+                let table_body = document.getElementById('liste_restitution').children[1];
                 let row = document.createElement('tr');
                 let cell_number = document.createElement('td');
                 let cell_code = document.createElement('td');
                 let cell_ouvrage = document.createElement('td');
-                let cell_nb_exemplaire = document.createElement('td');
+                let cell_etat_ouvrage = document.createElement('td');
                 let cell_editer = document.createElement('td');
                 let cell_supprimer = document.createElement('td');
 
@@ -201,7 +243,7 @@
 
                 cell_number.innerText = number;
                 cell_ouvrage.innerText = titre.value;
-                cell_nb_exemplaire.innerText = nb_exemplaire.value;
+                cell_etat_ouvrage.innerText = etat_ouvrage.value;
                 cell_code.innerText = cote_ouvrage.value;
 
                 cell_editer.appendChild(button_editer);
@@ -211,7 +253,7 @@
                 row.appendChild(cell_number);
                 row.appendChild(cell_code);
                 row.appendChild(cell_ouvrage);
-                row.appendChild(cell_nb_exemplaire);
+                row.appendChild(cell_etat_ouvrage);
                 row.appendChild(cell_editer);
                 row.appendChild(cell_supprimer);
 
@@ -223,21 +265,22 @@
         function editerLigne(numero_ligne){
             let div_modal = document.getElementById("modal_editer");
             div_modal.hidden = false;
-            console.log(numero_ligne);
+            //console.log(numero_ligne);
             numero_ligne_edite = numero_ligne;
         }
 
-        function modifierNbExemplaire(){
-            console.log("modification.... "+numero_ligne_edite);
-            let table_body = document.getElementById('liste_approvisionnement').children[1];
+        function modifierEtatOuvrage(){
+            //console.log("modification.... "+numero_ligne_edite);
+            let table_body = document.getElementById('liste_restitution').children[1];
+            let etat_ouvrage_edite = document.getElementById('etat_ouvrage_edite');
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
                 if (i === parseInt(numero_ligne_edite)){
                     let line = lines[i].children;
-                    line[3].innerText = nombre_exemplaire_edite.value;
+                    line[3].innerText = etat_ouvrage_edite.value;
                     let div_modal = document.getElementById("modal_editer");
                     div_modal.hidden = true;
-                    nombre_exemplaire_edite.value = "";
+                    etat_ouvrage_edite.value = "Séléctionner etat";
                 }
             }
         }
@@ -257,13 +300,8 @@
                 return false;
             }
 
-            if (nb_exemplaire.value === ""){
-                nb_exemplaire_erreur.hidden = false;
-                return false;
-            }
-
-            if (nb_exemplaire.value <= 0){
-                nb_exemplaire_valeur_erreur.hidden = false;
+            if (etat_ouvrage.value === "" || etat_ouvrage.value === "Séléctionner etat"){
+                etat_ouvragae_erreur.hidden = false;
                 return false;
             }
 
@@ -273,30 +311,30 @@
         function cleanInput(){
             cote_ouvrage.value = "";
             titre.value = "";
-            nb_exemplaire.value = "";
+            etat_ouvrage.value = "Séléctionner etat";
         }
 
         function cleanALl(){
             cleanInput();
             nom_personnes.value = "Séléctionner nom";
             prenom_personnes.value = "Séléctionner prénom";
-            data.value = "";
+            nom_abonnes.value = "Séléctionner nom";
+            prenom_abonnes.value = "Séléctionner prénom";
+            donne.value = "";
         }
 
         function rechercherTitreParCote() {
             let cote = cote_ouvrage.value;
             if (cote.substring(0, 2) === "LP"){
-                console.log("LP---Yes");
                 for (let i = 0; i < livres_papier.length; i++) {
-                    if(livres_papier[i]['cote']===cote){
+                    if(livres_papier[i]['cote'] === cote){
                         titre.value = livres_papier[i]['titre'];
                         return;
                     }
                 }
             } else if (cote.substring(0, 2) === "DA"){
-                console.log("DA---Yes");
                 for (let i = 0; i < doc_av.length; i++) {
-                    if (doc_av[i]['cote'] == titre) {
+                    if (doc_av[i]['cote'] === cote) {
                         titre.value = doc_av[i]['titre'];
                         return;
                     }
@@ -309,12 +347,11 @@
         // format table before send
         function formatTableDataBeforeSend()
         {
-            let table_body = document.getElementById('liste_approvisionnement').children[1];
+            let table_body = document.getElementById('liste_restitution').children[1];
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
-                submit_btn.disabled = false;
                 let line = lines[i].children;
-                data.value += `${dernierCarracter(line[1].innerText)},${line[3].innerText},${prenom_personnes.value};`;
+                donne.value += `${dernierCarracter(line[1].innerText)},${line[3].innerText};`;
             }
         }
 
@@ -329,25 +366,45 @@
         }
 
         submit_btn.addEventListener('click', function (e){
-            console.log("OKKKKKKKK..............");
+            console.log(donne);
+            if (! validerFormulaire(e)){
+                return;
+            }
+            formatTableDataBeforeSend();
+            if (donne.value === ""){
+                stopPropagation(e);
+            }
+            //stopPropagation(e);
+        });
+
+        function validerFormulaire(e){
             if(nom_personnes.value === "Séléctionner nom" || nom_personnes.value === ""){
                 nom_erreur.hidden = false;
                 stopPropagation(e);
-                return;
+                return false;
             }
-            console.log("OKKKKKKKK..............2222");
             if(prenom_personnes.value === "Séléctionner prénom" || prenom_personnes.value === ""){
                 prenom_erreur.hidden = false;
                 stopPropagation(e);
-                return;
+                return false;
             }
-            console.log("OKKKKKKKK..............3333");
-            formatTableDataBeforeSend();
-            if (data.value === ""){
+            if(nom_abonnes.value === "Séléctionner nom" || nom_abonnes.value === ""){
+                nom_erreur.hidden = false;
                 stopPropagation(e);
-                return;
+                return false;
             }
-        });
+            if(prenom_abonnes.value === "Séléctionner prénom" || prenom_abonnes.value === ""){
+                prenom_erreur.hidden = false;
+                stopPropagation(e);
+                return false;
+            }
+            if(cote_ouvrage.value !== "" || etat_ouvrage.value !== "Séléctionner etat"){
+                restitutions_erreur.hidden = false;
+                stopPropagation(e);
+                return false;
+            }
+            return true;
+        }
     </script>
 @stop
 

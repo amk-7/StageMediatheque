@@ -19,7 +19,7 @@ class CreateLivresPapiersTable extends Migration
             $table->string('ISBN')->unique();
             $table->bigInteger('id_ouvrage_physique');
             $table->timestamps();
-            $table->foreign('id_ouvrage_physique')->references('id_ouvrage_physique')->on('ouvrages_physiques');
+            $table->foreign('id_ouvrage_physique')->references('id_ouvrage_physique')->on('ouvrages_physiques')->cascadeOnDelete();
         });
     }
 
