@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Emprunt;
 use App\Models\Restitution;
 use App\Service\AbonneService;
-use App\Service\OuvrageRestitutionService;
+use App\Service\LignesEmprunt;
+use App\Service\LignesEmpruntService;
 use App\Service\OuvragesPhysiqueService;
 use App\Service\PersonnelService;
 use Illuminate\Http\Request;
@@ -28,13 +30,12 @@ class RestitutionController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function create()
+    public function create(Emprunt $emprunt)
     {
+        //dd(LignesEmpruntService::getAllLignesEmpruntByEmprunt($emprunt));
         return view('Restitution.create')->with([
-            "livre_papier" => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
-            "document_audio_visuel" => json_encode(OuvragesPhysiqueService::getDocAVWithAllAttribute()),
-            "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
-            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
+            "emprunt" => $emprunt,
+            "lignes_emprunt" => json_encode(LignesEmpruntService::getAllLignesEmpruntByEmprunt($emprunt)),
         ]);
     }
 
@@ -56,7 +57,7 @@ class RestitutionController extends Controller
 
         //dd($request);
 
-        OuvrageRestitutionService::enregistrerRestitutionOuvrages($request->data, $request->prenom, $request->prenom_abonne);
+        LignesEmprunt::enregistrerRestitutionOuvrages($request->data, $request->prenom, $request->prenom_abonne);
         return "Succes";
     }
 

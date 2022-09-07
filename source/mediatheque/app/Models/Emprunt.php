@@ -12,15 +12,23 @@ class Emprunt extends Model
     protected $primaryKey = 'id_emprunt';
     protected $dates = ['date_emprunt', 'date_retour'];
 
-    public function abonne()
+    public function getNombreOuvrageEmprunteAttribute()
     {
-        return $this->hasOne('App\Models\Abonne', 'id_abonne');
+        return $this->lignesEmprunts()->count();
     }
 
-    public function ouvragePhysiques()
+    public function abonne()
     {
-        return $this->belongsToMany(OuvragesPhysique::class, 'ouvrage_emprunt', 'id_ouvrage_physique', 'id_emprunt')
-                    ->withTimestamps()
-                    ->withPivot(['etat_sortie','disponibilite']);
+        return $this->belongsTo('App\Models\Abonne', 'id_abonne');
+    }
+
+    public function personnel()
+    {
+        return $this->belongsTo(Personnel::class, 'id_personnel');
+    }
+
+    public function lignesEmprunts()
+    {
+        return $this->hasMany(LignesEmprunt::class, 'id_emprunt');
     }
 }

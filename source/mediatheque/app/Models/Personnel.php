@@ -23,4 +23,7 @@ class Personnel extends Model
     public function restitutions(){
         return $this->hasMany(Restitution::class, 'id_restitution');
     }
+    public function emprunts(){
+        return $this->hasMany(Emprunt::class, 'id_emprunt');
+    }
 }

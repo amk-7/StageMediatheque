@@ -162,7 +162,7 @@ class OuvragesPhysiqueService
         return $docsComplet;
     }
 
-    public static function genererCoteNouvelleOuvrage(String $type_livre, $indice_dewey, array $auteurs, Ouvrage $ouvrage) : String
+    public static function genererCoteNouvelleOuvrage(String $type_livre, $indice_dewey, array $auteurs, Ouvrage $ouvrage)
     {
         //type_livre+indice_dewey+AAA[+AAA]+t+id_ouvrage
 
@@ -171,7 +171,7 @@ class OuvragesPhysiqueService
         } elseif ($type_livre == 'document_av'){
             $type_livre = "DA";
         } else {
-            return "";
+            return null;
         }
 
         $cote = $type_livre;

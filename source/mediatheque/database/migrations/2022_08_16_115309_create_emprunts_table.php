@@ -19,9 +19,9 @@ class CreateEmpruntsTable extends Migration
             $table->date('date_retour');
             $table->bigInteger('id_abonne')->nullable();
             $table->bigInteger('id_personnel')->nullable();
+            $table->timestamps();
             $table->foreign('id_abonne')->references('id_abonne')->on('abonnes')->nullOnDelete();
             $table->foreign('id_personnel')->references('id_personnel')->on('personnels')->nullOnDelete();
-            $table->timestamps();
         });
     }
 

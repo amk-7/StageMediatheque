@@ -47,7 +47,7 @@ Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelControlle
 // Path: Emprunt routes/web.php
 Route::get('liste_des_emprunts', 'App\Http\Controllers\EmpruntController@index')->name('listeEmprunts');
 Route::get('affiche_emprunt', 'App\Http\Controllers\EmpruntController@show')->name('showEmprunt');
-Route::get('formulaire_edition_des_emprunts', 'App\Http\Controllers\EmpruntController@edit')->name('editEmprunt');
+Route::get('formulaire_edition_emprunts', 'App\Http\Controllers\EmpruntController@edit')->name('editEmprunt');
 Route::put('mise_a_jour_des_emprunts', 'App\Http\Controllers\EmpruntController@update')->name('updateEmprunt');
 Route::delete('suppression_des_emprunts', 'App\Http\Controllers\EmpruntController@destroy')->name('destroyEmprunt');
 Route::get('formulaire_Emprunt', 'App\Http\Controllers\EmpruntController@create')->name('createEmprunt');
@@ -159,7 +159,7 @@ Route::post('modification_approvisionnements', [ApprovisionnementsController::cl
 Route::delete('suppression_approvisionnements', [ApprovisionnementsController::class, 'destroy'])->name('suppressionApprovisionnements');
 
 Route::get('liste_restitutions', [RestitutionController::class, 'index'])->name('listeRestitutions');
-Route::get('formulaire_enregistrement_restitution', [RestitutionController::class, 'create'])->name('formulaireEnregistrementRestitution');
+Route::get('formulaire_enregistrement_restitution/{emprunt}/formulaire', [RestitutionController::class, 'create'])->name('formulaireEnregistrementRestitution');
 Route::post('enregistrement_restitution', [RestitutionController::class, 'store'])->name('enregistementRestitution');
 Route::get('affichage_restitution/{restitution}/afficher', [RestitutionController::class, 'show'])->name('affichageRestitution');
 Route::get('formulaire_modification_restitution', [RestitutionController::class, 'edit'])->name('formulaireModificationRestitution');

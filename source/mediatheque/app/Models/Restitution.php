@@ -11,10 +11,8 @@ class Restitution extends Model
     protected $fillable = ['date_restitution', 'id_abonne', 'id_personnel'];
     protected $primaryKey = 'id_restitution';
 
-    public function ouvragePhysiques(){
-        return $this->belongsToMany(OuvragesPhysique::class, 'restitutions_ouvrages_physiques', 'id_ouvrage_physique', 'id_restitution')
-                    ->withTimestamps()
-                    ->withPivot(['etat_ouvrage']);
+    public function lignesRestitutions(){
+        return $this->hasMany(LignesRestitution::class, 'id_ligne_restitution');
     }
 
     public function getAbonneFullNameAttribute()

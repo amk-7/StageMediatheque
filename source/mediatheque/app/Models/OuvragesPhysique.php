@@ -49,19 +49,16 @@ class OuvragesPhysique extends Model
         return $this->belongsTo(DocumentsAudioVisuel::class);
     }
 
-    public function restitutions(){
-        return $this->belongsToMany(Restitution::class, "restitutions_ouvrages_physiques", "id_restitution", "id_ouvrage_physique")
-                    ->withTimestamps()
-                    ->withPivot(["etat_ouvrage"]);
+    public function lignesRestitutions(){
+        return $this->hasMany(LignesRestitution::class, 'id_ligne_restitution');
     }
+
     public function reservation()
     {
         return $this->belongsToMany(Reservation::class)->using(OuvrageReservation::class);
     }
-    public function emprunts()
+    public function lignesEmprunts()
     {
-        return $this->belongsToMany(Emprunt::class, 'ouvrage_emprunt', 'id_ouvrage_physique', 'id_emprunt')
-                    ->withTimestamps()
-                    ->withPivot(['etat_sortie','disponibilite']);
+        return $this->hasMany(LignesEmprunt::class, 'id_livre_emprunt');
     }
 }

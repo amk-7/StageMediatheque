@@ -31,6 +31,11 @@ class User extends Authenticatable
     ];
     protected $primaryKey = 'id_utilisateur';
 
+    public function getUserFullNameAttribute()
+    {
+        return $this->nom." ".$this->prenom;
+    }
+
     public function abonne()
     {
         return $this->hasOne('App\Models\Abonne', 'id_abonne');

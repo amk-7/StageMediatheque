@@ -15,6 +15,7 @@ class CreateRestitutionsTable extends Migration
     {
         Schema::create('restitutions', function (Blueprint $table) {
             $table->bigIncrements('id_restitution');
+            $table->enum('etat', [-1,0,1]);
             $table->date('date_restitution')->default('now()');
             $table->bigInteger('id_abonne')->nullable();
             $table->bigInteger('id_personnel')->nullable();

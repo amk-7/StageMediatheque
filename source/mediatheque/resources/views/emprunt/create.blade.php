@@ -121,22 +121,22 @@
                 </table>
             </div>
             <div class="modal_editer" id="modal_editer" hidden>
-            <div>
                 <div>
-                    <label for="">Etat ouvrage</label>
-                    <select name="" id="etat_ouvrage_edite">
-                        <option selected>Séléctionner etat</option>
-                        @for($i=5; $i>0; $i--)
-                            <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
-                        @endfor
-                    </select>
+                    <div>
+                        <label for="">Etat ouvrage</label>
+                        <select name="" id="etat_ouvrage_edite">
+                            <option selected>Séléctionner etat</option>
+                            @for($i=5; $i>0; $i--)
+                                <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="alert" >
+                        <p id="etat_ouvrage_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire approvisionné</p>
+                    </div>
+                    <button id="btn_modifier">modifier</button>
                 </div>
-                <div class="alert" >
-                    <p id="etat_ouvrage_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire approvisionné</p>
-                </div>
-                <button id="btn_modifier">modifier</button>
             </div>
-        </div>
         </form>
     </div>
 @stop
@@ -159,7 +159,7 @@
         let btn_ajouter = document.getElementById('ajouter_emprunt');
         let submit_btn = document.getElementById('action_emprunter');
         let duree_emprunt = document.getElementById('duree_emprunt');
-        
+
         //let btn_modifier = document.getElementById('btn_modifier');
 
         let nom_erreur = document.getElementById('nom_erreur');
@@ -173,7 +173,7 @@
         setLiteOptions(nom_personnes, personnels);
         setLiteOptions(nom_abonnes, abonnes);
         cleanALl();
-        
+
         let numero_ligne_edite = -1;
 
         btn_modifier.addEventListener('click', function (e){
