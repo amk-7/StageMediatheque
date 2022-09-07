@@ -110,12 +110,11 @@
 
         function mettreLignesEmprunt(){
             for (let i = 0; i < lignes_emprunt.length; i++) {
-                //console.log(lignes_emprunt[i]);
-                mettreUneLigneEmprunt(lignes_emprunt[i]['cote'], lignes_emprunt[i]['titre_ouvrage'], lignes_emprunt[i]['etat_sortie']);
+                mettreUneLigneEmprunt(lignes_emprunt[i]['cote'], lignes_emprunt[i]['titre_ouvrage'], lignes_emprunt[i]['etat_sortie'], lignes_emprunt[i]['disponibilite'], lignes_emprunt[i]['etat_entree']);
             }
         }
 
-        function mettreUneLigneEmprunt(cote, titre_ouvrage, etat_sortie){
+        function mettreUneLigneEmprunt(cote, titre_ouvrage, etat_sortie, disponibilite, etat_entree){
             let table_body = document.getElementById('liste_restitution').children[1];
             let row = document.createElement('tr');
             let cell_number = document.createElement('td');
@@ -125,20 +124,24 @@
             let cell_etat_entree = document.createElement('td');
             let cell_restituer = document.createElement('td');
 
-            let check_restituer = document.createElement('input');
-            check_restituer.type = 'checkbox';
-            check_restituer.id = number - 1;
-            check_restituer.addEventListener('click', function (e){
-                editerLigne(check_restituer.id);
-            });
-
-            cell_restituer.appendChild(check_restituer);
+            if (! disponibilite){
+                let check_restituer = document.createElement('input');
+                check_restituer.type = 'checkbox';
+                check_restituer.id = number - 1;
+                check_restituer.addEventListener('click', function (e){
+                    editerLigne(check_restituer.id);
+                });
+                cell_restituer.appendChild(check_restituer);
+                cell_etat_entree.innerText = "";
+            } else {
+                cell_restituer.innerText = "Restituer";
+                cell_etat_entree.innerText = etat_entree;
+            }
 
             cell_number.innerText = number;
             cell_cote.innerText = cote;
             cell_ouvrage.innerText = titre_ouvrage;
             cell_etat_sortie.innerText = etat_sortie;
-            cell_etat_entree.innerText = "";
 
             number++;
 
