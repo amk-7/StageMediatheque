@@ -158,12 +158,12 @@ Route::get('formulaire_modification_approvisionnements/{approvisionnements}/modi
 Route::post('modification_approvisionnements', [ApprovisionnementsController::class, 'update'])->name('modificationApprovisionnements');
 Route::delete('suppression_approvisionnements', [ApprovisionnementsController::class, 'destroy'])->name('suppressionApprovisionnements');
 
-Route::get('liste_restitutions', [RestitutionController::class, 'index'])->name('listeRestitutions');
+Route::get('liste_des_restitutions', [RestitutionController::class, 'index'])->name('listeRestitutions');
 Route::get('formulaire_enregistrement_restitution/{emprunt}/formulaire', [RestitutionController::class, 'create'])->name('formulaireEnregistrementRestitution');
 Route::post('enregistrement_restitution', [RestitutionController::class, 'store'])->name('enregistementRestitution');
 Route::get('affichage_restitution/{restitution}/afficher', [RestitutionController::class, 'show'])->name('affichageRestitution');
-Route::get('formulaire_modification_restitution', [RestitutionController::class, 'edit'])->name('formulaireModificationRestitution');
-Route::post('modification_restitution', [RestitutionController::class, 'update'])->name('modificationRestitution');
+Route::get('formulaire_modification_restitution/{restitution}/editer', [RestitutionController::class, 'edit'])->name('formulaireModificationRestitution');
+Route::post('modification_restitution/{restitution}', [RestitutionController::class, 'update'])->name('modificationRestitution');
 Route::delete('suppression_restitution', [RestitutionController::class, 'destroy'])->name('suppressionRestitution');
 
 Route::get('/getCodeIDTitle', [\App\Service\OuvragesPhysiqueService::class, 'getCodeIDTitle'] );

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
 use App\Models\Restitution;
-use App\Service\AbonneService;
+use App\Service\GobaleService;
 use App\Service\LignesEmprunt;
 use App\Service\LignesEmpruntService;
-use App\Service\OuvragesPhysiqueService;
-use App\Service\PersonnelService;
+use App\Service\LignesRestitutionService;
+use App\Service\RestitutionService;
 use Illuminate\Http\Request;
 
 class RestitutionController extends Controller
@@ -20,7 +20,7 @@ class RestitutionController extends Controller
      */
     public function index()
     {
-        return view('Restitution.index')->with([
+        return view('restitution.index')->with([
             'restitutions' => Restitution::all(),
         ]);
     }
@@ -33,7 +33,7 @@ class RestitutionController extends Controller
     public function create(Emprunt $emprunt)
     {
         //dd(LignesEmpruntService::getAllLignesEmpruntByEmprunt($emprunt));
-        return view('Restitution.create')->with([
+        return view('restitution.create')->with([
             "emprunt" => $emprunt,
             "lignes_emprunt" => json_encode(LignesEmpruntService::getAllLignesEmpruntByEmprunt($emprunt)),
         ]);
@@ -43,22 +43,28 @@ class RestitutionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
+        //dd($request);
         $request->validate([
-            'nom'=>'required',
-            'prenom'=>'required',
-            'nom_abonne'=>'required',
-            'prenom_abonne'=>'required',
             'data'=>'required',
         ]);
+        $datas = GobaleService::extractLineToData($request->data);
 
-        //dd($request);
+        $id_emprunt = $datas[0][0];
 
-        LignesEmprunt::enregistrerRestitutionOuvrages($request->data, $request->prenom, $request->prenom_abonne);
-        return "Succes";
+        $restitution = Restitution::create([
+            'etat' => RestitutionService::etatRestitution($id_emprunt, count($datas)-2), //verifier si la restitution est partielle ou complet.
+            'date_restitution' => date('Y-m-d'),
+            'id_personnel' => $datas[0][1],
+            'id_abonne' => $datas[0][2],
+            'id_emprunt' => $id_emprunt,
+        ]);
+        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
+
+        return redirect()->route('listeRestitutions');
     }
 
     /**
@@ -69,7 +75,7 @@ class RestitutionController extends Controller
      */
     public function show(Restitution $restitution)
     {
-        return view('Restitution.show')->with([
+        return view('restitution.show')->with([
             'restitution' => $restitution,
         ]);
     }
@@ -78,11 +84,14 @@ class RestitutionController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Restitution  $restitution
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Restitution $restitution)
     {
-        //
+        return view('restitution.edite')->with([
+            'restitution' => $restitution,
+            'lignes_emprunt' => json_encode(LignesEmpruntService::getAllLignesEmpruntByEmprunt($restitution->emprunt)),
+        ]);
     }
 
     /**
@@ -90,11 +99,23 @@ class RestitutionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Request  $restitution
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Restitution $restitution)
     {
-        //
+        $request->validate([
+            'data'=>'required',
+        ]);
+        $datas = GobaleService::extractLineToData($request->data);
+
+        $id_emprunt = $restitution->id_emprunt;
+        //dd($id_emprunt);
+        $restitution->etat = RestitutionService::etatRestitution($id_emprunt, count($datas)-2);
+        $restitution->save();
+
+        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
+
+        return redirect()->route('listeRestitutions');
     }
 
     /**

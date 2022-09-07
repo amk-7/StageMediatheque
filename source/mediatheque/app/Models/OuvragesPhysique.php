@@ -50,7 +50,7 @@ class OuvragesPhysique extends Model
     }
 
     public function lignesRestitutions(){
-        return $this->hasMany(LignesRestitution::class, 'id_ligne_restitution');
+        return $this->hasMany(LignesRestitution::class, 'id_ouvrage_physique');
     }
 
     public function reservation()

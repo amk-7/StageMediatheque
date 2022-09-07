@@ -1,7 +1,5 @@
 <?php
 namespace App\Helpers;
-use App\Models\Auteur;
-use Illuminate\Http\Request;
 
 class AuteurHelpers
 {

@@ -11,13 +11,13 @@
                 <div>
                     <label>
                         <span>Nom : </span>
-                        <span></span>
+                        <span> {{ $emprunt->personnel->utilisateur->nom }} </span>
                     </label>
                 </div>
                 <div>
                     <label>
                         <span>Prenom : </span>
-                        <span></span>
+                        <span> {{ $emprunt->personnel->utilisateur->prenom }} </span>
                     </label>
                 </div>
             </fieldset>
@@ -26,13 +26,13 @@
                 <div>
                     <label>
                         <span>Nom : </span>
-                        <span></span>
+                        <span> {{ $emprunt->abonne->utilisateur->nom }} </span>
                     </label>
                 </div>
                 <div>
                     <label>
                         <span>Prénom : </span>
-                        <span></span>
+                        <span> {{ $emprunt->abonne->utilisateur->prenom }} </span>
                     </label>
                 </div>
             </fieldset>
@@ -59,7 +59,7 @@
                 </div>
             </fieldset>
         </form>
-        <div class="modal_editer" id="modal_editer">
+        <div class="modal_editer" id="modal_editer" hidden>
             <div>
                 <div>
                     <label>Etat entree</label>
@@ -82,19 +82,25 @@
     <script type="text/javascript" async>
 
         let number = 1;
+        let id_emprunt = {!! $emprunt->id_emprunt !!};
+        let id_personnel = {{ $emprunt->personnel->id_personnel }};
+        let id_abonne = {{ $emprunt->abonne->id_abonne }};
         let lignes_emprunt = {!! $lignes_emprunt !!};
 
         let donne = document.getElementById('data');
         let submit_btn = document.getElementById('action_restituer');
+        let btn_modifier = document.getElementById('btn_modifier');
 
-        mettreLignesEmprunt();
         cleanALl();
 
-        /*btn_modifier.addEventListener('click', function (e){
-           stopPropagation(e);
-           modifierEtatOuvrage();
-        });*/
+        donne.value = `${id_emprunt},${id_personnel},${id_abonne};`;
+        mettreLignesEmprunt();
+        let numero_ligne_edite = -1;
 
+        btn_modifier.addEventListener('click', function (e){
+            stopPropagation(e);
+            modifierEtatEntreeOuvrage();
+        });
 
 
         function stopPropagation(e) {
@@ -122,6 +128,9 @@
             let check_restituer = document.createElement('input');
             check_restituer.type = 'checkbox';
             check_restituer.id = number - 1;
+            check_restituer.addEventListener('click', function (e){
+                editerLigne(check_restituer.id);
+            });
 
             cell_restituer.appendChild(check_restituer);
 
@@ -139,31 +148,36 @@
             row.appendChild(cell_etat_sortie);
             row.appendChild(cell_etat_entree);
             row.appendChild(cell_restituer);
-
             table_body.appendChild(row);
         };
 
         function editerLigne(numero_ligne){
+            let checkbox = document.getElementById(numero_ligne);
             let div_modal = document.getElementById("modal_editer");
-            div_modal.hidden = false;
-            //console.log(numero_ligne);
-            numero_ligne_edite = numero_ligne;
+            if (checkbox.checked){
+                div_modal.hidden = false;
+                numero_ligne_edite = numero_ligne;
+            } else {
+                div_modal.hidden = true;
+                let table_body = document.getElementById('liste_restitution').children[1];
+                let etat_entree_ouvrage_edite = document.getElementById('etat_entree_ouvrage_edite');
+                let line = table_body.children[numero_ligne_edite];
+                let cellules = line.children;
+                cellules[4].innerText = "";
+            }
         }
 
-        function modifierEtatOuvrage(){
+        function modifierEtatEntreeOuvrage(){
             //console.log("modification.... "+numero_ligne_edite);
             let table_body = document.getElementById('liste_restitution').children[1];
-            let etat_ouvrage_edite = document.getElementById('etat_ouvrage_edite');
-            let lines = table_body.children;
-            for (let i = 0; i < lines.length; i++) {
-                if (i === parseInt(numero_ligne_edite)){
-                    let line = lines[i].children;
-                    line[3].innerText = etat_ouvrage_edite.value;
-                    let div_modal = document.getElementById("modal_editer");
-                    div_modal.hidden = true;
-                    etat_ouvrage_edite.value = "Séléctionner etat";
-                }
-            }
+            let etat_entree_ouvrage_edite = document.getElementById('etat_entree_ouvrage_edite');
+            let line = table_body.children[numero_ligne_edite];
+            console.log(line);
+            let cellules = line.children;
+            cellules[4].innerText = etat_entree_ouvrage_edite.value;
+            let div_modal = document.getElementById("modal_editer");
+            div_modal.hidden = true;
+            etat_entree_ouvrage_edite.value = "Séléctionner etat";
         }
 
         function removeLine(id, table_body){
@@ -174,10 +188,6 @@
             donne.value = "";
         }
 
-        function rechercherTitreParCote() {
-
-        }
-
         // format table before send
         function formatTableDataBeforeSend()
         {
@@ -185,7 +195,9 @@
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
                 let line = lines[i].children;
-                donne.value += `${dernierCarracter(line[1].innerText)},${line[3].innerText};`;
+                if (line[4].innerText !== ""){
+                    donne.value += `${dernierCarracter(line[1].innerText)},${line[4].innerText};`;
+                }
             }
         }
 
@@ -204,7 +216,6 @@
             if (donne.value === ""){
                 stopPropagation(e);
             }
-            stopPropagation(e);
         });
     </script>
 @stop

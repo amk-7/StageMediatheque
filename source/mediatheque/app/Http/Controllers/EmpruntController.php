@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
+use App\Service\LignesEmpruntService;
 use Illuminate\Http\Request;
 use App\Service\OuvragesPhysiqueService;
 use App\Service\PersonnelService;
@@ -74,9 +75,9 @@ class EmpruntController extends Controller
             'id_personnel' => $request->prenom,
         ]);
 
-        EmpruntService::enregistrerUnEmprunt($request->data, $emprunt);
+        LignesEmpruntService::enregistrerLignesEmprunt($request->data, $emprunt);
 
-        return redirect()->route("listesEmprunts");
+        return redirect()->route("listeEmprunts");
     }
 
     /**

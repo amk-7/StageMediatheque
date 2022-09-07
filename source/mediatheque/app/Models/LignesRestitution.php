@@ -9,15 +9,15 @@ class LignesRestitution extends Model
 {
     use HasFactory;
     protected $fillable = ['etat_entree', 'id_restitution', 'id_ouvrage_physique'];
-    protected $primaryKey = 'id_lignes_restitution';
+    protected $primaryKey = 'id_ligne_restitution';
 
     public function ouvragesPhysique()
     {
-        return $this->belongsTo(OuvragesPhysique::class, 'id_ouvrage_physique');
+        return $this->belongsTo(OuvragesPhysique::class, 'id_ligne_restitution');
     }
 
     public function restitution()
     {
-        return $this->belongsTo(Restitution::class, 'id_restitution');
+        return $this->belongsTo(Restitution::class, 'id_ligne_restitution');
     }
 }

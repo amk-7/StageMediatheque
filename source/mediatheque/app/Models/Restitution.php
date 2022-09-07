@@ -8,25 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Restitution extends Model
 {
     use HasFactory;
-    protected $fillable = ['date_restitution', 'id_abonne', 'id_personnel'];
+    protected $fillable = ['date_restitution', 'etat', 'id_abonne', 'id_personnel', 'id_emprunt'];
     protected $primaryKey = 'id_restitution';
 
     public function lignesRestitutions(){
-        return $this->hasMany(LignesRestitution::class, 'id_ligne_restitution');
-    }
-
-    public function getAbonneFullNameAttribute()
-    {
-        return $this->abonne->utilisateur->nom." ".$this->abonne->utilisateur->prenom;
-    }
-
-    public function getPersonnelFullNameAttribute()
-    {
-        return $this->personnel->utilisateur->nom." ".$this->personnel->utilisateur->prenom;
+        return $this->hasMany(LignesRestitution::class, 'id_restitution');
     }
 
     public function getNombreOuvragesAttribute(){
-        return $this->ouvragePhysiques()->count();
+        return $this->lignesRestitutions()->count();
     }
 
     public function abonne(){
@@ -35,6 +25,10 @@ class Restitution extends Model
 
     public function personnel(){
         return $this->belongsTo(Personnel::class, 'id_personnel');
+    }
+
+    public function emprunt(){
+        return $this->hasOne(Emprunt::class, 'id_emprunt');
     }
 }
 
