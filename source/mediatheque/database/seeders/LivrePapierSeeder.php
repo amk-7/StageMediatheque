@@ -55,10 +55,8 @@ class LivrePapierSeeder extends Seeder
             'lieu_edition'=>'DAKAR',
         ]);
 
-
-
         $classificationDizaine5 = ClassificationDeweyDizaine::all()->where("classe", 10)->first();
-        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage('', $classificationDizaine5->classe, [$auteur5, $auteurn], $ouvrage5);
+        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", $classificationDizaine5->classe, [$auteur5, $auteurn], $ouvrage5);
 
         $ouvragePhysique5 = OuvragesPhysique::Create([
             'nombre_exemplaire' => 4,

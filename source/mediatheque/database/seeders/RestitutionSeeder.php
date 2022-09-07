@@ -17,6 +17,7 @@ class RestitutionSeeder extends Seeder
 
         $restitution = Restitution::create([
             'date_restitution' => date('Y-m-d'),
+            'etat'=> -1,
             'id_abonne' => $abonne->id_abonne,
             'id_personnel' => $personnel->id_personnel,
         ]);
