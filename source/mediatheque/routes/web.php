@@ -47,7 +47,7 @@ Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelControlle
 // Path: Emprunt routes/web.php
 Route::get('liste_des_emprunts', 'App\Http\Controllers\EmpruntController@index')->name('listeEmprunts');
 Route::get('affiche_emprunt', 'App\Http\Controllers\EmpruntController@show')->name('showEmprunt');
-Route::get('formulaire_edition_emprunts', 'App\Http\Controllers\EmpruntController@edit')->name('editEmprunt');
+Route::get('formulaire_edition_emprunts/{emprunt}/edition', 'App\Http\Controllers\EmpruntController@edit')->name('editEmprunt');
 Route::put('mise_a_jour_des_emprunts', 'App\Http\Controllers\EmpruntController@update')->name('updateEmprunt');
 Route::delete('suppression_des_emprunts', 'App\Http\Controllers\EmpruntController@destroy')->name('destroyEmprunt');
 Route::get('formulaire_Emprunt', 'App\Http\Controllers\EmpruntController@create')->name('createEmprunt');

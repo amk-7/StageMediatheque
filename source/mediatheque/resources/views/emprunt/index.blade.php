@@ -36,7 +36,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action="" method="">
+                            <form action="{{route('editEmprunt', $emprunt)}}" method="get">
                                 <input type="submit" value="Editer">
                             </form>
                         </td>
