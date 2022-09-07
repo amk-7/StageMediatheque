@@ -17,8 +17,8 @@ class AbonneSeeder extends Seeder
     {
         //
         $utilisateur = User::create([
-            'nom' => 'Daiki',
-            'prenom' => 'Aominé',
+            'nom' => 'Shintaro',
+            'prenom' => 'Midorima',
             'nom_utilisateur' => 'Daiki5',
             'numero_maison'=>'N102',
             'email' => 'Alhassan.blog@gmail.com',
