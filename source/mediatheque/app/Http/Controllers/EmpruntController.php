@@ -100,7 +100,11 @@ class EmpruntController extends Controller
     public function edit(Emprunt $emprunt)
     {
         //
-        return view('emprunt.edit')->with('emprunt', $emprunt);
+        return view('emprunt.edit')->with([
+            'emprunt'=>$emprunt,
+            "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
+            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
+        ]);
     }
 
     /**
