@@ -11,6 +11,12 @@ class LignesEmprunt extends Model
     protected $fillable =['etat_sortie', 'disponibilite', 'id_ouvrage_physique', 'id_emprunt'];
     protected $primaryKey = 'id_ligne_emprunt';
 
+    public function updateDisponibilite()
+    {
+        $this->disponibilite = true;
+        $this->save();
+    }
+
     public function emprunt()
     {
         return $this->belongsTo(Emprunt::class, 'id_ligne_emprunt');

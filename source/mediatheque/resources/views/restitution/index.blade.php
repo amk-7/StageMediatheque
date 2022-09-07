@@ -15,9 +15,10 @@
                     <th>Nombre ouvrage</th>
                     <th>Abonne</th>
                     <th>Personnel</th>
-                    <th>Etat ouvrage global</th>
+                    <th>Etat </th>
                     <th>Date</th>
                     <th>Consulter</th>
+                    <th>Editer</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,13 +26,18 @@
                     <tr>
                         <td> {{ $restitution->id_restitution }} </td>
                         <td> {{ $restitution->nombreOuvrages }} </td>
-                        <td> {{ $restitution->abonneFullName }} </td>
-                        <td> {{ $restitution->personnelFullName }} </td>
-                        <td> etat emprunt == etat restitution ? </td>
+                        <td> {{ $restitution->abonne->utilisateur->userFullName }} </td>
+                        <td> {{ $restitution->personnel->utilisateur->userFullName }} </td>
+                        {!! \App\Helpers\RestitutionHelper::afficherEtatREstitution($restitution)  !!}
                         <td> {{ $restitution->date_restitution }} </td>
                         <td>
-                            <form action="{{ route('affichageRestitution', $restitution) }}" method="get">
+                            <form action="{{-- route('affichageRestitution', $restitution) --}}" method="get">
                                 <input type="submit" value="Consulter">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ route('formulaireModificationRestitution', $restitution) }}" method="get">
+                                <input type="submit" value="Editer">
                             </form>
                         </td>
                     </tr>

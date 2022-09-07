@@ -15,13 +15,15 @@ class CreateRestitutionsTable extends Migration
     {
         Schema::create('restitutions', function (Blueprint $table) {
             $table->bigIncrements('id_restitution');
-            $table->enum('etat', [-1,0,1]);
+            $table->boolean('etat');
             $table->date('date_restitution')->default('now()');
             $table->bigInteger('id_abonne')->nullable();
             $table->bigInteger('id_personnel')->nullable();
+            $table->bigInteger('id_emprunt')->nullable();
             $table->timestamps();
             $table->foreign('id_abonne')->references('id_abonne')->on('abonnes')->nullOnDelete();
             $table->foreign('id_personnel')->references('id_personnel')->on('personnels')->nullOnDelete();
+            $table->foreign('id_emprunt')->references('id_emprunt')->on('emprunts')->nullOnDelete();
         });
     }
 

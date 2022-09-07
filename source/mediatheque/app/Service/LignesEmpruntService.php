@@ -6,55 +6,55 @@ use App\Helpers\OuvragesPhysiqueHelper;
 use App\Models\Approvisionnement;
 use App\Models\Emprunt;
 use App\Models\LignesEmprunt;
+use App\Models\LignesRestitution;
 use App\Models\OuvragesPhysique;
 use App\Models\Restitution;
 
 class LignesEmpruntService
 {
-    public static function enregistrerRestitutionOuvrages($data, $id_personnel, $id_abonne)
+    public static function enregistrerLignesEmprunt($datas, $emprunt)
     {
-        $data = GobaleService::extractLineToData($data);
-        for ($i=0; $i<count($data)-1; $i++){
-           if ($id_personnel != null && $id_abonne != null){
-               self::enregistrerUneRestitutionOuvrage($data[$i][0], $data[$i][1], $id_personnel, $id_abonne);
-           }
+        $datas = GobaleService::extractLineToData($datas);
+        for ($i=0; $i<count($datas)-1; $i++){
+            self::enregistrerUneLignesEmprunt($datas[$i][0], $datas[$i][1], $emprunt);
         }
     }
 
-    public static function enregistrerUneRestitutionOuvrage($id_ouvrage, $etat_ouvrage, $id_personnel, $id_abonne){
-        $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $id_ouvrage)->first();
-        $etat_ouvrage = array_search($etat_ouvrage, OuvragesPhysiqueHelper::demanderEtat());
-        if ((int) $etat_ouvrage == 1){
-            $ouvragePhysique->decrementerNombreExemplaire();
-        } else {
-            $ouvragePhysique->augmenterNombreExemplaire(1);
-        }
-        $restitution = Restitution::create([
-            'date_restitution' => date('d-m-Y'),
-            'id_abonne' => $id_abonne,
-            'id_personnel'=>$id_personnel,
+    public static function enregistrerUneLignesEmprunt($id_ouvrage_physique, $etat_sortie, $emprunt)
+    {
+        $ouvrage_physique = OuvragesPhysique::find($id_ouvrage_physique);
+        $ouvrage_physique->decrementerNombreExemplaire();
+        //dd($emprunt->id_emprunt);
+        LignesEmprunt::create([
+            'etat_sortie' => array_search($etat_sortie, OuvragesPhysiqueHelper::demanderEtat()),
+            'disponibilite' => false,
+            'id_ouvrage_physique' => $ouvrage_physique->id_ouvrage_physique,
+            'id_emprunt' => $emprunt->id_emprunt,
         ]);
-        $restitution->ouvragePhysiques()->attach(
-            $ouvragePhysique->id_ouvrage_physique,
-            [
-                'etat_ouvrage' => '' ,
-            ]
-        );
     }
 
     public static function getAllLignesEmpruntByEmprunt(Emprunt $emprunt)
     {
         $lignes_emprunt = [];
-        $lignes_emprunt_by_emprunt = LignesEmprunt::all()->where('id_emprunt', $emprunt->id_emprunt);
+        $lignes_emprunt_by_emprunt = LignesEmprunt::all()->where('id_emprunt', $emprunt->id_emprunt)->sortBy('id_emprunt');
+        $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
 
         foreach ($lignes_emprunt_by_emprunt as $ligne){
+           if ($ligne->disponibilite){
+               $etat_entree = LignesRestitution::all()->where('id_restitution', $restitution->id_restitution)
+                                                ->first()->etat_entree;
+               $etat_entree =  OuvragesPhysiqueHelper::afficherEtat($etat_entree);
+           }
+
             $fullLine = [
-                "numero_ligne" => $ligne->id_ligne_emprunt,
-                "numero_emprunt" => $ligne->id_emprunt,
-                "numero_ouvrage_physique" => $ligne->id_ouvrage_physique,
-                "etat_sortie" => OuvragesPhysiqueHelper::afficherEtat($ligne->etat_sortie),
-                "titre_ouvrage" => $ligne->ouvragesPhysique->ouvrage->titre,
-                "cote" => $ligne->ouvragesPhysique->cote,
+                'numero_ligne' => $ligne->id_ligne_emprunt,
+                'numero_emprunt' => $ligne->id_emprunt,
+                'numero_ouvrage_physique' => $ligne->id_ouvrage_physique,
+                'etat_sortie' => OuvragesPhysiqueHelper::afficherEtat($ligne->etat_sortie),
+                'etat_entree' => $etat_entree ?? "",
+                'titre_ouvrage' => $ligne->ouvragesPhysique->ouvrage->titre,
+                'cote' => $ligne->ouvragesPhysique->cote,
+                'disponibilite' => $ligne->disponibilite,
             ];
             array_push($lignes_emprunt, $fullLine);
         }
