@@ -6,6 +6,7 @@
         <h1>Editer l'emprunt N° {{ $emprunt->id_emprunt }}</h1>
         <form action="{{route('updateEmprunt')}}" method="post">
             @csrf
+            {{ method_field('PUT') }}
             <fieldset>
                 <legend>Personnel</legend>
                 <div>
@@ -63,11 +64,7 @@
             </fieldset>
             <div>
                 <div>
-                    <button name="ajouter_emprunt" id="ajouter_emprunt">Ajouter</button>
-                    <input type="submit" id="action_emprunter" name="action_emprunt" value="Emprunter">
-                </div>
-                <div class="alert" >
-                    <p id="emprunt_erreur" hidden>Veuillez ajouter cet d'ouvrage.</p>
+                    <button name="modifier_emprunt" id="modifier_emprunt">Modifier</button>
                 </div>
             </div>
         </form>
