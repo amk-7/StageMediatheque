@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OuvragesPhysique extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre_exemplaire', 'id_ouvrage', 'id_classification_dewey_dizaine'];
+    protected $fillable = ['nombre_exemplaire', 'id_ouvrage', 'id_classification_dewey_dizaine', 'cote'];
     protected $primaryKey = 'id_ouvrage_physique';
 
     public function estDisponible()

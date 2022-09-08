@@ -169,4 +169,3 @@ Route::delete('suppression_restitution', [RestitutionController::class, 'destroy
 Route::get('/getCodeIDTitle', [\App\Service\OuvragesPhysiqueService::class, 'getCodeIDTitle'] );
 Route::get('/getCodeID', [\App\Service\OuvragesPhysiqueService::class, 'getCodeID'] );
 Route::get('/getOuvragePhysiqueByType', [\App\Service\OuvragesPhysiqueService::class, 'getOuvragePhysiqueByType'] );
-

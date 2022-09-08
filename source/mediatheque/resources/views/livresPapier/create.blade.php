@@ -3,17 +3,18 @@
     <fieldset class="border border-solid border-gray-600 p-4 space-y-3 rounded-md">
         <legend>Particularité</legend>
         <div>
+            <input type="text" id="data_categorie" name="data_categorie" hidden>
             <label class="label">Catégorie</label>
-            <select name="categorie0" id="ajouterCategorie" class="select_btn @error('categorie0') is-invalid @enderror">
-                <option>--Selectionner--</option>
+            <select name="categorie" id="ajouter_categorie" class="select_btn @error('categorie0') is-invalid @enderror">
+                <option>--Sélectionner--</option>
                 @foreach($categories as $categorie)
                     <option value="{{$categorie}}" {{ old('categorie') == $categorie ? 'selected':'' }}>{{$categorie}}</option>
                 @endforeach
             </select>
-            @error('categorie0')
+            @error('categorie')
             <div class="alert">{{ $message }}</div>
             @enderror
-            <div id="listeCategorie"></div>
+            <div id="liste_categorie"></div>
         </div>
         <div>
             <label class="label">ISBN</label>

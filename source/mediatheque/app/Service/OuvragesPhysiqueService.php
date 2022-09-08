@@ -16,16 +16,19 @@ use Illuminate\Support\Facades\DB;
 class OuvragesPhysiqueService
 {
     public static function getClassificationsDewey(){
-        return [ClassificationDeweyCentaine::all(), ClassificationDeweyDizaine::all()->toJson()];
+        return [ClassificationDeweyCentaine::all(), ClassificationDeweyDizaine::all()];
     }
+
     public static function enregisterOuvragePhysique(Request $request, Ouvrage $ouvrage)
     {
         $classificationDizaine = ClassificationDeweyDizaine::all()->where("id_classification_dewey_dizaine", $request["id_classification_dewey_dizaine"])->first();
+        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", $classificationDizaine->classe, [$ouvrage->auteurs()->first()], $ouvrage);
 
         $ouvragePhysique = OuvragesPhysique::Create([
             'nombre_exemplaire' => $request["nombre_exemplaire"],
             'id_ouvrage'=>$ouvrage->id_ouvrage,
-            'id_classification_dewey_dizaine'=>$classificationDizaine->id_classification_dewey_dizaine
+            'cote' => $cote,
+            'id_classification_dewey_dizaine'=>$classificationDizaine->id_classification_dewey_dizaine,
         ]);
 
         return $ouvragePhysique ;

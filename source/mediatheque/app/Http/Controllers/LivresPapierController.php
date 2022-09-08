@@ -6,6 +6,7 @@ use App\Helpers\LivrePapierHelper;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
 use App\Service\AuteurService;
+use App\Service\GobaleService;
 use App\Service\LivresPapierService;
 use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
@@ -68,7 +69,7 @@ class LivresPapierController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -87,32 +88,38 @@ class LivresPapierController extends Controller
 
         $request->validate([
             'titre'=> 'required',
-            'niveau'=>'required|not_in:--Selectionner--',
-            'type'=>'required|not_in:--Selectionner--',
+            'niveau'=>'required|not_in:Sélectionner niveau',
+            'type'=>'required|not_in:Sélectionner type',
             'annee_apparution'=>'required',
             'lieu_edition'=>'required',
-            'auteur0'=>'required',
-            'categorie0'=>'required|not_in:--Selectionner--',
+            'data_auteurs'=>'required',
+            'data_categorie'=>'required',
             'resume'=>'required',
             'nombre_exemplaire'=>'required',
-            'id_classification_dewey_centaine'=>'required|not_in:--Selectionner--',
-            'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
+            'id_classification_dewey_centaine'=>'required|not_in:Sélectionner rayon',
+            'id_classification_dewey_dizaine'=>'required|not_in:Sélectionner étagère',
         ]);
 
         // Creation d'un ou des auteurs .
-        $auteurs = AuteurService::enregistrerAuteur($request);
+        $data_auteurs = GobaleService::extractLineToData($request->data_auteurs);
+        $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
         // Creation de l'ouvrage
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
         // Création d'un ouvrage physique
         $ouvragePhysique = OuvragesPhysiqueService::enregisterOuvragePhysique($request, $ouvrage);
-        //dd($ouvragePhysique);
-        $categories = OuvrageService::convertDataToArray($request, "categorie");
-        //dd($categories);
+
+        $categories_data = GobaleService::extractLineToData($request->data_categorie);
+        $categories = [];
+        foreach ($categories_data as $categorie_array){
+            array_push($categories, $categorie_array[0]);
+        }
+
         LivresPapier::create([
             'categorie'=>$categories,
             'ISBN'=>strtoupper($request["ISBN"]),
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
         ]);
+
         return redirect()->route("listeLivresPapier");
     }
 
@@ -120,7 +127,7 @@ class LivresPapierController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\LivresPapier  $livresPapier
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(LivresPapier $livresPapier)
     {
@@ -167,17 +174,16 @@ class LivresPapierController extends Controller
         //dd($request);
         $request->validate([
             'titre'=> 'required',
-            'niveau'=>'required|not_in:--Selectionner--',
-            'type'=>'required|not_in:--Selectionner--',
+            'niveau'=>'required|not_in:Sélectionner niveau',
+            'type'=>'required|not_in:Sélectionner type',
             'annee_apparution'=>'required',
             'lieu_edition'=>'required',
-            'auteur0'=>'required',
-            'categorie0'=>'required|not_in:--Selectionner--',
-            'ISBN'=>'required',
+            'data_auteurs'=>'required',
+            'data_categorie'=>'required',
             'resume'=>'required',
             'nombre_exemplaire'=>'required',
-            'id_classification_dewey_centaine'=>'required|not_in:--Selectionner--',
-            'id_classification_dewey_dizaine'=>'required|not_in:--Selectionner--',
+            'id_classification_dewey_centaine'=>'required|not_in:Sélectionner rayon',
+            'id_classification_dewey_dizaine'=>'required|not_in:Sélectionner étagère',
         ]);
 
         $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livresPapier->id_ouvrage_physique)->first();
@@ -195,14 +201,10 @@ class LivresPapierController extends Controller
      */
     public function destroy(LivresPapier $livresPapier)
     {
-        $id_ouvrage = $livresPapier->id_livre_papier;
-
-        $livresPapier->delete();
-        OuvragesPhysique::all()->where("id_ouvrage_physique", $id_ouvrage)->first()->delete();
-        Ouvrage::all()->where("id_ouvrage", $id_ouvrage)->first()->delete();
-        //dd("suppression");
+        $ouvrage = Ouvrage::find($livresPapier->id_livre_papier);
+        $ouvrage->auteurs()->detach();
+        $ouvrage->delete();
         return redirect()->route('listeLivresPapier');
     }
-
 }
 

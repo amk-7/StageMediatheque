@@ -4,18 +4,19 @@
         <legend>Particularité</legend>
         <div>
             <label>Catégorie</label>
-            <select name="categorie" id="ajouterCategorie">
-                <option>--Sélectionner categorie--</option>
+            <input type="text" name="data_categorie" id="data_categorie" hidden>
+            <select name="categorie" id="ajouter_categorie">
+                <option>Sélectionner categorie</option>
                 @foreach($categories as $categorie)
                     <option value="{{$categorie}}">{{$categorie}}</option>
                 @endforeach
             </select>
-            <div id="listeCategorie">
+            <div id="liste_categorie">
                 @foreach($livresPapier->categorie as $categorie)
                     @if(! empty($categorie))
                         <input id="categorie{{$loop->index}}" type="text" name="categorie{{$loop->index}}"
-                               value="{{ $categorie }}"/>
-                        <button onclick="removeCategorie('categorie{{$loop->index}}')">x</button>
+                               value="{{ $categorie }}" disabled/>
+                        <button onclick="removeElt('liste_categorie','categorie{{$loop->index}}')">x</button>
                     @endif
                 @endforeach
             </div>

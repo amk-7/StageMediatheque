@@ -31,7 +31,7 @@
                 <label class="label">Etagère</label>
                 <select id="id_classification_dewey_dizaine" name="id_classification_dewey_dizaine"
                         class="select_btn @error('id_classification_dewey_dizaine') is-invalid @enderror">
-                    <option>Selectionner etager</option>
+                    <option>Selectionner étagère</option>
                 </select>
                 @error('id_classification_dewey_dizaine')
                 <div class="alert">{{ $message }}</div>
@@ -39,4 +39,7 @@
             </div>
         </div>
     </fieldset>
+@stop
+@section('ouvrage_physique_content_js')
+    @include('layout.ouvrageZJS.ouvragePhysique')
 @stop

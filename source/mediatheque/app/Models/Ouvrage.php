@@ -9,7 +9,7 @@ use Laravel\Scout\Searchable;
 class Ouvrage extends Model
 {
     use HasFactory, Searchable;
-    protected $fillable = ['titre', 'mot_cle', 'resume', 'niveau', 'type', 'image', 'langue'];
+    protected $fillable = ['titre', 'mot_cle', 'resume', 'niveau', 'type', 'image', 'langue', 'annee_apparution', 'lieu_edition'];
     protected $primaryKey = 'id_ouvrage';
     protected $casts = [
         'mot_cle'=>'array'
@@ -34,9 +34,7 @@ class Ouvrage extends Model
     public function auteurs()
     {
         return $this->belongsToMany(Auteur::class, "auteurs_ouvrages", "id_ouvrage", "id_auteur")
-                    ->withTimestamps()
-                    ->withPivot(['annee_apparution', 'lieu_edition']);
-
+                    ->withTimestamps();
     }
 
 

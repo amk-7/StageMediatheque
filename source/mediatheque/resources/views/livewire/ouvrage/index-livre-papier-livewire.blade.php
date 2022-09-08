@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="" id="searchParametersField">
-                <p>Paramètre de recherche</p>
+                <p>Paramètres de recherche</p>
                 <div>
                     <select wire:model="annee_debut" name="annee_parution_debut" class="select_btn">
                         <option value="">Toute annees </option>

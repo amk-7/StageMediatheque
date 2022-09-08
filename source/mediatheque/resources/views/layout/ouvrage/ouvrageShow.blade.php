@@ -19,11 +19,11 @@
                     </label>
                     <label>
                         <span class="label_title_sub_title">Lieu d'édition :</span>
-                        <span class="label_show_value">{{ $ouvrage->auteurs->first()->pivot->lieu_edition }}</span>
+                        <span class="label_show_value">{{ $ouvrage->lieu_edition }}</span>
                     </label>
                     <label>
                         <span class="label_title_sub_title">Année d'édition :</span>
-                        <span class="label_show_value">{{ $ouvrage->auteurs->first()->pivot->annee_apparution }}</span>
+                        <span class="label_show_value">{{ $ouvrage->annee_apparution }}</span>
                     </label>
                     <label>
                         <span class="label_title_sub_title">Niveau :</span>
