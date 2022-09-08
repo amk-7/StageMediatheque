@@ -14,9 +14,7 @@ class Auteur extends Model
     public function ouvrages()
     {
         return $this->belongsToMany(Ouvrage::class, "auteur_ouvrage", "id_ouvrage", "id_auteur")
-                    ->withTimestamps()
-                    ->withPivot(['annee_apparution', 'lieu_edition']);
-
+                    ->withTimestamps();
     }
 
 }

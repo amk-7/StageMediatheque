@@ -386,7 +386,7 @@
         }
 
         submit_btn.addEventListener('click', function (e){
-            console.log(donne);
+            stopPropagation(e);
             if (! validerFormulaire(e)){
                 return;
             }
@@ -394,7 +394,6 @@
             if (donne.value === ""){
                 stopPropagation(e);
             }
-            //stopPropagation(e);
         });
 
         function validerFormulaire(e){

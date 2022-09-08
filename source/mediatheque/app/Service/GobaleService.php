@@ -13,7 +13,6 @@ class GobaleService
             $line_attributes = explode(',', $array_data_lines[$i]);
             array_push($array_data, $line_attributes);
         }
-        //dd($array_data);
         return $array_data;
     }
 }

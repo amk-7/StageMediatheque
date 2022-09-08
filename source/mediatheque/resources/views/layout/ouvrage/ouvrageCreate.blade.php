@@ -90,14 +90,15 @@
            </fieldset>
            <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
                <legend>Auteur</legend>
+               <input type="text" name="data_auteurs" id="data_auteurs" hidden>
                <div class="flex flex-col">
                    <div class="flex flex-row space-x-3">
                        <div>
                            <label class="label">Nom</label>
                            <div class="flex flex-col">
-                               <input name="auteur0" id="nom" type="text" value="{{ old('nom') }}"
+                               <input name="auteur" id="nom" type="text" value="{{ old('nom') }}"
                                       placeholder="Saisire le nom de l'auteur"
-                                      class="input @error('auteur0') is-invalid @enderror" autocomplete="off">
+                                      class="input @error('auteur') is-invalid @enderror" autocomplete="off">
                                <ul id="searche_options" class="overflow-y-auto h-16 bg-gray-50 border border-gray-300
                                text-gray-900 text-sm rounded-lg block w-full p-2">
                                    @foreach($auteurs as $auteur)
@@ -113,7 +114,7 @@
                            <div class="flex flex-row space-x-3">
                                <input name="prenom" id="prenom" placeholder="saisire le prenom de l'auteur" value="{{ old('prenom') }}"
                                       class="input" autocomplete="off">
-                               <button id="ajouterAuteur" class="button button_plus">+</button>
+                               <button id="ajouter_auteur" class="button button_plus">+</button>
                            </div>
                        </div>
                    </div>
@@ -122,34 +123,24 @@
                    @enderror
                    <div id="auteurs">
                        <label class="label">Auteurs : </label>
-                       <div id="listeAuteurs"></div>
+                       <div id="liste_auteurs"></div>
                    </div>
                </div>
            </fieldset>
            @yield('particularite_papier')
            @yield('particularite_document')
+           @yield('particularite_numerique')
            <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
                <legend>Mots clé</legend>
-               <div id="motCle" name="">
+               <input type="text" name="data_mots_cle" id="data_mots_cle" hidden>
+               <div id="mot_cle" name="">
                    <div class="flex flex-row space-x-3">
-                       <input name="mot_cle_" id="inputMotCle" type="text" value="{{ old('mot_cle_') }}"
+                       <input name="mot_cle" id="input_mot_cle" type="text" value="{{ old('mot_cle_') }}"
                               placeholder="Entrez un mot clé"
                               class="input" autocomplete="off"/>
-                       <button class="button button_plus" id="ajouterMotCle">+</button>
+                       <button class="button button_plus" id="ajouter_mot_cle">+</button>
                    </div>
-                   <table id="tableMotCle" class="">
-                       <tbody>
-                       <tr>
-                           <td>
-                           </td>
-                       </tr>
-                       <tr>
-                           <td>
-                               <div class="listeBtns"></div>
-                           </td>
-                       </tr>
-                       </tbody>
-                   </table>
+                   <div id="liste_mots_cle"></div>
                </div>
            </fieldset>
            <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
@@ -167,12 +158,10 @@
        </form>
    </main>
 @stop
-
 @section("js")
     @include("layout.ouvrageZJS.ouvrageSendDataFormat")
     @include('layout.ouvrageZJS.ouvrageCreate')
     @include("layout.ouvrageZJS.ouvrageLoadFile")
-    @yield('ouvrage_content_js')
     @yield('ouvrage_physique_content_js')
 @stop
 

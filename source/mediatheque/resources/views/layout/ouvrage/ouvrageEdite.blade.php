@@ -15,7 +15,7 @@
                 <div>
                     <label>Niveau</label>
                     <select name="niveau" id="niveau">
-                        <option>--Sélectionner niveau--</option>
+                        <option>Sélectionner niveau</option>
                         @foreach($niveaus as $niveau)
                             <option value="{{$niveau}}" {{ $niveau == $livresPapier->ouvragePhysique->ouvrage->niveau ? 'selected' : '' }}>
                                 {{ \App\Helpers\OuvrageHelper::afficherNiveau($niveau) }}
@@ -26,7 +26,7 @@
                 <div>
                     <label>Type</label>
                     <select name="type" id="type">
-                        <option>--Sélectionner type--</option>
+                        <option>Sélectionner type</option>
                         @foreach($types as $type)
                             <option value="{{$type}}" {{ $type == $livresPapier->ouvragePhysique->ouvrage->type ? 'selected' : '' }}>{{$type}}</option>
                         @endforeach
@@ -45,25 +45,25 @@
                 <div>
                     <label>langue</label>
                     <select name="langue" id="langue">
-                        <option>--Sélectionner langue--</option>
+                        <option>Sélectionner langue</option>
                         @foreach($langues as $langue)
-                            <option value="{{$langue}}" {{ $niveau == $livresPapier->ouvragePhysique->ouvrage->niveau ? 'selected' : '' }}>{{$langue}}</option>
+                            <option value="{{$langue}}" {{ $langue == $livresPapier->ouvragePhysique->ouvrage->langue ? 'selected' : '' }}>{{$langue}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
                     <label>Année d'apparution</label>
                     <select name="annee_apparution" id="annee_apparution">
-                        <option>--Sélectionner annee--</option>
-                        @for($annee=$annees; $annee<date('Y'); $annee++)
-                            <option value="{{$annee}}" {{ $annee == $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->annee_apparution ? 'selected' : '' }}>{{$annee}}</option>
+                        <option>Sélectionner annee</option>
+                        @for($annee=$annees; $annee <= date('Y'); $annee++)
+                            <option value="{{$annee}}" {{ $annee == $livresPapier->ouvragePhysique->ouvrage->annee_apparution ? 'selected' : '' }}>{{$annee}}</option>
                         @endfor
                     </select>
                 </div>
                 <div>
                     <label>Lieu d'édition</label>
                     <input name="lieu_edition" id="lieu_edition" type="text"
-                           value="{{ $livresPapier->ouvragePhysique->ouvrage->auteurs->first()->pivot->lieu_edition }}"
+                           value="{{ $livresPapier->ouvragePhysique->ouvrage->lieu_edition }}"
                            placeholder="Saisire le lieu d'édition">
                 </div>
             </div>
@@ -71,54 +71,56 @@
         @yield("particularite")
         <fieldset>
             <legend>Auteur</legend>
+            <input type="text" name="data_auteurs" id="data_auteurs" hidden>
             <div>
                 <div>
-                    <label>Nom</label>
-                    <input id="nom" name="nom" type="text" value="" placeholder="Saisire le nom de l'auteur">
+                    <label class="label">Nom</label>
+                    <div class="flex flex-col">
+                        <input name="auteur" id="nom" type="text" value="{{ old('nom') }}"
+                               placeholder="Saisire le nom de l'auteur"
+                               class="input @error('auteur') is-invalid @enderror" autocomplete="off">
+                        <ul id="searche_options" class="overflow-y-auto h-16 bg-gray-50 border border-gray-300
+                               text-gray-900 text-sm rounded-lg block w-full p-2">
+                            @foreach($auteurs as $auteur)
+                                <li class="auteurs hover:bg-gray-200" id="{{$auteur->id_auteur}}">
+                                    {{ $auteur->nom }}-{{ $auteur->prenom }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
                 <div>
                     <label>Prénom</label>
                     <input id="prenom" name="prenom" type="text" value="" placeholder="Saisire le prénom de l'auteur">
                 </div>
-                <button id="ajouterAuteur">Ajouter</button>
+                <button id="ajouter_auteur">Ajouter</button>
             </div>
-            <div id="listeAuteurs">
+            <div id="liste_auteurs">
                 @foreach($livresPapier->ouvragePhysique->ouvrage->auteurs as $auteur)
                     <input type="text" id="auteur{{$loop->index}}" name="auteur{{$loop->index}}"
-                           value="{{ $auteur->nom }}, {{ $auteur->prenom }}"/>
-                    <button onclick="removeAuteur('auteur{{$loop->index}}')">x</button>
+                           value="{{ $auteur->nom }}, {{ $auteur->prenom }}" disabled/>
+                    <button onclick="removeElt('liste_auteurs','auteur{{$loop->index}}')">x</button>
                 @endforeach
             </div>
         </fieldset>
         <fieldset>
             <legend>Mots clé</legend>
-            <div id="motCle" name="">
-                <table id="tableMotCle">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div>
-                                <input name="mot_cle" id="inputMotCle" type="text" value="mot"
-                                       placeholder="Entrez un mot clé"/>
-                                <button id="ajouterMotCle">+</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="listeBtns">
-                                @foreach($livresPapier->ouvragePhysique->ouvrage->mot_cle as $mot_cle)
-                                    @if(! empty($mot_cle))
-                                        <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}"
-                                               value="{{ $mot_cle }}"/>
-                                        <button onclick="removeKeyWord('mot_cle_{{$loop->index}}')">x</button>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <input type="text" name="data_mots_cle" id="data_mots_cle" hidden>
+            <div id="mot_cle">
+                <div>
+                    <input name="mot_cle" id="input_mot_cle" type="text" value="mot"
+                           placeholder="Entrez un mot clé"/>
+                    <button id="ajouter_mot_cle">+</button>
+                </div>
+                <div id="liste_mots_cle">
+                    @foreach($livresPapier->ouvragePhysique->ouvrage->mot_cle as $mot_cle)
+                        @if(! empty($mot_cle))
+                            <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}"
+                                   value="{{ $mot_cle }}" disabled/>
+                            <button onclick="removeElt('liste_mots_cle','mot_cle_{{$loop->index}}')">x</button>
+                        @endif
+                    @endforeach
+                </div>
             </div>
         </fieldset>
         <fieldset>
@@ -132,23 +134,11 @@
         @yield("stock")
         <button id="enregistrer" type="submit">Enregister</button>
     </form>
-
-    <script type="text/javascript" async>
-        var image = document.getElementById("profil_livre");
-        var types = ["image/jpg", "image/jpeg", "image/png"];
-        var previewPicture = function (e) {
-            const [picture] = e.files;
-            if (types.includes(picture.type)) {
-                image_livre.src = URL.createObjectURL(picture);
-            }
-        };
-    </script>
 @stop
-
 @section('js')
-    <!--Mettre à jour les select box-->
-    @include("layout.ouvrageZJS.ouvrageEdite")
-    @include("layout.ouvrageZJS.ouvrageSendDataFormat")
-    @yield('ouvrage_content_js')
     @yield('ouvrage_physique_content_js')
+    @include("layout.ouvrageZJS.ouvrageEdite")
+    @include("layout.ouvrageZJS.ouvrageCreate")
+    @include("layout.ouvrageZJS.ouvrageLoadFile")
+    @include("layout.ouvrageZJS.ouvrageSendDataFormat")
 @stop

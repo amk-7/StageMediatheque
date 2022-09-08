@@ -8,44 +8,22 @@ use Illuminate\Http\Request;
 
 class AuteurService
 {
-    public static function enregistrerAuteur(Request $request)
+    public static function enregistrerAuteur(Array $data_auteurs)
     {
         $auteurs = [];
-        if(!empty($request["auteur0"]) && !empty($request["prenom"])){
-            $request["nom"] = $request["auteur0"];
-            $auteur = AuteurService::auteur($request["nom"], $request["prenom"]);
-            if($auteur == null){
-                $auteur = Auteur::Create([
-                    "nom"=>strtoupper($request["nom"]),
-                    "prenom"=>strtolower($request["prenom"])
-                ]);
-            }
-            array_push($auteurs, $auteur);
-        }else{
-            $list_auteurs = OuvrageService::convertDataToArray($request, "auteur");
-            $auteurs = AuteurService::enregistrerPlusieursAuteurs($list_auteurs);
-        }
-
-        return $auteurs;
-    }
-    public static function enregistrerPlusieursAuteurs(Array $auteurs)
-    {
-        $liste_auteurs = [];
-        for($i=0; $i<count($auteurs)-1; $i++){
-            $attributs_auteur = explode(",", $auteurs[$i].',');
-            if(! empty($attributs_auteur[0]) and ! empty($attributs_auteur[1])){
-                $auteur = AuteurService::auteur($attributs_auteur[0], $attributs_auteur[1]);
-                if($auteur == null){
+        foreach ($data_auteurs as $info_auteur){
+            if (!empty($info_auteur[0])){
+                $auteur = self::auteur($info_auteur[0], $info_auteur[1]);
+                if (! $auteur){
                     $auteur = Auteur::Create([
-                        "nom"=>strtoupper($attributs_auteur[0]),
-                        "prenom"=>strtolower($attributs_auteur[1]),
+                        "nom"=>trim(strtoupper($info_auteur[0])),
+                        "prenom"=>trim(strtolower($info_auteur[1])),
                     ]);
                 }
-                array_push($liste_auteurs, $auteur);
+                array_push($auteurs, $auteur);
             }
         }
-        //dd($liste_auteurs);
-        return $liste_auteurs;
+        return $auteurs;
     }
 
     public static function auteur(String $nom, string $prenom)

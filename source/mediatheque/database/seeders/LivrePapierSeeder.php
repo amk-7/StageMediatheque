@@ -44,19 +44,15 @@ class LivrePapierSeeder extends Seeder
             'type'=>'roman',
             'image' => 'default_book_image.png',
             'langue'=>'français',
+            'annee_apparution'=>'1994',
+            'lieu_edition'=>'DAKAR',
         ]);
 
-        $ouvrage5->auteurs()->attach($auteur5->id_auteur, [
-            'annee_apparution'=>'1994',
-            'lieu_edition'=>'DAKAR',
-        ]);
-        $ouvrage5->auteurs()->attach($auteurn->id_auteur, [
-            'annee_apparution'=>'1994',
-            'lieu_edition'=>'DAKAR',
-        ]);
+        $ouvrage5->auteurs()->attach($auteur5->id_auteur);
+        $ouvrage5->auteurs()->attach($auteurn->id_auteur);
 
         $classificationDizaine5 = ClassificationDeweyDizaine::all()->where("classe", 10)->first();
-        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", $classificationDizaine5->classe, [$auteur5, $auteurn], $ouvrage5);
+        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", $classificationDizaine5->classe, [$auteur5], $ouvrage5);
 
         $ouvragePhysique5 = OuvragesPhysique::Create([
             'nombre_exemplaire' => 4,
@@ -90,12 +86,11 @@ class LivrePapierSeeder extends Seeder
             'type'=>'nouvelle',
             'image' => 'default_book_image.png',
             'langue'=>'anglais',
-        ]);
-
-        $ouvrage1->auteurs()->attach($auteur1->id_auteur, [
             'annee_apparution'=>'2004',
             'lieu_edition'=>'Pocket',
         ]);
+
+        $ouvrage1->auteurs()->attach($auteur1->id_auteur);
 
         $classificationDizaine1 = ClassificationDeweyDizaine::all()->where("classe", 10)->first();
         $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", $classificationDizaine1->classe, [$auteur1], $ouvrage1);
@@ -130,12 +125,11 @@ class LivrePapierSeeder extends Seeder
             'type'=>'nouvelle',
             'image' => 'default_book_image.png',
             'langue'=>'français',
-        ]);
-
-        $ouvrage->auteurs()->attach($auteur1->id_auteur, [
             'annee_apparution'=>'2013',
             'lieu_edition'=>'Pocket',
         ]);
+
+        $ouvrage->auteurs()->attach($auteur1->id_auteur);
 
 
         $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage('livre_papier','COTE'.$ouvrage->id_ouvrage, [$auteur1], $ouvrage);

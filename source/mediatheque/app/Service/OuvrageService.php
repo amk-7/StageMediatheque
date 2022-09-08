@@ -37,14 +37,12 @@ class OuvrageService
 
     public static function searchByParamaters($annee_debut, $annee_fin, $langue, $niveau, $type)
     {
-        $id_ouvrages = DB::select("Select id_ouvrage from auteurs_ouvrages where annee_apparution between $annee_debut and $annee_fin");
-
         $id_ouvrages = DB::table('ouvrages')
             ->select("id_ouvrage")
             ->where('langue', 'like', '%'.$langue.'%')
             ->where('niveau', 'like', '%'.$niveau.'%')
             ->where('type', 'like', '%'.$type.'%')
-            ->whereIn('id_ouvrage', self::id_ouvrage_from_array($id_ouvrages))
+            ->whereBetween('annee_apparution', [$annee_debut, $annee_fin])
             ->get();
         //dd($id_ouvrages);
         return self::id_ouvrage_from_array($id_ouvrages);
@@ -52,19 +50,12 @@ class OuvrageService
 
     public static function updateOuvrage(Request $request, OuvragesPhysique $ouvragesPhysique)
     {
-        $ouvrage = Ouvrage::all()->where("id_ouvrage", $ouvragesPhysique->id_ouvrage)->first();
-
-        $motCle = [];
-
-        if (empty($request["mot_cle_0"])){
-            if (is_string($request["mot_cle_0"])){
-                $motCle = array([$request["mot_cle_0"]]);
-            }else{
-                $list_mot_cles = self::convertDataToArray($request, "motCle");
-                $motCle = self::convertObjetToArray($list_mot_cles, "mot_cle");
-            }
+        $ouvrage = Ouvrage::find($ouvragesPhysique->id_ouvrage);
+        $mots_cle_data = GobaleService::extractLineToData($request->data_mots_cle);
+        $mots_cle = [];
+        foreach ($mots_cle_data as $mot_cle_array){
+            array_push($mots_cle, $mot_cle_array[0]);
         }
-
         // Récupérer l'image.
         $image = $request->file('image_livre');
 
@@ -81,14 +72,13 @@ class OuvrageService
         $ouvrage['image'] = $image;
         $ouvrage['langue'] = strtolower($request["langue"]);
         $ouvrage['resume'] = ucfirst($request["resume"]);
-        $ouvrage['mot_cle'] = $motCle;
+        $ouvrage['mot_cle'] = $mots_cle;
         $ouvrage->save();
 
         $ouvrage->auteurs()->detach();
-        // Creation d'un ou des auteurs .
-        $auteurs = AuteurService::enregistrerAuteur($request);
+        $data_auteurs = GobaleService::extractLineToData($request->data_auteurs);
+        $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
         self::definireAuteur($request, $ouvrage, $auteurs);
-        //dd($auteurs);
 
     }
     public static function getNiveausTypesLanguesAuteursAnnee(){
@@ -109,15 +99,10 @@ class OuvrageService
 
     public static function enregisterOuvrage(Request $request, Array $auteurs)
     {
-        $motCle = [];
-
-        //dd($request);
-        if (! empty($request["mot_cle_0"])){
-            if (is_string($request["mot_cle_0"])){
-                $motCle = array($request["mot_cle_0"]);
-            }
-        } else {
-            $motCle = self::convertDataToArray($request, "motCle");
+        $mots_cle_data = GobaleService::extractLineToData($request->data_mots_cle);
+        $mots_cle = [];
+        foreach ($mots_cle_data as $mot_cle_array){
+            array_push($mots_cle, $mot_cle_array[0]);
         }
         // Récupérer l'image.
         $image = $request->file('image_livre');
@@ -137,12 +122,13 @@ class OuvrageService
             'image' => $chemin_image,
             'langue'=>strtolower($request["langue"]),
             'resume'=>strtolower($request["resume"]),
-            'mot_cle'=>$motCle
+            'mot_cle'=>$mots_cle,
+            'annee_apparution'=>$request["annee_apparution"],
+            'lieu_edition'=>$request["lieu_edition"],
         ]);
 
         // Definire les auteurs de l'ouvrage
-        OuvrageService::definireAuteur($request, $ouvrage, $auteurs);
-        //dd($ouvrage->auteurs()->first());
+        self::definireAuteur($request, $ouvrage, $auteurs);
         return $ouvrage;
     }
 
@@ -150,10 +136,7 @@ class OuvrageService
     {
         // Definire les auteurs de l'ouvrage
         foreach ($auteurs as $auteur){
-            $ouvrage->auteurs()->attach($auteur->id_auteur, [
-                'annee_apparution'=>$request["annee_apparution"],
-                'lieu_edition'=>$request["lieu_edition"],
-            ]);
+            $ouvrage->auteurs()->attach($auteur->id_auteur);
         }
     }
 

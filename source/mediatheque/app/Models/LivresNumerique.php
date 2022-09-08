@@ -10,9 +10,9 @@ class LivresNumerique extends Model
     use HasFactory;
     protected $fillable = ['categorie', 'ISBN', 'id_ouvrage_electronique'];
     protected $primaryKey = 'id_livre_numerique';
+    protected $casts = ['categorie' => 'array'];
 
     public function ouvrageElectronique(){
         return $this->hasOne(OuvragesElectronique::class, 'id_ouvrage_electronique');
     }
 }
-
