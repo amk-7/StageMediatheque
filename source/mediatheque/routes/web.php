@@ -46,10 +46,10 @@ Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelControlle
 
 // Path: Emprunt routes/web.php
 Route::get('liste_des_emprunts', 'App\Http\Controllers\EmpruntController@index')->name('listeEmprunts');
-Route::get('affiche_emprunt', 'App\Http\Controllers\EmpruntController@show')->name('showEmprunt');
+Route::get('affiche_emprunt/{emprunt}', 'App\Http\Controllers\EmpruntController@show')->name('showEmprunt');
 Route::get('formulaire_edition_emprunts/{emprunt}/edition', 'App\Http\Controllers\EmpruntController@edit')->name('editEmprunt');
-Route::put('mise_a_jour_des_emprunts', 'App\Http\Controllers\EmpruntController@update')->name('updateEmprunt');
-Route::delete('suppression_des_emprunts', 'App\Http\Controllers\EmpruntController@destroy')->name('destroyEmprunt');
+Route::put('mise_a_jour_des_emprunts/{emprunt}', 'App\Http\Controllers\EmpruntController@update')->name('updateEmprunt');
+Route::delete('suppression_des_emprunts/{emprunt}', 'App\Http\Controllers\EmpruntController@destroy')->name('destroyEmprunt');
 Route::get('formulaire_Emprunt', 'App\Http\Controllers\EmpruntController@create')->name('createEmprunt');
 Route::post('enregistrement_emprunt', 'App\Http\Controllers\EmpruntController@store')->name('storeEmprunt');
 
@@ -83,7 +83,7 @@ Route::post('enregistrement_tarif_abonnement', 'App\Http\Controllers\TarifAbonne
 // Path: Registration routes/web.php
 Route::get('liste_des_registrations', 'App\Http\Controllers\RegistrationController@index')->name('listeRegistrations');
 Route::get('affiche_registration', 'App\Http\Controllers\RegistrationController@show')->name('showRegistration');
-Route::get('formulaire_edition_des_registrations', 'App\Http\Controllers\RegistrationController@edit')->name('editRegistration');
+Route::get('formulaire_edition_des_registrations/{registration}/edition', 'App\Http\Controllers\RegistrationController@edit')->name('editRegistration');
 Route::put('mise_a_jour_des_registrations', 'App\Http\Controllers\RegistrationController@update')->name('updateRegistration');
 Route::delete('suppression_des_registrations', 'App\Http\Controllers\RegistrationController@destroy')->name('destroyRegistration');
 Route::get('formulaire_Registration', 'App\Http\Controllers\RegistrationController@create')->name('createRegistration');

@@ -14,13 +14,13 @@ class TarifAbonnementSeeder extends Seeder
         TarifAbonnement::create([
             'designation' => "formule1",
             'tarif' => 200,
-            'durreeValidite' => 279,
+            'duree_validite' => 279,
         ]);
 
         TarifAbonnement::create([
             'designation' => "formule2",
             'tarif' => 500,
-            'durreeValidite' => 279,
+            'duree_validite' => 279,
         ]);
     }
 }

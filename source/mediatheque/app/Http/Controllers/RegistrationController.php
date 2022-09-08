@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Registraton;
+use App\Models\Registrations;
 use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
@@ -15,6 +15,8 @@ class RegistrationController extends Controller
     public function index()
     {
         //
+        $registrations = Registrations::all();
+        return view('registrations.index')->with('registrations', $registrations);
     }
 
     /**
@@ -25,6 +27,7 @@ class RegistrationController extends Controller
     public function create()
     {
         //
+        return view('registrations.create');
     }
 
     /**
@@ -41,10 +44,10 @@ class RegistrationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Registraton  $registraton
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Registraton $registraton)
+    public function show($id)
     {
         //
     }
@@ -52,10 +55,10 @@ class RegistrationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Registraton  $registraton
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Registraton $registraton)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +67,10 @@ class RegistrationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Registraton  $registraton
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Registraton $registraton)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +78,10 @@ class RegistrationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Registraton  $registraton
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Registraton $registraton)
+    public function destroy($id)
     {
         //
     }

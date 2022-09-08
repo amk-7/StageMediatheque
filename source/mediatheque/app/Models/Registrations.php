@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Registraton extends Model
+class Registrations extends Model
 {
     use HasFactory;
     protected $fillable = ['date_debut', 'date_fin', 'id_abonne', 'id_tarif_abonnement'];
@@ -36,11 +36,4 @@ class Registraton extends Model
     {
         return $this->hasOne('App\Models\TarifAbonnement', 'id_tarif_abonnement');
     }
-
-
-
-
-
-
-
 }

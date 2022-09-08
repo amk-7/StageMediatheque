@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\LivresNumerique;
+use App\Models\TarifAbonnement;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PersonnelSeeder::class);
         $this->call(AbonneSeeder::class);
         $this->call(EmpruntSeeder::class);
+        $this->call(TarifAbonnementSeeder::class);
         //$this->call(RestitutionSeeder::class);
         //$this->call(LivreNumeriqueSeeder::class);
     }
