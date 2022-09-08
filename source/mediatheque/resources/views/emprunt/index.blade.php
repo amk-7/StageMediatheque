@@ -12,8 +12,9 @@
                 <thead>
                 <tr>
                     <th>Numéro</th>
-                    <th>Date</th>
+                    <th>Date de l'emprunt</th>
                     <th>Nombre Ouvrage</th>
+                    <th>Date de retour</th>
                     <th>Abonné</th>
                     <th>personnel</th>
                     <th>Consulter</th>
@@ -26,8 +27,9 @@
                 @foreach($emprunts as $emprunt)
                     <tr>
                         <td> {{ $emprunt->id_emprunt }} </td>
-                        <td> {{ $emprunt->date_emprunt }} </td>
+                        <td> {{ $emprunt->date_emprunt->format('Y-m-d') }} </td>
                         <td> {{ $emprunt->nombreOuvrageEmprunte }} </td>
+                        <td> {{ $emprunt->date_retour->format('Y-m-d') }} </td>
                         <td> {{ $emprunt->abonne->utilisateur->userFullName ?? "" }} </td>
                         <td> {{ $emprunt->personnel->utilisateur->userFullName ?? "" }} </td>
                         <td>

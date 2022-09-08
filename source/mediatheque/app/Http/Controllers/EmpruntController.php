@@ -117,10 +117,25 @@ class EmpruntController extends Controller
     public function update(Request $request, Emprunt $emprunt)
     {
         //
+        //dd($emprunt);
         $emprunt->update(array([
-            'date_emprunt' => $request['date_emprunt'],
-            'date_retour' => $request['date_retour']
+            'date_retour' => $request['date_retour'],
+
         ]));
+
+        /*$emprunt = Emprunt::find($id_emprunt);
+        $emprunt->date_retour = date('Y-m-d');
+        $emprunt->save();
+        dd($emprunt);*/
+
+        //$emprunt = Emprunt::find($id_emprunt);
+        
+        /*$emprunt->date_retour = $request['date_retour'];
+        dd($emprunt->date_retour);
+        $emprunt->save();*/
+
+
+        return redirect()->route('listeEmprunts');
     }
 
     /**

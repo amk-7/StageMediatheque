@@ -31,6 +31,21 @@ class EmpruntService
             'id_emprunt' => $emprunt->id_emprunt,
         ]);
     }
+/*
+    public static function modifierDateRetour($id_emprunt, $date_retour)
+    {
+        $emprunt = Emprunt::find($id_emprunt);
+        $emprunt->date_retour = $date_retour;
+        $emprunt->save();
+    }
+
+    public static function updateDateRetour($id_emprunt)
+    {
+        $emprunt = Emprunt::find($id_emprunt);
+        $emprunt->date_retour = date('Y-m-d');
+        $emprunt->save();
+    }*/
+
 }
 
 
