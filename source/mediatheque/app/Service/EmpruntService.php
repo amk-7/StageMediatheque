@@ -6,7 +6,7 @@ use App\Helpers\OuvragesPhysiqueHelper;
 use App\Models\Emprunt;
 use App\Models\LignesEmprunt;
 use App\Models\OuvragesPhysique;
-
+use Nette\Utils\Strings;
 
 class EmpruntService
 {
@@ -30,6 +30,16 @@ class EmpruntService
             'id_ouvrage_physique' => $ouvrage_physique->id_ouvrage_physique,
             'id_emprunt' => $emprunt->id_emprunt,
         ]);
+    }
+
+    public static function determinerDateRetour(String $duree_emprunt){
+        $nbjour = (integer) $duree_emprunt;
+        $nbjour = ($nbjour * 7)-1;
+        $date = date_create();
+        date_add($date,date_interval_create_from_date_string("$nbjour days"));
+        $date_retour = date_format($date, 'Y-m-d');
+        
+        return $date_retour;
     }
 /*
     public static function modifierDateRetour($id_emprunt, $date_retour)

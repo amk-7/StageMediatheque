@@ -15,4 +15,10 @@ class GobaleService
         }
         return $array_data;
     }
+
+    public static function afficherDate($date) : String
+    {
+        $date = date_format($date, 'Y-m-d');
+        return $date;
+    }
 }

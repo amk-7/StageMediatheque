@@ -12,7 +12,7 @@ class EmpruntSeeder extends Seeder
     {
         $emprunt = Emprunt::create([
             'date_emprunt' => '2022-09-06',
-            'date_retour' => '2022-09-16',
+            'date_retour' => '2022-09-20',
             'id_abonne' => 1,
             'id_personnel' => 1
         ]);
@@ -32,7 +32,7 @@ class EmpruntSeeder extends Seeder
 
         $emprunt = Emprunt::create([
             'date_emprunt' => '2022-09-07',
-            'date_retour' => '2022-09-18',
+            'date_retour' => '2022-09-14',
             'id_abonne' => 1,
             'id_personnel' => 1
         ]);

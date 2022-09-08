@@ -4,7 +4,7 @@
 
     <div>
         <h1>Editer l'emprunt N° {{ $emprunt->id_emprunt }}</h1>
-        <form action="{{route('updateEmprunt')}}" method="post">
+        <form action="{{route('updateEmprunt', $emprunt)}}" method="post">
             @csrf
             {{ method_field('PUT') }}
             <fieldset>
@@ -49,7 +49,7 @@
                 <legend>Duree emprunt</legend>
                 <div>
                     <label for="date_emprunt">Date Emprunt</label>
-                    <input type="date" name="date_emprunt" id="date_emprunt" value="{{ date('Y-m-d') }}" disabled>
+                    <input type="date" name="date_emprunt" id="date_emprunt" value="{{ App\Service\GobaleService::afficherDate($emprunt->date_emprunt) }}" disabled>
                 </div>
                 <div>
                     <label for="duree_emprunt">Duree Emprunt</label>

@@ -33,7 +33,7 @@
                         <td> {{ $emprunt->abonne->utilisateur->userFullName ?? "" }} </td>
                         <td> {{ $emprunt->personnel->utilisateur->userFullName ?? "" }} </td>
                         <td>
-                            <form action="" method="">
+                            <form action="{{ route('showEmprunt', $emprunt)}}" method="get">
                                 <input type="submit" value="Consulter">
                             </form>
                         </td>
@@ -48,7 +48,9 @@
                             </form>
                         </td>
                         <td>
-                            <form action="" method="">
+                            <form action="{{ route('destroyEmprunt', $emprunt) }}" method="post">
+                                @csrf
+                                @method("DELETE")
                                 <input type="submit" value="Supprimer">
                             </form>
                         </td>

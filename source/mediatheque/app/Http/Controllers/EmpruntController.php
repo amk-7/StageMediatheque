@@ -9,6 +9,7 @@ use App\Service\OuvragesPhysiqueService;
 use App\Service\PersonnelService;
 use App\Service\AbonneService;
 use App\Service\EmpruntService;
+use App\Service\GobaleService;
 
 class EmpruntController extends Controller
 {
@@ -62,11 +63,7 @@ class EmpruntController extends Controller
 
         ]);
 
-        $nbjour = (int) $request->duree_emprunt;
-        $nbjour = $nbjour * 7;
-        $date = date_create();
-        date_add($date,date_interval_create_from_date_string("$nbjour days"));
-        $date_retour = date_format($date, 'Y-m-d');
+        $date_retour = EmpruntService::determinerDateRetour($request->duree_emprunt);
 
         $emprunt = Emprunt::create([
             'date_emprunt' => date('Y-m-d'),
@@ -89,6 +86,11 @@ class EmpruntController extends Controller
     public function show(Emprunt $emprunt)
     {
         //
+        return view('emprunt.show')->with([
+            'emprunt'=>$emprunt,
+            "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
+            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
+        ]);
     }
 
     /**
@@ -100,6 +102,7 @@ class EmpruntController extends Controller
     public function edit(Emprunt $emprunt)
     {
         //
+        //dd(GobaleService::afficherDate($emprunt->date_emprunt));
         return view('emprunt.edit')->with([
             'emprunt'=>$emprunt,
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
@@ -118,10 +121,10 @@ class EmpruntController extends Controller
     {
         //
         //dd($emprunt);
-        $emprunt->update(array([
-            'date_retour' => $request['date_retour'],
-
-        ]));
+        $date_retour = EmpruntService::determinerDateRetour($request->duree_emprunt);
+        //dd($date_retour);
+        $emprunt->date_retour = $date_retour;
+        $emprunt->save();
 
         /*$emprunt = Emprunt::find($id_emprunt);
         $emprunt->date_retour = date('Y-m-d');
@@ -148,6 +151,6 @@ class EmpruntController extends Controller
     {
         //
         $emprunt->delete();
-        return redirect()->route('emprunt.index');
+        return redirect()->route('listeEmprunts');
     }
 }

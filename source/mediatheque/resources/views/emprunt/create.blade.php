@@ -92,7 +92,6 @@
                             <option value="{{$i}}" {{ $i == 2 ? "selected" : "" }} > {{$i}} Semaines  </option>
                         @endfor
                     </select>
-
                 </div>
             </fieldset>
             <div>
