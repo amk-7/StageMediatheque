@@ -9,7 +9,7 @@ class ApprovisionnementService
 
     public static function enregistrerPlusieursApprosionnement($data, $id_personnel)
     {
-        $data = GobaleService::extractLineToData($data);
+        $data = GlobaleService::extractLineToData($data);
         for ($i=0; $i<count($data)-1; $i++){
             self::enregistrerUnApprovisionnement($data[$i][0], $data[$i][1], $data[$i][2]);
         }

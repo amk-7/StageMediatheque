@@ -1,4 +1,5 @@
-@extends('layout.ouvragePhysique.ouvragePhysiqueEdite', ['update_object'=>$livresPapier, 'ouvragesPhysique'=>$livresPapier->ouvragesPhysique, 'action'=>"modificationLivrePapier"])
+@extends('layout.ouvrageElectronique.ouvrageElectroniqueEdit', ['update_object'=>$livresNumerique, 'ouvragesElectronique'=>$livresNumerique->ouvragesElectronique, 'action'=>"modificationLivreNumerique"])
+
 @section("particularite")
     <fieldset>
         <legend>Particularité</legend>
@@ -12,7 +13,7 @@
                 @endforeach
             </select>
             <div id="liste_categorie">
-                @foreach($livresPapier->categorie as $categorie)
+                @foreach($livresNumerique->categorie as $categorie)
                     @if(! empty($categorie))
                         <input id="categorie{{$loop->index}}" type="text" name="categorie{{$loop->index}}"
                                value="{{ $categorie }}" disabled/>
@@ -23,8 +24,7 @@
         </div>
         <div>
             <label>ISBN</label>
-            <input name="ISBN" type="text" value=" {{ $livresPapier->ISBN }}" placeholder="Saisire l'ISBN de l'ouvrage">
+            <input name="ISBN" type="text" value=" {{ $livresNumerique->ISBN }}" placeholder="Saisire l'ISBN de l'ouvrage">
         </div>
     </fieldset>
 @stop
-

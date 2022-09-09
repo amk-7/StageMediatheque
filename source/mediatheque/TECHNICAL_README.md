@@ -60,3 +60,10 @@
 
 ## Pagination with tailwindcss
     npm i tailwindcss-plugins -D
+
+## Installation du module pour l'importation en excel.
+
+    composer require maatwebsite/excel
+    php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
+    php artisan make:import UsersImport --model=User
+

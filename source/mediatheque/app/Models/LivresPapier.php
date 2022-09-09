@@ -12,7 +12,7 @@ class LivresPapier extends Model
     protected $primaryKey = 'id_livre_papier';
     protected $casts = ['categorie' => 'array'];
 
-    public function ouvragePhysique(){
-        return $this->hasOne(OuvragesPhysique::class, "id_ouvrage_physique");
+    public function ouvragesPhysique(){
+        return $this->belongsTo(OuvragesPhysique::class, "id_ouvrage_physique");
     }
 }
