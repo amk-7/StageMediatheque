@@ -14,7 +14,7 @@ class LignesEmpruntService
 {
     public static function enregistrerLignesEmprunt($datas, $emprunt)
     {
-        $datas = GobaleService::extractLineToData($datas);
+        $datas = GlobaleService::extractLineToData($datas);
         for ($i=0; $i<count($datas)-1; $i++){
             self::enregistrerUneLignesEmprunt($datas[$i][0], $datas[$i][1], $emprunt);
         }

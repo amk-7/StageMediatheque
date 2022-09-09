@@ -9,7 +9,7 @@ use App\Service\OuvragesPhysiqueService;
 use App\Service\PersonnelService;
 use App\Service\AbonneService;
 use App\Service\EmpruntService;
-use App\Service\GobaleService;
+use App\Service\GlobaleService;
 
 class EmpruntController extends Controller
 {
@@ -102,7 +102,7 @@ class EmpruntController extends Controller
     public function edit(Emprunt $emprunt)
     {
         //
-        //dd(GobaleService::afficherDate($emprunt->date_emprunt));
+        //dd(GlobaleService::afficherDate($emprunt->date_emprunt));
         return view('emprunt.edit')->with([
             'emprunt'=>$emprunt,
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
@@ -132,7 +132,7 @@ class EmpruntController extends Controller
         dd($emprunt);*/
 
         //$emprunt = Emprunt::find($id_emprunt);
-        
+
         /*$emprunt->date_retour = $request['date_retour'];
         dd($emprunt->date_retour);
         $emprunt->save();*/

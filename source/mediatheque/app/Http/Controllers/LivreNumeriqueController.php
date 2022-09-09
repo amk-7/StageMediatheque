@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\LivresNumerique;
 use App\Models\LivresPapier;
 use App\Models\OuvragesElectronique;
+use App\Models\OuvragesPhysique;
 use App\Service\AuteurService;
-use App\Service\GobaleService;
+use App\Service\GlobaleService;
+use App\Service\LivresNumeriqueService;
 use App\Service\LivresPapierService;
 use App\Service\OuvragesElectroniqueService;
 use App\Service\OuvrageService;
@@ -23,10 +25,19 @@ class LivreNumeriqueController extends Controller
      */
     public function index()
     {
-        //
-        //return "livres electronique";
+        $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
+        $categories = LivresPapierService::getCategories();
         $livresNumeriques = LivresNumerique::all();
-        return view('livresNumerique.index')->with('livresNumeriques', $livresNumeriques);
+
+        return view('livresNumerique.index')->with([
+            'niveaus'=> $niveausTypesLanguesAuteursAnnee[0],
+            'types'=>$niveausTypesLanguesAuteursAnnee[1],
+            'langues'=>$niveausTypesLanguesAuteursAnnee[2],
+            'auteurs'=>$niveausTypesLanguesAuteursAnnee[3],
+            'categories'=>$categories,
+            'annees' => $niveausTypesLanguesAuteursAnnee[4],
+            'id_livre_numerique'=>LivresNumeriqueService::getAllIDLivreNumerique($livresNumeriques),
+        ]);
     }
 
     /**
@@ -80,14 +91,14 @@ class LivreNumeriqueController extends Controller
         ]);
 
         // Creation d'un ou des auteurs .
-        $data_auteurs = GobaleService::extractLineToData($request->data_auteurs);
+        $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
         // Creation de l'ouvrage
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
         // Création d'un ouvrage electronique
         $ouvrageElectronique = OuvragesElectroniqueService::enregistrerOuvrageElectronique($ouvrage, $request->url);
         //dd($ouvrageElectronique);
-        $categories_data = GobaleService::extractLineToData($request->data_categorie);
+        $categories_data = GlobaleService::extractLineToData($request->data_categorie);
         $categories = [];
         foreach ($categories_data as $categorie_array){
             array_push($categories, $categorie_array[0]);
@@ -106,49 +117,31 @@ class LivreNumeriqueController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\LivresNumerique  $livreNumerique
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(LivresNumerique $livreNumerique)
+    public function show(LivresNumerique $livresNumerique)
     {
-        //
-        return view('livresNumerique.show')->with('livreNumerique', $livreNumerique);
+        return view('livresNumerique.show')->with('livreNumerique', $livresNumerique);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LivresNumerique  $livreNumerique
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\LivresNumerique  $livresNumerique
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(LivresNumerique $livreNumerique)
+    public function edit(LivresNumerique $livresNumerique)
     {
-        //
-        //return view('livresNumerique.edit')->with('livreNumerique', $livreNumerique);
-
-        $niveaus = [
-            '1er degré', '2è degré', '3è degré', 'université'
-        ];
-
-        $types = [
-            'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle'
-        ];
-
-        $langues = [
-            'français', 'anglais', 'allemand'
-        ];
-
-        $categories = [
-            'français', 'anglais', 'allemand', 'physique', 'education',
-            'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
-            'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
-        ];
-
-        return view('livresNumerique.edit')->with([
-            'livreNumerique'=>$livreNumerique,
-            'niveaus'=> $niveaus,
-            'types'=>$types,
-            'langues'=>$langues,
-            'categories'=>$categories
+        $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
+        $categories = LivresPapierService::getCategories();
+        return view('livresNumerique.edite')->with([
+            "livresNumerique" => $livresNumerique,
+            'niveaus'=> $niveausTypesLanguesAuteursAnnee[0],
+            'types'=>$niveausTypesLanguesAuteursAnnee[1],
+            'langues'=>$niveausTypesLanguesAuteursAnnee[2],
+            'auteurs'=>$niveausTypesLanguesAuteursAnnee[3],
+            'categories'=>$categories,
+            'annees' => $niveausTypesLanguesAuteursAnnee[4],
         ]);
     }
 
@@ -157,27 +150,40 @@ class LivreNumeriqueController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\LivresNumerique  $livreNumerique
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, LivresNumerique $livreNumerique)
+    public function update(Request $request, LivresNumerique $livresNumerique)
     {
-        //
-        $livreNumerique->update(array([
-            'catégorie' => $request->categorie,
-            'ISBN' => $request->ISBN
-        ]));
+        $request->validate([
+            'titre'=> 'required',
+            'niveau'=>'required|not_in:Sélectionner niveau',
+            'type'=>'required|not_in:Sélectionner type',
+            'annee_apparution'=>'required',
+            'lieu_edition'=>'required',
+            'data_auteurs'=>'required',
+            'data_categorie'=>'required',
+            'resume'=>'required',
+        ]);
+
+        $ouvrageElectronique = OuvragesElectronique::all()->where("id_ouvrage_electronique", $livresNumerique->id_ouvrage_electronique)->first();
+        OuvragesElectroniqueService::updateOuvrageElectronique($ouvrageElectronique, $request["url"]);
+        $ouvrage = $ouvrageElectronique->ouvrage;
+        OuvrageService::updateOuvrage($request, $ouvrage);
+
+        return redirect()->route('listeLivresNumerique');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\LivresNumerique  $livreNumerique
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(LivresNumerique $livreNumerique)
+    public function destroy(LivresNumerique $livresNumerique)
     {
-        //
-        $livreNumerique->delete();
-        return redirect()->route('livresNumerique.index');
+        //dd($livresNumerique);
+        $id_ouvrage = OuvragesElectronique::all()->where('id_ouvrage_electronique', $livresNumerique->id_ouvrage_electronique)->first()->id_ouvrage;
+        OuvrageService::supprimer_ouvrage($id_ouvrage);
+        return redirect()->route('listeLivresNumerique');
     }
 }

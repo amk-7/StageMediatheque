@@ -116,14 +116,13 @@ Route::delete('suppression_des_liquides', 'App\Http\Controllers\LiquideControlle
 Route::get('formulaire_Liquide', 'App\Http\Controllers\LiquideController@create')->name('createLiquide');
 Route::post('enregistrement_liquide', 'App\Http\Controllers\LiquideController@store')->name('storeLiquide');
 
-
 Route::get('liste_livres_numerique', [LivreNumeriqueController::class, 'index'])->name('listeLivresNumerique');
 Route::get('formulaire_enregistrement_livre_numerique', [LivreNumeriqueController::class, 'create'])->name('formulaireEnregistrementLivreNumerique');
 Route::post('enregistrement_livre_numerique', [LivreNumeriqueController::class, 'store'])->name('enregistementLivreNumerique');
-Route::get('affichage_livre_numerique', [LivreNumeriqueController::class, 'show'])->name('affichageLivreNumerique');
-Route::get('formulaire_modification_livre_numerique', [LivreNumeriqueController::class, 'edit'])->name('formulaireModificationLivreNumerique');
-Route::post('modification_livre_numerique', [LivreNumeriqueController::class, 'update'])->name('modificationLivreNumerique');
-Route::delete('suppression_livre_numerique', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreElectronique');
+Route::get('affichage_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'show'])->name('affichageLivreNumerique');
+Route::get('formulaire_modification_livre_numerique/{livres_numerique}/edite', [LivreNumeriqueController::class, 'edit'])->name('formulaireModificationLivreNumerique');
+Route::put('modification_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'update'])->name('modificationLivreNumerique');
+Route::delete('suppression_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreElectronique');
 
 Route::get('liste_livres_papier', [LivresPapierController::class, 'index'])->name('listeLivresPapier');
 Route::get('formulaire_enregistrement_livre_papier', [LivresPapierController::class, 'create'])->name('formulaireEnregistrementLivrePapier');
@@ -134,12 +133,16 @@ Route::put('modification_livre_papier/{livres_papier}', [LivresPapierController:
 Route::delete('suppression_livre_papier/{livres_papier}', [LivresPapierController::class, 'destroy'])->name('suppressionLivrePapier');
 Route::get('data_class_dizaine', [LivresPapierController::class, 'echoclassification_dewey_dizaines'])->name('dataClassDizain');
 
+Route::get('formulaire_import_excel', [LivresPapierController::class, 'uploadLivresPapierCreate'])->name('formulaireImportExcel');
+Route::put('enregistrement_import_excel', [LivresPapierController::class, 'uploadLivresPapierStore'])->name('enregistrementImportExcel');
+
+
 Route::get('liste_documents_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'index'])->name('listeDocumentsAudioVisuelsElectroniques');
 Route::get('formulaire_enregistrement_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'create'])->name('formulaireEnregistrementDocumentAudioVisuelsElectroniques');
 Route::post('enregistrement_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'store'])->name('enregistementDocumentAudioVisuelsElectroniques');
 Route::get('affichage_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'show'])->name('affichageDocumentAudioVisuelsElectroniques');
 Route::get('formulaire_modification_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'edit'])->name('formulaireModificationDocumentAudioVisuelsElectroniques');
-Route::post('modification_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'update'])->name('modificationDocumentAudioVisuelsElectroniques');
+Route::put('modification_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'update'])->name('modificationDocumentAudioVisuelsElectroniques');
 Route::delete('suppression_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'destroy'])->name('suppressionDocumentAudioVisuelsElectroniques');
 
 Route::get('liste_documents_audio_visuels', [DocumentAudioVisuelController::class, 'index'])->name('listeDocumentsAudioVisuels');

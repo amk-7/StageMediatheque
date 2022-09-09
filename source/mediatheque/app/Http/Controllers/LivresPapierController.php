@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\LivrePapierHelper;
+use App\Imports\LivresPapierImport;
 use App\Models\LivresPapier;
-use App\Models\Ouvrage;
 use App\Service\AuteurService;
-use App\Service\GobaleService;
+use App\Service\GlobaleService;
 use App\Service\LivresPapierService;
 use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LivresPapierController extends Controller
 {
@@ -24,8 +23,6 @@ class LivresPapierController extends Controller
      */
     public function index()
     {
-        /*$annee = Carbon::now();
-        dd($annee);*/
         $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
         $categories = LivresPapierService::getCategories();
         $livresPapiers = LivresPapier::all();
@@ -101,14 +98,14 @@ class LivresPapierController extends Controller
         ]);
 
         // Creation d'un ou des auteurs .
-        $data_auteurs = GobaleService::extractLineToData($request->data_auteurs);
+        $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
         // Creation de l'ouvrage
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
         // Création d'un ouvrage physique
         $ouvragePhysique = OuvragesPhysiqueService::enregisterOuvragePhysique($request, $ouvrage);
 
-        $categories_data = GobaleService::extractLineToData($request->data_categorie);
+        $categories_data = GlobaleService::extractLineToData($request->data_categorie);
         $categories = [];
         foreach ($categories_data as $categorie_array){
             array_push($categories, $categorie_array[0]);
@@ -131,7 +128,6 @@ class LivresPapierController extends Controller
      */
     public function show(LivresPapier $livresPapier)
     {
-        //ddd($livresPapier->id_livre_papier);
         return view('livresPapier.show')->with("livrePapier", $livresPapier);
     }
 
@@ -143,7 +139,6 @@ class LivresPapierController extends Controller
      */
     public function edit(LivresPapier $livresPapier)
     {
-        //dd($livresPapier);
         $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
         $categories = LivresPapierService::getCategories();
         $classifications_dewey = OuvragesPhysiqueService::getClassificationsDewey();
@@ -201,9 +196,27 @@ class LivresPapierController extends Controller
      */
     public function destroy(LivresPapier $livresPapier)
     {
-        $ouvrage = Ouvrage::find($livresPapier->id_livre_papier);
-        $ouvrage->auteurs()->detach();
-        $ouvrage->delete();
+        $id_ouvrage = OuvragesPhysique::all()->where('id_ouvrage_physique', $livresPapier->id_ouvrage_physique)->first()->id_ouvrage;
+        OuvrageService::supprimer_ouvrage($id_ouvrage);
+        return redirect()->route('listeLivresPapier');
+    }
+
+    public function uploadLivresPapierCreate()
+    {
+       return view('livresPapier.excel_import');
+    }
+
+    public function uploadLivresPapierStore(Request $request)
+    {
+        if (! $request->url == null)
+        {
+            $chemin_ouvrage_excel = strtolower('livres_papier').'.'.$request->url->extension();
+            $request->url->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
+        } else
+        {
+            dd("::::Appeller le developpeur::::");
+        }
+        Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel, '', \Maatwebsite\Excel\Excel::XLSX);
         return redirect()->route('listeLivresPapier');
     }
 }

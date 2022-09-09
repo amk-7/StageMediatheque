@@ -12,7 +12,7 @@ class LivresNumerique extends Model
     protected $primaryKey = 'id_livre_numerique';
     protected $casts = ['categorie' => 'array'];
 
-    public function ouvrageElectronique(){
-        return $this->hasOne(OuvragesElectronique::class, 'id_ouvrage_electronique');
+    public function ouvragesElectronique(){
+        return $this->belongsTo(OuvragesElectronique::class, 'id_ouvrage_electronique');
     }
 }

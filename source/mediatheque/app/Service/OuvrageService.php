@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\DB;
 
 class OuvrageService
 {
+    public static function supprimer_ouvrage($id_ouvrage)
+    {
+        $ouvrage = Ouvrage::all()->where('id_ouvrage', $id_ouvrage)->first();
+        $ouvrage->auteurs()->detach();
+        $ouvrage->delete();
+    }
 
     public static function searchByTitreMotCle(String $value)
     {
@@ -48,10 +54,9 @@ class OuvrageService
         return self::id_ouvrage_from_array($id_ouvrages);
     }
 
-    public static function updateOuvrage(Request $request, OuvragesPhysique $ouvragesPhysique)
+    public static function updateOuvrage(Request $request, Ouvrage $ouvrage)
     {
-        $ouvrage = Ouvrage::find($ouvragesPhysique->id_ouvrage);
-        $mots_cle_data = GobaleService::extractLineToData($request->data_mots_cle);
+        $mots_cle_data = GlobaleService::extractLineToData($request->data_mots_cle);
         $mots_cle = [];
         foreach ($mots_cle_data as $mot_cle_array){
             array_push($mots_cle, $mot_cle_array[0]);
@@ -76,7 +81,7 @@ class OuvrageService
         $ouvrage->save();
 
         $ouvrage->auteurs()->detach();
-        $data_auteurs = GobaleService::extractLineToData($request->data_auteurs);
+        $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
         self::definireAuteur($request, $ouvrage, $auteurs);
 
@@ -99,7 +104,7 @@ class OuvrageService
 
     public static function enregisterOuvrage(Request $request, Array $auteurs)
     {
-        $mots_cle_data = GobaleService::extractLineToData($request->data_mots_cle);
+        $mots_cle_data = GlobaleService::extractLineToData($request->data_mots_cle);
         $mots_cle = [];
         foreach ($mots_cle_data as $mot_cle_array){
             array_push($mots_cle, $mot_cle_array[0]);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
 use App\Models\Restitution;
-use App\Service\GobaleService;
+use App\Service\GlobaleService;
 use App\Service\LignesEmprunt;
 use App\Service\LignesEmpruntService;
 use App\Service\LignesRestitutionService;
@@ -51,7 +51,7 @@ class RestitutionController extends Controller
         $request->validate([
             'data'=>'required',
         ]);
-        $datas = GobaleService::extractLineToData($request->data);
+        $datas = GlobaleService::extractLineToData($request->data);
 
         $id_emprunt = $datas[0][0];
 
@@ -106,7 +106,7 @@ class RestitutionController extends Controller
         $request->validate([
             'data'=>'required',
         ]);
-        $datas = GobaleService::extractLineToData($request->data);
+        $datas = GlobaleService::extractLineToData($request->data);
 
         $id_emprunt = $restitution->id_emprunt;
         //dd($id_emprunt);

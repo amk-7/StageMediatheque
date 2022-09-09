@@ -1,5 +1,4 @@
 <div class="flex flex-col items-center">
-    {{ $search }}
     <h1 class="text-3xl"> Livres papier </h1>
     <div>
         <form wire:submit.prevent="searchByAll" class="flex flex-col items-center">
@@ -91,12 +90,12 @@
                 @foreach($livresPapiers as $livresPapier)
                     <tr class="dark:text-gray-500 text-center">
                         <td class="border border-solid" >{{ $livresPapier->id_livre_papier }}</td>
-                        <td class="border border-solid"> {{ $livresPapier->ouvragePhysique->ouvrage->titre }} </td>
-                        <td class="border border-solid"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($livresPapier->ouvragePhysique->ouvrage->niveau) }} </td>
-                        <td class="border border-solid"> {{ $livresPapier->ouvragePhysique->ouvrage->type }} </td>
-                        <td class="border border-solid"> {{ $livresPapier->ouvragePhysique->ouvrage->langue }} </td>
-                        <td class="border border-solid"> {{ $livresPapier->ouvragePhysique->nombre_exemplaire }} </td>
-                        <td class="border border-solid"> {!! \App\Helpers\OuvragesPhysiqueHelper::afficherDisponibilite($livresPapier->ouvragePhysique) !!} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->ouvrage->titre }} </td>
+                        <td class="border border-solid"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($livresPapier->ouvragesPhysique->ouvrage->niveau) }} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->ouvrage->type }} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->ouvrage->langue }} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->nombre_exemplaire }} </td>
+                        <td class="border border-solid"> {!! \App\Helpers\OuvragesPhysiqueHelper::afficherDisponibilite($livresPapier->ouvragesPhysique) !!} </td>
                         <td class="border border-solid"> {{ $livresPapier->ISBN }} </td>
                         <td class="border border-solid">
                             <form action="{{route('affichageLivrePapier', $livresPapier)}}" method="get">

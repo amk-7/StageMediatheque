@@ -31,7 +31,7 @@ class OuvragesPhysique extends Model
     }
 
     public function ouvrage(){
-        return $this->hasOne(Ouvrage::class, "id_ouvrage");
+        return $this->belongsTo(Ouvrage::class, "id_ouvrage");
     }
 
     public function approvisonnements()
@@ -43,10 +43,10 @@ class OuvragesPhysique extends Model
         return $this->belongsTo(ClassificationDeweyDizaine::class, "id_ouvrage_physique");
     }
     public function livrePapier(){
-        return $this->belongsTo(LivrePapier::class, "id_livre_papier");
+        return $this->hasOne(LivresPapier::class, "id_livre_papier");
     }
     public function documentAudioVisuel(){
-        return $this->belongsTo(DocumentsAudioVisuel::class);
+        return $this->hasOne(DocumentsAudioVisuel::class, 'id_document_audio_visuel');
     }
 
     public function lignesRestitutions(){

@@ -13,7 +13,7 @@ class EmpruntService
 
     public static function enregistrerUnEmprunt($datas, $emprunt)
     {
-        $datas = GobaleService::extractLineToData($datas);
+        $datas = GlobaleService::extractLineToData($datas);
         for ($i=0; $i<count($datas)-1; $i++){
             self::enregistrerLignesEmprunt($datas[$i][0], $datas[$i][1], $emprunt);
         }
@@ -38,7 +38,7 @@ class EmpruntService
         $date = date_create();
         date_add($date,date_interval_create_from_date_string("$nbjour days"));
         $date_retour = date_format($date, 'Y-m-d');
-        
+
         return $date_retour;
     }
 /*

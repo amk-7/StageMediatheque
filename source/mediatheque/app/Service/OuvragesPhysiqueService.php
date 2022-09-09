@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Helpers\OuvragesPhysiqueHelper;
 use App\Models\ClassificationDeweyCentaine;
 use App\Models\ClassificationDeweyDizaine;
 use App\Models\DocumentsAudioVisuel;
@@ -39,91 +38,25 @@ class OuvragesPhysiqueService
         $ouvragePhysique->save();
     }
 
-    public static function getIDouvrage($type, $identifiant, $titre)
+    public static function getIDOuvragePhysiqueByIDOuvrage(array $id_ouvrages)
     {
-        if(! empty($identifiant)){
-            if($type=='livre_papier'){
-                $ouvrage = LivresPapier::all()
-                    ->where('ISBN', $identifiant)
-                    ->first();
-                return $ouvrage!=null ? $ouvrage->id_livre_papier : $ouvrage;
-            }
-            $ouvrage = DocumentsAudioVisuel::all()
-                    ->where('ISAN', $identifiant)
-                    ->first();
-            return $ouvrage!=null ? $ouvrage->id_document_audio_visuel : $ouvrage;
-        }
-        if (! empty($titre)){
-            $ouvrage = Ouvrage::all()->where('titre', $titre)->first();
-            return $ouvrage!=null ? $ouvrage->id_ouvrage : $ouvrage;
-        }
+        $ouvrages_phyqiques = DB::table('ouvrages_physiques')
+            ->select('id_ouvrage_physique')
+            ->whereIn('id_ouvrage', $id_ouvrages)
+            ->get();
+        return self::id_ouvrage_physique_from_array($ouvrages_phyqiques);
     }
 
-    public static function searchOuvrageByTitre($titre){
-        $id_ouvrages = DB::table('ouvrages')
-                            ->select('id_ouvrage')
-                            ->where('titre', 'like', '%'.strtoupper($titre).'%')
-                            ->get();
-        $liste_id_ouvrages = array();
-        foreach ($id_ouvrages as $id_ouvrage){
-            array_push($liste_id_ouvrages, $id_ouvrage->id_ouvrage);
-        }
-
-        return OuvragesPhysique::all()->whereIn('id_ouvrage_physique', $liste_id_ouvrages);
-    }
-
-    public static function getCodeIDTitle(Request $request)
+    public static function id_ouvrage_physique_from_array($ouvrage_physiques)
     {
-        //return$request;
-        $code = $request->code_id;
-        if($request->type_code=="livre_papier"){
-            $livre = LivresPapier::all()->where('ISBN', $code)->first();
-            return $livre != null ? $livre->ouvragePhysique->ouvrage->titre : $livre;
+        $id_ouvrage_physiques = array();
+        foreach ($ouvrage_physiques as $op)
+        {
+            array_push($id_ouvrage_physiques, $op->id_ouvrage_physique);
         }
-        $doc = DocumentsAudioVisuel::all()->where('ISAN', $code)->first();
-        return $doc != null ? $doc->ouvragePhysique->ouvrage->titre : $doc;
+        return$id_ouvrage_physiques;
     }
 
-    public static function getCodeID(Request $request)
-    {
-        //return$request;
-        //$code = $request->code_id;
-        $ouvrage = Ouvrage::all()->where('titre', strtoupper($request->titre));
-        if ($ouvrage->count()==1){
-            if($request->type_code=='livre_papier'){
-                $livre = LivresPapier::all()->whereIn('id_ouvrage_physique', $ouvrage->first()->id_ouvrage);
-                if ($livre->count()>0){
-                    return $livre->first()->id_livre_papier;
-                }
-                return null;
-            }
-            $docAV = DocumentsAudioVisuel::all()->whereIn('id_ouvrage_physique', $ouvrage->first()->id_ouvrage);
-            if ($docAV->count()>0){
-                return $docAV->first()->id_livre_papier;
-            }
-            return null;
-        }
-    }
-
-    public static function getOuvragePhysiqueByType(Request $request)
-    {
-        if($request->type_code=="livre_papier"){
-            $id_livres = self::getArrayKeyFromDBResult(LivresPapier::all(), 'id_ouvrage_physique');
-            return json_encode(OuvragesPhysique::all()->whereIn('id_ouvrage', $id_livres));
-        }
-        $id_docs = self::getArrayKeyFromDBResult(DocumentsAudioVisuel::all(), "id_ouvrage_physique");
-        return  json_encode(OuvragesPhysique::all()->whereIn('id_ouvrage', $id_docs));
-    }
-
-    public static function getArrayKeyFromDBResult(Collection $collection, $key)
-    {
-        $array_collection = $collection->toArray();
-        $array_key = array();
-        foreach ($array_collection as $ouvrage){
-            array_push($array_key, $ouvrage[$key]);
-        }
-        return $array_key;
-    }
 
     public static function getLivrePapierWithAllAttribute()
     {
