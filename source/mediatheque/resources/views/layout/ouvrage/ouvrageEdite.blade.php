@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layout.template.base')
 @section('content')
     <h1>Edition du livre {{$ouvrage->titre }} </h1>
     <form action="{{ route($action, $update_object) }}" method="post" enctype="multipart/form-data">

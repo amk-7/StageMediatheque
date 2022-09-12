@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layout.template.base')
 @section('content')
     <h1>Liste des restitutions</h1>
     <div>
@@ -15,7 +15,7 @@
                     <th>Nombre ouvrage</th>
                     <th>Abonne</th>
                     <th>Personnel</th>
-                    <th>Etat </th>
+                    <th>Etat</th>
                     <th>Date</th>
                     <th>Consulter</th>
                     <th>Editer</th>
@@ -45,7 +45,7 @@
                 </tbody>
             </table>
     </div>
-        @else
-            <h2>Aucun approvisionnement</h2>
-        @endif
+    @else
+        <h2>Aucun approvisionnement</h2>
+    @endif
 @stop

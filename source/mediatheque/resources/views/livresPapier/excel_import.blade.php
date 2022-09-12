@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layout.template.base')
 @section('content')
     <form action="{{ route('enregistrementImportExcel') }}" method="post" enctype="multipart/form-data">
         @method('put')

@@ -181,6 +181,9 @@ return [
         MercurySeries\Helpers\HelpersServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        // spatie
+        Spatie\Permission\PermissionServiceProvider::class,
+
     ],
 
     /*

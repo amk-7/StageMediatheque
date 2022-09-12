@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layout.template.base')
 
 @section('content')
     {{--dd($emprunt->personnel->utilisateur->nom)--}}

@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Personnel;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class PersonnelSeeder extends Seeder
 {
@@ -22,7 +24,7 @@ class PersonnelSeeder extends Seeder
             'nom_utilisateur' => 'Shin06',
             'numero_maison'=>'N105',
             'email' => 'Alhassan.tuto@gmail.com',
-            'password' => '256398741',
+            'password' => Hash::make('256398741'),
             'contact' => '91767676',
             'photo_profil' => 'personne.jpg',
             'adresse' => array(
@@ -30,10 +32,12 @@ class PersonnelSeeder extends Seeder
                 'quartier' => 'Sédhiou'),
             'sexe' => 'Masculin'
         ]);
-        
+
         Personnel::create([
             'statut' => 'Responsable',
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
+
+        $utilisateur->assignRole(Role::find(1));
     }
 }
