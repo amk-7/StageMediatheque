@@ -20,7 +20,7 @@ class OuvragesElectroniqueService
         if (! $url == null)
         {
             $chemin_ouvrage = strtolower(str_replace(' ', '_', $ouvrage->titre)).'.'.$url->extension();
-            $url->storeAs('public/images/ouvrage_electonique', $chemin_ouvrage);
+            $url->storeAs('public/ouvrage_electonique', $chemin_ouvrage);
             return $chemin_ouvrage;
         } else
         {
@@ -30,7 +30,7 @@ class OuvragesElectroniqueService
 
     public static function enregistrerOuvrageELectronique($ouvrage, $url)
     {
-        $chemin_ouvrage = enregistrerPdf($ouvrage, $url);
+        $chemin_ouvrage = self::enregistrerPdf($ouvrage, $url);
         $ouvrageElectronique = OuvragesElectronique::create([
             'url' => $chemin_ouvrage,
             'id_ouvrage' => $ouvrage->id_ouvrage,

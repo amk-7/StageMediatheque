@@ -67,3 +67,6 @@
     php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
     php artisan make:import UsersImport --model=User
 
+## Installation du module de qr-code
+
+    composer require simplesoftwareio/simple-qrcode "~4"

@@ -136,6 +136,7 @@ Route::get('data_class_dizaine', [LivresPapierController::class, 'echoclassifica
 Route::get('formulaire_import_excel', [LivresPapierController::class, 'uploadLivresPapierCreate'])->name('formulaireImportExcel');
 Route::put('enregistrement_import_excel', [LivresPapierController::class, 'uploadLivresPapierStore'])->name('enregistrementImportExcel');
 
+Route::get('imprimer_ouvrages_physique_code/{livres_papier}', [LivresPapierController::class, 'downloadCoteQrcode'])->name('imprimerOuvragesPhysiqueCode');
 
 Route::get('liste_documents_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'index'])->name('listeDocumentsAudioVisuelsElectroniques');
 Route::get('formulaire_enregistrement_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'create'])->name('formulaireEnregistrementDocumentAudioVisuelsElectroniques');

@@ -133,11 +133,11 @@ class OuvrageService
         ]);
 
         // Definire les auteurs de l'ouvrage
-        self::definireAuteur($request, $ouvrage, $auteurs);
+        self::definireAuteur($ouvrage, $auteurs);
         return $ouvrage;
     }
 
-    public static function definireAuteur($request, $ouvrage, $auteurs)
+    public static function definireAuteur($ouvrage, $auteurs)
     {
         // Definire les auteurs de l'ouvrage
         foreach ($auteurs as $auteur){
@@ -193,5 +193,10 @@ class OuvrageService
         }
 
         return array($debut, $fin);
+    }
+
+    public static function ouvrageExist($titre, $annee)
+    {
+        return Ouvrage::all()->where('titre', $titre)->where('annee_apparution', $annee)->first();
     }
 }

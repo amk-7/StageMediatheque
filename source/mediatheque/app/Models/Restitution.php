@@ -11,24 +11,29 @@ class Restitution extends Model
     protected $fillable = ['date_restitution', 'etat', 'id_abonne', 'id_personnel', 'id_emprunt'];
     protected $primaryKey = 'id_restitution';
 
-    public function lignesRestitutions(){
+    public function lignesRestitutions()
+    {
         return $this->hasMany(LignesRestitution::class, 'id_restitution');
     }
 
-    public function getNombreOuvragesAttribute(){
+    public function getNombreOuvragesAttribute()
+    {
         return $this->lignesRestitutions()->count();
     }
 
-    public function abonne(){
+    public function abonne()
+    {
         return $this->belongsTo(Abonne::class, 'id_abonne');
     }
 
-    public function personnel(){
+    public function personnel()
+    {
         return $this->belongsTo(Personnel::class, 'id_personnel');
     }
 
-    public function emprunt(){
-        return $this->hasOne(Emprunt::class, 'id_emprunt');
+    public function emprunt()
+    {
+        return $this->belongsTo(Emprunt::class, 'id_emprunt');
     }
 }
 

@@ -33,4 +33,21 @@ class GlobaleService
         }
         return $array_key;
     }
+
+    public static function formatString($chaine, $size)
+    {
+        $format_id = "";
+        $string_size = $size;
+        $id_ouvrage_size = strlen($chaine);
+        $nb_zeros = $string_size - $id_ouvrage_size;
+        if ($nb_zeros == 0){
+            return $chaine;
+        }
+        for($i=0; $i < $nb_zeros; $i++)
+        {
+            $format_id .= "0";
+        }
+        $format_id .= $chaine;
+        return $format_id;
+    }
 }

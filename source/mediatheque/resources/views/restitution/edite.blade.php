@@ -131,7 +131,7 @@
                     editerLigne(check_restituer.id);
                 });
                 cell_restituer.appendChild(check_restituer);
-                cell_etat_entree.innerText = "";
+                cell_etat_entree.innerText = "-";
             } else {
                 cell_restituer.innerText = "Restituer";
                 cell_etat_entree.innerText = etat_entree;
@@ -205,7 +205,7 @@
         }
 
         function dernierCarracter(str){
-            return str.substring(str.length-1, str.length);
+            return str.substring(str.length-6, str.length);
         }
 
         function getType(str){

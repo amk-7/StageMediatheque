@@ -375,7 +375,7 @@
         }
 
         function dernierCarracter(str){
-            return str.substring(str.length-1, str.length);
+            return str.substring(str.length-6, str.length);
         }
 
         function getType(str){
@@ -385,7 +385,7 @@
         }
 
         submit_btn.addEventListener('click', function (e){
-            stopPropagation(e);
+            //stopPropagation(e);
             if (! validerFormulaire(e)){
                 return;
             }
