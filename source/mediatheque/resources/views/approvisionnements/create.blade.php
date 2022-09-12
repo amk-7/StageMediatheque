@@ -1,4 +1,4 @@
-@extends("layout.base")
+@extends("layout.template.base")
 
 @section("content")
     <div>
@@ -11,7 +11,7 @@
                     <label for="nom">Nom</label>
                     <select name="nom" id="nom_personnes"></select>
                 </div>
-                <div class="alert" >
+                <div class="alert">
                     <p id="nom_erreur" hidden>Vous devez séléctionner le nom</p>
                 </div>
                 <div>
@@ -20,12 +20,13 @@
                         <option>Séléctionner prénom</option>
                     </select>
                 </div>
-                <div class="alert" >
+                <div class="alert">
                     <p id="prenom_erreur" hidden>Vous devez séléctionner le prenom</p>
                 </div>
                 <div>
                     <label for="date_approvisionement">Date</label>
-                    <input type="date" name="date_approvisionnement" id="date_approvisionnement" value="{{ date('Y-m-d') }}" disabled>
+                    <input type="date" name="date_approvisionnement" id="date_approvisionnement"
+                           value="{{ date('Y-m-d') }}" disabled>
                 </div>
             </fieldset>
             <fieldset>
@@ -33,10 +34,11 @@
                 <div>
                     <div>
                         <label for="ouvrage_cote">Cote</label>
-                        <input type="text" name="ouvrage_cote" id="ouvrage_cote" placeholder="Saisire l'idendifiant la cote de l'ouvrage">
-                        <div class="alert" >
-                            <p  id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
-                            <p  id="cote_ouvrage_not_found" hidden>Cet ouvrage n'existe pas</p>
+                        <input type="text" name="ouvrage_cote" id="ouvrage_cote"
+                               placeholder="Saisire l'idendifiant la cote de l'ouvrage">
+                        <div class="alert">
+                            <p id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
+                            <p id="cote_ouvrage_not_found" hidden>Cet ouvrage n'existe pas</p>
                         </div>
                     </div>
                 </div>
@@ -50,16 +52,20 @@
                 <div>
                     <div>
                         <label for="nombre_exemplaire">Nombre d'exemplaire</label>
-                        <input type="number" name="nombre_exemplaire" id="nombre_exemplaire" placeholder="Saisire le nombre d'exemplaire.">
+                        <input type="number" name="nombre_exemplaire" id="nombre_exemplaire"
+                               placeholder="Saisire le nombre d'exemplaire.">
                     </div>
-                    <div class="alert" >
-                        <p id="nombre_exemplaire_erreur" hidden>Vous devez indiquer le nombre d'exemplaire approvisionné</p>
-                        <p id="nombre_exemplaire_valeur_erreur" hidden>Le nombre d'exemplaire approvisionné doit être supérieure à 0</p>
+                    <div class="alert">
+                        <p id="nombre_exemplaire_erreur" hidden>Vous devez indiquer le nombre d'exemplaire
+                            approvisionné</p>
+                        <p id="nombre_exemplaire_valeur_erreur" hidden>Le nombre d'exemplaire approvisionné doit être
+                            supérieure à 0</p>
                     </div>
                 </div>
                 <div>
                     <button name="ajouter_approvisionnement" id="ajouter_approvisionnement">Ajouter</button>
-                    <input type="submit" id="action_approvisionnement" name="action_approvisionnement" value="Approvisionner">
+                    <input type="submit" id="action_approvisionnement" name="action_approvisionnement"
+                           value="Approvisionner">
                 </div>
             </fieldset>
             <div>
@@ -85,9 +91,11 @@
                     <label for="nombre_exemplaire_edite">Nombre d'exemplaire</label>
                     <input type="number" id="nombre_exemplaire_edite" placeholder="Saisire le nombre d'exemplaire.">
                 </div>
-                <div class="alert" >
-                    <p id="nombre_exemplaire_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire approvisionné</p>
-                    <p id="nombre_exemplaire_modif_valeur_erreur" hidden>Le nombre d'exemplaire approvisionné doit être supérieure à 0</p>
+                <div class="alert">
+                    <p id="nombre_exemplaire_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire
+                        approvisionné</p>
+                    <p id="nombre_exemplaire_modif_valeur_erreur" hidden>Le nombre d'exemplaire approvisionné doit être
+                        supérieure à 0</p>
                 </div>
                 <button id="btn_modifier">modifier</button>
             </div>
@@ -124,16 +132,16 @@
         setLiteNoms(nom_personnes);
         cleanALl();
 
-        btn_modifier.addEventListener('click', function (e){
-           stopPropagation(e);
-           modifierNbExemplaire();
+        btn_modifier.addEventListener('click', function (e) {
+            stopPropagation(e);
+            modifierNbExemplaire();
         });
 
-        cote_ouvrage.addEventListener('keyup', function (e){
+        cote_ouvrage.addEventListener('keyup', function (e) {
             rechercherTitreParCote();
         });
 
-        nom_personnes.addEventListener('change', function (e){
+        nom_personnes.addEventListener('change', function (e) {
             while (prenom_personnes.firstChild) {
                 prenom_personnes.removeChild(prenom_personnes.firstChild);
             }
@@ -141,7 +149,7 @@
             option.innerText = "Séléctionner prénom";
             prenom_personnes.appendChild(option);
             for (let i = 0; i < personnels.length; i++) {
-                if(nom_personnes.value==personnels[i]['nom']){
+                if (nom_personnes.value == personnels[i]['nom']) {
                     let option = document.createElement('option');
                     option.value = personnels[i]['id_personnel'];
                     option.innerText = personnels[i]['prenom'];
@@ -155,7 +163,7 @@
             e.stopPropagation();
         }
 
-        function setLiteNoms(nom_personnes){
+        function setLiteNoms(nom_personnes) {
             let option = document.createElement('option');
             option.innerText = "Séléctionner nom";
             nom_personnes.appendChild(option);
@@ -169,9 +177,9 @@
 
         let number = 1;
 
-        btn_ajouter.addEventListener('click', function addApprovisionnement(e){
+        btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
             e.preventDefault();
-            if(validate()) {
+            if (validate()) {
                 let table_body = document.getElementById('liste_approvisionnement').children[1];
                 let row = document.createElement('tr');
                 let cell_number = document.createElement('td');
@@ -189,12 +197,12 @@
                 button_editer.id = number - 1;
                 button_supprimer.id = number - 1;
 
-                button_editer.addEventListener('click', function (e){
+                button_editer.addEventListener('click', function (e) {
                     stopPropagation(e);
                     editerLigne(button_editer.id);
                 });
 
-                button_supprimer.addEventListener('click', function (e){
+                button_supprimer.addEventListener('click', function (e) {
                     stopPropagation(e);
                     removeLine(button_supprimer.id, table_body)
                 });
@@ -220,19 +228,19 @@
             }
         });
 
-        function editerLigne(numero_ligne){
+        function editerLigne(numero_ligne) {
             let div_modal = document.getElementById("modal_editer");
             div_modal.hidden = false;
             console.log(numero_ligne);
             numero_ligne_edite = numero_ligne;
         }
 
-        function modifierNbExemplaire(){
-            console.log("modification.... "+numero_ligne_edite);
+        function modifierNbExemplaire() {
+            console.log("modification.... " + numero_ligne_edite);
             let table_body = document.getElementById('liste_approvisionnement').children[1];
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
-                if (i === parseInt(numero_ligne_edite)){
+                if (i === parseInt(numero_ligne_edite)) {
                     let line = lines[i].children;
                     line[3].innerText = nombre_exemplaire_edite.value;
                     let div_modal = document.getElementById("modal_editer");
@@ -242,27 +250,27 @@
             }
         }
 
-        function removeLine(id, table_body){
+        function removeLine(id, table_body) {
             table_body.removeChild(table_body.children[id]);
         }
 
-        function validate(){
-            if (cote_ouvrage.value === ""){
+        function validate() {
+            if (cote_ouvrage.value === "") {
                 cote_erreur.hidden = false;
                 return false;
             }
 
-            if (titre.value === "Aucun ouvrage trouvé"){
+            if (titre.value === "Aucun ouvrage trouvé") {
                 cote_no_trouve.hidden = false;
                 return false;
             }
 
-            if (nb_exemplaire.value === ""){
+            if (nb_exemplaire.value === "") {
                 nb_exemplaire_erreur.hidden = false;
                 return false;
             }
 
-            if (nb_exemplaire.value <= 0){
+            if (nb_exemplaire.value <= 0) {
                 nb_exemplaire_valeur_erreur.hidden = false;
                 return false;
             }
@@ -270,13 +278,13 @@
             return true;
         }
 
-        function cleanInput(){
+        function cleanInput() {
             cote_ouvrage.value = "";
             titre.value = "";
             nb_exemplaire.value = "";
         }
 
-        function cleanALl(){
+        function cleanALl() {
             cleanInput();
             nom_personnes.value = "Séléctionner nom";
             prenom_personnes.value = "Séléctionner prénom";
@@ -285,15 +293,15 @@
 
         function rechercherTitreParCote() {
             let cote = cote_ouvrage.value;
-            if (cote.substring(0, 2) === "LP"){
+            if (cote.substring(0, 2) === "LP") {
                 console.log("LP---Yes");
                 for (let i = 0; i < livres_papier.length; i++) {
-                    if(livres_papier[i]['cote']===cote){
+                    if (livres_papier[i]['cote'] === cote) {
                         titre.value = livres_papier[i]['titre'];
                         return;
                     }
                 }
-            } else if (cote.substring(0, 2) === "DA"){
+            } else if (cote.substring(0, 2) === "DA") {
                 console.log("DA---Yes");
                 for (let i = 0; i < doc_av.length; i++) {
                     if (doc_av[i]['cote'] == titre) {
@@ -307,8 +315,7 @@
         }
 
         // format table before send
-        function formatTableDataBeforeSend()
-        {
+        function formatTableDataBeforeSend() {
             let table_body = document.getElementById('liste_approvisionnement').children[1];
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
@@ -318,32 +325,33 @@
             }
         }
 
-        function dernierCarracter(str){
-            return str.substring(str.length-1, str.length);
+        function dernierCarracter(str) {
+            return str.substring(str.length - 1, str.length);
         }
 
-        function getType(str){
-            if (str.substring(0, 2) === "LP"){
+        function getType(str) {
+            if (str.substring(0, 2) === "LP") {
                 return "livre_papier";
-            } return "document_av";
+            }
+            return "document_av";
         }
 
-        submit_btn.addEventListener('click', function (e){
+        submit_btn.addEventListener('click', function (e) {
             console.log("OKKKKKKKK..............");
-            if(nom_personnes.value === "Séléctionner nom" || nom_personnes.value === ""){
+            if (nom_personnes.value === "Séléctionner nom" || nom_personnes.value === "") {
                 nom_erreur.hidden = false;
                 stopPropagation(e);
                 return;
             }
             console.log("OKKKKKKKK..............2222");
-            if(prenom_personnes.value === "Séléctionner prénom" || prenom_personnes.value === ""){
+            if (prenom_personnes.value === "Séléctionner prénom" || prenom_personnes.value === "") {
                 prenom_erreur.hidden = false;
                 stopPropagation(e);
                 return;
             }
             console.log("OKKKKKKKK..............3333");
             formatTableDataBeforeSend();
-            if (data.value === ""){
+            if (data.value === "") {
                 stopPropagation(e);
                 return;
             }

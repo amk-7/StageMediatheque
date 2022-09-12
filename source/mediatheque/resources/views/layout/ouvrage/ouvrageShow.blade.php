@@ -1,4 +1,4 @@
-@extends("layout.base", ['body_style'=> "bg-gray-200 flex content-center justify-center h-full items-center", 'hfull'=>'h-full'])
+@extends("layout.template.base", ['body_style'=> "bg-gray-200 flex content-center justify-center h-full items-center", 'hfull'=>'h-full'])
 @section("content")
     <main class=" bg-white flex flex-col items-center p-12">
         <h1 class="text-2xl">{{$ouvrage->titre }}</h1>

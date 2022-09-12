@@ -1,4 +1,4 @@
-@extends("layout.base")
+@extends("layout.template.base")
 @section("content")
     <main>
         <h4>Avoir des methodes changementEtat et retardRestitution</h4>
@@ -39,13 +39,13 @@
             e.stopPropagation();
         }
 
-        function mettreLignesEmprunt(){
+        function mettreLignesEmprunt() {
             for (let i = 0; i < lignes_emprunt.length; i++) {
                 mettreUneLigneEmprunt(lignes_emprunt[i]['cote'], lignes_emprunt[i]['titre_ouvrage'], lignes_emprunt[i]['etat_sortie'], lignes_emprunt[i]['disponibilite'], lignes_emprunt[i]['etat_entree']);
             }
         }
 
-        function mettreUneLigneEmprunt(cote, titre_ouvrage, etat_sortie, disponibilite, etat_entree){
+        function mettreUneLigneEmprunt(cote, titre_ouvrage, etat_sortie, disponibilite, etat_entree) {
             let table_body = document.getElementById('liste_restitution').children[1];
             let row = document.createElement('tr');
             let cell_number = document.createElement('td');
@@ -55,7 +55,7 @@
             let cell_etat_entree = document.createElement('td');
             let cell_restituer = document.createElement('td');
 
-            if (! disponibilite){
+            if (!disponibilite) {
                 cell_restituer.innerText = "Nom restituer";
                 cell_etat_entree.innerText = "-";
             } else {

@@ -16,11 +16,15 @@
 </header>
 <hr>
 <div class="menu">
-    {{-- @include('side_bar.personnel') --}}
+    @if(in_array(Auth::user()->roles()->first()->name, ['responsable', 'bibliothecaire']))
+        @include('side_bar.personnel')
+    @endif
 </div>
 <hr>
 <div class="menu">
-    {{-- @include('side_bar.abonne') --}}
+    @if(in_array(Auth::user()->roles()->first()->name, ['abonne']))
+        @include('side_bar.abonne')
+    @endif
 </div>
 <hr>
 @yield('content')

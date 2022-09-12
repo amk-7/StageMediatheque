@@ -1,4 +1,4 @@
-@extends("layout.base")
+@extends("layout.template.base")
 
 @section("content")
     <div>
@@ -70,7 +70,7 @@
                         @endfor
                     </select>
                 </div>
-                <div class="alert" >
+                <div class="alert">
                     <p id="etat_ouvrage_modif_erreur" hidden>Vous l'état de retour de l'ouvrage .</p>
                 </div>
                 <button id="btn_modifier">modifier</button>
@@ -96,7 +96,7 @@
         mettreLignesEmprunt();
         let numero_ligne_edite = -1;
 
-        btn_modifier.addEventListener('click', function (e){
+        btn_modifier.addEventListener('click', function (e) {
             stopPropagation(e);
             modifierEtatEntreeOuvrage();
         });
@@ -107,13 +107,13 @@
             e.stopPropagation();
         }
 
-        function mettreLignesEmprunt(){
+        function mettreLignesEmprunt() {
             for (let i = 0; i < lignes_emprunt.length; i++) {
                 mettreUneLigneEmprunt(lignes_emprunt[i]['cote'], lignes_emprunt[i]['titre_ouvrage'], lignes_emprunt[i]['etat_sortie'], lignes_emprunt[i]['disponibilite'], lignes_emprunt[i]['etat_entree']);
             }
         }
 
-        function mettreUneLigneEmprunt(cote, titre_ouvrage, etat_sortie, disponibilite, etat_entree){
+        function mettreUneLigneEmprunt(cote, titre_ouvrage, etat_sortie, disponibilite, etat_entree) {
             let table_body = document.getElementById('liste_restitution').children[1];
             let row = document.createElement('tr');
             let cell_number = document.createElement('td');
@@ -123,11 +123,11 @@
             let cell_etat_entree = document.createElement('td');
             let cell_restituer = document.createElement('td');
 
-            if (! disponibilite){
+            if (!disponibilite) {
                 let check_restituer = document.createElement('input');
                 check_restituer.type = 'checkbox';
                 check_restituer.id = number - 1;
-                check_restituer.addEventListener('click', function (e){
+                check_restituer.addEventListener('click', function (e) {
                     editerLigne(check_restituer.id);
                 });
                 cell_restituer.appendChild(check_restituer);
@@ -153,10 +153,10 @@
             table_body.appendChild(row);
         };
 
-        function editerLigne(numero_ligne){
+        function editerLigne(numero_ligne) {
             let checkbox = document.getElementById(numero_ligne);
             let div_modal = document.getElementById("modal_editer");
-            if (checkbox.checked){
+            if (checkbox.checked) {
                 div_modal.hidden = false;
                 numero_ligne_edite = numero_ligne;
             } else {
@@ -169,7 +169,7 @@
             }
         }
 
-        function modifierEtatEntreeOuvrage(){
+        function modifierEtatEntreeOuvrage() {
             //console.log("modification.... "+numero_ligne_edite);
             let table_body = document.getElementById('liste_restitution').children[1];
             let etat_entree_ouvrage_edite = document.getElementById('etat_entree_ouvrage_edite');
@@ -181,42 +181,42 @@
             etat_entree_ouvrage_edite.value = "Séléctionner etat";
         }
 
-        function removeLine(id, table_body){
+        function removeLine(id, table_body) {
             table_body.removeChild(table_body.children[id]);
         }
 
-        function cleanALl(){
+        function cleanALl() {
             donne.value = "";
         }
 
         // format table before send
-        function formatTableDataBeforeSend()
-        {
+        function formatTableDataBeforeSend() {
             let table_body = document.getElementById('liste_restitution').children[1];
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
                 let line = lines[i].children;
-                if (line[5].innerText !== "Restituer"){
-                    if (line[4].innerText !== ""){
+                if (line[5].innerText !== "Restituer") {
+                    if (line[4].innerText !== "") {
                         donne.value += `${dernierCarracter(line[1].innerText)},${line[4].innerText};`;
                     }
                 }
             }
         }
 
-        function dernierCarracter(str){
-            return str.substring(str.length-6, str.length);
+        function dernierCarracter(str) {
+            return str.substring(str.length - 6, str.length);
         }
 
-        function getType(str){
-            if (str.substring(0, 2) === "LP"){
+        function getType(str) {
+            if (str.substring(0, 2) === "LP") {
                 return "livre_papier";
-            } return "document_av";
+            }
+            return "document_av";
         }
 
-        submit_btn.addEventListener('click', function (e){
+        submit_btn.addEventListener('click', function (e) {
             formatTableDataBeforeSend();
-            if (donne.value === ""){
+            if (donne.value === "") {
                 stopPropagation(e);
             }
         });
