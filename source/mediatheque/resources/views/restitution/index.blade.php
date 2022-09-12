@@ -31,7 +31,7 @@
                         {!! \App\Helpers\RestitutionHelper::afficherEtatREstitution($restitution)  !!}
                         <td> {{ $restitution->date_restitution }} </td>
                         <td>
-                            <form action="{{-- route('affichageRestitution', $restitution) --}}" method="get">
+                            <form action="{{ route('affichageRestitution', $restitution) }}" method="get">
                                 <input type="submit" value="Consulter">
                             </form>
                         </td>

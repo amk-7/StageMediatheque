@@ -44,6 +44,7 @@
                         </td>
                         <td>
                             <form action="{{ route('formulaireEnregistrementRestitution', $emprunt) }}" method="get">
+                                @csrf
                                 <input type="submit" value="Restituer">
                             </form>
                         </td>

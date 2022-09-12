@@ -49,7 +49,7 @@
                            <select name="type" id="type" class="select_btn @error('type') is-invalid @enderror">
                                <option>Sélectionner type</option>
                                @foreach($types as $type)
-                                   <option value="{{$type}} {{ old('type') == $type ? 'selected':'' }} ">{{$type}}</option>
+                                   <option value="{{$type}}" {{ old('type') == $type ? 'selected':'' }}>{{$type}}</option>
                                @endforeach
                            </select>
                            @error('type')
@@ -61,7 +61,7 @@
                            <select name="langue" class="select_btn">
                                <option>Sélectionner langue</option>
                                @foreach($langues as $langue)
-                                   <option value="{{$langue}} {{ old('langue') == $langue ? 'selected':'' }} ">{{$langue}}</option>
+                                   <option value="{{$langue}}" {{ old('langue') == $langue ? 'selected':'' }}>{{$langue}}</option>
                                @endforeach
                            </select>
                        </div>

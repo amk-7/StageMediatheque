@@ -11,13 +11,22 @@
     @yield("livewire_styles_content")
 </head>
 <body class="{{$body_style ?? ''}}">
-    <header>
-        @include('layout.nav_bar')
-    </header>
-    @yield('content')
-    @yield("livewire_scripts_content")
-    <footer>
-    </footer>
-    @yield("js")
+<header>
+    {{-- @include('layout.nav_bar') --}}
+</header>
+<hr>
+<div class="menu">
+    {{-- @include('side_bar.personnel') --}}
+</div>
+<hr>
+<div class="menu">
+    {{-- @include('side_bar.abonne') --}}
+</div>
+<hr>
+@yield('content')
+@yield("livewire_scripts_content")
+<footer>
+</footer>
+@yield("js")
 </body>
 </html>

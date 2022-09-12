@@ -77,6 +77,7 @@ class RestitutionController extends Controller
     {
         return view('restitution.show')->with([
             'restitution' => $restitution,
+            'lignes_emprunt' => json_encode(LignesEmpruntService::getAllLignesEmpruntByEmprunt($restitution->emprunt)),
         ]);
     }
 
@@ -107,13 +108,9 @@ class RestitutionController extends Controller
             'data'=>'required',
         ]);
         $datas = GlobaleService::extractLineToData($request->data);
-
-        $id_emprunt = $restitution->id_emprunt;
-        //dd($id_emprunt);
-        $restitution->etat = RestitutionService::etatRestitution($id_emprunt, count($datas)-2);
+        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $restitution->id_emprunt);
+        $restitution->etat = RestitutionService::etatRestitutionUpdate($restitution);
         $restitution->save();
-
-        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
 
         return redirect()->route('listeRestitutions');
     }

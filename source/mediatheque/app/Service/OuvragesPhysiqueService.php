@@ -66,10 +66,10 @@ class OuvragesPhysiqueService
         {
             $livre = array(
                 'id_livre'=>$lpc->id_livre_papier,
-                'titre'=>$lpc->ouvragePhysique->ouvrage->titre,
+                'titre'=>$lpc->ouvragesPhysique->ouvrage->titre,
                 'ISBN'=>$lpc->ISBN,
-                'cote'=>$lpc->ouvragePhysique->cote,
-                'nombre_exemplaire'=>$lpc->ouvragePhysique->nombre_exemplaire,
+                'cote'=>$lpc->ouvragesPhysique->cote,
+                'nombre_exemplaire'=>$lpc->ouvragesPhysique->nombre_exemplaire,
             );
 
             array_push($livresComplet, $livre);
@@ -111,11 +111,10 @@ class OuvragesPhysiqueService
         }
 
         $cote = $type_livre;
-        $cote .= (String) $indice_dewey;
-        foreach ($auteurs as $auteur){
-            $cote .= strtoupper(substr($auteur->nom, 0, 3));
-        }
-        $cote .= strtolower(substr($ouvrage->titre, 0, 1)).$ouvrage->id_ouvrage;
+        $cote .= GlobaleService::formatString($indice_dewey, 3);
+        $cote .= strtoupper(substr($auteurs[0]->nom, 0, 3));
+        $cote .= strtolower(substr($ouvrage->titre, 0, 1)).GlobaleService::formatString($ouvrage->id_ouvrage, 6);
         return $cote;
     }
+
 }

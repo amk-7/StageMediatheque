@@ -11,8 +11,8 @@ class EmpruntSeeder extends Seeder
     public function run()
     {
         $emprunt = Emprunt::create([
-            'date_emprunt' => '2022-09-06',
-            'date_retour' => '2022-09-20',
+            'date_emprunt' => '2022-08-30',
+            'date_retour' => '2022-09-06',
             'id_abonne' => 1,
             'id_personnel' => 1
         ]);

@@ -6,6 +6,7 @@ use App\Helpers\OuvragesPhysiqueHelper;
 use App\Models\Emprunt;
 use App\Models\LignesEmprunt;
 use App\Models\OuvragesPhysique;
+use App\Models\Restitution;
 use Nette\Utils\Strings;
 
 class EmpruntService
@@ -14,7 +15,8 @@ class EmpruntService
     public static function enregistrerUnEmprunt($datas, $emprunt)
     {
         $datas = GlobaleService::extractLineToData($datas);
-        for ($i=0; $i<count($datas)-1; $i++){
+        for ($i=0; $i<count($datas)-1; $i++)
+        {
             self::enregistrerLignesEmprunt($datas[$i][0], $datas[$i][1], $emprunt);
         }
     }
@@ -32,7 +34,8 @@ class EmpruntService
         ]);
     }
 
-    public static function determinerDateRetour(String $duree_emprunt){
+    public static function determinerDateRetour(String $duree_emprunt)
+    {
         $nbjour = (integer) $duree_emprunt;
         $nbjour = ($nbjour * 7)-1;
         $date = date_create();
@@ -40,6 +43,21 @@ class EmpruntService
         $date_retour = date_format($date, 'Y-m-d');
 
         return $date_retour;
+    }
+
+    public static function determinerRouteRestitutionEmprunt($emprunt)
+    {
+        $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
+        if ($restitution == null)
+        {
+            return false;
+        } return true;
+    }
+
+    public static function empruntsNonRestituee()
+    {
+        $emprunts = Emprunt::all()->where('date_retour', '<', date('Y-m-d'));
+        return $emprunts;
     }
 /*
     public static function modifierDateRetour($id_emprunt, $date_retour)

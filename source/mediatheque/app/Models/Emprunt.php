@@ -31,4 +31,9 @@ class Emprunt extends Model
     {
         return $this->hasMany(LignesEmprunt::class, 'id_emprunt');
     }
+
+    public function restitution()
+    {
+        return $this->hasOne(Restitution::class, 'id_restitution');
+    }
 }

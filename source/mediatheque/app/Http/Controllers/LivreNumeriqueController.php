@@ -68,6 +68,7 @@ class LivreNumeriqueController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
         Validator::make($request->all(), [
             'ISBN'=>['required',
                 function ($attribute, $value, $flail){

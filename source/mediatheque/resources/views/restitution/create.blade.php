@@ -205,7 +205,7 @@
         }
 
         function dernierCarracter(str){
-            return str.substring(str.length-1, str.length);
+            return str.substring(str.length-6, str.length);
         }
 
         function getType(str){

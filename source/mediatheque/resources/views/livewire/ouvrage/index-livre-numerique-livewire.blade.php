@@ -57,7 +57,7 @@
         <div class="m-3">
             <div class="flex flex-row content-center">
                 <td>
-                    <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
+                    <form action="{{route('formulaireEnregistrementLivreNumerique')}}" method="get">
                         @csrf
                         <input type="submit" class="button button_edite" name="ajouter" value="ajouter">
                     </form>

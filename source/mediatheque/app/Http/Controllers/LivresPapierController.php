@@ -13,6 +13,7 @@ use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LivresPapierController extends Controller
 {
@@ -216,8 +217,16 @@ class LivresPapierController extends Controller
         {
             dd("::::Appeller le developpeur::::");
         }
-        Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel, '', \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel);
+        dd('ok');
         return redirect()->route('listeLivresPapier');
+    }
+
+    public function downloadCoteQrcode(LivresPapier $livresPapier)
+    {
+        $cote_qrcode = base64_encode(QrCode::format('png')->generate($livresPapier->ouvragesPhysique->cote));
+
+        return "<image src='data:image/png;base64, $cote_qrcode'/>";
     }
 }
 
