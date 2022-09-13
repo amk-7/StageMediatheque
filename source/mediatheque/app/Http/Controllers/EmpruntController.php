@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
+use App\Models\LignesEmprunt;
 use App\Service\LignesEmpruntService;
 use Illuminate\Http\Request;
 use App\Service\OuvragesPhysiqueService;
@@ -22,6 +23,7 @@ class EmpruntController extends Controller
     {
         //
         $emprunts = Emprunt::all();
+        //dd($emprunts);
         return view('emprunt.index')->with('emprunts', $emprunts);
     }
 
@@ -62,6 +64,8 @@ class EmpruntController extends Controller
             'duree_emprunt' => 'required',
 
         ]);
+
+        
         
         $date_retour = EmpruntService::determinerDateRetour($request->duree_emprunt);
 
@@ -71,7 +75,8 @@ class EmpruntController extends Controller
             'id_abonne' => $request->prenom_abonne,
             'id_personnel' => $request->prenom,
         ]);
-
+        
+        //dd($listesEmprunts->restitution);
         LignesEmpruntService::enregistrerLignesEmprunt($request->data, $emprunt);
         //dd($request);
 
@@ -154,6 +159,11 @@ class EmpruntController extends Controller
     public function destroy(Emprunt $emprunt)
     {
         //
+        //dd($emprunt->lignesEmprunts);
+        foreach($emprunt->lignesEmprunts as $ligneEmprunt){
+            $ligneEmprunt->ouvragesPhysique->augmenterNombreExemplaire(1);
+            $ligneEmprunt->delete();
+        }
         $emprunt->delete();
         return redirect()->route('listeEmprunts');
     }

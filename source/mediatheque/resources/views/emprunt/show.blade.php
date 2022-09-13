@@ -6,7 +6,7 @@
 
 <label>
     <span class="label_title_sub_title">Date Emprunt:</span>
-    <span class="label_show_value">{{ App\Service\GobaleService::afficherDate($emprunt->date_emprunt)}}</span>
+    <span class="label_show_value">{{ App\Service\GlobaleService::afficherDate($emprunt->date_emprunt)}}</span>
 </label></br>
 
 

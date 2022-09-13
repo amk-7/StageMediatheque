@@ -46,7 +46,7 @@ class LignesEmpruntService
                                                 ->first()->etat_entree;
                $etat_entree =  OuvragesPhysiqueHelper::afficherEtat($etat_entree);
            }
-
+           //dd($ligne->ouvragesPhysique);
             $fullLine = [
                 'numero_ligne' => $ligne->id_ligne_emprunt,
                 'numero_emprunt' => $ligne->id_emprunt,
@@ -61,5 +61,12 @@ class LignesEmpruntService
         }
         return $lignes_emprunt;
     }
+
+   /* public static function incrementerNombreExemplaire($id_ouvrage_physique)
+    {
+        $ouvrage_physique = OuvragesPhysique::find($id_ouvrage_physique);
+        $ouvrage_physique->incrementerNombreExemplaire();
+    }*/
+
 }
 

@@ -59,6 +59,6 @@ class OuvragesPhysique extends Model
     }
     public function lignesEmprunts()
     {
-        return $this->hasMany(LignesEmprunt::class, 'id_livre_emprunt');
+        return $this->hasMany(LignesEmprunt::class, 'id_ligne_emprunt');
     }
 }
