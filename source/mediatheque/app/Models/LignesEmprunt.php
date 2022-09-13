@@ -24,6 +24,6 @@ class LignesEmprunt extends Model
 
     public function ouvragesPhysique()
     {
-        return $this->belongsTo(OuvragesPhysique::class, 'id_ligne_emprunt');
+        return $this->belongsTo(OuvragesPhysique::class, 'id_ouvrage_physique');
     }
 }
