@@ -6,6 +6,7 @@ use App\Http\Controllers\DocumentAudioVisuelController;
 use App\Http\Controllers\DocumentAudioVisuelElectroniqueController;
 use App\Http\Controllers\LivreNumeriqueController;
 use App\Http\Controllers\LivresPapierController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RestitutionController;
 use Illuminate\Support\Facades\Route;
 
@@ -121,13 +122,21 @@ Route::middleware('auth')->group(function(){
     Route::get('formulaire_Liquide', 'App\Http\Controllers\LiquideController@create')->name('createLiquide');
     Route::post('enregistrement_liquide', 'App\Http\Controllers\LiquideController@store')->name('storeLiquide');
 
+    Route::get('liste_des_registrations', [RegistrationController::class, 'index'])->name('listeResgistration');
+    Route::get('formulaire_enregistrement_registration/{abonnee}', [RegistrationController::class, 'create'])->name('formulaireEnregistrementResgistration');
+    Route::post('enregistrement_registration', [RegistrationController::class, 'store'])->name('enregistementResgistration');
+    Route::get('affichage_registration/{registration}', [RegistrationController::class, 'show'])->name('affichageLivreNumerique');
+    Route::get('formulaire_modification_registration/{registration}/edite', [RegistrationController::class, 'edit'])->name('formulaireModificationResgistration');
+    Route::put('modification_registration/{registration}', [RegistrationController::class, 'update'])->name('modificationResgistration');
+    Route::delete('suppression_registration/{registration}', [RegistrationController::class, 'destroy'])->name('suppressionResgistration');
+
     Route::get('liste_livres_numerique', [LivreNumeriqueController::class, 'index'])->name('listeLivresNumerique');
     Route::get('formulaire_enregistrement_livre_numerique', [LivreNumeriqueController::class, 'create'])->name('formulaireEnregistrementLivreNumerique');
     Route::post('enregistrement_livre_numerique', [LivreNumeriqueController::class, 'store'])->name('enregistementLivreNumerique');
     Route::get('affichage_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'show'])->name('affichageLivreNumerique');
     Route::get('formulaire_modification_livre_numerique/{livres_numerique}/edite', [LivreNumeriqueController::class, 'edit'])->name('formulaireModificationLivreNumerique');
     Route::put('modification_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'update'])->name('modificationLivreNumerique');
-    Route::delete('suppression_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreElectronique');
+    Route::delete('suppression_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreNumerique');
 
     Route::get('liste_livres_papier', [LivresPapierController::class, 'index'])->name('listeLivresPapier');
     Route::get('formulaire_enregistrement_livre_papier', [LivresPapierController::class, 'create'])->name('formulaireEnregistrementLivrePapier');
