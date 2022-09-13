@@ -26,12 +26,7 @@
         <label for="nom_utilisateur">Nom d'utilisateur</label>
         <input type="text" name="nom_utilisateur" value="{{$utilisateur->nom_utilisateur}}">
     </div>
-
-    <div>
-        <label for="numero_maison">Numero de maison</label>
-        <input type="text" name="numero_maison" value="{{$utilisateur->numero_maison}}">
-    </div>
-
+    
     <div>
         <label for="email">Email</label>
         <input type="text" name="email" value="{{$utilisateur->email}}">
@@ -55,6 +50,9 @@
         
             <label for="quartier">Quartier</label>
             <input type="text" name="quartier" value="{{$utilisateur->adresse['quartier']}}">
+
+            <label for="numero_maison">Numero de maison</label>
+            <input type="text" name="numero_maison" value="{{$utilisateur->adresse['numero_maison']}}">
         </div>
     </div>
 

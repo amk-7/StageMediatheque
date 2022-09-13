@@ -18,29 +18,29 @@
     <table>
         <caption>{{$title}}</caption>
         <tr>
-            <th>Identifiant de l'utilisateur :</th>
-            <th>Nom :</th>
-            <th>Prenom :</th>
-            <th>Nom d'utilisateur :</th>
-            <th>Numero de maison :</th>
-            <th>Email :</th>
-            <th>Contact :</th>
-            <th>Photo_profil :</th>
-            <th>Ville :</th>
-            <th>Quartier :</th>
-            <th>Sexe :</th>
+            <th>Identifiant de l'utilisateur</th>
+            <th>Nom </th>
+            <th>Prenom </th>
+            <th>Nom d'utilisateur </th>
+            <th>Email </th>
+            <th>Contact </th>
+            <th>Photo_profil </th>
+            <th>Ville </th>
+            <th>Quartier </th>
+            <th>Numero de maison </th>
+            <th>Sexe </th>
         </tr>
         <tr>
             <td>{{$utilisateur->id_utilisateur}}</td>
             <td>{{$utilisateur->nom}}</td>
             <td>{{$utilisateur->prenom}}</td>
             <td>{{$utilisateur->nom_utilisateur}}</td>
-            <td>{{$utilisateur->numero_maison}}</td>
             <td>{{$utilisateur->email}}</td>
             <td>{{$utilisateur->contact}}</td>
             <td>{{$utilisateur->photo_profil}}</td>
             <td>{{$utilisateur->adresse["ville"]}}</td>
             <td>{{$utilisateur->adresse["quartier"]}}</td>
+            <td>{{$utilisateur->adresse["numero_maison"]}}</td>
             <td>{{$utilisateur->sexe}}</td>
         </tr>
 

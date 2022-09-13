@@ -32,11 +32,6 @@
     </label></br>
 
     <label>
-        <span class="label_title_sub_title">Numero de maison : </span>
-        <span class="label_show_value">{{$utilisateur->numero_maison}}</span>
-    </label></br>
-
-    <label>
         <span class="label_title_sub_title">Email : </span>
         <span class="label_show_value">{{$utilisateur->email}}</span>
     </label></br>
@@ -54,6 +49,11 @@
     <label>
         <span class="label_title_sub_title">Quartier : </span>
         <span class="label_show_value">{{$utilisateur->adresse["quartier"]}}</span>
+    </label></br>
+
+    <label>
+        <span class="label_title_sub_title">Numero de maison : </span>
+        <span class="label_show_value">{{$utilisateur->adresse["numero_maison"]}}</span>
     </label></br>
 
     <label>

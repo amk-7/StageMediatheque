@@ -92,7 +92,6 @@ class AbonneController extends Controller
             'nom' => 'required',
             'prenom' => 'required',
             'nom_utilisateur' => 'required',
-            'email' => 'required',
             'password' => 'required',
             'contact' => 'required',
             'ville' => 'required',
@@ -108,7 +107,8 @@ class AbonneController extends Controller
 
         $request['adresse'] = array(
             'ville' => $request->ville,
-            'quartier' => $request->quartier
+            'quartier' => $request->quartier,
+            'numero_maison' => $request->numero_maison,
         );
 
         $utilisateurs = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom);
@@ -180,7 +180,8 @@ class AbonneController extends Controller
         ]));*/
         $request['adresse'] = array(
             'ville' => $request->ville,
-            'quartier' => $request->quartier
+            'quartier' => $request->quartier,
+            'numero_maison' => $request->numero_maison,
         );
 
         $utilisateurs = UserService::modifierUtilisateur($request, $abonne->id_utilisateur);

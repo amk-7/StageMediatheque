@@ -25,11 +25,11 @@
             <th>Nom</th>
             <th>Prenom</th>
             <th>Nom d'utilisateur</th>
-            <th>Numero de maison</th>
             <th>Email</th>
             <th>Contact</th>
             <th>Ville</th>
             <th>Quartier</th>
+            <th>Numero de maison</th>
             <th>Sexe</th>
             <th>Date Naissance</th>
             <th>Niveau Etude</th>
@@ -49,11 +49,11 @@
                 <td>{{$abonne->utilisateur->nom}}</td>
                 <td>{{$abonne->utilisateur->prenom}}</td>
                 <td>{{$abonne->utilisateur->nom_utilisateur}}</td>
-                <td>{{$abonne->utilisateur->numero_maison}}</td>
                 <td>{{$abonne->utilisateur->email}}</td>
                 <td>{{$abonne->utilisateur->contact}}</td>
                 <td>{{$abonne->utilisateur->adresse["ville"]}}</td>
                 <td>{{$abonne->utilisateur->adresse["quartier"]}}</td>
+                <td>{{$abonne->utilisateur->adresse["numero_maison"]}}</td>
                 <td>{{$abonne->utilisateur->sexe}}</td>
                 <td>{{$abonne->date_naissance->format('d/m/Y')}}</td>
                 <td>{{$abonne->niveau_etude}}</td>
