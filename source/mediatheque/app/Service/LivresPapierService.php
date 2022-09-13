@@ -17,10 +17,10 @@ class LivresPapierService
     public static function searchByParamaters($annee_debut, $annee_fin, $langue, $niveau, $type, $dommaine)
     {
         $id_ouvrages = OuvrageService::searchByParamaters($annee_debut, $annee_fin, $langue, $niveau, $type);
-
+        $id_ouvrage_physique = OuvragesPhysiqueService::getIDOuvragePhysiqueByIDOuvrage($id_ouvrages);
         $id_livres_papier = DB::table('livres_papiers')
                             ->whereJsonContains('categorie', [strtolower($dommaine)])
-                            ->whereIn('id_livre_papier', $id_ouvrages)
+                            ->whereIn('id_livre_papier', $id_ouvrage_physique)
                             ->get();
         //dd(self::id_livre_papier_from_array($id_livres_papier));
         return self::id_livre_papier_from_array($id_livres_papier);
@@ -34,7 +34,6 @@ class LivresPapierService
                             ->where('ISBN', 'like', $value)
                             ->orWhereIn('id_livre_papier', $id_ouvrages)
                             ->get();
-        //dd($id_livre_papier);
         return self::id_livre_papier_from_array($id_livre_papier);
     }
 
@@ -87,7 +86,6 @@ class LivresPapierService
             'hydrolique', 'musique et art', 'théologie', 'philosophie', 'zoologie', 'géologie', 'mathématique générale',
             'bibliographie', 'physique', 'médécine', 'comptabilité', 'droit'
         ];
-
         return $categories;
     }
 

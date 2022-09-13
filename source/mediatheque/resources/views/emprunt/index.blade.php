@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layout.template.base')
 
 @section('content')
     <h1> Liste des Emprunts </h1>
@@ -44,6 +44,7 @@
                         </td>
                         <td>
                             <form action="{{ route('formulaireEnregistrementRestitution', $emprunt) }}" method="get">
+                                @csrf
                                 <input type="submit" value="Restituer">
                             </form>
                         </td>

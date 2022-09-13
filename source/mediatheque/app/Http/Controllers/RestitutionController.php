@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
 use App\Models\Restitution;
-use App\Service\GobaleService;
+use App\Service\GlobaleService;
 use App\Service\LignesEmprunt;
 use App\Service\LignesEmpruntService;
 use App\Service\LignesRestitutionService;
@@ -51,7 +51,7 @@ class RestitutionController extends Controller
         $request->validate([
             'data'=>'required',
         ]);
-        $datas = GobaleService::extractLineToData($request->data);
+        $datas = GlobaleService::extractLineToData($request->data);
 
         $id_emprunt = $datas[0][0];
 
@@ -77,6 +77,7 @@ class RestitutionController extends Controller
     {
         return view('restitution.show')->with([
             'restitution' => $restitution,
+            'lignes_emprunt' => json_encode(LignesEmpruntService::getAllLignesEmpruntByEmprunt($restitution->emprunt)),
         ]);
     }
 
@@ -106,14 +107,10 @@ class RestitutionController extends Controller
         $request->validate([
             'data'=>'required',
         ]);
-        $datas = GobaleService::extractLineToData($request->data);
-
-        $id_emprunt = $restitution->id_emprunt;
-        //dd($id_emprunt);
-        $restitution->etat = RestitutionService::etatRestitution($id_emprunt, count($datas)-2);
+        $datas = GlobaleService::extractLineToData($request->data);
+        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $restitution->id_emprunt);
+        $restitution->etat = RestitutionService::etatRestitutionUpdate($restitution);
         $restitution->save();
-
-        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
 
         return redirect()->route('listeRestitutions');
     }

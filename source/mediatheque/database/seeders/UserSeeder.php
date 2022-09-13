@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'prenom' => 'Alhasan',
             'nom_utilisateur' => 'Shin',
             'email' => 'Alhassan.blog@gmail.com',
-            'mot_de_passe' => Hash::make('123456789'),
+            'password' => Hash::make('123456789'),
             'contact' => '+22891817907',
             'profil' => '',
             'adresse' => array(

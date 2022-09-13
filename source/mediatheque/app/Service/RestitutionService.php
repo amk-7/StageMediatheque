@@ -3,6 +3,9 @@
 namespace App\Service;
 
 use App\Models\Emprunt;
+use App\Models\LignesEmprunt;
+use App\Models\Restitution;
+
 class RestitutionService
 {
     public static function etatRestitution($id_emprunt, $nb_lignes_restitution)
@@ -14,6 +17,25 @@ class RestitutionService
         if ($nb_lignes_restitution < $nb_lignes_emprunt){
             return false;
         } return true;
+    }
+
+    public static function etatRestitutionUpdate($restitution)
+    {
+        $lignes_emprunt = LignesEmprunt::all()->where('id_emprunt', $restitution->id_emprunt);
+        foreach ($lignes_emprunt as $ligne)
+        {
+            if (! $ligne->disponibilite)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static function restitutionsPartiel()
+    {
+        $restitutions = Restitution::all()->where('etat', 0);
+        return $restitutions;
     }
 }
 ?>

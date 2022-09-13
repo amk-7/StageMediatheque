@@ -1,7 +1,7 @@
-@extends('layout.base')
+@extends('layout.template.base')
 @section('content')
-    <h1>Edition du livre {{$livresPapier->ouvragePhysique->ouvrage->titre }} </h1>
-    <form action="{{ route($action, $livresPapier) }}" method="post" enctype="multipart/form-data">
+    <h1>Edition du livre {{$ouvrage->titre }} </h1>
+    <form action="{{ route($action, $update_object) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method("put")
         <fieldset>
@@ -9,7 +9,7 @@
             <div>
                 <div>
                     <label>Titre</label>
-                    <input type="text" name="titre" value="{{$livresPapier->ouvragePhysique->ouvrage->titre }}"
+                    <input type="text" name="titre" value="{{$ouvrage->titre }}"
                            placeholder="saisir le titre du livre">
                 </div>
                 <div>
@@ -17,7 +17,7 @@
                     <select name="niveau" id="niveau">
                         <option>Sélectionner niveau</option>
                         @foreach($niveaus as $niveau)
-                            <option value="{{$niveau}}" {{ $niveau == $livresPapier->ouvragePhysique->ouvrage->niveau ? 'selected' : '' }}>
+                            <option value="{{$niveau}}" {{ $niveau == $ouvrage->niveau ? 'selected' : '' }}>
                                 {{ \App\Helpers\OuvrageHelper::afficherNiveau($niveau) }}
                             </option>
                         @endforeach
@@ -28,7 +28,7 @@
                     <select name="type" id="type">
                         <option>Sélectionner type</option>
                         @foreach($types as $type)
-                            <option value="{{$type}}" {{ $type == $livresPapier->ouvragePhysique->ouvrage->type ? 'selected' : '' }}>{{$type}}</option>
+                            <option value="{{$type}}" {{ $type == $ouvrage->type ? 'selected' : '' }}>{{$type}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -47,7 +47,7 @@
                     <select name="langue" id="langue">
                         <option>Sélectionner langue</option>
                         @foreach($langues as $langue)
-                            <option value="{{$langue}}" {{ $langue == $livresPapier->ouvragePhysique->ouvrage->langue ? 'selected' : '' }}>{{$langue}}</option>
+                            <option value="{{$langue}}" {{ $langue == $ouvrage->langue ? 'selected' : '' }}>{{$langue}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -56,14 +56,14 @@
                     <select name="annee_apparution" id="annee_apparution">
                         <option>Sélectionner annee</option>
                         @for($annee=$annees; $annee <= date('Y'); $annee++)
-                            <option value="{{$annee}}" {{ $annee == $livresPapier->ouvragePhysique->ouvrage->annee_apparution ? 'selected' : '' }}>{{$annee}}</option>
+                            <option value="{{$annee}}" {{ $annee == $ouvrage->annee_apparution ? 'selected' : '' }}>{{$annee}}</option>
                         @endfor
                     </select>
                 </div>
                 <div>
                     <label>Lieu d'édition</label>
                     <input name="lieu_edition" id="lieu_edition" type="text"
-                           value="{{ $livresPapier->ouvragePhysique->ouvrage->lieu_edition }}"
+                           value="{{ $ouvrage->lieu_edition }}"
                            placeholder="Saisire le lieu d'édition">
                 </div>
             </div>
@@ -96,7 +96,7 @@
                 <button id="ajouter_auteur">Ajouter</button>
             </div>
             <div id="liste_auteurs">
-                @foreach($livresPapier->ouvragePhysique->ouvrage->auteurs as $auteur)
+                @foreach($ouvrage->auteurs as $auteur)
                     <input type="text" id="auteur{{$loop->index}}" name="auteur{{$loop->index}}"
                            value="{{ $auteur->nom }}, {{ $auteur->prenom }}" disabled/>
                     <button onclick="removeElt('liste_auteurs','auteur{{$loop->index}}')">x</button>
@@ -113,7 +113,7 @@
                     <button id="ajouter_mot_cle">+</button>
                 </div>
                 <div id="liste_mots_cle">
-                    @foreach($livresPapier->ouvragePhysique->ouvrage->mot_cle as $mot_cle)
+                    @foreach($ouvrage->mot_cle as $mot_cle)
                         @if(! empty($mot_cle))
                             <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}"
                                    value="{{ $mot_cle }}" disabled/>
