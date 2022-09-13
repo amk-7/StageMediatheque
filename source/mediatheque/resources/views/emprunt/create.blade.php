@@ -386,9 +386,10 @@
             return "document_av";
         }
 
-        submit_btn.addEventListener('click', function (e) {
+        submit_btn.addEventListener('click', function (e){
             //stopPropagation(e);
-            if (!validerFormulaire(e)) {
+            if (! validerFormulaire(e)){
+
                 return;
             }
             formatTableDataBeforeSend();
