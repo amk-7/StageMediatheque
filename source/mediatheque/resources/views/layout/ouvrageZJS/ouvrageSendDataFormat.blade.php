@@ -89,18 +89,21 @@
         elt_canvas.value = valeur_insert ;
         elt_canvas.className = "input_elt";
         elt_canvas.disabled = true;
+        elt_canvas.id = valeur_insert;
         let remove_elt_btn = document.createElement("button");
         remove_elt_btn.innerText = "x"
         remove_elt_btn.className = "button_remove_elt button_delete"
-        remove_elt_btn.id = valeur_insert;
+        remove_elt_btn.name=valeur_insert;
 
         remove_elt_btn.addEventListener('click', function removeAuteur(e){
             let div_auteurs = document.getElementById(id_div_liste_elt);
-            let btn = e.explicitOriginalTarget;
-            let removeBtn = btn.previousSibling; //voici le souci sur chrome
+            let btn = e.srcElement;
+            stoperPropagation(e);
+            //let removeBtn = btn.previousSibling; //voici le souci sur chrome
+            let removeBtn = document.getElementById(btn.name); //voici le souci sur chrome
+            console.log(btn);
             div_auteurs.removeChild(removeBtn);
             div_auteurs.removeChild(btn);
-            stoperPropagation(e);
         } , {capture: true});
 
         div_liste_elt.appendChild(elt_canvas);

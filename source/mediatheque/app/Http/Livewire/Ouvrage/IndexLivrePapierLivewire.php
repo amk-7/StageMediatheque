@@ -48,15 +48,12 @@ class IndexLivrePapierLivewire extends Component
         }else{
             $this->searchByParameters();
         }
-
     }
 
     public function render()
     {
-        //dd(LivresPapierService::searchByTitre($this->search));
         return view('livewire.ouvrage.index-livre-papier-livewire')->with([
             'livresPapiers' => LivresPapier::whereIn('id_livre_papier', $this->id_livre_papier)->paginate($this->par_page)
         ]);
     }
-    //'livresPapiers' => LivresPapierService::searchByTitre($this->search)->paginate(5)
 }

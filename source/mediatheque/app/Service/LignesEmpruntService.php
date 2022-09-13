@@ -7,6 +7,7 @@ use App\Models\Approvisionnement;
 use App\Models\Emprunt;
 use App\Models\LignesEmprunt;
 use App\Models\LignesRestitution;
+use App\Models\Ouvrage;
 use App\Models\OuvragesPhysique;
 use App\Models\Restitution;
 
@@ -14,17 +15,17 @@ class LignesEmpruntService
 {
     public static function enregistrerLignesEmprunt($datas, $emprunt)
     {
-        $datas = GobaleService::extractLineToData($datas);
+        $datas = GlobaleService::extractLineToData($datas);
         for ($i=0; $i<count($datas)-1; $i++){
             self::enregistrerUneLignesEmprunt($datas[$i][0], $datas[$i][1], $emprunt);
         }
     }
 
-    public static function enregistrerUneLignesEmprunt($id_ouvrage_physique, $etat_sortie, $emprunt)
+    public static function enregistrerUneLignesEmprunt($id_ouvrage, $etat_sortie, $emprunt)
     {
-        $ouvrage_physique = OuvragesPhysique::find($id_ouvrage_physique);
+        $ouvrage = Ouvrage::find($id_ouvrage);
+        $ouvrage_physique = OuvragesPhysique::all()->where('id_ouvrage', $ouvrage->id_ouvrage)->first();
         $ouvrage_physique->decrementerNombreExemplaire();
-        //dd($emprunt->id_emprunt);
         LignesEmprunt::create([
             'etat_sortie' => array_search($etat_sortie, OuvragesPhysiqueHelper::demanderEtat()),
             'disponibilite' => false,

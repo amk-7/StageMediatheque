@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Abonne;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AbonneSeeder extends Seeder
 {
@@ -21,7 +23,7 @@ class AbonneSeeder extends Seeder
             'prenom' => 'Midorima',
             'nom_utilisateur' => 'Daiki5',
             'email' => 'Alhassan.blog@gmail.com',
-            'password' => 'moprte789654',
+            'password' => Hash::make('moprte789654'),
             'contact' => '91817907',
             'photo_profil' => 'personne.jpg',
             'adresse' => array(
@@ -40,6 +42,8 @@ class AbonneSeeder extends Seeder
             'type_de_carte' => 'Identité',
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
+
+        $utilisateur->assignRole(Role::find(3));
 
     }
 }

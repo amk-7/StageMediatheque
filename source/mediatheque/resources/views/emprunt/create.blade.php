@@ -1,4 +1,4 @@
-@extends("layout.base")
+@extends("layout.template.base")
 
 @section("content")
     <div>
@@ -11,7 +11,7 @@
                     <label for="nom">Nom</label>
                     <select name="nom" id="nom_personnes"></select>
                 </div>
-                <div class="alert" >
+                <div class="alert">
                     <p id="nom_erreur" hidden>Vous devez séléctionner le nom</p>
                 </div>
                 <div>
@@ -20,7 +20,7 @@
                         <option>Séléctionner prénom</option>
                     </select>
                 </div>
-                <div class="alert" >
+                <div class="alert">
                     <p id="prenom_erreur" hidden>Vous devez séléctionner le prenom</p>
                 </div>
             </fieldset>
@@ -30,7 +30,7 @@
                     <label for="nom_abonnee">Nom</label>
                     <select name="nom_abonne" id="nom_abonnes"></select>
                 </div>
-                <div class="alert" >
+                <div class="alert">
                     <p id="nom_abonne_erreur" hidden>Vous devez séléctionner le nom</p>
                 </div>
                 <div>
@@ -49,10 +49,11 @@
                 <div>
                     <div>
                         <label for="ouvrage_cote">Cote</label>
-                        <input type="text" name="ouvrage_cote" id="ouvrage_cote" placeholder="Saisire l'idendifiant la cote de l'ouvrage" autocomplete="off">
-                        <div class="alert" >
-                            <p  id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
-                            <p  id="cote_ouvrage_not_found" hidden>Cet ouvrage n'existe pas</p>
+                        <input type="text" name="ouvrage_cote" id="ouvrage_cote"
+                               placeholder="Saisire l'idendifiant la cote de l'ouvrage" autocomplete="off">
+                        <div class="alert">
+                            <p id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
+                            <p id="cote_ouvrage_not_found" hidden>Cet ouvrage n'existe pas</p>
                         </div>
                     </div>
                 </div>
@@ -68,12 +69,12 @@
                         <label for="etat_ouvrage">Etat ouvrage</label>
                         <select name="etat_ouvrage" id="etat_ouvrage">
                             <option selected>Séléctionner etat</option>
-                           @for($i=5; $i>0; $i--)
-                               <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
+                            @for($i=5; $i>0; $i--)
+                                <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
                             @endfor
                         </select>
                     </div>
-                    <div class="alert" >
+                    <div class="alert">
                         <p id="etat_ouvrage_erreur" hidden>Le champ etat ouvrage est requis.</p>
                     </div>
                 </div>
@@ -89,7 +90,7 @@
                     <select name="duree_emprunt" id="duree_emprunt">
                         <option>Sélectionner durée</option>
                         @for($i=1; $i<=4; $i++)
-                            <option value="{{$i}}" {{ $i == 2 ? "selected" : "" }} > {{$i}} Semaines  </option>
+                            <option value="{{$i}}" {{ $i == 2 ? "selected" : "" }} > {{$i}} Semaines</option>
                         @endfor
                     </select>
                 </div>
@@ -99,7 +100,7 @@
                     <button name="ajouter_emprunt" id="ajouter_emprunt">Ajouter</button>
                     <input type="submit" id="action_emprunter" name="action_emprunt" value="Emprunter">
                 </div>
-                <div class="alert" >
+                <div class="alert">
                     <p id="emprunt_erreur" hidden>Veuillez ajouter cet d'ouvrage.</p>
                 </div>
             </div>
@@ -130,8 +131,9 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="alert" >
-                        <p id="etat_ouvrage_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire approvisionné</p>
+                    <div class="alert">
+                        <p id="etat_ouvrage_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire
+                            approvisionné</p>
                     </div>
                     <button id="btn_modifier">modifier</button>
                 </div>
@@ -175,24 +177,24 @@
 
         let numero_ligne_edite = -1;
 
-        btn_modifier.addEventListener('click', function (e){
-           stopPropagation(e);
-           modifierEtatOuvrage();
+        btn_modifier.addEventListener('click', function (e) {
+            stopPropagation(e);
+            modifierEtatOuvrage();
         });
 
-        cote_ouvrage.addEventListener('keyup', function (e){
+        cote_ouvrage.addEventListener('keyup', function (e) {
             rechercherTitreParCote();
         });
 
-        nom_personnes.addEventListener('change', function (e){
+        nom_personnes.addEventListener('change', function (e) {
             mettreListePrenomParNom(prenom_personnes, nom_personnes.value, personnels);
         });
 
-        nom_abonnes.addEventListener('change', function (e){
+        nom_abonnes.addEventListener('change', function (e) {
             mettreListePrenomParNom(prenom_abonnes, nom_abonnes.value, abonnes);
         });
 
-        function mettreListePrenomParNom(balise, elt, liste){
+        function mettreListePrenomParNom(balise, elt, liste) {
             while (balise.firstChild) {
                 balise.removeChild(balise.firstChild);
             }
@@ -200,7 +202,7 @@
             option.innerText = "Séléctionner prénom";
             balise.appendChild(option);
             for (let i = 0; i < liste.length; i++) {
-                if(elt === liste[i]['nom']){
+                if (elt === liste[i]['nom']) {
                     let option = document.createElement('option');
                     option.value = liste[i]['id'];
                     console.log(option.value)
@@ -215,7 +217,7 @@
             e.stopPropagation();
         }
 
-        function setLiteOptions(elt, liste){
+        function setLiteOptions(elt, liste) {
             let option = document.createElement('option');
             option.innerText = "Séléctionner nom";
             elt.appendChild(option);
@@ -229,9 +231,9 @@
 
         let number = 1;
 
-        btn_ajouter.addEventListener('click', function addApprovisionnement(e){
+        btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
             e.preventDefault();
-            if(validate()) {
+            if (validate()) {
                 let table_body = document.getElementById('liste_emprunt').children[1];
                 let row = document.createElement('tr');
                 let cell_number = document.createElement('td');
@@ -249,12 +251,12 @@
                 button_supprimer.innerText = "Supprimer";
                 button_supprimer.id = number - 1;
 
-                button_editer.addEventListener('click', function (e){
+                button_editer.addEventListener('click', function (e) {
                     stopPropagation(e);
                     editerLigne(button_editer.id);
                 });
 
-                button_supprimer.addEventListener('click', function (e){
+                button_supprimer.addEventListener('click', function (e) {
                     stopPropagation(e);
                     removeLine(button_supprimer.id, table_body)
                 });
@@ -280,20 +282,20 @@
             }
         });
 
-        function editerLigne(numero_ligne){
+        function editerLigne(numero_ligne) {
             let div_modal = document.getElementById("modal_editer");
             div_modal.hidden = false;
             //console.log(numero_ligne);
             numero_ligne_edite = numero_ligne;
         }
 
-        function modifierEtatOuvrage(){
+        function modifierEtatOuvrage() {
             //console.log("modification.... "+numero_ligne_edite);
             let table_body = document.getElementById('liste_emprunt').children[1];
             let etat_ouvrage_edite = document.getElementById('etat_ouvrage_edite');
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
-                if (i === parseInt(numero_ligne_edite)){
+                if (i === parseInt(numero_ligne_edite)) {
                     let line = lines[i].children;
                     line[3].innerText = etat_ouvrage_edite.value;
                     let div_modal = document.getElementById("modal_editer");
@@ -303,22 +305,22 @@
             }
         }
 
-        function removeLine(id, table_body){
+        function removeLine(id, table_body) {
             table_body.removeChild(table_body.children[id]);
         }
 
-        function validate(){
-            if (cote_ouvrage.value === ""){
+        function validate() {
+            if (cote_ouvrage.value === "") {
                 cote_erreur.hidden = false;
                 return false;
             }
 
-            if (titre.value === "Aucun ouvrage trouvé"){
+            if (titre.value === "Aucun ouvrage trouvé") {
                 cote_no_trouve.hidden = false;
                 return false;
             }
 
-            if (etat_ouvrage.value === "" || etat_ouvrage.value === "Séléctionner etat"){
+            if (etat_ouvrage.value === "" || etat_ouvrage.value === "Séléctionner etat") {
                 etat_ouvragae_erreur.hidden = false;
                 return false;
             }
@@ -326,13 +328,13 @@
             return true;
         }
 
-        function cleanInput(){
+        function cleanInput() {
             cote_ouvrage.value = "";
             titre.value = "";
             etat_ouvrage.value = "Séléctionner etat";
         }
 
-        function cleanALl(){
+        function cleanALl() {
             cleanInput();
             nom_personnes.value = "Séléctionner nom";
             prenom_personnes.value = "Séléctionner prénom";
@@ -344,14 +346,14 @@
         function rechercherTitreParCote() {
             console.log("recherche....");
             let cote = cote_ouvrage.value;
-            if (cote.substring(0, 2) === "LP"){
+            if (cote.substring(0, 2) === "LP") {
                 for (let i = 0; i < livres_papier.length; i++) {
-                    if(livres_papier[i]['cote'] === cote){
+                    if (livres_papier[i]['cote'] === cote) {
                         titre.value = livres_papier[i]['titre'];
                         return;
                     }
                 }
-            } else if (cote.substring(0, 2) === "DA"){
+            } else if (cote.substring(0, 2) === "DA") {
                 for (let i = 0; i < doc_av.length; i++) {
                     if (doc_av[i]['cote'] === cote) {
                         titre.value = doc_av[i]['titre'];
@@ -364,8 +366,7 @@
         }
 
         // format table before send
-        function formatTableDataBeforeSend()
-        {
+        function formatTableDataBeforeSend() {
             let table_body = document.getElementById('liste_emprunt').children[1];
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
@@ -374,49 +375,51 @@
             }
         }
 
-        function dernierCarracter(str){
-            return str.substring(str.length-1, str.length);
+        function dernierCarracter(str) {
+            return str.substring(str.length - 6, str.length);
         }
 
-        function getType(str){
-            if (str.substring(0, 2) === "LP"){
+        function getType(str) {
+            if (str.substring(0, 2) === "LP") {
                 return "livre_papier";
-            } return "document_av";
+            }
+            return "document_av";
         }
 
         submit_btn.addEventListener('click', function (e){
             //stopPropagation(e);
             if (! validerFormulaire(e)){
+
                 return;
             }
             formatTableDataBeforeSend();
-            if (donne.value === ""){
+            if (donne.value === "") {
                 stopPropagation(e);
             }
         });
 
-        function validerFormulaire(e){
-            if(nom_personnes.value === "Séléctionner nom" || nom_personnes.value === ""){
+        function validerFormulaire(e) {
+            if (nom_personnes.value === "Séléctionner nom" || nom_personnes.value === "") {
                 nom_erreur.hidden = false;
                 stopPropagation(e);
                 return false;
             }
-            if(prenom_personnes.value === "Séléctionner prénom" || prenom_personnes.value === ""){
+            if (prenom_personnes.value === "Séléctionner prénom" || prenom_personnes.value === "") {
                 prenom_erreur.hidden = false;
                 stopPropagation(e);
                 return false;
             }
-            if(nom_abonnes.value === "Séléctionner nom" || nom_abonnes.value === ""){
+            if (nom_abonnes.value === "Séléctionner nom" || nom_abonnes.value === "") {
                 nom_erreur.hidden = false;
                 stopPropagation(e);
                 return false;
             }
-            if(prenom_abonnes.value === "Séléctionner prénom" || prenom_abonnes.value === ""){
+            if (prenom_abonnes.value === "Séléctionner prénom" || prenom_abonnes.value === "") {
                 prenom_erreur.hidden = false;
                 stopPropagation(e);
                 return false;
             }
-            if(cote_ouvrage.value !== "" || etat_ouvrage.value !== "Séléctionner etat"){
+            if (cote_ouvrage.value !== "" || etat_ouvrage.value !== "Séléctionner etat") {
                 emprunts_erreur.hidden = false;
                 stopPropagation(e);
                 return false;

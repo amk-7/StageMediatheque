@@ -132,7 +132,7 @@ class LivrePapierSeeder extends Seeder
         $ouvrage->auteurs()->attach($auteur1->id_auteur);
 
 
-        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage('livre_papier','COTE'.$ouvrage->id_ouvrage, [$auteur1], $ouvrage);
+        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage('livre_papier','COT', [$auteur1], $ouvrage);
 
         $ouvragePhysique = OuvragesPhysique::Create([
             'nombre_exemplaire' => 3,

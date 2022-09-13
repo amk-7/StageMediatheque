@@ -1,4 +1,4 @@
-@extends("layout.base")
+@extends("layout.template.base")
 @section("livewire_styles_content")
     @livewireStyles
 @stop

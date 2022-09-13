@@ -20,34 +20,65 @@ class LivreNumeriqueSeeder extends Seeder
     public function run()
     {
         $auteur5 = Auteur::Create([
-            'nom'=>'BONI',
-            'prenom'=>'nazi',
-            'date_naissance'=> '01-07-1912',
-            'date_decces'=>'16-06-1969'
+            'nom'=>'KONDI',
+            'prenom'=>'abdoul',
         ]);
         $ouvrage5 = Ouvrage::Create([
-            'titre'=>'Crepuscule des temps anciens EPA',
-            'niveau' => '3è degré',
+            'titre'=>'Titre test 1',
+            'niveau' => '1',
             'type'=>'roman',
-            'image' => '',
-            'langue'=>'Français',
+            'image' => 'default_book_image.png',
+            'langue'=>'français',
+            'annee_apparution'=>'1998',
+            'lieu_edition'=>'LOME',
+            'mot_cle' => [
+                ""
+            ],
         ]);
 
-        $ouvrage5->auteurs()->attach($auteur5->id_auteur, [
-            'annee_apparution'=>'1994',
-            'lieu_edition'=>'DAKAR',
-            'created_at'=> Carbon::now(),
-            'updated_at'=> Carbon::now()
-        ]);
+        $ouvrage5->auteurs()->attach($auteur5->id_auteur);
 
         $ouvrageNumeri = OuvragesElectronique::create([
-            'url'=>'path',
+            'url'=>'default_book_pdf.pdf',
             'id_ouvrage'=>$ouvrage5->id_ouvrage,
         ]);
 
         LivresNumerique::Create([
-            'categorie'=> 'français',
-            'ISBN'=>'12225555',
+            'categorie'=> array(
+                "français",
+                "",
+            ),
+            'ISBN'=>'ISBNLN001',
+            'id_ouvrage_electronique'=>$ouvrageNumeri->id_ouvrage_electronique
+        ]);
+
+
+        $ouvrage5 = Ouvrage::Create([
+            'titre'=>'Titre test 2',
+            'niveau' => '3',
+            'type'=>'nouvelle',
+            'image' => 'default_book_image.png',
+            'langue'=>'anglais',
+            'annee_apparution'=>'1998',
+            'lieu_edition'=>'Kara',
+            'mot_cle' => [
+                ""
+            ],
+        ]);
+
+        $ouvrage5->auteurs()->attach($auteur5->id_auteur);
+
+        $ouvrageNumeri = OuvragesElectronique::create([
+            'url'=>'default_book_pdf.pdf',
+            'id_ouvrage'=>$ouvrage5->id_ouvrage,
+        ]);
+
+        LivresNumerique::Create([
+            'categorie'=> array(
+                "anglais",
+                "",
+            ),
+            'ISBN'=>'ISBNLN002',
             'id_ouvrage_electronique'=>$ouvrageNumeri->id_ouvrage_electronique
         ]);
     }

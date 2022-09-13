@@ -1,5 +1,4 @@
 <div class="flex flex-col items-center">
-    {{ $search }}
     <h1 class="text-3xl"> Livres papier </h1>
     <div>
         <form wire:submit.prevent="searchByAll" class="flex flex-col items-center">
@@ -76,12 +75,13 @@
                     <tr>
                         <th class="border border-solid">Numéro</th>
                         <th class="border border-solid">Titre</th>
+                        <th class="border border-solid">Année apparution</th>
                         <th class="border border-solid">Niveau</th>
                         <th class="border border-solid">Type</th>
                         <th class="border border-solid">Langue</th>
                         <th class="border border-solid">Nombre d'exemplaire</th>
                         <th class="border border-solid">Disponibilité</th>
-                        <th class="border border-solid">ISBN</th>
+                        <th class="border border-solid">cote QR code</th>
                         <th class="border border-solid">Consulter</th>
                         <th class="border border-solid">Editer</th>
                         <th class="border border-solid">Supprimer</th>
@@ -91,13 +91,23 @@
                 @foreach($livresPapiers as $livresPapier)
                     <tr class="dark:text-gray-500 text-center">
                         <td class="border border-solid" >{{ $livresPapier->id_livre_papier }}</td>
-                        <td class="border border-solid"> {{ $livresPapier->ouvragePhysique->ouvrage->titre }} </td>
-                        <td class="border border-solid"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($livresPapier->ouvragePhysique->ouvrage->niveau) }} </td>
-                        <td class="border border-solid"> {{ $livresPapier->ouvragePhysique->ouvrage->type }} </td>
-                        <td class="border border-solid"> {{ $livresPapier->ouvragePhysique->ouvrage->langue }} </td>
-                        <td class="border border-solid"> {{ $livresPapier->ouvragePhysique->nombre_exemplaire }} </td>
-                        <td class="border border-solid"> {!! \App\Helpers\OuvragesPhysiqueHelper::afficherDisponibilite($livresPapier->ouvragePhysique) !!} </td>
-                        <td class="border border-solid"> {{ $livresPapier->ISBN }} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->ouvrage->titre }} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->ouvrage->annee_apparution }} </td>
+                        <td class="border border-solid"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($livresPapier->ouvragesPhysique->ouvrage->niveau) }} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->ouvrage->type }} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->ouvrage->langue }} </td>
+                        <td class="border border-solid"> {{ $livresPapier->ouvragesPhysique->nombre_exemplaire }} </td>
+                        <td class="border border-solid"> {!! \App\Helpers\OuvragesPhysiqueHelper::afficherDisponibilite($livresPapier->ouvragesPhysique) !!} </td>
+                        <td class="border border-solid">
+                            <form>
+                                @csrf
+                               <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->generate($livresPapier->ouvragesPhysique->cote)) }}"
+                                  download="{{ 'cote'.str_replace(' ', '_', strtolower($livresPapier->ouvragesPhysique->ouvrage->titre)).'qrcode.png' }}"
+                               >
+                                   Imprimer
+                               </a>
+                            </form>
+                        </td>
                         <td class="border border-solid">
                             <form action="{{route('affichageLivrePapier', $livresPapier)}}" method="get">
                                 @csrf

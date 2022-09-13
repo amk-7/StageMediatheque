@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layout.template.base')
 
 @section('content')
 {{--dd($emprunt->lignesEmprunts)--}}
@@ -9,10 +9,12 @@
     <span class="label_show_value">{{ App\Service\GobaleService::afficherDate($emprunt->date_emprunt)}}</span>
 </label></br>
 
-<label>
-    <span class="label_title_sub_title">Date Retour:</span>
-    <span class="label_show_value">{{App\Service\GobaleService::afficherDate($emprunt->date_retour)}}</span>
-</label></br>
+
+    <label>
+        <span class="label_title_sub_title">Date Retour:</span>
+        <span class="label_show_value">{{App\Service\GlobaleService::afficherDate($emprunt->date_retour)}}</span>
+    </label></br>
+
 
 <label>
     <span class="label_title_sub_title">Personnel :</span>
@@ -58,6 +60,6 @@
         </tbody>
     </table>
     </div>
-
-
 @stop
+
+

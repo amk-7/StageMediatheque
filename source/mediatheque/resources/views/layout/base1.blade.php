@@ -11,13 +11,26 @@
     @yield("livewire_styles_content")
 </head>
 <body class="{{$body_style ?? ''}}">
-    <header>
-        @include('layout.nav_bar')
-    </header>
-    @yield('content')
-    @yield("livewire_scripts_content")
-    <footer>
-    </footer>
-    @yield("js")
+<header>
+    {{-- @include('layout.nav_bar') --}}
+</header>
+<hr>
+<div class="menu">
+    @if(in_array(Auth::user()->roles()->first()->name, ['responsable', 'bibliothecaire']))
+        @include('side_bar.personnel')
+    @endif
+</div>
+<hr>
+<div class="menu">
+    @if(in_array(Auth::user()->roles()->first()->name, ['abonne']))
+        @include('side_bar.abonne')
+    @endif
+</div>
+<hr>
+@yield('content')
+@yield("livewire_scripts_content")
+<footer>
+</footer>
+@yield("js")
 </body>
 </html>

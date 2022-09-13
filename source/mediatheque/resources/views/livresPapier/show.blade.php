@@ -1,4 +1,4 @@
-@extends("layout.ouvragePhysique.ouvragePhysiqueShow", ['ouvragePhysique' => $livrePapier->ouvragePhysique])
+@extends("layout.ouvragePhysique.ouvragePhysiqueShow", ['ouvragesPhysique' => $livrePapier->ouvragesPhysique])
 
 @section("particularite")
     <label>
