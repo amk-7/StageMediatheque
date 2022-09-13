@@ -22,14 +22,14 @@ class AbonneSeeder extends Seeder
             'nom' => 'Shintaro',
             'prenom' => 'Midorima',
             'nom_utilisateur' => 'Daiki5',
-            'numero_maison'=>'N102',
             'email' => 'Alhassan.blog@gmail.com',
             'password' => Hash::make('moprte789654'),
             'contact' => '91817907',
             'photo_profil' => 'personne.jpg',
             'adresse' => array(
                 'ville' => 'Sokode',
-                'quartier' => 'Lome'),
+                'quartier' => 'Lome',
+                'numero_maison' => 'N102'),
             'sexe' => 'Masculin'
         ]);
 

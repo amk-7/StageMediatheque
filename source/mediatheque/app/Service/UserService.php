@@ -25,7 +25,6 @@ class UserService
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'nom_utilisateur' => $request->nom_utilisateur,
-            'numero_maison' => $request->numero_maison,
             'email' => $request->email,
             'password' => $request->password,
             'contact' => $request->contact,
@@ -42,7 +41,6 @@ class UserService
         $utilisateur->nom = $request->nom;
         $utilisateur->prenom = $request->prenom;
         $utilisateur->nom_utilisateur = $request->nom_utilisateur;
-        $utilisateur->numero_maison = $request->numero_maison;
         $utilisateur->email = $request->email;
         $utilisateur->password = $request->password;
         $utilisateur->contact = $request->contact;

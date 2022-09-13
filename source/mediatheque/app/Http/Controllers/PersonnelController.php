@@ -61,13 +61,13 @@ class PersonnelController extends Controller
 
         $request['adresse'] = array(
             'ville' => $request->ville,
-            'quartier' => $request->quartier
+            'quartier' => $request->quartier,
+            'numero_maison' => $request->numero_maison,
         );
         $utilisateur = User::create([
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'nom_utilisateur' => $request->nom_utilisateur,
-            'numero_maison' => $request->numero_maison,
             'email' => $request->email,
             'password' => $request->password,
             'contact' => $request->contact,
@@ -127,7 +127,8 @@ class PersonnelController extends Controller
         ]));*/
         $request['adresse'] = array(
             'ville' => $request->ville,
-            'quartier' => $request->quartier
+            'quartier' => $request->quartier,
+            'numero_maison' => $request->numero_maison,
         );
         
         $utilisateurs = UserService::modifierUtilisateur($request, $personnel->id_utilisateur);
