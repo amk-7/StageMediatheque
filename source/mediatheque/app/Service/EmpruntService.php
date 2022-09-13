@@ -59,6 +59,16 @@ class EmpruntService
         $emprunts = Emprunt::all()->where('date_retour', '<', date('Y-m-d'));
         return $emprunts;
     }
+
+    public static function etatEmprunt(Emprunt $emprunt)
+    {
+        $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
+        if ($restitution == null)
+        {
+            return ["formulaireEnregistrementRestitution"];
+        }
+
+    }
 /*
     public static function modifierDateRetour($id_emprunt, $date_retour)
     {
