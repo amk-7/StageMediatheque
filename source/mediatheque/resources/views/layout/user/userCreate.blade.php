@@ -37,7 +37,7 @@
 
     <div class="flex flex-row m-3">
         <div class="border border-gray-200 text-center">
-            <img src="" alt="photo_profil" id="profil_object" size>
+            <img src="" alt="photo_profil" id="profil_object" width="350" height="300" size>
         </div>
         <div class="flex flex-col-reverse p-2">
             <input type="file" onchange="previewPicture(this)" name="photo_profil" id="" value=""

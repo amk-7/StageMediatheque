@@ -385,7 +385,7 @@
         }
 
         submit_btn.addEventListener('click', function (e){
-            stopPropagation(e);
+            //stopPropagation(e);
             if (! validerFormulaire(e)){
                 return;
             }

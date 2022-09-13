@@ -62,7 +62,7 @@ class EmpruntController extends Controller
             'duree_emprunt' => 'required',
 
         ]);
-
+        
         $date_retour = EmpruntService::determinerDateRetour($request->duree_emprunt);
 
         $emprunt = Emprunt::create([
@@ -73,6 +73,7 @@ class EmpruntController extends Controller
         ]);
 
         LignesEmpruntService::enregistrerLignesEmprunt($request->data, $emprunt);
+        //dd($request);
 
         return redirect()->route("listeEmprunts");
     }
@@ -86,11 +87,14 @@ class EmpruntController extends Controller
     public function show(Emprunt $emprunt)
     {
         //
+        //dd($emprunt);
         return view('emprunt.show')->with([
             'emprunt'=>$emprunt,
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
             "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
+            //"livre_papier" => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
         ]);
+        
     }
 
     /**

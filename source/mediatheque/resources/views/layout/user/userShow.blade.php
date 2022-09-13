@@ -14,7 +14,7 @@
     </label></br>
     
     <label>Photo de profil : </label></br>
-    <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}"></br>
+    <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}" width="350" height="300"></br>
     
     <label>
         <sapn class="label_title_sub_title">Nom : </sapn>
@@ -39,11 +39,6 @@
     <label>
         <span class="label_title_sub_title">Email : </span>
         <span class="label_show_value">{{$utilisateur->email}}</span>
-    </label></br>
-
-    <label>
-        <span class="label_title_sub_title">Mot de passe : </span>
-        <span class="label_show_value">{{$utilisateur->password}}</span>
     </label></br>
 
     <label>

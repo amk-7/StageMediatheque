@@ -45,7 +45,7 @@
     {{--dd($abonne->date_naissance->format('d/m/Y'))--}}
             <tr>
                 <td>{{$abonne->utilisateur->id_utilisateur}}</td>
-                <td><img src="{{--asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil--}}"></td>
+                <td><img src="{{asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil}}" width="80" height="80"></td>
                 <td>{{$abonne->utilisateur->nom}}</td>
                 <td>{{$abonne->utilisateur->prenom}}</td>
                 <td>{{$abonne->utilisateur->nom_utilisateur}}</td>
