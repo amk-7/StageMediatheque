@@ -6,9 +6,12 @@ use App\Models\LivresPapier;
 use App\Service\LivresPapierService;
 use App\Service\OuvrageService;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexLivrePapierLivewire extends Component
 {
+    use WithPagination;
+
     public $search ;
     public $id_livre_papier ;
     public $annees ;

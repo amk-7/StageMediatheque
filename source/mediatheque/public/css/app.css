@@ -707,6 +707,12 @@ select {
   left: 0px;
   right: 0px;
 }
+.top-1\/2 {
+  top: 50%;
+}
+.left-1\/2 {
+  left: 50%;
+}
 .bottom-0 {
   bottom: 0px;
 }
@@ -722,14 +728,17 @@ select {
 .z-0 {
   z-index: 0;
 }
+.z-40 {
+  z-index: 40;
+}
+.z-50 {
+  z-index: 50;
+}
 .z-10 {
   z-index: 10;
 }
 .z-20 {
   z-index: 20;
-}
-.z-50 {
-  z-index: 50;
 }
 .m-3 {
   margin: 0.75rem;
@@ -769,9 +778,6 @@ select {
 .ml-4 {
   margin-left: 1rem;
 }
-.mt-16 {
-  margin-top: 4rem;
-}
 .ml-12 {
   margin-left: 3rem;
 }
@@ -796,8 +802,8 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
-.ml-16 {
-  margin-left: 4rem;
+.mt-16 {
+  margin-top: 4rem;
 }
 .mt-12 {
   margin-top: 3rem;
@@ -838,6 +844,9 @@ select {
 .h-20 {
   height: 5rem;
 }
+.h-screen {
+  height: 100vh;
+}
 .h-32 {
   height: 8rem;
 }
@@ -856,9 +865,6 @@ select {
 .h-16 {
   height: 4rem;
 }
-.h-screen {
-  height: 100vh;
-}
 .h-10 {
   height: 2.5rem;
 }
@@ -876,6 +882,12 @@ select {
 }
 .w-full {
   width: 100%;
+}
+.w-screen {
+  width: 100vw;
+}
+.w-96 {
+  width: 24rem;
 }
 .w-64 {
   width: 16rem;
@@ -933,6 +945,14 @@ select {
 }
 .origin-top-right {
   transform-origin: top right;
+}
+.-translate-x-1\/2 {
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.-translate-y-1\/2 {
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .-translate-x-full {
   --tw-translate-x: -100%;
@@ -1009,6 +1029,16 @@ select {
 .justify-between {
   justify-content: space-between;
 }
+.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1023,11 +1053,6 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
-}
-.space-y-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -1085,12 +1110,6 @@ select {
 .rounded-l-3xl {
   border-top-left-radius: 1.5rem;
   border-bottom-left-radius: 1.5rem;
-}
-.rounded-tr-3xl {
-  border-top-right-radius: 1.5rem;
-}
-.rounded-br-3xl {
-  border-bottom-right-radius: 1.5rem;
 }
 .border {
   border-width: 1px;
@@ -1158,6 +1177,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
+.bg-gray-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
 .bg-gray-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -1189,6 +1212,9 @@ select {
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+.bg-opacity-60 {
+  --tw-bg-opacity: 0.6;
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
@@ -1229,6 +1255,10 @@ select {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 .py-4 {
   padding-top: 1rem;
@@ -1467,6 +1497,10 @@ select {
 }
 .ring-opacity-5 {
   --tw-ring-opacity: 0.05;
+}
+.drop-shadow-lg {
+  --tw-drop-shadow: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .transition {
   transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;

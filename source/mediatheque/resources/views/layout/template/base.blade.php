@@ -36,15 +36,10 @@
                 @include('side_bar.side_bar')
             @endif
         </div>
-        <div class="flex flex-col flex-1 ml-16 mt-16">
-            <div class="flex flex-1">
-                <!-- Main -->
-                <main class="flex items-center justify-center flex-1 px-4 py-8">
-                    <!-- Content -->
-                    @yield('content')
-                </main>
-            </div>
-        </div>
+        <main class="flex items-center justify-center flex-1 px-4 py-8">
+            <!-- Content -->
+            @yield('content')
+        </main>
     </div>
 
     <!-- Panels -->

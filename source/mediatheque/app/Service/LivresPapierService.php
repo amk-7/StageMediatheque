@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Models\LivresPapier;
+use App\Models\OuvragesPhysique;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -29,11 +30,15 @@ class LivresPapierService
     public static function searchByTitreMotCleISBN(String $value)
     {
         $id_ouvrages = OuvrageService::searchByTitreMotCle($value);
+        $id_ouvrage_phyiques = DB::table('ouvrages_physiques')
+                            ->WhereIn('id_ouvrage', $id_ouvrages)
+                            ->get();
 
         $id_livre_papier = DB::table('livres_papiers')
                             ->where('ISBN', 'like', $value)
-                            ->orWhereIn('id_livre_papier', $id_ouvrages)
+                            ->orWhereIn('id_ouvrage_physique', self::id_ouvrage_physique_from_array($id_ouvrage_phyiques))
                             ->get();
+
         return self::id_livre_papier_from_array($id_livre_papier);
     }
 
@@ -97,7 +102,18 @@ class LivresPapierService
             array_push($id_lps, $lp->id_livre_papier);
         }
 
-        return$id_lps;
+        return $id_lps;
+    }
+
+    public static function id_ouvrage_physique_from_array($ouvrage_physiques)
+    {
+        $id_op = array();
+        foreach ($ouvrage_physiques as $op)
+        {
+            array_push($id_op, $op->id_ouvrage_physique);
+        }
+
+        return $id_op;
     }
 
 }
