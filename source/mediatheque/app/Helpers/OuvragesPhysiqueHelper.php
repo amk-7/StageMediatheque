@@ -38,8 +38,7 @@ class OuvragesPhysiqueHelper
     public static function demanderEtat()
     {
         $etats = [
-            5 => "Bon état",
-            4 => "Acceptable",
+            4 => "Bon état",
             3 => "Mauvais état",
             2 => "Déchiré",
             1 => "Perdus"

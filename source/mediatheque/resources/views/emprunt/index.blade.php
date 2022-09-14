@@ -46,7 +46,7 @@
                             <!-- Verifier si l'emprunt à été déjà restituer -->
                             <form action="{{ route('formulaireEnregistrementRestitution', $emprunt) }}" method="get">
                                 @csrf
-                                <input type="submit" value="Restituer">
+                                <input type="submit" value="Restituer" {{ \App\Service\EmpruntService::etatEmprunt($emprunt) }}>
                             </form>
                         </td>
                         <td>

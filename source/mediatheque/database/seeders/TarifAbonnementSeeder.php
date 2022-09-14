@@ -12,13 +12,13 @@ class TarifAbonnementSeeder extends Seeder
         // formule 2 etudiant, fonctionnaire, retraité
 
         TarifAbonnement::create([
-            'designation' => "formule1",
+            'designation' => "secondaire",
             'tarif' => 200,
             'duree_validite' => 279,
         ]);
 
         TarifAbonnement::create([
-            'designation' => "formule2",
+            'designation' => "supérieure",
             'tarif' => 500,
             'duree_validite' => 279,
         ]);

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Registrations extends Model
+class Registration extends Model
 {
     use HasFactory;
     protected $fillable = ['date_debut', 'date_fin', 'id_abonne', 'id_tarif_abonnement'];
-    protected $primaryKey = 'id_registraton';
+    protected $primaryKey = 'id_registration';
     protected $dates = ['date_debut', 'date_fin'];
 
     public function flooz()
@@ -24,7 +24,7 @@ class Registrations extends Model
 
     public function liquide()
     {
-        return $this->hasOne('App\Models\Liquide', 'id_liquide');
+        return $this->hasOne('App\Models\Liquide', 'id_registration');
     }
 
     public function abonne()

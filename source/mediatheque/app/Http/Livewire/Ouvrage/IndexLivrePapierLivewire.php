@@ -43,6 +43,8 @@ class IndexLivrePapierLivewire extends Component
 
     public function searchByAll()
     {
+        //dd("search...");
+
         if (! empty($this->search)){
             $this->id_livre_papier = LivresPapierService::searchByTitreMotCleISBN($this->search);
         }else{
