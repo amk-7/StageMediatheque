@@ -36,6 +36,7 @@ class LignesEmpruntService
 
     public static function getAllLignesEmpruntByEmprunt(Emprunt $emprunt)
     {
+        //dd("Re");
         $lignes_emprunt = [];
         $lignes_emprunt_by_emprunt = LignesEmprunt::all()->where('id_emprunt', $emprunt->id_emprunt)->sortBy('id_emprunt');
         $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
@@ -59,6 +60,7 @@ class LignesEmpruntService
             ];
             array_push($lignes_emprunt, $fullLine);
         }
+       // dd("======================================");
         return $lignes_emprunt;
     }
 

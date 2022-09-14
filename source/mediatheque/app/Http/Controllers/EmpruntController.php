@@ -65,8 +65,6 @@ class EmpruntController extends Controller
 
         ]);
 
-        
-        
         $date_retour = EmpruntService::determinerDateRetour($request->duree_emprunt);
 
         $emprunt = Emprunt::create([
@@ -87,7 +85,7 @@ class EmpruntController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Emprunt  $emprunt
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Emprunt $emprunt)
     {
@@ -97,16 +95,16 @@ class EmpruntController extends Controller
             'emprunt'=>$emprunt,
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
             "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
-            //"livre_papier" => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
+            "livre_papier" => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
         ]);
-        
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Emprunt  $emprunt
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Emprunt $emprunt)
     {

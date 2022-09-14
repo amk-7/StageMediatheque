@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LivresNumerique;
 use App\Models\LivresPapier;
+use App\Models\Ouvrage;
 use App\Models\OuvragesElectronique;
 use App\Models\OuvragesPhysique;
 use App\Service\AuteurService;
@@ -186,5 +187,10 @@ class LivreNumeriqueController extends Controller
         $id_ouvrage = OuvragesElectronique::all()->where('id_ouvrage_electronique', $livresNumerique->id_ouvrage_electronique)->first()->id_ouvrage;
         OuvrageService::supprimer_ouvrage($id_ouvrage);
         return redirect()->route('listeLivresNumerique');
+    }
+
+    public function readPdf(Ouvrage $ouvrage)
+    {
+        return view('livresNumerique.lire', compact('ouvrage'));
     }
 }

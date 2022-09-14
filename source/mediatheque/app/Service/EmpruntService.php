@@ -45,6 +45,16 @@ class EmpruntService
         return $date_retour;
     }
 
+    public static function updateDateRetour(String $duree_emprunt, $date)
+    {
+        $nbjour = (integer) $duree_emprunt;
+        $nbjour = ($nbjour * 7)-1;
+        date_add($date,date_interval_create_from_date_string("$nbjour days"));
+        $date_retour = date_format($date, 'Y-m-d');
+
+        return $date_retour;
+    }
+
     public static function determinerRouteRestitutionEmprunt($emprunt)
     {
         $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
@@ -65,9 +75,9 @@ class EmpruntService
         $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
         if ($restitution == null)
         {
-            return ["formulaireEnregistrementRestitution"];
+            return "";
         }
-
+        return "disabled";
     }
 /*
     public static function modifierDateRetour($id_emprunt, $date_retour)

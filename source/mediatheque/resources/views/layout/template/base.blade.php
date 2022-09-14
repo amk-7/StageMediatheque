@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Styles -->
-    <!--link rel="stylesheet" href="{{-- asset('css/app.css') --}}"-->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @yield("livewire_styles_content")
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -19,7 +20,7 @@
 <body>
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
     <!-- nav bar -->
-    {{--@include('layouts.navigation')--}}
+    @include('layouts.navigation')
     <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
         <div
@@ -29,12 +30,13 @@
             Chargement.....
         </div>
         <!-- Sidebar -->
-        @if("" == "welcome")
-            <div class="flex flex-shrink-0 transition-all">
+
+        <div class="flex flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" hidden>
+            @if(""!="")
                 @include('side_bar.side_bar')
-            </div>
-        @endif
-        <div class="flex flex-col flex-1">
+            @endif
+        </div>
+        <div class="flex flex-col flex-1 ml-16 mt-16">
             <div class="flex flex-1">
                 <!-- Main -->
                 <main class="flex items-center justify-center flex-1 px-4 py-8">
@@ -88,6 +90,9 @@
         }
     }
 </script>
-@yield('js')
+
+@yield("livewire_scripts_content")
+@yield("js")
+
 </body>
 </html>
