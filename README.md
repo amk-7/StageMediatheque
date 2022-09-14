@@ -1,2 +1,2 @@
-# Stage_Mediatheque
+# StageMediatheque
 Pour le stage à la Médiathèque
