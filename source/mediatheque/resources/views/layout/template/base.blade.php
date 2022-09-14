@@ -90,7 +90,9 @@
         }
     }
 </script>
+
 @yield("livewire_scripts_content")
 @yield("js")
+
 </body>
 </html>

@@ -24,11 +24,11 @@
             <th>Nom</th>
             <th>Prenom</th>
             <th>Nom d'utilisateur</th>
-            <th>Numero de maison</th>
             <th>Email</th>
             <th>Contact</th>
             <th>Ville</th>
             <th>Quartier</th>
+            <th>Numero de maison</th>
             <th>Sexe</th>
             <th> Statut </th>
             <th> Modifier </th>
@@ -38,15 +38,15 @@
     @forelse ($listePersonnels as $personnel)
             <tr>
                 <td>{{$personnel->utilisateur->id_utilisateur}}</td>
-                <td><img src="{{--asset('storage/images/image_utilisateur').'/'.$personnel->utilisateur->photo_profil--}}"></td>
+                <td><img src="{{asset('storage/images/image_utilisateur').'/'.$personnel->utilisateur->photo_profil}}" width="80" height="80"></td>
                 <td>{{$personnel->utilisateur->nom}}</td>
                 <td>{{$personnel->utilisateur->prenom}}</td>
                 <td>{{$personnel->utilisateur->nom_utilisateur}}</td>
-                <td>{{$personnel->utilisateur->numero_maison}}</td>
                 <td>{{$personnel->utilisateur->email}}</td>
                 <td>{{$personnel->utilisateur->contact}}</td>
                 <td>{{$personnel->utilisateur->adresse["ville"]}}</td>
                 <td>{{$personnel->utilisateur->adresse["quartier"]}}</td>
+                <td>{{$personnel->utilisateur->adresse["numero_maison"]}}</td>
                 <td>{{$personnel->utilisateur->sexe}}</td>
                 <td>{{$personnel->statut}}</td>
                 <td>

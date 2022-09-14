@@ -12,7 +12,6 @@ class Abonne extends Model
     protected $primaryKey = 'id_abonne';
     protected $dates = ['date_naissance'];
 
-
     public function utilisateur(){
         return $this->belongsTo('App\Models\User', 'id_utilisateur');
     }
@@ -35,5 +34,21 @@ class Abonne extends Model
 
     public function telechargements(){
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
+    }
+
+   
+
+    public function empruntsEnCours()
+    {
+        $empuntNonRestitue = array();
+        $listesEmprunts = $this->emprunts;
+        foreach ($listesEmprunts as $emprunt) {
+            if ($emprunt->restitution == null) {
+                array_push($empuntNonRestitue, $emprunt);
+            }
+        }
+        //dd($empuntNonRestitue);
+
+        return $empuntNonRestitue;
     }
 }

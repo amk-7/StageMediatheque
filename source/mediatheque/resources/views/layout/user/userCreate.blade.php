@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layout.template.base')
 
 @section('content')
 
@@ -44,14 +44,7 @@
                 accept="image/jpg, image/jpeg, image/png, image/jpeg"><br>
         </div>
     </div>
-
-    <div>
-        <label class="label" for="numero_maison">Numero de maison</label>
-            <input type="text" id="numero_maison" value="{{old('numero_maison')}}" name="numero_maison" class="input @error('numero_maison') is-invalid @enderror">
-            @error('numero_maison')
-                <div class="alert">{{ $message }}</div>
-            @enderror
-
+        
     <div>
         <label class="label" for="email">Email</label>
             <input type="text" id="email" value="{{old('email')}}" name="email" class="input">
@@ -87,6 +80,10 @@
                 @error('quartier')
                     <div class="alert">{{ $message }}</div>
                 @enderror
+
+                <label class="label" for="numero_maison">Numero de maison</label>
+                <input type="text" id="numero_maison" value="{{old('numero_maison')}}" name="numero_maison" class="input">
+            
             </div>
     </div>
 
