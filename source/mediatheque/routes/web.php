@@ -6,7 +6,6 @@ use App\Http\Controllers\DocumentAudioVisuelController;
 use App\Http\Controllers\DocumentAudioVisuelElectroniqueController;
 use App\Http\Controllers\LivreNumeriqueController;
 use App\Http\Controllers\LivresPapierController;
-use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RestitutionController;
 use Illuminate\Support\Facades\Route;
 
@@ -68,14 +67,6 @@ Route::middleware('auth')->group(function(){
     Route::get('formulaire_Reservation', 'App\Http\Controllers\ReservationController@create')->name('createReservation');
     Route::post('enregistrement_reservation', 'App\Http\Controllers\ReservationController@store')->name('storeReservation');
 
-// Path: ClassificationDeweyCentaine routes/web.php
-    Route::get('liste_des_classification_dewey_centaines', 'App\Http\Controllers\ClassificationDeweyCentaineController@index')->name('listeClassificationDeweyCentaines');
-    Route::get('affiche_classification_dewey_centaine', 'App\Http\Controllers\ClassificationDeweyCentaineController@show')->name('showClassificationDeweyCentaine');
-    Route::get('formulaire_edition_des_classification_dewey_centaines', 'App\Http\Controllers\ClassificationDeweyCentaineController@edit')->name('editClassificationDeweyCentaine');
-    Route::put('mise_a_jour_des_classification_dewey_centaines', 'App\Http\Controllers\ClassificationDeweyCentaineController@update')->name('updateClassificationDeweyCentaine');
-    Route::delete('suppression_des_classification_dewey_centaines', 'App\Http\Controllers\ClassificationDeweyCentaineController@destroy')->name('destroyClassificationDeweyCentaine');
-    Route::get('formulaire_ClassificationDeweyCentaine', 'App\Http\Controllers\ClassificationDeweyCentaineController@create')->name('createClassificationDeweyCentaine');
-    Route::post('enregistrement_classification_dewey_centaine', 'App\Http\Controllers\ClassificationDeweyCentaineController@store')->name('storeClassificationDeweyCentaine');
 
 // Path: TarifAbonnement routes/web.php
     Route::get('liste_des_tarif_abonnements', 'App\Http\Controllers\TarifAbonnementController@index')->name('listeTarifAbonnements');
@@ -85,15 +76,6 @@ Route::middleware('auth')->group(function(){
     Route::delete('suppression_des_tarif_abonnements', 'App\Http\Controllers\TarifAbonnementController@destroy')->name('destroyTarifAbonnement');
     Route::get('formulaire_TarifAbonnement', 'App\Http\Controllers\TarifAbonnementController@create')->name('createTarifAbonnement');
     Route::post('enregistrement_tarif_abonnement', 'App\Http\Controllers\TarifAbonnementController@store')->name('storeTarifAbonnement');
-
-// Path: Registration routes/web.php
-    Route::get('liste_des_registrations', 'App\Http\Controllers\RegistrationController@index')->name('listeRegistrations');
-    Route::get('affiche_registration', 'App\Http\Controllers\RegistrationController@show')->name('showRegistration');
-    Route::get('formulaire_edition_des_registrations/{registration}/edition', 'App\Http\Controllers\RegistrationController@edit')->name('editRegistration');
-    Route::put('mise_a_jour_des_registrations', 'App\Http\Controllers\RegistrationController@update')->name('updateRegistration');
-    Route::delete('suppression_des_registrations', 'App\Http\Controllers\RegistrationController@destroy')->name('destroyRegistration');
-    Route::get('formulaire_Registration', 'App\Http\Controllers\RegistrationController@create')->name('createRegistration');
-    Route::post('enregistrement_registration', 'App\Http\Controllers\RegistrationController@store')->name('storeRegistration');
 
 // Path: Tmoney routes/web.php
     Route::get('liste_des_tmoney', 'App\Http\Controllers\TmoneyController@index')->name('listeTmoney');
@@ -121,14 +103,6 @@ Route::middleware('auth')->group(function(){
     Route::delete('suppression_des_liquides', 'App\Http\Controllers\LiquideController@destroy')->name('destroyLiquide');
     Route::get('formulaire_liquide', 'App\Http\Controllers\LiquideController@create')->name('createLiquide');
     Route::post('enregistrement_liquide', 'App\Http\Controllers\LiquideController@store')->name('storeLiquide');
-
-    Route::get('liste_des_registrations', [RegistrationController::class, 'index'])->name('listeResgistration');
-    Route::get('formulaire_enregistrement_registration/{abonnee}', [RegistrationController::class, 'create'])->name('formulaireEnregistrementResgistration');
-    Route::post('enregistrement_registration', [RegistrationController::class, 'store'])->name('enregistementResgistration');
-    Route::get('affichage_registration/{registration}', [RegistrationController::class, 'show'])->name('affichageLivreNumerique');
-    Route::get('formulaire_modification_registration/{registration}/edite', [RegistrationController::class, 'edit'])->name('formulaireModificationResgistration');
-    Route::put('modification_registration/{registration}', [RegistrationController::class, 'update'])->name('modificationResgistration');
-    Route::delete('suppression_registration/{registration}', [RegistrationController::class, 'destroy'])->name('suppressionResgistration');
 
     Route::get('formulaire_enregistrement_livre_numerique', [LivreNumeriqueController::class, 'create'])->name('formulaireEnregistrementLivreNumerique');
     Route::post('enregistrement_livre_numerique', [LivreNumeriqueController::class, 'store'])->name('enregistementLivreNumerique');
