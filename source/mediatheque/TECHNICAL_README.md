@@ -1,5 +1,5 @@
 ## Creation du projet Laravel mediatheque
-`composer create-project laravel/laravel mediatheque --prefer-dist "8.*"`
+`composer create-project laravel/laravel mediatheque --prefer-dist "8.*" `
 
 ## Installation de debugbar
     Pour installer le debugbar ou même un projet laravel il faut s'assurer que tous 
@@ -70,3 +70,7 @@
 ## Installation du module de qr-code
 
     composer require simplesoftwareio/simple-qrcode "~4"
+    
+## Authentification.
+composer require laravel/breeze --dev 
+    
