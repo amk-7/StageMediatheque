@@ -4,7 +4,7 @@
         @include('livresPapier.shareSearchBarLivrePapier')
     </div>
     @if(!empty($livresPapiers ?? "") && $livresPapiers->count())
-        @if(""=="welcome")
+        @if("" != "")
             <div class="m-3">
                 <div class="flex flex-row content-center">
                     <td>
@@ -107,6 +107,7 @@
                    </div>
                @endforeach
            </div>
+            {!! $livresPapiers->links() !!}
         @endif
     @else
         <h3>Il n'y a aucun ouvrage.</h3>

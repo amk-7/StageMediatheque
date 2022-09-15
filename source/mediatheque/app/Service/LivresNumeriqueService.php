@@ -13,6 +13,7 @@ class LivresNumeriqueService
     {
         $id_ouvrages = OuvrageService::searchByParamaters($annee_debut, $annee_fin, $langue, $niveau, $type);
         $id_ouvrage_electroniques = OuvragesElectroniqueService::getIDOuvrageElectroniquesByIDOuvrage($id_ouvrages);
+        //dd($id_ouvrages);
         $id_livres_numerique = DB::table('livres_numeriques')
             ->whereJsonContains('categorie', [strtolower($dommaine)])
             ->whereIn('id_livre_numerique', $id_ouvrage_electroniques)

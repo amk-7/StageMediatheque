@@ -1,12 +1,12 @@
 @extends("layout.template.base")
 
 @section("content")
-    <div>
-        <h1>Restitution de l'emprunt N° EMP{{ $restitution->emprunt->id_emprunt }}</h1>
-        <h4>Date : </h4>
+    <div class="flex flex-col items-center space-y-3">
+        <h1 class="label_title">Restitution de l'emprunt N° EMP{{ $restitution->emprunt->id_emprunt }}</h1>
+        <h4 class="label_title_sub_title">Date : {{ $restitution->date_restitution }} </h4>
         <form action="{{route('modificationRestitution', $restitution)}}" method="post">
             @csrf
-            <fieldset>
+            <fieldset class="fieldset_border">
                 <legend>Personnel</legend>
                 <div>
                     <label>
@@ -21,7 +21,7 @@
                     </label>
                 </div>
             </fieldset>
-            <fieldset>
+            <fieldset class="fieldset_border">
                 <legend>Abonné</legend>
                 <div>
                     <label>
@@ -36,44 +36,46 @@
                     </label>
                 </div>
             </fieldset>
-            <fieldset>
+            <fieldset class="fieldset_border flex flex-col items-center space-y-4">
                 <legend>Ouvrages emprunté</legend>
                 <div>
-                    <input type="text" name="data" id="data">
+                    <input type="text" name="data" id="data" class="hidden" hidden>
                     <table border="1" id="liste_restitution">
                         <thead>
                         <tr>
-                            <th>N°</th>
-                            <th>Cote</th>
-                            <th>Titre ouvrage</th>
-                            <th>Etat sortie</th>
-                            <th>Etat entrée</th>
-                            <th>Restituer</th>
+                            <th class="fieldset_border">N°</th>
+                            <th class="fieldset_border">Cote</th>
+                            <th class="fieldset_border">Titre ouvrage</th>
+                            <th class="fieldset_border">Etat sortie</th>
+                            <th class="fieldset_border">Etat entrée</th>
+                            <th class="fieldset_border">Restituer</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
                 </div>
                 <div>
-                    <input type="submit" id="action_restituer" name="action_restituer" value="Restituer">
+                    <input type="submit" id="action_restituer" class="button button_primary" name="action_restituer" value="Restituer">
                 </div>
             </fieldset>
         </form>
-        <div class="modal_editer" id="modal_editer" hidden>
-            <div>
+        <!-- Overlay element -->
+        <div id="overlay" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
+        <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
+            <div class="flex flex-col items-center space-y-4">
                 <div>
                     <label>Etat entree</label>
                     <select name="" id="etat_entree_ouvrage_edite">
                         <option selected>Séléctionner etat</option>
-                        @for($i=5; $i>0; $i--)
+                        @for($i=4; $i>0; $i--)
                             <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
                         @endfor
                     </select>
                 </div>
                 <div class="alert">
-                    <p id="etat_ouvrage_modif_erreur" hidden>Vous l'état de retour de l'ouvrage .</p>
+                    <p id="etat_ouvrage_modif_erreur" hidden>Vous devez renseigner l'état de l'ouvrage restituer .</p>
                 </div>
-                <button id="btn_modifier">modifier</button>
+                <button id="btn_modifier" class="button button_primary">modifier</button>
             </div>
         </div>
     </div>
@@ -82,6 +84,7 @@
     <script type="text/javascript" async>
 
         let number = 1;
+        let restitution = {!! $restitution !!};
         let id_emprunt = {!! $restitution->emprunt->id_emprunt !!};
         let id_personnel = {{ $restitution->emprunt->personnel->id_personnel }};
         let id_abonne = {{ $restitution->emprunt->abonne->id_abonne }};
@@ -90,6 +93,16 @@
         let submit_btn = document.getElementById('action_restituer');
         let btn_modifier = document.getElementById('btn_modifier');
 
+        let overlay = document.getElementById('overlay');
+        let box_erreur = document.getElementById('erreur_msg_box');
+        let msg_value = document.getElementById('erreur_msg_value');
+        let div_modal = document.getElementById("modal_editer");
+
+
+        if(restitution['etat']){
+            submit_btn.hidden = true;
+            submit_btn.classList += "hidden";
+        }
         cleanALl();
 
         donne.value = `${id_emprunt},${id_personnel},${id_abonne};`;
@@ -97,14 +110,14 @@
         let numero_ligne_edite = -1;
 
         btn_modifier.addEventListener('click', function (e) {
-            stopPropagation(e);
+            stopPropagation();
             modifierEtatEntreeOuvrage();
         });
 
 
-        function stopPropagation(e) {
-            e.preventDefault();
-            e.stopPropagation();
+        function stopPropagation() {
+            event.preventDefault();
+            event.stopPropagation();
         }
 
         function mettreLignesEmprunt() {
@@ -143,6 +156,12 @@
             cell_etat_sortie.innerText = etat_sortie;
 
             number++;
+            cell_number.classList = "fieldset_border"
+            cell_cote.classList = "fieldset_border"
+            cell_ouvrage.classList = "fieldset_border"
+            cell_etat_sortie.classList = "fieldset_border"
+            cell_etat_entree.classList = "fieldset_border"
+            cell_restituer.classList = "fieldset_border"
 
             row.appendChild(cell_number);
             row.appendChild(cell_cote);
@@ -155,12 +174,14 @@
 
         function editerLigne(numero_ligne) {
             let checkbox = document.getElementById(numero_ligne);
-            let div_modal = document.getElementById("modal_editer");
+
             if (checkbox.checked) {
-                div_modal.hidden = false;
+                div_modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
                 numero_ligne_edite = numero_ligne;
             } else {
-                div_modal.hidden = true;
+                /*div_modal.classList.add('hidden');
+                overlay.classList.add('hidden');*/
                 let table_body = document.getElementById('liste_restitution').children[1];
                 let etat_entree_ouvrage_edite = document.getElementById('etat_entree_ouvrage_edite');
                 let line = table_body.children[numero_ligne_edite];
@@ -170,14 +191,19 @@
         }
 
         function modifierEtatEntreeOuvrage() {
-            //console.log("modification.... "+numero_ligne_edite);
             let table_body = document.getElementById('liste_restitution').children[1];
             let etat_entree_ouvrage_edite = document.getElementById('etat_entree_ouvrage_edite');
+            if (etat_entree_ouvrage_edite.value === "Séléctionner etat"){
+                let erreur = document.getElementById("etat_ouvrage_modif_erreur");
+                erreur.hidden = false;
+                return ;
+            }
             let line = table_body.children[numero_ligne_edite];
+            console.log(line);
             let cellules = line.children;
             cellules[4].innerText = etat_entree_ouvrage_edite.value;
-            let div_modal = document.getElementById("modal_editer");
-            div_modal.hidden = true;
+            div_modal.classList.add('hidden');
+            overlay.classList.add('hidden');
             etat_entree_ouvrage_edite.value = "Séléctionner etat";
         }
 
