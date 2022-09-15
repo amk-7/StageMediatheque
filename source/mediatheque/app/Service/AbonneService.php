@@ -20,6 +20,7 @@ class AbonneService
                 'id'=>$p->id_abonne,
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
+                //'estEligibilite'=>count($p->empruntsEnCours) == 0 ? 'true' : 'false',
             );
             array_push($abonnes, $personne);
         }
