@@ -42,6 +42,12 @@
                 <div class="alert">
                     <p id="prenom_abonne_erreur" hidden>Vous devez séléctionner le prenom</p>
                 </div>
+                <div class="alert">
+                    <p id="abonne_non_eligible" hidden>L'abonné a déjà des emprunts en cours</p>
+                </div>
+                <div class="alert">
+                    <p id="nombre_emprunt" hidden>Vous avez atteint le nombre maximum d'emprunt</p>
+                </div>
             </fieldset>
 
             <fieldset>
@@ -127,7 +133,7 @@
                         <select name="" id="etat_ouvrage_edite">
                             <option selected>Séléctionner etat</option>
                             @for($i=5; $i>0; $i--)
-                                <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
+                                
                             @endfor
                         </select>
                     </div>
@@ -148,7 +154,7 @@
         let abonnes = {!! $abonnes !!};
         let livres_papier = {!! $livre_papier !!};
         let doc_av = {!! $document_audio_visuel !!};
-
+        console.log(abonnes);
         let nom_personnes = document.getElementById('nom_personnes');
         let prenom_personnes = document.getElementById('prenom_personnes');
         let nom_abonnes = document.getElementById('nom_abonnes');
@@ -163,12 +169,17 @@
 
         //let btn_modifier = document.getElementById('btn_modifier');
 
+        let nom_abonne_erreur = document.getElementById('nom_abonne_erreur');
+        let prenom_abonne_erreur = document.getElementById('prenom_abonne_erreur');
         let nom_erreur = document.getElementById('nom_erreur');
         let prenom_erreur = document.getElementById('prenom_erreur');
         let cote_erreur = document.getElementById('cote_ouvrage_erreur');
         let cote_no_trouve = document.getElementById('cote_ouvrage_not_found');
         let etat_ouvragae_erreur = document.getElementById('etat_ouvrage_erreur');
         let emprunts_erreur = document.getElementById('emprunt_erreur');
+        let non_eligble_erreur = document.getElementById('abonne_non_eligible');
+        let nombre_emprunt_erreur = document.getElementById('nombre_emprunt');
+        console.log(nombre_emprunt_erreur);
 
 
         setLiteOptions(nom_personnes, personnels);
@@ -212,9 +223,9 @@
             }
         }
 
-        function stopPropagation(e) {
-            e.preventDefault();
-            e.stopPropagation();
+        function stopPropagation() {
+            event.preventDefault();
+            event.stopPropagation();
         }
 
         function setLiteOptions(elt, liste) {
@@ -232,7 +243,30 @@
         let number = 1;
 
         btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
+            console.log("::::::::Add:::::::::");
+            if(validateUser()){
+                console.log("::::::::Validate::::::::");
+                let id_abonne = prenom_abonnes.value;
+                console.log(verfierSiAbonneEstEligible(id_abonne));
+                if(verfierSiAbonneEstEligible(id_abonne)=="false"){
+                    //console.log("abonne non eligible");
+                    non_eligble_erreur.hidden = false;
+                    stopPropagation();
+                    return;
+                }               
+            }
+            /*if(verifierNombreMaxEmprunt(prenom_abonnes.value)){
+                    console.log("AAAAAAAAAAAAAAAA");
+                    nombre_emprunt_erreur.hidden = false;
+                    stopPropagation();
+                    return;
+                }*/
+            non_eligble_erreur.hidden = true;
+            //nombre_emprunt_erreur.hidden = true;
+
+            //console.log("Salut");
             e.preventDefault();
+            //return;
             if (validate()) {
                 let table_body = document.getElementById('liste_emprunt').children[1];
                 let row = document.createElement('tr');
@@ -252,7 +286,7 @@
                 button_supprimer.id = number - 1;
 
                 button_editer.addEventListener('click', function (e) {
-                    stopPropagation(e);
+                    stopPropagation();
                     editerLigne(button_editer.id);
                 });
 
@@ -387,47 +421,62 @@
         }
 
         submit_btn.addEventListener('click', function (e){
-            //stopPropagation(e);
             if (! validerFormulaire(e)){
+                stopPropagation();
 
-                return;
+                return ;
             }
             formatTableDataBeforeSend();
             if (donne.value === "") {
-                stopPropagation(e);
+                stopPropagation();
             }
         });
 
-        function validerFormulaire(e) {
+        function validateUser(){
             if (nom_personnes.value === "Séléctionner nom" || nom_personnes.value === "") {
                 nom_erreur.hidden = false;
-                stopPropagation(e);
+                stopPropagation();
                 return false;
             }
+            nom_erreur.hidden = true;
+
             if (prenom_personnes.value === "Séléctionner prénom" || prenom_personnes.value === "") {
                 prenom_erreur.hidden = false;
-                stopPropagation(e);
+                stopPropagation();
                 return false;
             }
+            prenom_erreur.hidden = true;
+
             if (nom_abonnes.value === "Séléctionner nom" || nom_abonnes.value === "") {
-                nom_erreur.hidden = false;
-                stopPropagation(e);
+                nom_abonne_erreur.hidden = false;
+                stopPropagation();
                 return false;
             }
+            nom_abonne_erreur.hidden = true;
+
             if (prenom_abonnes.value === "Séléctionner prénom" || prenom_abonnes.value === "") {
-                prenom_erreur.hidden = false;
-                stopPropagation(e);
+                prenom_abonne_erreur.hidden = false;
+                stopPropagation();
+                return false;
+            }
+            prenom_abonne_erreur.hidden = true;
+
+            return true ;
+        }
+
+        function validerFormulaire(e) {
+            if(! validateUser()){
                 return false;
             }
             if (cote_ouvrage.value !== "" || etat_ouvrage.value !== "Séléctionner etat") {
                 emprunts_erreur.hidden = false;
-                stopPropagation(e);
+                stopPropagation();
                 return false;
             }
             return true;
         }
 
-        function verifierEmpruntEnCours(id_abonne) {
+        /*function verifierEmpruntEnCours(id_abonne) {
             let emprunts = [];
             for (let i = 0; i < emprunts_en_cours.length; i++) {
                 if (emprunts_en_cours[i]['id_abonne'] === id_abonne) {
@@ -435,6 +484,38 @@
                 }
             }
             return emprunts;
+        }*/
+        //verfierSiAbonneEstEligible(2);
+        function verfierSiAbonneEstEligible(id_abonne) 
+        {
+            //abonnes.forEach(element => console.log(element));
+            for(let i = 0; i < abonnes.length; i++)
+            {
+                //console.log(abonnes[i]['id']);
+                if(abonnes[i]['id'] == id_abonne)
+                {
+                    console.log(abonnes[i]['estEligible']);
+                    return abonnes[i]['estEligible'];
+                }
+                
+            }
+            //console.log(abonnes); 
+            
+        }
+
+        verifierNombreMaxEmprunt(1);
+        function verifierNombreMaxEmprunt(id_abonne) {
+            for(let i = 0; i < abonnes.length; i++)
+            {
+                if(abonnes[i]['id'] == id_abonne)
+                {
+                    if(abonnes[i]['nombre_emprunt'] >= 5)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+            }
         }
         
     </script>
