@@ -1,45 +1,33 @@
 <?php ?>
 
-<style>
-    td, th {border: 2px solid black;}
-
-    caption {background-color: deepskyblue;}
-
-    label {background-color: red;}
-
-    th {background-color: chartreuse;}
-
-    td {background-color: burlywood;}
-</style>
-
 <h1 class="label_title">Liste des Abonnes</h1>
 <form method="GET" action="{{route('createAbonne')}}">
     <button class="select_btn" type="Submit">Ajouter un Abonne</button>
 </form>
 <div>
-    <table>
+    <table class="w-full text-sm text-left text-dark">
         <caption class="button_show">Informations sur les Abonnes</caption>
         <tr>
-            <th>Identifiant de l'utilisateur</th>
-            <th>Photo de profil</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Nom d'utilisateur</th>
-            <th>Email</th>
-            <th>Contact</th>
-            <th>Ville</th>
-            <th>Quartier</th>
-            <th>Numero de maison</th>
-            <th>Sexe</th>
-            <th>Date Naissance</th>
-            <th>Niveau Etude</th>
-            <th>Profession</th>
-            <th>Contact a prevenir</th>
-            <th>Numero de Carte</th>
-            <th>Type de Carte</th>
-            <th>Mofier</th>
-            <th>Afficher</th>
-            <th>Supprimer</th>
+            <th class="fieldset_border">Identifiant de l'utilisateur</th>
+            <th class="fieldset_border">Photo de profil</th>
+            <th class="fieldset_border">Nom</th>
+            <th class="fieldset_border">Prenom</th>
+            <th class="fieldset_border">Nom d'utilisateur</th>
+            <th class="fieldset_border">Email</th>
+            <th class="fieldset_border">Contact</th>
+            <th class="fieldset_border">Ville</th>
+            <th class="fieldset_border">Quartier</th>
+            <th class="fieldset_border">Numero de maison</th>
+            <th class="fieldset_border">Sexe</th>
+            <th class="fieldset_border">Date Naissance</th>
+            <th class="fieldset_border">Niveau Etude</th>
+            <th class="fieldset_border">Profession</th>
+            <th class="fieldset_border">Contact a prevenir</th>
+            <th class="fieldset_border">Numero de Carte</th>
+            <th class="fieldset_border">Type de Carte</th>
+            <th class="fieldset_border">Mofier</th>
+            <th class="fieldset_border">Afficher</th>
+            <th class="fieldset_border">Supprimer</th>
         </tr>
     @forelse ($listeAbonnes as $abonne)
     {{--dd($abonne->date_naissance->format('d/m/Y'))--}}
