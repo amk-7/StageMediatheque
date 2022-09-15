@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center">
+<div class="flex flex-col justify-center items-center m-auto">
     {{-- In work, do what you enjoy. --}}
     <h1 class="text-3xl"> Livres Numerique </h1>
     <div>
@@ -14,16 +14,14 @@
                     </form>
                 </td>
                 <div class="flex flex-row">
-                    <select wire:model="par_page" id="par_page" class="select_btn">
-                        @for($i = 5; $i <= 25; $i = $i+5)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
+                    <!--select wire:model="par_page" id="par_page" class="select_btn">
+
                     </select>
-                    <label for="par_page">par page</label>
+                    <label for="par_page">par page</label-->
                 </div>
             </div>
-            <table class="w-full text-sm text-left text-dark">
-                <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
+            <table class="">
+                <thead class="text-xs bg-white uppercase bg-gray-70 dark:bg-gray-300 dark:text-gray-500 text-center">
                 <tr>
                     <th class="fieldset_border">Numéro</th>
                     <th class="fieldset_border">Titre</th>

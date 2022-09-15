@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.thead {
+    @apply text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center;
+}
+
 .fieldset_border {
-    @apply border border-gray-600 p-3;
+    @apply border border-gray-600 p-2;
 }
 
 .modal_box {

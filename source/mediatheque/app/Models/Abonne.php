@@ -29,14 +29,12 @@ class Abonne extends Model
     }
 
     public function emprunts(){
-        return $this->hasMany('App\Models\Emprunt', 'id_emprunt');
+        return $this->hasMany('App\Models\Emprunt', 'id_abonne');
     }
 
     public function telechargements(){
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
     }
-
-   
 
     public function empruntsEnCours()
     {

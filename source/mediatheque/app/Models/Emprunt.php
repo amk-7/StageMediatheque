@@ -19,7 +19,7 @@ class Emprunt extends Model
 
     public function abonne()
     {
-        return $this->belongsTo('App\Models\Abonne', 'id_abonne');
+        return $this->belongsTo('App\Models\Abonne', 'id_emprunt');
     }
 
     public function personnel()
