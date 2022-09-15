@@ -1,11 +1,9 @@
 @extends('layout.template.base', ['body_style'=> "bg-gray-200 flex content-center justify-center h-full items-center"])
 @section('content')
-    <main class="flex flex-col m-12">
-        <div class="text-gray-700 text-center mb-12">
-            <h1 class="text-2xl font-bold">{{$title}}</h1>
-        </div>
-        <form action="{{route($action)}}" method="post" enctype="multipart/form-data" class="bg-white p-12 m-auto">
+    <main class="flex flex-col justify-center items-center m-auto">
+        <form action="{{route($action)}}" method="post" enctype="multipart/form-data" class="bg-white p-12 mb-12">
             @csrf
+            <h1 class="label_title text-center pb-12">{{$title}}</h1>
             <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
                 <legend>Ouvrage</legend>
                 <div class="flex flex-col my-auto">
@@ -158,7 +156,7 @@
             </fieldset>
             @yield('stock')
             <div class="flex space-x-3">
-                <input class="button button_edite w-full mt-12" type="submit" id="enregistrer" name="enregister"
+                <input class="button button_primary w-full mt-12" type="submit" id="enregistrer" name="enregister"
                        value="Enregister"/>
             </div>
         </form>

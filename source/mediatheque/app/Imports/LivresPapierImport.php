@@ -30,7 +30,7 @@ class LivresPapierImport implements ToModel
             return null;
         }
 
-        dump(OuvrageService::ouvrageExist(strtoupper(trim($row[2], ' ')), str_replace(' ', '', $row[4])));
+        //dump(OuvrageService::ouvrageExist(strtoupper(trim($row[2], ' ')), str_replace(' ', '', $row[4])));
 
         if (OuvrageService::ouvrageExist(strtoupper(trim($row[2], ' ')), str_replace(' ', '', $row[4])) != null)
         {

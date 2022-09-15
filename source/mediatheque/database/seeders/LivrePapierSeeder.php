@@ -33,7 +33,7 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         $ouvrage5 = Ouvrage::Create([
-            'titre'=>'CREPUSCUL DES TEMPS ANCIEN EPA',
+            'titre'=>'CREPUSCULE DES TEMPS ANCIEN EPA',
             'mot_cle'=> array(
                 "temps",
                 "anciens",

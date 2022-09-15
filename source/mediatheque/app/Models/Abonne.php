@@ -36,9 +36,7 @@ class Abonne extends Model
     public function telechargements(){
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
     }
-
    
-
     public function getEmpruntsEnCours()
     {
         $empuntNonRestitue = array();

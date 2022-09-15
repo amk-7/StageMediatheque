@@ -31,11 +31,9 @@
 
         <!-- Logo -->
         <a href="#">
-            <img
-                class="w-10 h-auto"
-                src="https://raw.githubusercontent.com/kamona-ui/dashboard-alpine/main/public/assets/images/logo.png"
-                alt="K-UI"
-            />
+            <a href="/liste_livres_papier">
+                <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
+            </a>
         </a>
     </nav>
 
@@ -47,11 +45,9 @@
         <!-- Logo -->
         <div class="flex-shrink-0 py-4">
             <a href="#">
-                <img
-                    class="w-10 h-auto"
-                    src="https://raw.githubusercontent.com/kamona-ui/dashboard-alpine/main/public/assets/images/logo.png"
-                    alt="K-UI"
-                />
+                <a href="/liste_livres_papier">
+                    <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
+                </a>
             </a>
         </div>
         <div class="flex flex-col items-center flex-1 p-2 space-y-4">
@@ -89,12 +85,8 @@
         <nav x-show="currentSidebarTab == 'linksTab'" aria-label="Main" class="flex flex-col h-full">
             <!-- Logo -->
             <div class="flex items-center justify-center flex-shrink-0 py-10">
-                <a href="#">
-                    <img
-                        class="w-24 h-auto"
-                        src="https://raw.githubusercontent.com/kamona-ui/dashboard-alpine/main/public/assets/images/logo.png"
-                        alt="K-UI"
-                    />
+                <a href="/liste_livres_papier">
+                    <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                 </a>
             </div>
             <!-- Links -->

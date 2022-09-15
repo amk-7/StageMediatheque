@@ -132,8 +132,8 @@
                         <label for="">Etat ouvrage</label>
                         <select name="" id="etat_ouvrage_edite">
                             <option selected>Séléctionner etat</option>
-                            @for($i=5; $i>0; $i--)
-                                
+                            @for($i=4; $i>0; $i--)
+                                <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
                             @endfor
                         </select>
                     </div>
@@ -517,7 +517,7 @@
                 }
             }
         }
-        
+
     </script>
 @stop
 
