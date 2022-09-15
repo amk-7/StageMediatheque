@@ -426,6 +426,17 @@
             }
             return true;
         }
+
+        function verifierEmpruntEnCours(id_abonne) {
+            let emprunts = [];
+            for (let i = 0; i < emprunts_en_cours.length; i++) {
+                if (emprunts_en_cours[i]['id_abonne'] === id_abonne) {
+                    emprunts.push(emprunts_en_cours[i]);
+                }
+            }
+            return emprunts;
+        }
+        
     </script>
 @stop
 
