@@ -106,7 +106,6 @@ Route::middleware('auth')->group(function(){
 
     Route::get('formulaire_enregistrement_livre_numerique', [LivreNumeriqueController::class, 'create'])->name('formulaireEnregistrementLivreNumerique');
     Route::post('enregistrement_livre_numerique', [LivreNumeriqueController::class, 'store'])->name('enregistementLivreNumerique');
-    Route::get('affichage_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'show'])->name('affichageLivreNumerique');
     Route::get('formulaire_modification_livre_numerique/{livres_numerique}/edite', [LivreNumeriqueController::class, 'edit'])->name('formulaireModificationLivreNumerique');
     Route::put('modification_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'update'])->name('modificationLivreNumerique');
     Route::delete('suppression_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreNumerique');
@@ -115,7 +114,6 @@ Route::middleware('auth')->group(function(){
 
     Route::get('formulaire_enregistrement_livre_papier', [LivresPapierController::class, 'create'])->name('formulaireEnregistrementLivrePapier');
     Route::post('enregistrement_livre_papier', [LivresPapierController::class, 'store'])->name('enregistementLivrePapier');
-    Route::get('affichage_livre_papier/{livres_papier}', [LivresPapierController::class, 'show'])->name('affichageLivrePapier');
     Route::get('formulaire_modification_livres_papier/{livres_papier}/modifier', [LivresPapierController::class, 'edit'])->name('formulaireModificationLivrePapier');
     Route::put('modification_livre_papier/{livres_papier}', [LivresPapierController::class, 'update'])->name('modificationLivrePapier');
     Route::delete('suppression_livre_papier/{livres_papier}', [LivresPapierController::class, 'destroy'])->name('suppressionLivrePapier');
@@ -162,6 +160,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/getCodeID', [\App\Service\OuvragesPhysiqueService::class, 'getCodeID'] );
     Route::get('/getOuvragePhysiqueByType', [\App\Service\OuvragesPhysiqueService::class, 'getOuvragePhysiqueByType'] );
 });
+
+Route::get('affichage_livre_papier/{livres_papier}', [LivresPapierController::class, 'show'])->name('affichageLivrePapier');
+Route::get('affichage_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'show'])->name('affichageLivreNumerique');
 
 Route::get('liste_livres_papier', [LivresPapierController::class, 'index'])->name('listeLivresPapier');
 Route::get('liste_livres_numerique', [LivreNumeriqueController::class, 'index'])->name('listeLivresNumerique');

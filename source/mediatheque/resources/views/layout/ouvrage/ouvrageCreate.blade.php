@@ -116,7 +116,7 @@
                                 <input name="prenom" id="prenom" placeholder="saisire le prenom de l'auteur"
                                        value="{{ old('prenom') }}"
                                        class="input" autocomplete="off">
-                                <button id="ajouter_auteur" class="button button_plus">+</button>
+                                <button id="ajouter_auteur" class="button button_primary">+</button>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                         <input name="mot_cle" id="input_mot_cle" type="text" value="{{ old('mot_cle_') }}"
                                placeholder="Entrez un mot clé"
                                class="input" autocomplete="off"/>
-                        <button class="button button_plus" id="ajouter_mot_cle">+</button>
+                        <button class="button button_primary" id="ajouter_mot_cle">+</button>
                     </div>
                     <div id="liste_mots_cle"></div>
                 </div>

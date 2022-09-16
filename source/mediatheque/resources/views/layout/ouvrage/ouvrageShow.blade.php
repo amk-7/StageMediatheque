@@ -42,15 +42,13 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-row space-x-32">
+        <!--div class="flex flex-row space-x-32">
             <form action="" method="get">
-                @csrf
                 <input class="button button_edite" type="submit" name="retour" value="Retour">
             </form>
             <form action="" method="get">
-                @csrf
                 <input class="button button_edite" type="submit" name="suivant" value="suivant">
             </form>
-        </div>
+        </div-->
     </main>
 @stop
