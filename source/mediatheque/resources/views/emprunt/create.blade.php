@@ -171,6 +171,7 @@
         let div_modal = document.getElementById("modal_editer");
 
         //declarer une variable nbre d'emprunt
+        let nombre_emprunt = 0;
 
         //let btn_modifier = document.getElementById('btn_modifier');
 
@@ -282,6 +283,11 @@
                 cote_ouvrage_exist.hidden = true;
 
                 //Verifier si le nombre d'emprunt n'est pas inferieur à 5 là on sort
+                if (nombre_emprunt >= 5) {
+                    emprunts_erreur.hidden = false;
+                    stopPropagation();
+                    return;
+                }
                 let table_body = document.getElementById('liste_emprunt').children[1];
                 let row = document.createElement('tr');
                 let cell_number = document.createElement('td');
@@ -337,6 +343,9 @@
                 cleanInput();
 
                 //incrementer le nombre d'emprunt
+                nombre_emprunt.value = parseInt(nombre_emprunt.value) + 1;
+                console.log(nombre_emprunt.value);
+
             }
         });
 
