@@ -1,15 +1,18 @@
 @extends('layout.template.base')
 @section('content')
-    <form action="{{ route('enregistrementImportExcel') }}" method="post" enctype="multipart/form-data" class="m-auto">
+    <form action="{{ route('enregistrementImportExcel') }}" method="post" enctype="multipart/form-data" class="m-auto flex flex-col space-y-3">
         @method('put')
         @csrf
-        <fieldset class="border border-solid">
+        <fieldset class="fieldset_border">
             <legend>Fichier excel</legend>
             <div>
                 <label>Fichier</label>
                 <input type="file" name="url" accept="*" value="">
             </div>
+            @error('url')
+                <div class="alert">{{ $message }}</div>
+            @enderror
         </fieldset>
-        <input type="submit" value="Importer">
+        <input type="submit" class="button button_primary" value="Importer">
     </form>
 @stop

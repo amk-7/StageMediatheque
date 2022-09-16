@@ -30,14 +30,15 @@ class LivresPapierImport implements ToModel
             return null;
         }
 
-        dump(OuvrageService::ouvrageExist(strtoupper(trim($row[2], ' ')), str_replace(' ', '', $row[4])));
+        //dump(OuvrageService::ouvrageExist(strtoupper(trim($row[2], ' ')), str_replace(' ', '', $row[4])));
 
         if (OuvrageService::ouvrageExist(strtoupper(trim($row[2], ' ')), str_replace(' ', '', $row[4])) != null)
         {
             return null;
         }
 
-        $data_auteurs = explode(',', self::exctratUserInfo($row[1]));
+        $data_auteurs = self::exctratUserInfo($row[1]);
+
         $auteurs = AuteurService::enregistrerAuteur(array($data_auteurs));
 
         // Creation de l'ouvrage
@@ -47,7 +48,7 @@ class LivresPapierImport implements ToModel
             'titre'=>strtoupper(trim($row[2], ' ')),
             'lieu_edition'=>$row[3],
             'annee_apparution'=>str_replace(' ', '', $row[4]),
-            'type'=>strtolower($row[6]),
+            'type'=>self::formatString($row[6]),
             'niveau' => self::extractLevelInfo($row[8]),
             'image' => $chemin_image,
             'langue'=>strtolower('français'),
@@ -68,7 +69,7 @@ class LivresPapierImport implements ToModel
         ]);
 
         return LivresPapier::create([
-            'categorie'=>[$row[7]],
+            'categorie'=>[strtolower($row[7])],
             'ISBN'=>"ISBN-".$ouvragePhysique->cote,
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
         ]);
@@ -80,7 +81,12 @@ class LivresPapierImport implements ToModel
         $auteur = str_replace('(', ',', $auteur);
         $auteur = str_replace(')', '', $auteur);
         $auteur = str_replace('-', '', $auteur);
-        return $auteur;
+        $auteurs = explode(',', $auteur);
+        if (count($auteurs)==1)
+        {
+            array_push($auteurs, "");
+        }
+        return $auteurs;
     }
 
     public static function extractLevelInfo(String $niveau)
@@ -102,5 +108,19 @@ class LivresPapierImport implements ToModel
         }
         array_push($mots_cle, "");
         return $mots_cle;
+    }
+    public static function formatString(String $type) : String
+    {
+        $array_resultat = array();
+        $type = trim($type);
+        for($i=0; $i<strlen($type); $i++){
+            if ($i+1 != strlen($type)){
+                if ($type[$i] == " " && $type[$i+1] == " ")
+                {
+                    $type[$i] = "_";
+                }
+            }
+        }
+        return strtolower(str_replace("_", "", $type));
     }
 }

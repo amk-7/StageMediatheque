@@ -17,34 +17,28 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
-<body>
+<body class="bg-gray-100">
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
     <!-- nav bar -->
     @include('layouts.navigation')
-    <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
+    <div class="flex h-screen antialiased text-gray-900 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
         <div
             x-ref="loading"
-            class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-indigo-800"
+            class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-yellow-800"
         >
             Chargement.....
         </div>
         <!-- Sidebar -->
-
-        <div class="flex flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" hidden>
-            @if(""!="")
-                @include('side_bar.side_bar')
-            @endif
-        </div>
-        <div class="flex flex-col flex-1 ml-16 mt-16">
-            <div class="flex flex-1">
-                <!-- Main -->
-                <main class="flex items-center justify-center flex-1 px-4 py-8">
-                    <!-- Content -->
-                    @yield('content')
-                </main>
+            <div class="flex hidden flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" hidden>
+                @if(Auth::user())
+                    @include('side_bar.side_bar')
+                @endif
             </div>
-        </div>
+            <main class="flex items-center justify-center flex-1 px-4 py-8 mt-16 ml-16">
+                <!-- Content -->
+                @yield('content')
+            </main>
     </div>
 
     <!-- Panels -->

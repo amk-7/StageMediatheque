@@ -73,7 +73,7 @@ class EmpruntController extends Controller
             'id_abonne' => $request->prenom_abonne,
             'id_personnel' => $request->prenom,
         ]);
-        
+
         //dd($listesEmprunts->restitution);
         LignesEmpruntService::enregistrerLignesEmprunt($request->data, $emprunt);
         //dd($request);

@@ -1,8 +1,10 @@
 <form wire:submit.prevent="searchByAll" class="flex flex-col items-center">
     <div class="">
-        <div class="flex flex-row">
-            <input wire:model="search" class="search" type="search" name="search_by" id="search_by" placeholder="rechercher par titre, ISBM ou mot cle">
-            <button type="submit" class="button button_edite">Rechercher</button>
+        <div class="flex flex-row w-96">
+            <input wire:model="search" class="search w-5/6" type="search" name="search_by" id="search_by" placeholder="rechercher par titre, ISBM ou mot cle">
+            <button type="submit" class="button button_primary w-1/6">
+                <img src="{{ asset('storage/images/search.png') }}" class="block h-auto w-auto fill-current text-gray-600">
+            </button>
         </div>
     </div>
     <div class="" id="searchParametersField">

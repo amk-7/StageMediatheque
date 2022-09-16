@@ -33,7 +33,7 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         $ouvrage5 = Ouvrage::Create([
-            'titre'=>'CREPUSCUL DES TEMPS ANCIEN EPA',
+            'titre'=>'CREPUSCULE DES TEMPS ANCIEN EPA',
             'mot_cle'=> array(
                 "temps",
                 "anciens",
@@ -135,7 +135,7 @@ class LivrePapierSeeder extends Seeder
         $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage('livre_papier','COT', [$auteur1], $ouvrage);
 
         $ouvragePhysique = OuvragesPhysique::Create([
-            'nombre_exemplaire' => 3,
+            'nombre_exemplaire' => 1,
             'id_ouvrage'=>$ouvrage->id_ouvrage,
             'cote'=>$cote,
             'id_classification_dewey_dizaine'=>null

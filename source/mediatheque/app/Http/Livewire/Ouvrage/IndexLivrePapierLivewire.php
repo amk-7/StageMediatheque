@@ -6,9 +6,12 @@ use App\Models\LivresPapier;
 use App\Service\LivresPapierService;
 use App\Service\OuvrageService;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class IndexLivrePapierLivewire extends Component
 {
+    use WithPagination;
+
     public $search ;
     public $id_livre_papier ;
     public $annees ;
@@ -54,6 +57,9 @@ class IndexLivrePapierLivewire extends Component
 
     public function render()
     {
+        if(\Auth::guest()){
+            $this->par_page = 5;
+        }
         return view('livewire.ouvrage.index-livre-papier-livewire')->with([
             'livresPapiers' => LivresPapier::whereIn('id_livre_papier', $this->id_livre_papier)->paginate($this->par_page)
         ]);

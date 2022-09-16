@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Abonne extends Model
 {
@@ -29,21 +30,20 @@ class Abonne extends Model
     }
 
     public function emprunts(){
-        return $this->hasMany('App\Models\Emprunt', 'id_emprunt');
+        return $this->hasMany('App\Models\Emprunt', 'id_abonne');
     }
 
     public function telechargements(){
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
     }
 
-   
-
-    public function empruntsEnCours()
+    public function getEmpruntsEnCours()
     {
         $empuntNonRestitue = array();
-        $listesEmprunts = $this->emprunts;
+        $listesEmprunts = Emprunt::all()->where('id_abonne', $this->id_abonne);
+
         foreach ($listesEmprunts as $emprunt) {
-            if ($emprunt->restitution == null) {
+            if (Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first() == null) {
                 array_push($empuntNonRestitue, $emprunt);
             }
         }
