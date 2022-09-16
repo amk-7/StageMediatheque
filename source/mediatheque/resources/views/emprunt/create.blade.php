@@ -167,6 +167,8 @@
         let submit_btn = document.getElementById('action_emprunter');
         let duree_emprunt = document.getElementById('duree_emprunt');
 
+        //declarer une variable nbre d'emprunt
+
         //let btn_modifier = document.getElementById('btn_modifier');
 
         let nom_abonne_erreur = document.getElementById('nom_abonne_erreur');
@@ -268,6 +270,7 @@
             e.preventDefault();
             //return;
             if (validate()) {
+                //Verifier si le nombre d'emprunt n'est pas inferieur à 5 là on sort
                 let table_body = document.getElementById('liste_emprunt').children[1];
                 let row = document.createElement('tr');
                 let cell_number = document.createElement('td');
@@ -313,6 +316,8 @@
 
                 table_body.appendChild(row);
                 cleanInput();
+
+                //incrementer le nombre d'emprunt
             }
         });
 
