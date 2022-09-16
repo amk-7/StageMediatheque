@@ -69,7 +69,7 @@ class LivresPapierImport implements ToModel
         ]);
 
         return LivresPapier::create([
-            'categorie'=>[strtolower($row[7])],
+            'categorie'=>[strtolower($row[7]), ""],
             'ISBN'=>"ISBN-".$ouvragePhysique->cote,
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
         ]);
