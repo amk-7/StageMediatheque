@@ -283,11 +283,12 @@
                 cote_ouvrage_exist.hidden = true;
 
                 //Verifier si le nombre d'emprunt n'est pas inferieur à 5 là on sort
-                if (nombre_emprunt >= 5) {
-                    emprunts_erreur.hidden = false;
+                if (nombre_emprunt >= 2) {
+                    nombre_emprunt_erreur.hidden = false;
                     stopPropagation();
-                    return;
+                    return ;
                 }
+                nombre_emprunt_erreur.hidden = true;
                 let table_body = document.getElementById('liste_emprunt').children[1];
                 let row = document.createElement('tr');
                 let cell_number = document.createElement('td');
@@ -343,9 +344,7 @@
                 cleanInput();
 
                 //incrementer le nombre d'emprunt
-                nombre_emprunt.value = parseInt(nombre_emprunt.value) + 1;
-                console.log(nombre_emprunt.value);
-
+                nombre_emprunt = nombre_emprunt + 1;
             }
         });
 
