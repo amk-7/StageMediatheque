@@ -30,26 +30,21 @@ class Abonne extends Model
     }
 
     public function emprunts(){
-        return $this->hasMany('App\Models\Emprunt','id_emprunt');
+        return $this->hasMany('App\Models\Emprunt', 'id_abonne');
     }
 
     public function telechargements(){
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
     }
-   
+
     public function getEmpruntsEnCours()
     {
         $empuntNonRestitue = array();
-        $listesEmprunts = DB::table('emprunts')
-                          ->where('id_abonne', $this->id_abonne)
-                          ->get();
+        $listesEmprunts = Emprunt::all()->where('id_abonne', $this->id_abonne);
 
-        //dump($listesEmprunts);     
         foreach ($listesEmprunts as $emprunt) {
-            $model_emprunt = Emprunt::find($emprunt->id_emprunt);
-            if ($model_emprunt->restitution == null) {
-                //dd(array_push($empuntNonRestitue, $emprunt));
-                array_push($empuntNonRestitue, $model_emprunt);
+            if (Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first() == null) {
+                array_push($empuntNonRestitue, $emprunt);
             }
         }
         //dd($empuntNonRestitue);

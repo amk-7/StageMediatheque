@@ -47,7 +47,7 @@ class AbonneSeeder extends Seeder
             'nom' => 'Tchabana',
             'prenom' => 'Hafiz',
             'nom_utilisateur' => 'Haf',
-            'email' => 'Hafiz@gmail.com',
+            'email' => 'hafiz@gmail.com',
             'password' => Hash::make('123456789'),
             'contact' => '90229029',
             'photo_profil' => 'personne.jpg',
@@ -68,7 +68,7 @@ class AbonneSeeder extends Seeder
             'id_utilisateur' => $utilisateur2->id_utilisateur
         ]);
 
-        
+
 
         $utilisateur->assignRole(Role::find(3));
         $utilisateur2->assignRole(Role::find(3));

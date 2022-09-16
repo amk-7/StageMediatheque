@@ -73,6 +73,12 @@
 .button_primary {
     @apply bg-green-600;
 }
+.button_primary_disabled {
+    @apply bg-green-600;
+}
+.button_delete_disabled{
+    @apply bg-red-600;
+}
 
 .button_show {
     @apply bg-yellow-500;

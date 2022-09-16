@@ -13,11 +13,11 @@ class LignesRestitution extends Model
 
     public function ouvragesPhysique()
     {
-        return $this->belongsTo(OuvragesPhysique::class, 'id_ligne_restitution');
+        return $this->belongsTo(OuvragesPhysique::class, 'id_ouvrage_physique');
     }
 
     public function restitution()
     {
-        return $this->belongsTo(Restitution::class, 'id_ligne_restitution');
+        return $this->belongsTo(Restitution::class, 'id_restitution');
     }
 }

@@ -48,14 +48,24 @@
                                 <!-- Verifier si l'emprunt à été déjà restituer -->
                                 <form action="{{ route('formulaireEnregistrementRestitution', $emprunt) }}" method="get">
                                     @csrf
-                                    <input type="submit" class="button button_primary" value="Restituer" {{ \App\Service\EmpruntService::etatEmprunt($emprunt) }}>
+                                    <input type="submit" value="Restituer" class =
+                                    @if(\App\Service\EmpruntService::etatEmprunt($emprunt))
+                                        "button button_primary_disabled disabled:opacity-25 cursor-default" disabled
+                                    @else
+                                        "button button_primary "
+                                    @endif>
                                 </form>
-                            </td>
+                            </td><!--"class='button button_primary_disabled disabled:opacity-25' disabled"-->
                             <td class="fieldset_border">
                                 <form action="{{ route('destroyEmprunt', $emprunt) }}" method="post">
                                     @csrf
                                     @method("DELETE")
-                                    <input type="submit" class="button button_delete" value="Supprimer">
+                                    <input type="submit" value="Supprimer" class =
+                                        @if(\App\Service\EmpruntService::etatEmprunt($emprunt))
+                                            "button button_delete_disabled disabled:opacity-25" disabled
+                                    @else
+                                        "button button_delete"
+                                    @endif>
                                 </form>
                             </td>
                         </tr>

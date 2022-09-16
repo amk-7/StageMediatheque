@@ -48,6 +48,7 @@ class RestitutionController extends Controller
     public function store(Request $request)
     {
         //dd($request);
+        //return $request;
         $request->validate([
             'data'=>'required',
         ]);

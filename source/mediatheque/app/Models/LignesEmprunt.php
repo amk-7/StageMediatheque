@@ -19,7 +19,7 @@ class LignesEmprunt extends Model
 
     public function emprunt()
     {
-        return $this->belongsTo(Emprunt::class, 'id_ligne_emprunt');
+        return $this->belongsTo(Emprunt::class, 'id_emprunt');
     }
 
     public function ouvragesPhysique()

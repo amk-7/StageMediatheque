@@ -4,7 +4,7 @@
         @include('livresPapier.shareSearchBarLivrePapier')
     </div>
     @if(!empty($livresPapiers ?? "") && $livresPapiers->count())
-        @if("" == "")
+        @if(Auth::user())
             <div class="m-3">
                 <div class="flex flex-row content-center">
                     <td>
@@ -55,7 +55,7 @@
                                           {{ QrCode::generate($livresPapier->ouvragesPhysique->cote) }}
                                       </div>
                                        <div>
-                                           <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->generate($livresPapier->ouvragesPhysique->cote)) }}"
+                                           <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->backgroundColor(255,255,255)->size(400)->generate($livresPapier->ouvragesPhysique->cote)) }}"
                                               download="{{ 'cote'.str_replace(' ', '_', strtolower($livresPapier->ouvragesPhysique->ouvrage->titre)).'qrcode.png' }}"
                                               class="text-center text-white bg-green-600 p-1 hover:bg-green-700 mt-2"
                                            >Imprimer
@@ -90,12 +90,12 @@
                 </table>
                 {!! $livresPapiers->links() !!}
             </div>
-        @elseif("-"=="")
-           <div class="m-6 flex space-x-3 border border-solid">
+        @else
+           <div class="m-6 flex space-x-3">
                @foreach($livresPapiers as $livresPapier)
                    <div>
                        <a href="{{route('affichageLivrePapier', $livresPapier)}}" class="">
-                           <div class="border border-solid">
+                           <div class="">
                                <img src="{{ asset('storage/images/images_livre/'.$livresPapier->ouvragesPhysique->ouvrage->image) }}"
                                     alt="{{$livresPapier->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>
                            </div>

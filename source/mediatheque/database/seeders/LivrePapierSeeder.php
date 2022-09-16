@@ -135,7 +135,7 @@ class LivrePapierSeeder extends Seeder
         $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage('livre_papier','COT', [$auteur1], $ouvrage);
 
         $ouvragePhysique = OuvragesPhysique::Create([
-            'nombre_exemplaire' => 3,
+            'nombre_exemplaire' => 1,
             'id_ouvrage'=>$ouvrage->id_ouvrage,
             'cote'=>$cote,
             'id_classification_dewey_dizaine'=>null

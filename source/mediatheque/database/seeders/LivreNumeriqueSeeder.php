@@ -19,12 +19,9 @@ class LivreNumeriqueSeeder extends Seeder
      */
     public function run()
     {
-        $auteur5 = Auteur::Create([
-            'nom'=>'KONDI',
-            'prenom'=>'abdoul',
-        ]);
+        $auteur5 = Auteur::find(1);
         $ouvrage5 = Ouvrage::Create([
-            'titre'=>'Titre test 1',
+            'titre'=>'ouvrage test',
             'niveau' => '1',
             'type'=>'roman',
             'image' => 'default_book_image.png',
@@ -39,7 +36,7 @@ class LivreNumeriqueSeeder extends Seeder
         $ouvrage5->auteurs()->attach($auteur5->id_auteur);
 
         $ouvrageNumeri = OuvragesElectronique::create([
-            'url'=>'default_book_pdf.pdf',
+            'url'=>'ouvrage_test',
             'id_ouvrage'=>$ouvrage5->id_ouvrage,
         ]);
 
@@ -49,36 +46,6 @@ class LivreNumeriqueSeeder extends Seeder
                 "",
             ),
             'ISBN'=>'ISBNLN001',
-            'id_ouvrage_electronique'=>$ouvrageNumeri->id_ouvrage_electronique
-        ]);
-
-
-        $ouvrage5 = Ouvrage::Create([
-            'titre'=>'Titre test 2',
-            'niveau' => '3',
-            'type'=>'nouvelle',
-            'image' => 'default_book_image.png',
-            'langue'=>'anglais',
-            'annee_apparution'=>'1998',
-            'lieu_edition'=>'Kara',
-            'mot_cle' => [
-                ""
-            ],
-        ]);
-
-        $ouvrage5->auteurs()->attach($auteur5->id_auteur);
-
-        $ouvrageNumeri = OuvragesElectronique::create([
-            'url'=>'default_book_pdf.pdf',
-            'id_ouvrage'=>$ouvrage5->id_ouvrage,
-        ]);
-
-        LivresNumerique::Create([
-            'categorie'=> array(
-                "anglais",
-                "",
-            ),
-            'ISBN'=>'ISBNLN002',
             'id_ouvrage_electronique'=>$ouvrageNumeri->id_ouvrage_electronique
         ]);
     }

@@ -30,12 +30,12 @@
             Chargement.....
         </div>
         <!-- Sidebar -->
-            <div class="flex flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" hidden>
+            <div class="flex hidden flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" hidden>
                 @if(Auth::user())
                     @include('side_bar.side_bar')
                 @endif
             </div>
-            <main class="flex items-center justify-center flex-1 px-4 py-8 mt-16">
+            <main class="flex items-center justify-center flex-1 px-4 py-8 mt-16 ml-16">
                 <!-- Content -->
                 @yield('content')
             </main>

@@ -75,9 +75,9 @@ class EmpruntService
         $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
         if ($restitution == null)
         {
-            return "";
+            return false;
         }
-        return "disabled";
+        return true;
     }
 /*
     public static function modifierDateRetour($id_emprunt, $date_retour)
