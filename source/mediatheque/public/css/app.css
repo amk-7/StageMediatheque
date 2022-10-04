@@ -853,6 +853,9 @@ select {
 .h-32 {
   height: 8rem;
 }
+.h-16 {
+  height: 4rem;
+}
 .h-6 {
   height: 1.5rem;
 }
@@ -864,9 +867,6 @@ select {
 }
 .h-8 {
   height: 2rem;
-}
-.h-16 {
-  height: 4rem;
 }
 .h-auto {
   height: auto;
@@ -894,6 +894,9 @@ select {
 }
 .w-96 {
   width: 24rem;
+}
+.w-12 {
+  width: 3rem;
 }
 .w-64 {
   width: 16rem;

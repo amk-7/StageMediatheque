@@ -90,7 +90,7 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-
+        dd("OK");
         return redirect()->route('formulaireEnregistrementResgistration')->with('abonne', $abonne);
     }
 
