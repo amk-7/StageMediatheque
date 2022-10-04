@@ -11,6 +11,19 @@ use phpDocumentor\Reflection\Types\Integer;
 class OuvrageHelper
 {
 
+    public static function formatString(String $str)
+    {
+        $max_length = 20;
+        $str_length = strlen($str);
+        if($str_length > $max_length)
+        {
+            $str_complet = $str_length - $max_length-3;
+            $str = substr($str, 0, $str_length-$str_complet);
+            $str .= "...";
+            return $str;
+        } return $str;
+    }
+
     public static function afficherAuteurs(Ouvrage $ouvrage)
     {
         $resultat = "";

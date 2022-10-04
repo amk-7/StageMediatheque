@@ -60,6 +60,7 @@ class PersonnelSeeder extends Seeder
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
 
-        $utilisateur->assignRole(Role::find(1));
+        $utilisateur->assignRole([Role::find(2), Role::find(1)]);
+
     }
 }

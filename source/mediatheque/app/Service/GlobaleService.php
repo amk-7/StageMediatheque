@@ -3,9 +3,18 @@
 namespace App\Service;
 
 use Illuminate\Support\Collection;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class GlobaleService
 {
+    public static function verifieContact(String $contact) : Boolean
+    {
+        /*
+         *
+         *
+         */
+        return false;
+    }
     public static function extractLineToData($data) : array
     {
         $array_data = array();

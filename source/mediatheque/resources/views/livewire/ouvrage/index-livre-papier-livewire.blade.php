@@ -4,15 +4,17 @@
         @include('livresPapier.shareSearchBarLivrePapier')
     </div>
     @if(!empty($livresPapiers ?? "") && $livresPapiers->count())
-        @if(Auth::user())
+        @if(Auth::user() && Auth::user()->hasRole('bibliothecaire'))
             <div class="m-3">
                 <div class="flex flex-row content-center">
-                    <td>
-                        <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
-                            @csrf
-                            <input type="submit" class="button button_primary" name="ajouter" value="ajouter">
-                        </form>
-                    </td>
+                    @if(Auth::user()->hasRole('responsable'))
+                        <td>
+                            <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
+                                @csrf
+                                <input type="submit" class="button button_primary" name="ajouter" value="ajouter">
+                            </form>
+                        </td>
+                    @endif
                     <div class="flex flex-row">
                         <!--select wire:model="par_page" id="par_page" class="select_btn">
                         </select>
@@ -91,22 +93,28 @@
                 {!! $livresPapiers->links() !!}
             </div>
         @else
-           <div class="m-6 flex space-x-3">
-               @foreach($livresPapiers as $livresPapier)
-                   <div>
-                       <a href="{{route('affichageLivrePapier', $livresPapier)}}" class="">
-                           <div class="">
-                               <img src="{{ asset('storage/images/images_livre/'.$livresPapier->ouvragesPhysique->ouvrage->image) }}"
-                                    alt="{{$livresPapier->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>
-                           </div>
-                           <div class="text-center">
-                               <label>
-                                   <span>{{ strtolower($livresPapier->ouvragesPhysique->ouvrage->titre) }}</span>
-                               </label>
-                           </div>
-                       </a>
+           <div class="m-6 flex flex-col">
+               @for($j=0; $j<count($livresPapiers); $j += 5)
+                   <div class="flex flex-row space-x-3">
+                       @for($i=$j; $i<$j+5; $i++)
+                           @if($livresPapiers[$i])
+                               <div class="card">
+                                   <a href="{{route('affichageLivrePapier', $livresPapiers[$i])}}" class="">
+                                       <div class="image">
+                                           <img src="{{ asset('storage/images/images_livre/'.$livresPapiers[$i]->ouvragesPhysique->ouvrage->image) }}"
+                                                alt="{{$livresPapiers[$i]->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>
+                                       </div>
+                                       <div class="label">
+                                           <label>
+                                               <span>{{ \App\Helpers\OuvrageHelper::formatString(strtolower($livresPapiers[$i]->ouvragesPhysique->ouvrage->titre)) }}</span>
+                                           </label>
+                                       </div>
+                                   </a>
+                               </div>
+                           @endif
+                       @endfor
                    </div>
-               @endforeach
+               @endfor
            </div>
             {!! $livresPapiers->links() !!}
         @endif

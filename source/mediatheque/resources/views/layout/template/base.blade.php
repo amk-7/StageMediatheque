@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield("livewire_styles_content")
+    @yield("styles")
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
