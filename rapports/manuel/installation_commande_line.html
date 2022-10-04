@@ -1,0 +1,236 @@
+<h1>Rapport technique du stage  de fin L2 2021-2022 Abdoul malik KONDI &amp;&amp; n</h1>
+
+<h2>Sommaire</h2>
+
+<p>Laravel est un frame ....</p>
+
+<h2>Partie 1/n : Installation et organisation d'un projet laravel.</h2>
+
+<p>Dans cette première partie nous allons créer une application Laravel et voir comment le code y est organisé.
+En cas générale pour utiliser le framework laravel vous aurez besoins d'au mininume d'une version <strong>7.3</strong> de php
+installer sur vos machines, de plusieurs extensions php installer et d'un SGBD (System de Gestion de Base de Données ici nous utiliserons <strong>postgresql</strong>).</p>
+
+<h3>Le serveur.</h3>
+
+<p>Pour fonctionner correctement, laravel à besoin de <strong>PHP</strong>:</p>
+
+<ul>
+<li>Version > <strong>7.3.0</strong>,</li>
+<li>Extension <strong>pdo</strong> </li>
+<li>Extension <strong>pgsql</strong> ou <em>mysql</em> ou autre selon votre SGBD.</li>
+<li>Extension <strong>mbstring</strong></li>
+<li>Extension <strong>opcache</strong></li>
+<li>Extension <strong>xml</strong></li>
+<li>Extension <strong>curl</strong></li>
+<li>Extension <strong>gd</strong></li>
+<li>Extension openSSL</li>
+<li>Extension json</li>
+<li>Extension <strong>fileinfo</strong></li>
+<li>Extension <strong>ctype</strong></li>
+<li>Extension <strong>BCMath</strong></li>
+<li>Extension soap</li>
+<li>Extension <strong>zip</strong></li>
+<li>Extension <strong>intl</strong></li>
+<li>Extension <strong>common</strong></li>
+<li>Extension imagick</li>
+<li>Extension <strong>cli</strong></li>
+<li>Extension <strong>imap</strong></li>
+</ul>
+
+<blockquote>
+  <p>NB : Si vous ne savez pas installer php et activer ces extensions cliquer ici.</p>
+</blockquote>
+
+<h2>Installation d'un projet laravel via composer.</h2>
+
+<p>Il y a plusieurs façons de créer une application Laravel. La plus classique consiste à utiliser la commande 
+<strong>create-project</strong> de Composer. voici la syntaxe gnérale à utiliser.
+<code>composer create-project laravel/laravel chemain/du/repertoire --prefer-dist "version"</code></p>
+
+<blockquote>
+  <p>Exemple : <code>composer create-project laravel/laravel application --prefer-dist "8.*"</code> . 
+Crée une application Laravel dans le dossier application.</p>
+</blockquote>
+
+<p>Une fois l'installation démarré, on a plus qu'a attendre quelques minutes pour que Composer fasse son travail
+jusqu'au bout. On verra s'afficher une liste de téléchargements. Au final on se retrouve avec cette architechture :</p>
+
+<p><img src="images/archithecture.png" alt="archithecture" title="" /></p>
+
+<p>Laravel est équiper d'un server pour le developpement qui se lance avec cette commande :</p>
+
+<p><code>php artisan serve</code></p>
+
+<p>On peut vérifier que tout fonctionne bien en allant sur l'URL http://127.0.0.1:8000. Normalement on
+doit obtenir cette page.</p>
+
+<p><img src="images/laravel_localhost.png" alt="laravel localhost" title="" /></p>
+
+<p>Pour des mises à jour ultérieures il suffit encore d'utiliser Composer avec la commande update :</p>
+
+<p><code>composer update</code></p>
+
+<blockquote>
+  <p><strong>Note :</strong> Si vous installez Laravel en téléchargeant directement les fichiers sur Github et en utilisant
+la commande <code>composer install</code>, il vous faut effectuer une action suplémentaires.
+En effet, dans ce cas la clé de sécurité ne sera pas automatiquement créé et vous allez tomber sur une
+erreur au lancement. Il faut donc la créer avec la commande.</p>
+</blockquote>
+
+<p><code>php artisan key:generate</code></p>
+
+<h2>Organisation d'un projet laravel.</h2>
+
+<h3>Répertoire App.</h3>
+
+<p>Le repertoire App est répertoire le plus important de votre projet. C'est lui qui contiendra votre application,
+c'est à dire tout votre code php (classes, fonctions ...).</p>
+
+<p>!<a href="">repertoire_app</a></p>
+
+<ul>
+<li>Console : toutes les commandes en mode console,</li>
+<li>Exceptions : pour gérer les erreurs d'exécution,</li>
+<li>Http : tout ce qui concerne la communication : contrôleurs, middlewares (il y a 8 middlewares
+de base qui servent à filtrer les requêtes HTTP) et le kernel,</li>
+<li>Providers : tous les fournisseurs de services (providers), il y en a déjà 5 au départ. Les providers
+servent à initialiser les composants.</li>
+<li>Models : le dossier des modèles avec déjà un présent qui concerne les utilisateurs.</li>
+</ul>
+
+<h3>Autres repertoires.</h3>
+
+<p>Voici une description du contenu des autres dossiers :
+- bootstrap : scripts d'initialisation de Laravel pour le chargement automatique des classes, la
+fixation de l'environnement et des chemins, et pour le démarrage de l'application,
+- public : tout ce qui doit apparaître dans le dossier public du site : images, CSS, scripts...
+- config : toutes les configurations : application, authentification, cache, base de données, espaces
+de noms, emails, systèmes de fichier, session...
+- database : migrations et populations,
+Le dossier database permet la gestion de la base données. Il contient trois sous-dossier.
+Les migrations sont des fichiers permettant de décrire votre base de données afin de permettre
+à Laravel de créer, modifier ou supprimer les tables et les colonnes automatiquement pour vous.
+- resources : vues, fichiers de langage et assets (par exemple les fichiers Sass),
+- routes : la gestion des urls d'entrée de l'application,
+- storage : données temporaires de l'application : vues compilées, caches, clés de session. . .
+- tests : fichiers de tests unitaires,
+- vendor : tous les composants de Laravel et de ses dépendances (créé par composer).</p>
+
+<h3>Fichiers de racine.</h3>
+
+<p>Il y a un certain nombre de fichiers dans la racine dont voici les principaux :</p>
+
+<p>!<a href="">repertoire_app</a></p>
+
+<ul>
+<li>artisan : outil en ligne (ligne de commande) de Laravel pour des tâches de gestion,</li>
+<li>composer.json : fichier de référence de composer,</li>
+<li>package.json : fichier de référence de npm pour les assets,</li>
+<li>phpunit.xml : fichier de configuration de phpunit (pour les tests unitaires),</li>
+<li>.env : fichier pour spécifier l'environnement d'exécution.
+Les fichiers .env contient les mots de passe de vos services ainsi que toutes les données sensibles
+de votre application (mot de passe de base de données, adresse de la base de données...).
+Ce fichier ne doit jamais être partagé. Afin de connaître les informations à renseigner, il existe
+un fichier .env.example qui contient uniquement des valeurs d'exemple.
+Nous verrons tout cela progressivement dans le cours,</li>
+</ul>
+
+<h3>Accessibilité</h3>
+
+<p>Pour des raisons de securité sur le serveur seul le dossier public est accessible.</p>
+
+<p>!<a href="">public</a></p>
+
+<p>Cette configuration n'est pas toujours possible sur un serveur mutualisé (partagé). Il faut alors modifier 
+un tout petit peu Laravel pour que ça fonctionne; nous en palerons peut être dans la partie déployement.</p>
+
+<h2>Installation de debugbar</h2>
+
+<pre><code>Pour installer le debugbar ou même un projet laravel il faut s'assurer que tous 
+indispensable suivant soit activé ou installer pour le faire on utilise décommente
+ces lignes dans le php.ini ou on les installe avec la commandes :
+</code></pre>
+
+<h3>Commande</h3>
+
+<pre><code>sudo apt-get install php7.4-extension
+</code></pre>
+
+<p>#
+    Mais ici mon problème c'est que mon php est en version 7.4 or laravel lui il est à 8
+    et souhaite que j'ai un php dont la version > 8:</p>
+
+<h3>Résoulution du problème.</h3>
+
+<pre><code>1.Version de php: php -v
+2.Liste des package de php dpkg -l | grep php | tee packages.txt
+3.Suppression de php : sudo apt-get purge php7.*
+    - Nétoyage des dépendences php:
+        * sudo apt-get autoclean
+        * sudo apt-get autoremove
+4.Préparation du système pour une nouvelle réinstallation:
+</code></pre>
+
+<p><code>sudo add-apt-repository ppa:ondrej/php</code></p>
+
+<pre><code>5.Installation de php 
+    * sudo apt-get update
+    * sudo apt-get install php8.1
+    * sudo systemctl restart apache2
+6.Installation des instensions php:
+</code></pre>
+
+<p><code>sudo apt install php8.1-common php8.1-mysql php8.1-xml php8.1-xmlrpc php8.1-curl php8.1-gd php8.1-imagick php8.1-cli php8.1-dev php8.1-imap php8.1-mbstring php8.1-opcache php8.1-soap php8.1-zip php8.1-intl -y</code></p>
+
+<pre><code>7.Vérification de la nouvelle version : php -v
+
+Pour installer le debuge bar il faut lancer la commande:
+</code></pre>
+
+<p><code>composer require barryvdh/laravel-debugbar:* --dev</code></p>
+
+<h2>Installation du package helper</h2>
+
+<p><code>composer require mercuryseries/laravel-helpers</code></p>
+
+<pre><code>Ajout d'un provider
+Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+</code></pre>
+
+<h3>Usage</h3>
+
+<pre><code>`php artisan ide-helper:generate`
+</code></pre>
+
+<h2>Installation de Tailwindcss</h2>
+
+<pre><code>NB: Pour plus d'information allez sur la doc
+de tailwindcss =&gt; https://tailwindcss.com/docs/guides/laravel
+
+sudo apt update
+sudo apt install nodejs npm
+
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+</code></pre>
+
+<h2>Pagination with tailwindcss</h2>
+
+<pre><code>npm i tailwindcss-plugins -D
+</code></pre>
+
+<h2>Installation du module pour l'importation en excel.</h2>
+
+<pre><code>composer require maatwebsite/excel
+php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
+php artisan make:import UsersImport --model=User
+</code></pre>
+
+<h2>Installation du module de qr-code</h2>
+
+<pre><code>composer require simplesoftwareio/simple-qrcode "~4"
+</code></pre>
+
+<h2>Authentification.</h2>
+
+<p>composer require laravel/breeze --dev </p>
