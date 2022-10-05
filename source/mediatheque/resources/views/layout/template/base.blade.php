@@ -31,7 +31,7 @@
             Chargement.....
         </div>
         <!-- Sidebar -->
-            <div class="flex hidden flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" hidden>
+            <div class="flex flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord">
                 @if(Auth::user())
                     @include('side_bar.side_bar')
                 @endif

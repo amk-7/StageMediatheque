@@ -6,9 +6,11 @@ use App\Helpers\UtilisateurHelper;
 
 use App\Models\Abonne;
 use App\Models\User;
+use App\Service\GlobaleService;
 use App\Service\UserService;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AbonneController extends Controller
 {
@@ -50,20 +52,47 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
+        Validator::make($request->all(), [
+            'numero_carte'=>['required',
+                function ($attribute, $value, $flail){
+                    if (! GlobaleService::verifieCart($value)){
+                        $flail("Ce numéro de carte est invalide");
+                    }
+                }
+            ],
+        ])->validate();
+
+        Validator::make($request->all(), [
+            'contact'=>['required',
+                function ($attribute, $value, $flail){
+                    if (! GlobaleService::verifieContact($value)){
+                        $flail("Ce ".$attribute." est invalide");
+                    }
+                }
+            ],
+        ])->validate();
+
+        Validator::make($request->all(), [
+            'contact_a_prevenir'=>['required',
+                function ($attribute, $value, $flail){
+                    if (! GlobaleService::verifieContact($value)){
+                        $flail("Ce ".$attribute." est invalide");
+                    }
+                }
+            ],
+        ])->validate();
+
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
             'nom_utilisateur' => 'required',
             'password' => 'required',
-            'contact' => 'required',
             'ville' => 'required',
             'quartier' => 'required',
             'sexe' => 'required',
             'date_naissance' => 'required',
             'niveau_etude' => 'required',
             'profession' => 'required',
-            'contact_a_prevenir' => 'required',
-            'numero_carte' => 'required',
             'type_de_carte' => 'required'
         ]);
 
@@ -75,12 +104,10 @@ class AbonneController extends Controller
 
         // Vérification des contacts.
 
-        $utilisateurs = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom);
-        if(count($utilisateurs)!=0){
-
-        }else{
+        $utilisateur = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom)->first();
+        if(! $utilisateur){
             $utilisateur = UserService::enregistrerUtilisateur($request);
-            $abonne = Abonne::create([
+            Abonne::create([
                 'date_naissance' => $request->date_naissance,
                 'niveau_etude' => $request->niveau_etude,
                 'profession' => $request->profession,
@@ -90,8 +117,8 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-        dd("OK");
-        return redirect()->route('formulaireEnregistrementResgistration')->with('abonne', $abonne);
+
+        return redirect()->route('listeAbonnes');
     }
 
     /**
@@ -170,5 +197,17 @@ class AbonneController extends Controller
         //
         $abonne->delete();
         return redirect()->route('listeAbonnes');
+    }
+
+    public function mesEmprunts(Abonne $abonne)
+    {
+        $emprunts = $abonne->emprunts()->get();
+        return view('abonnes.mes_emprunt')->with('emprunts', $emprunts);
+    }
+
+    public function mesEmpruntsEnCours(Abonne $abonne)
+    {
+        $emprunts = $abonne->getEmpruntsEnCours();
+        return view('abonnes.mes_emprunt_actuelle')->with('emprunts', $emprunts);
     }
 }

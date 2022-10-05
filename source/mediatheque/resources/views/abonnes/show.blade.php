@@ -11,7 +11,7 @@
                 <span class="label_title_sub_title"> Niveau Etude : </span>
                 <span class="label_show_value">{{$abonne->niveau_etude}}</span>
         </label></br>
-        
+
         <label>
                 <span class="label_title_sub_title"> Profession : </span>
                 <span class="label_show_value">{{$abonne->profession}}</span>
@@ -31,6 +31,5 @@
                 <span class="label_title_sub_title"> Type de Carte : </span>
                 <span class="label_show_value">{{$abonne->type_de_carte}}</span>
         </label></br>
-
 
 @endsection

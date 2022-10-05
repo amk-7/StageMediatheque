@@ -16,76 +16,82 @@
                         <div class="alert">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div>
-                        <label>image</label>
-                    </div>
-                    <div class="flex flex-row m-3">
-                        <div class="border border-gray-200 text-center">
-                            <img src="" alt="image_livre" id="profil_object" size>
+                    <div class="flex flex-row space-x-3">
+                        <div class="flex flex-col w-1/3 mt-6 mr-3">
+                            <div>
+                                <label class="label">Image</label>
+                            </div>
+                            <div class="border border-gray-200 text-center">
+                                <img src="" alt="image_livre" id="profil_object" width="200" height="250" size>
+                            </div>
+                            <div class="flex flex-col-reverse p-2">
+                                <input type="file" onchange="previewPicture(this)" name="image_livre" id="" value=""
+                                       accept="image/jpg, image/jpeg, image/png, image/jpeg"><br>
+                            </div>
                         </div>
-                        <div class="flex flex-col-reverse p-2">
-                            <input type="file" onchange="previewPicture(this)" name="image_livre" id="" value=""
-                                   accept="image/jpg, image/jpeg, image/png, image/jpeg"><br>
+                        <div class="flex flex-col">
+                            <div class="flex flex-row">
+                                <div class="flex flex-col m-3">
+                                    <label class="label">Niveau</label>
+                                    <select id="ajouterNiveau" name="niveau" class="select_btn
+                                  @error('niveau') is-invalid @enderror">
+                                        <option>Sélectionner niveau</option>
+                                        @foreach($niveaus as $niveau)
+                                            <option value="{{$niveau}}" {{ old('niveau') == $niveau ? 'selected':'' }}>{{ \App\Helpers\OuvrageHelper::afficherNiveau($niveau) }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('niveau')
+                                    <div class="alert">{{ $message }}</div>
+                                    @enderror
+                                    <div id="listeNiveau"></div>
+                                </div>
+                                <div class="flex flex-col m-3">
+                                    <label class="label">Type</label>
+                                    <select name="type" id="type" class="select_btn @error('type') is-invalid @enderror">
+                                        <option>Sélectionner type</option>
+                                        @foreach($types as $type)
+                                            <option value="{{$type}}" {{ old('type') == $type ? 'selected':'' }}>{{$type}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('type')
+                                    <div class="alert">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="flex flex-row">
+                                <div class="flex flex-col m-3">
+                                    <label class="label">langue</label>
+                                    <select name="langue" class="select_btn">
+                                        <option>Sélectionner langue</option>
+                                        @foreach($langues as $langue)
+                                            <option value="{{$langue}}" {{ old('langue') == $langue ? 'selected':'' }}>{{$langue}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="flex flex-col m-3">
+                                    <label class="label">Année d'apparution</label>
+                                    <select name="annee_apparution" id="annee_apparution"
+                                            class="select_btn @error('annee_apparution') is-invalid @enderror">
+                                        <option>Séléctionner année</option>
+                                        @for($annee=$annees; $annee< date('Y'); $annee++)
+                                            <option value="{{$annee}}" {{ old('annee') == $annee ? 'selected':'' }} >{{$annee}}</option>
+                                        @endfor
+                                    </select>
+                                    @error('annee_apparution')
+                                    <div class="alert">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="flex flex-col m-3">
+                                <label class="label">Lieu d'édition</label>
+                                <input name="lieu_edition" id="lieu_edition" type="text" value="{{ old('lieu_edition') }}"
+                                       placeholder="Saisire le lieu d'édition"
+                                       class="input @error('lieu_edition') is-invalid @enderror" autocomplete="off">
+                                @error('lieu_edition')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex flex-auto">
-                        <div class="flex flex-col m-3">
-                            <label class="label">Niveau</label>
-                            <select id="ajouterNiveau" name="niveau" class="select_btn
-                              @error('niveau') is-invalid @enderror">
-                                <option>Sélectionner niveau</option>
-                                @foreach($niveaus as $niveau)
-                                    <option value="{{$niveau}}" {{ old('niveau') == $niveau ? 'selected':'' }}>{{ \App\Helpers\OuvrageHelper::afficherNiveau($niveau) }}</option>
-                                @endforeach
-                            </select>
-                            @error('niveau')
-                            <div class="alert">{{ $message }}</div>
-                            @enderror
-                            <div id="listeNiveau"></div>
-                        </div>
-                        <div class="flex flex-col m-3">
-                            <label class="label">Type</label>
-                            <select name="type" id="type" class="select_btn @error('type') is-invalid @enderror">
-                                <option>Sélectionner type</option>
-                                @foreach($types as $type)
-                                    <option value="{{$type}}" {{ old('type') == $type ? 'selected':'' }}>{{$type}}</option>
-                                @endforeach
-                            </select>
-                            @error('type')
-                            <div class="alert">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="flex flex-col m-3">
-                            <label class="label">langue</label>
-                            <select name="langue" class="select_btn">
-                                <option>Sélectionner langue</option>
-                                @foreach($langues as $langue)
-                                    <option value="{{$langue}}" {{ old('langue') == $langue ? 'selected':'' }}>{{$langue}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="flex flex-col m-3">
-                            <label class="label">Année d'apparution</label>
-                            <select name="annee_apparution" id="annee_apparution"
-                                    class="select_btn @error('annee_apparution') is-invalid @enderror">
-                                <option>Séléctionner année</option>
-                                @for($annee=$annees; $annee< date('Y'); $annee++)
-                                    <option value="{{$annee}}" {{ old('annee') == $annee ? 'selected':'' }} >{{$annee}}</option>
-                                @endfor
-                            </select>
-                            @error('annee_apparution')
-                            <div class="alert">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="flex flex-col m-3">
-                        <label class="label">Lieu d'édition</label>
-                        <input name="lieu_edition" id="lieu_edition" type="text" value="{{ old('lieu_edition') }}"
-                               placeholder="Saisire le lieu d'édition"
-                               class="input @error('lieu_edition') is-invalid @enderror" autocomplete="off">
-                        @error('lieu_edition')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
                     </div>
                 </div>
             </fieldset>

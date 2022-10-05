@@ -7,6 +7,7 @@ use App\Models\Registration;
 use App\Models\TarifAbonnement;
 use App\Service\AbonneService;
 use App\Service\EmpruntService;
+use App\Service\GlobaleService;
 use App\Service\PersonnelService;
 use Illuminate\Http\Request;
 
@@ -64,7 +65,7 @@ class LiquideController extends Controller
             "id_tarif_abonnement" => $tarifs->id_tarif_abonnement,
             'id_abonne'=>$request->prenom_abonnes,
             "date_debut" => date("Y-m-d"),
-            "date_fin" => EmpruntService::determinerDateRetour($tarifs->duree_validite),
+            "date_fin" => GlobaleService::determinerDateFinAbonnement($tarifs->duree_validite),
         ]);
 
         Liquide::create([
