@@ -5,10 +5,16 @@
 
     <div>
         <label class="label" for="statut">Statut : </label>
-            <div>
-                    <input type="radio" name="statut" value="Bibliothècaire">Bibliothècaire</input>
-                    <input type="radio" name="statut" value="Responsable">Responsable</input>
+        <div class="flex space-x-3">
+            <div class="flex space-x-1">
+                <input type="radio" name="statut" value="Bibliothècaire"/>
+                <label class="label">Bibliothècaire</label>
             </div>
+            <div class="flex space-x-1">
+                <input type="radio" name="statut" value="Responsable"/>
+                <label class="label">Responsable</label>
+            </div>
+        </div>
     </div>
 @endsection
 

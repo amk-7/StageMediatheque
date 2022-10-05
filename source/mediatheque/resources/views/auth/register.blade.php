@@ -1,60 +1,84 @@
-@extends('layout.template.base')
-@section('content')
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="{{ route('listeLivresNumerique') }}">
-                <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
-            </a>
-        </x-slot>
+@extends('layout.user.userCreate', ['action'=>"register", 'title'=>"Abonnement"])
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <!-- Name -->
+@section('abonne')
+    <div class="flex flex-row space-x-3">
+        <div class="w-1/2">
+            <label class="label" for="date_naissance">Date de naissance</label>
+            <input type="date" name="date_naissance" id="date_naissance" value="{{old('date_naissance')}}" class="input @error('date_naissance') is-invalid @enderror">
+            @error('date_naissance')
+            <div class="alert">{{ $message }}</div>}
+            @enderror
+        </div>
+        <div class="w-1/2">
+            <label class="label" for="contact_a_prevenir">Contact à prévenir</label>
+            <input type="text" name="contact_a_prevenir" id="contact_a_prevenir" value="{{old('contact_a_prevenir')}}" class="input @error('contact_a_prevenir') is-invalid @enderror">
+            @error('contact_a_prevenir')
+            <div class="alert">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+    <div class="flex flex-row">
+        <div class="w-1/2">
+            <label class="label" for="niveau_etude">Niveau d'étude : </label>
             <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <div class="label">
+                    <input type="radio" name="niveau_etude" value="Primaire"/>
+                    <label>Primaire</label>
+                </div>
+                <div class="label">
+                    <input type="radio" name="niveau_etude" value="Collège"/>
+                    <label>Collège</label>
+                </div>
+                <div class="label">
+                    <input type="radio" name="niveau_etude" value="Lycée"/>
+                    <label>Lycée</label>
+                </div>
+                <div class="label">
+                    <input type="radio" name="niveau_etude" value="Université"/>
+                    <label>Université</label>
+                </div>
             </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+        </div>
+        <div class="w-1/2">
+            <label class="label" for="profession">Profession : </label>
+            <div>
+                <div class="label">
+                    <input type="radio" name="profession" value="Elève"/>
+                    <label>Elève</label>
+                </div>
+                <div class="label">
+                    <input type="radio" name="profession" value="Etudiant"/>
+                    <label>Etudiant</label>
+                </div>
+                <div class="label">
+                    <input type="radio" name="profession" value="Fonctionnaire"/>
+                    <label>Fonctionnaire</label>
+                </div>
+                <div class="label">
+                    <input type="radio" name="profession" value="Retraité"/>
+                    <label>Retraité</label>
+                </div>
             </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Mot de passe')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
+        </div>
+    </div>
+    <div>
+        <label class="label" for="type_de_carte">Type de carte :</label>
+        <div class="flex flex-row space-x-3">
+            <div class="label">
+                <input type="radio" name="type_de_carte" value="Identité"/>
+                <label>Identité</label>
             </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
+            <div class="label">
+                <input type="radio" name="type_de_carte" value="Scolaire"/>
+                <label>Scolaire</label>
             </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Déjà inscrit ?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __("S'inscrire") }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
+        </div>
+    </div>
+    <div>
+        <label class="label" for="numero_carte">Numéro de carte</label>
+        <input type="text" name="numero_carte" id="numero_carte" value="{{old('numero_carte')}}"  class="input @error('numero_carte') is-invalid @enderror">
+        @error('numero_carte')
+        <div class="alert">{{ $message }}</div>
+        @enderror
+    </div>
 @stop
