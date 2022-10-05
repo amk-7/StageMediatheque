@@ -91,11 +91,11 @@
             <div class="flex flex-col">
                 <label class="label" for="sexe">Sexe : </label>
                 <div class="flex flex-row space-x-8 text-center">
-                    <div>
+                    <div class="label">
                         <input type="radio" name="sexe" value="Masculin"/>
                         <label>Masculin</label>
                     </div>
-                    <div>
+                    <div class="label">
                         <input type="radio" name="sexe" value="Feminin"/>
                         <label>Feminin</label>
                     </div>
