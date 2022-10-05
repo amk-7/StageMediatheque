@@ -114,7 +114,7 @@
                        </a>
                    </li>
                    <!-- Menu respons -->
-                   @if(in_array(Auth::user()->roles()->first()->name, ["responsable", "bibliothecaire"], true))
+                   @if(Auth::user()->hasRole('bibliothecaire'))
                        <li>
                            <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Gestion des ouvrages</span>
@@ -142,7 +142,7 @@
                                <li>
                                    <a href="/liste_des_abonnes" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Abonnés</a>
                                </li>
-                               @if(Auth::user()->roles()->first()->name == "responsable")
+                               @if(Auth::user()->hasRole('responsable'))
                                    <li>
                                        <a href="/liste_des_personnels" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Presonnels</a>
                                    </li>
@@ -165,17 +165,17 @@
                        <li>
                            <ul id="dropdown-example" class="">
                                <li>
-                                   <a href="/" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mon compte</a>
+                                   <a href="/affiche_abonne/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mon compte</a>
                                </li>
                            </ul>
                            <ul id="dropdown-example" class="">
                                <li>
-                                   <a href="/" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes emprunts</a>
+                                   <a href="/liste_mes_emprunts/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes emprunts</a>
                                </li>
                            </ul>
                            <ul id="dropdown-example" class="">
                                <li>
-                                   <a href="/" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunts en cours</a>
+                                   <a href="/liste_mes_emprunts_actuelle/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunts en cours</a>
                                </li>
                            </ul>
                        </li>

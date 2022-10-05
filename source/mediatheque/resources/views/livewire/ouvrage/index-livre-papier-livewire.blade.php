@@ -94,12 +94,12 @@
             </div>
         @else
            <div class="m-6 flex flex-col">
-               @for($j=0; $j<count($livresPapiers); $j += 5)
+               @for($j=0; $j<count($livresPapiers); $j += 4)
                    <div class="flex flex-row space-x-3">
-                       @for($i=$j; $i<$j+5; $i++)
+                       @for($i=$j; $i<$j+4; $i++)
                            @if($livresPapiers[$i])
-                               <div class="card">
-                                   <a href="{{route('affichageLivrePapier', $livresPapiers[$i])}}" class="">
+                               <div class="">
+                                   <a href="{{route('affichageLivrePapier', $livresPapiers[$i])}}" class="card">
                                        <div class="image">
                                            <img src="{{ asset('storage/images/images_livre/'.$livresPapiers[$i]->ouvragesPhysique->ouvrage->image) }}"
                                                 alt="{{$livresPapiers[$i]->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>

@@ -39,6 +39,9 @@ Route::middleware('auth')->group(function(){
     Route::delete('suppression_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@destroy')->name('destroyAbonne');
     Route::get('formulaire_Abonne', 'App\Http\Controllers\AbonneController@create')->name('createAbonne');
     Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
+    Route::get('liste_mes_emprunts/{abonne}', 'App\Http\Controllers\AbonneController@mesEmprunts')->name('ListemesEmprunts');
+    Route::get('liste_mes_emprunts_actuelle/{abonne}', 'App\Http\Controllers\AbonneController@mesEmpruntsEnCours')->name('ListemesEmpruntsActuelle');
+
 
 // Path: Personnel routes/web.php
     Route::get('liste_des_personnels', 'App\Http\Controllers\PersonnelController@index')->name('listePersonnels');

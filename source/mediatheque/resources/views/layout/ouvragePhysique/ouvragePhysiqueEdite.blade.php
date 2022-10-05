@@ -3,14 +3,14 @@
     <fieldset>
         <legend>Stock</legend>
         <div>
-            <label>Nombre d'exemplaire</label>
-            <input name="nombre_exemplaire" type="number"
+            <label class="label">Nombre d'exemplaire</label>
+            <input name="nombre_exemplaire" type="number" class="input_elt"
                    value="{{ $ouvragesPhysique->nombre_exemplaire }}">
         </div>
         <div>
             <div>
-                <label>Rayons</label>
-                <select id="id_classification_dewey_centaine" name="id_classification_dewey_centaine">
+                <label class="label">Rayons</label>
+                <select id="id_classification_dewey_centaine" name="id_classification_dewey_centaine" class="select_btn">
                     <option>Sélectionner rayon</option>
                     @foreach($classification_dewey_centaines as $classification_dewey_centaine)
                         <option value="{{$classification_dewey_centaine->id_classification_dewey_centaine}}"
@@ -21,8 +21,8 @@
                 </select>
             </div>
             <div>
-                <label>Etagère</label>
-                <select id="id_classification_dewey_dizaine" name="id_classification_dewey_dizaine">
+                <label class="label">Etagère</label>
+                <select id="id_classification_dewey_dizaine" name="id_classification_dewey_dizaine" class="select_btn">
                     <option>Sélectionner etagère</option>
                     @foreach($classification_dewey_dizaines as $classification_dewey_dizaine)
                         @if($classification_dewey_dizaine->id_classification_dewey_centaine == $livresPapier->ouvragesPhysique->classificationDeweyDizaine->id_classification_dewey_centaine)

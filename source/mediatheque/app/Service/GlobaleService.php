@@ -7,14 +7,28 @@ use phpDocumentor\Reflection\Types\Boolean;
 
 class GlobaleService
 {
-    public static function verifieContact(String $contact) : Boolean
+    public static function verifieCart(String $carte) : bool
     {
-        /*
-         *
-         *
-         */
-        return false;
+        $carte = str_replace(" ", "", trim($carte));
+        $pattern1 = "/([1-9]{4})(-)([1-9]{3})(-)([1-9]{4})/";
+        return preg_match($pattern1, $carte)==1;
     }
+
+    public static function verifieContact(String $contact) : bool
+    {
+        $contact = str_replace(" ", "", trim($contact));
+        $pattern = "/((9[0-36-9])|(7[019])|(2[1-7]))[0-9]{6}/";
+        return preg_match($pattern, $contact)==1;
+    }
+    public static function determinerDateFinAbonnement(String $duree_emprunt)
+    {
+        $nbjour = (integer) $duree_emprunt;
+        $date = date_create();
+        date_add($date,date_interval_create_from_date_string("$nbjour days"));
+        $date_retour = date_format($date, 'Y-m-d');
+        return $date_retour;
+    }
+
     public static function extractLineToData($data) : array
     {
         $array_data = array();

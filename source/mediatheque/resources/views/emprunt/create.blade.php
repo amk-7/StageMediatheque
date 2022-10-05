@@ -1,7 +1,7 @@
 @extends("layout.template.base")
 
 @section("content")
-    <div class="flex flex-col justify-center items-center m-auto" >
+    <div class="flex flex-col justify-center items-center m-auto">
         <form action="{{route('storeEmprunt')}}" method="post" class="bg-white p-12 mb-12 space-y-3">
             @csrf
            <div class="flex flex-col items-center justify-center">
@@ -118,7 +118,6 @@
                        <th class="fieldset_border" >Cote</th>
                        <th class="fieldset_border" >Titre ouvrage</th>
                        <th class="fieldset_border" >Etat de l'ouvrage</th>
-                       <th class="fieldset_border" >Editer</th>
                        <th class="fieldset_border" >Supprimer</th>
                    </tr>
                    </thead>
@@ -296,22 +295,11 @@
                 let cell_ouvrage = document.createElement('td');
                 let cell_etat_ouvrage = document.createElement('td');
                 let cell_supprimer = document.createElement('td');
-                let cell_editer = document.createElement('td');
-
-                let button_editer = document.createElement('button');
                 let button_supprimer = document.createElement('button');
 
-                button_editer.innerText = "Editer";
-                button_editer.id = number - 1;
-                button_editer.classList = "button button_primary";
                 button_supprimer.innerText = "Supprimer";
                 button_supprimer.id = number - 1;
                 button_supprimer.classList = "button button_delete";
-
-                button_editer.addEventListener('click', function (e) {
-                    stopPropagation();
-                    editerLigne(button_editer.id);
-                });
 
                 button_supprimer.addEventListener('click', function (e) {
                     stopPropagation(e);
@@ -323,21 +311,18 @@
                 cell_etat_ouvrage.innerText = etat_ouvrage.value;
                 cell_code.innerText = cote_ouvrage.value;
 
-                cell_editer.appendChild(button_editer);
                 cell_supprimer.appendChild(button_supprimer);
                 number++;
                 cell_number.classList = "fieldset_border";
                 cell_code.classList = "fieldset_border";
                 cell_ouvrage.classList = "fieldset_border";
                 cell_etat_ouvrage.classList = "fieldset_border";
-                cell_editer.classList = "fieldset_border";
                 cell_supprimer.classList = "fieldset_border";
 
                 row.appendChild(cell_number);
                 row.appendChild(cell_code);
                 row.appendChild(cell_ouvrage);
                 row.appendChild(cell_etat_ouvrage);
-                row.appendChild(cell_editer);
                 row.appendChild(cell_supprimer);
 
                 table_body.appendChild(row);
