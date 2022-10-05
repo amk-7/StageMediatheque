@@ -7,7 +7,7 @@
     @if(!empty($livresNumeriques ?? "") && $livresNumeriques->count())
         @if(Auth::user() && Auth::user()->hasRole('bibliothecaire'))
             <div class="m-3">
-                <div class="flex flex-row content-center">
+                <div class="flex flex-row content-center space-x-3">
                     <td>
                         <form action="{{route('formulaireEnregistrementLivreNumerique')}}" method="get">
                             @csrf
@@ -21,7 +21,7 @@
                         <label for="par_page">par page</label-->
                     </div>
                 </div>
-                <table class="">
+                <table class="fieldset_border bg-white">
                     <thead class="text-xs bg-white uppercase bg-gray-70 dark:bg-gray-300 dark:text-gray-500 text-center">
                     <tr>
                         <th class="fieldset_border">Numéro</th>
