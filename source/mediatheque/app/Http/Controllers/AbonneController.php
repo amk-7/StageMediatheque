@@ -11,6 +11,7 @@ use App\Service\UserService;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class AbonneController extends Controller
 {
@@ -117,6 +118,7 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
+        $utilisateur->assignRole(Role::find(3));
 
         return redirect()->route('listeAbonnes');
     }

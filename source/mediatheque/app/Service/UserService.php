@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 class UserService
 {
     public static function enregistrerUtilisateur(Request $request){
-        
+
         //récuperation de l'image
         $image = $request->file('photo_profil');
-        
+
         if ($image != null){
             //enregistrement de l'image
             $chemin_image = strtolower($request->nom).strtolower($request->prenom).'.'.$image->extension();
@@ -26,7 +26,7 @@ class UserService
             'prenom' => $request->prenom,
             'nom_utilisateur' => $request->nom_utilisateur,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => \Hash::make($request->password),
             'contact' => $request->contact,
             'photo_profil' => $chemin_image,
             'adresse' => $request->adresse,
@@ -49,7 +49,7 @@ class UserService
 
         //récuperation de l'image
         $image = $request->file('photo_profil');
-        
+
         if ($image != null){
             //enregistrement de l'image
             $chemin_image = strtolower($request->nom).strtolower($request->prenom).'.'.$image->extension();
