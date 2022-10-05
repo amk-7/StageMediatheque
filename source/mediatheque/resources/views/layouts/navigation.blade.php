@@ -25,7 +25,7 @@
             <div class="hidden space-x-6 sm:flex sm:items-center sm:ml-6">
                 @if(Auth::guest())
                     <button class="button button_show">
-                        <a href="/register">{{ __("S'inscrire") }}</a>
+                        <a href="/register">{{ __("S'abonne") }}</a>
                     </button>
                     <button class="button button_primary">
                         <a href="/login">{{ __("Se connecter") }}</a>

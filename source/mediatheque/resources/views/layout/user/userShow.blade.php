@@ -32,7 +32,6 @@
             <label>Nom d'utilisateur : </label>
             <label>{{$utilisateur->nom_utilisateur}}</label>
         </div>
-
         <div class="label">
             <label>Email : </label>
             <label>{{$utilisateur->email}}</label>
@@ -69,15 +68,11 @@
     </div>
 </div>
 </fieldset>
-<div class="flex flex-row space-x-3 justify-center items-center">
+@if(Auth::user()->hasRole('abonne'))
     <div>
-        <button class="button button_primary w-full mt-12" type="Submit">Retour</button>
+        <form method="get" action="{{route('editAbonne', $abonne)}}">
+            <button class="button button_primary" type="Submit">Editer</button>
+        </form>
     </div>
-    <div>
-        <button class="button button_primary w-full mt-12" type="Submit">Suivant</button>
-    </div>
-</div>
-</form>
-
-
+@endif
 @stop

@@ -32,6 +32,4 @@
                 <label>{{$abonne->type_de_carte}}</label>
         </div>
 
-
-
 @endsection
