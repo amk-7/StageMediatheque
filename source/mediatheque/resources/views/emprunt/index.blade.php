@@ -10,7 +10,7 @@
                         <button type="Submit" class="button button_primary">Ajouter</button>
                     </form>
                 </div>
-                <table border="1" class="fieldset_border">
+                <table class="fieldset_border bg-white">
                     <thead class="thead">
                     <tr class="fieldset_border">
                         <th class="fieldset_border" >Numéro</th>

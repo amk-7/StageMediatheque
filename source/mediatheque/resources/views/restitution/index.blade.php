@@ -9,7 +9,7 @@
                 </form>
             </div-->
             @if(! empty( $restitutions ?? "") && $restitutions->count() > 0)
-                <table border="1" class="fieldset_border">
+                <table class="fieldset_border bg-white">
                     <thead class="fieldset_border">
                     <tr>
                         <th class="fieldset_border" >Numer</th>
