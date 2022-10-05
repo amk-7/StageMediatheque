@@ -2,34 +2,34 @@
 
 @section('abonne')
 
-        <label>
-                <span class="label_title_sub_title"> Date Naissance : </span>
-                <span class="label_show_value">{{$abonne->date_naissance->format('d/m/Y')}}</span>
-        </label></br>
+        <div class="label">
+                <label> Date Naissance : </label>
+                <label>{{$abonne->date_naissance->format('d/m/Y')}}</label>
+        </div>
 
-        <label>
-                <span class="label_title_sub_title"> Niveau Etude : </span>
-                <span class="label_show_value">{{$abonne->niveau_etude}}</span>
-        </label></br>
+        <div class="label">
+                <label> Niveau Etude : </label>
+                <label>{{$abonne->niveau_etude}}</label>
+        </div>
+        
+        <div class="label">
+                <label> Profession : </label>
+                <label>{{$abonne->profession}}</label>
+        </div>
 
-        <label>
-                <span class="label_title_sub_title"> Profession : </span>
-                <span class="label_show_value">{{$abonne->profession}}</span>
-        </label></br>
+        <div class="label">
+                <label> Contact à prevenir : </label>
+                <label>{{$abonne->contact_a_prevenir}}</label>
+        </div>
 
-        <label>
-                <span class="label_title_sub_title"> Contact à prevenir : </span>
-                <span class="label_show_value">{{$abonne->contact_a_prevenir}}</span>
-        </label></br>
+        <div class="label">
+                <label> Numero Carte : </label>
+                <label>{{$abonne->numero_carte}}</span>
+        </div>
 
-        <label>
-                <span class="label_title_sub_title"> Numero Carte : </span>
-                <span class="label_show_value">{{$abonne->numero_carte}}</span>
-        </label></br>
-
-        <label>
-                <span class="label_title_sub_title"> Type de Carte : </span>
-                <span class="label_show_value">{{$abonne->type_de_carte}}</span>
-        </label></br>
+        <div class="label">
+                <label> Type de Carte : </label>
+                <label>{{$abonne->type_de_carte}}</label>
+        </div>
 
 @endsection
