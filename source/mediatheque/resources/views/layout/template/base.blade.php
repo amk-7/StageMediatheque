@@ -36,7 +36,8 @@
                     @include('side_bar.side_bar')
                 @endif
             </div>
-            <main class="flex items-center justify-center flex-1 px-4 py-8 mt-16 ml-16">
+            <img id="bg" src="{{asset('storage/images/bg3.jpg')}}" class="hidden">
+            <main id="main" class="flex items-center justify-center flex-1 px-4 py-8 mt-16 ml-16">
                 <!-- Content -->
                 @yield('content')
             </main>

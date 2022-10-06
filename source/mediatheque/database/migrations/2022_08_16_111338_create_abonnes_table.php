@@ -19,7 +19,7 @@ class CreateAbonnesTable extends Migration
             $table->string('niveau_etude');
             $table->string('profession');
             $table->string('contact_a_prevenir');
-            $table->bigInteger('numero_carte');
+            $table->string('numero_carte');
             $table->string('type_de_carte');
             $table->bigInteger('id_utilisateur');
             $table->timestamps();

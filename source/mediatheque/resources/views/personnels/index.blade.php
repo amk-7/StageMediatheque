@@ -3,12 +3,12 @@
     <div class="flex flex-col justify-center items-center">
         <h1 class="label_title">Liste du Personnels</h1>
         <div class="ml-16">
-            <div>
+            <div class="mb-3">
                 <form method="GET" action="{{route('createPersonnel')}}">
-                    <button type="Submit">Ajouter un Personnel</button>
+                    <button type="Submit" class="button button_primary">Ajouter un Personnel</button>
                 </form>
             </div>
-            <table class="fieldset_border">
+            <table class="fieldset_border bg-white">
                 <tr class="fieldset_border" >
                     <th class="fieldset_border" >N°</th>
                     <th class="fieldset_border" >Profil</th>
