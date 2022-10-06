@@ -142,6 +142,9 @@
                                <li>
                                    <a href="/liste_des_abonnes" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Abonnés</a>
                                </li>
+                               <li>
+                                   <a href="/liste_des_liquides" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Abonnements</a>
+                               </li>
                                @if(Auth::user()->hasRole('responsable'))
                                    <li>
                                        <a href="/liste_des_personnels" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Presonnels</a>

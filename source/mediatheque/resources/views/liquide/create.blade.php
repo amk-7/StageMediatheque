@@ -1,34 +1,20 @@
 @extends('layout.template.base')
 
 @section('content')
-<div>
-    <h1>Registrations</h1>
-    <form action="{{route('storeLiquide')}}" method="post">
+<div class="flex flex-col justify-center items-center m-auto">
+    <form action="{{route('storeLiquide')}}" method="post" class="bg-white p-12 mb-12 space-y-3">
         @csrf
-        <fieldset>
-            <legend>Personnel</legend>
-            <div>
-                <label>Nom</label>
-                <select name="nom_personnes", id="nom_personnes">
-                </select>
-            </div>
-            <div>
-                <label>Prénom</label>
-                <select name="prenom_personnes" id="prenom_personnes">
-                    <option>Séléctionner prénom</option>
-                </select>
-            </div>
-        </fieldset>
-       <fieldset>
+        <h1 class="label_title">Registrations</h1>
+       <fieldset class="fieldset_border">
            <legend>Abonne</legend>
            <div>
-               <label>Nom</label>
-               <select name="nom_abonnes", id="nom_abonnes">
+               <label class="label">Nom</label>
+               <select name="nom_abonnes" id="nom_abonnes" class="select_btn">
                </select>
            </div>
            <div>
-               <label>Prénom</label>
-               <select name="prenom_abonnes" id="prenom_abonnes">
+               <label class="label">Prénom</label>
+               <select name="prenom_abonnes" id="prenom_abonnes" class="select_btn">
                    <option>Séléctionner prénom</option>
                </select>
            </div>
@@ -36,16 +22,16 @@
         <fieldset>
             <legend>Abonnement</legend>
             <div>
-                <label>Type</label>
-                <select name="tarifs" id="tarifs">
+                <label class="label">Type</label>
+                <select name="tarifs" id="tarifs" class="select_btn">
                 </select>
-                <label>
+                <label class="label">
                     <span>Montant: </span>
                     <span id="montant">0 FCFA</span>
                 </label>
             </div>
             <div>
-                <label>
+                <label class="label">
                     <span>Payé: </span>
                 </label>
                 <div>
