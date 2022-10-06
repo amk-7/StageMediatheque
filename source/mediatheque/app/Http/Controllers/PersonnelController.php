@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Personnel;
 use App\Models\User;
 use App\Service\UserService;
+use App\Service\GlobaleService;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 class PersonnelController extends Controller
 {
     /**
@@ -43,6 +45,36 @@ class PersonnelController extends Controller
         //
 
         //dd($request);
+
+        Validator::make($request->all(), [
+            'numero_carte'=>['required',
+                function ($attribute, $value, $flail){
+                    if (! GlobaleService::verifieCart($value)){
+                        $flail("Ce numéro de carte est invalide");
+                    }
+                }
+            ],
+        ])->validate();
+
+        Validator::make($request->all(), [
+            'contact'=>['required',
+                function ($attribute, $value, $flail){
+                    if (! GlobaleService::verifieContact($value)){
+                        $flail("Ce ".$attribute." est invalide");
+                    }
+                }
+            ],
+        ])->validate();
+
+        Validator::make($request->all(), [
+            'contact_a_prevenir'=>['required',
+                function ($attribute, $value, $flail){
+                    if (! GlobaleService::verifieContact($value)){
+                        $flail("Ce ".$attribute." est invalide");
+                    }
+                }
+            ],
+        ])->validate();
         
         $request->validate([
             'nom' => 'required',
@@ -57,14 +89,12 @@ class PersonnelController extends Controller
             'statut' => 'required'
         ]);
 
-
-
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
-        $utilisateur = User::create([
+        /*$utilisateur = User::create([
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'nom_utilisateur' => $request->nom_utilisateur,
@@ -74,14 +104,17 @@ class PersonnelController extends Controller
             'photo_profil' => $request->photo_profil,
             'adresse' => $request->adresse,
             'sexe' => $request->sexe
-        ]);
+        ]);*/
 
-        $personnel = Personnel::create([
-            'statut' => $request->statut,
-            'id_utilisateur' => $utilisateur->id_utilisateur
-        ]);
-
-        $personnel->save();
+        $utilisateur = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom)->first();
+        if(! $utilisateur){
+            $utilisateur = UserService::enregistrerUtilisateur($request);
+            Personnel::create([
+                'statut' => $request->statut,
+                'id_utilisateur' => $utilisateur->id_utilisateur
+            ]);
+        }        
+        $utilisateur->assignRole([Role::find(2), Role::find(1)]);
         return redirect()->route('listePersonnels');
     }
 
