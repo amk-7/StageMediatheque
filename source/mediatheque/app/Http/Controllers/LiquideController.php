@@ -49,8 +49,6 @@ class LiquideController extends Controller
     {
         //dd($request);
         $request->validate([
-            "nom_personnes" => "required",
-            "prenom_personnes" => "required",
             "nom_abonnes" => "required",
             "prenom_abonnes" => "required",
             "tarifs" => "required",

@@ -114,7 +114,6 @@ Route::middleware('auth')->group(function(){
     Route::delete('suppression_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreNumerique');
     Route::get('lire_pdf/{ouvrage}/lecture', [LivreNumeriqueController::class, 'readPdf'])->name('lirePDF');
 
-
     Route::get('formulaire_enregistrement_livre_papier', [LivresPapierController::class, 'create'])->name('formulaireEnregistrementLivrePapier');
     Route::post('enregistrement_livre_papier', [LivresPapierController::class, 'store'])->name('enregistementLivrePapier');
     Route::get('formulaire_modification_livres_papier/{livres_papier}/modifier', [LivresPapierController::class, 'edit'])->name('formulaireModificationLivrePapier');
