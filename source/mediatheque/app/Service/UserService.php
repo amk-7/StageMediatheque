@@ -22,8 +22,8 @@ class UserService
             $chemin_image = "personne.jpg";
         }
         $utilisateur = User::create([
-            'nom' => $request->nom,
-            'prenom' => $request->prenom,
+            'nom' => strtoupper($request->nom),
+            'prenom' => strtolower($request->prenom),
             'nom_utilisateur' => $request->nom_utilisateur,
             'email' => $request->email,
             'password' => \Hash::make($request->password),
