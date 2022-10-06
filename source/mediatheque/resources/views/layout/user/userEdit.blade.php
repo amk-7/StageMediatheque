@@ -51,21 +51,26 @@
         </div>
     </div>
 
-    
-
     <div>
         <label class="label" for="adresss">Adresss</label>
         <div class="flex flex-row space-x-2 justify-center items-center">
-            <label class="label" for="ville">Ville</label>
-            <input type="text" name="ville" value="{{$utilisateur->adresse['ville']}}" class="input">
-        
-            <label class="label" for="quartier">Quartier</label>
-            <input type="text" name="quartier" value="{{$utilisateur->adresse['quartier']}}" class="input">
+            <div class="w-2/6">
+                <label class="label" for="ville">Ville</label>
+                <input type="text" name="ville" value="{{$utilisateur->adresse['ville']}}" class="input">
+            </div>
 
-            <label class="label" for="numero_maison">Numero de maison</label>
-            <input type="text" name="numero_maison" value="{{$utilisateur->adresse['numero_maison']}}" class="input">
+            <div class="w-2/6">
+                <label class="label" for="quartier">Quartier</label>
+                <input type="text" name="quartier" value="{{$utilisateur->adresse['quartier']}}" class="input">
+            </div>
+
+            <div class="w-2/6">
+                <label class="label" for="numero_maison">Numero de maison</label>
+                <input type="text" name="numero_maison" value="{{$utilisateur->adresse['numero_maison']}}" class="input">
+            </div>
         </div>
     </div>
+
     <div class="flex flex-col">
                 <label class="label" for="sexe">Sexe : </label>
                 <div class="flex flex-row space-x-8 text-center">

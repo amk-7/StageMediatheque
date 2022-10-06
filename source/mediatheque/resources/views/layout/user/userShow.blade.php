@@ -6,65 +6,62 @@
     {{--dd($utilisateur->adresse)--}}
 @csrf
 <h1 class="label_title text-center pb-12">{{$title}}</h1>
-
+<main class=" bg-white flex flex-col items-center p-12">
 <fieldset>
-<div class="flex flex-row space-x-3 justify-center items-center">
-    <div class="flex flex-row space-x-3">
-        <label>Photo de profil : </label></br>
+<div class="flex flex-row m-auto p-3.5">
+    <div class="">
         <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}" width="350" height="300"></br>
+    </div> 
+    <div class="pl-6">
+        <div class="flex flex-col">
+            <label>
+                <span class="label_title_sub_title">Nom : </span>
+                <span class="label_title_sub_title">{{$utilisateur->nom}}</span>
+            </label>
         
-        <div class="flex flex-col w-2/3 mt-6">
-            <div class="label">
-                <label>Identifiant de l'utilisateur : </label>
-                <label>{{$utilisateur->id_utilisateur}}</label>
-            </div>
-            <div class="label">
-                <label>Nom : </label>
-                <label>{{$utilisateur->nom}}</label>
-            </div>
+            <label>
+                <span class="label_title_sub_title">Prenom : </span>
+                <span class="label_title_sub_title">{{$utilisateur->prenom}}</span>
+            </label>
         
-            <div class="label">
-                <label>Prenom : </label>
-                <label>{{$utilisateur->prenom}}</label>
-            </div>
-        
-        <div class="label">
-            <label>Nom d'utilisateur : </label>
-            <label>{{$utilisateur->nom_utilisateur}}</label>
-        </div>
-        <div class="label">
-            <label>Email : </label>
-            <label>{{$utilisateur->email}}</label>
-        </div>
+        <label>
+            <span class="label_title_sub_title">Nom d'utilisateur : </span>
+            <span class="label_title_sub_title">{{$utilisateur->nom_utilisateur}}</span>
+        </label>
+        <label>
+            <span class="label_title_sub_title">Email : </span>
+            <span class="label_title_sub_title">{{$utilisateur->email}}</span>
+        </label>
 
-        <div class="label">
-            <label>Contact : </label>
-            <label>{{$utilisateur->contact}}</label>
-        </div>
+        <label>
+            <span class="label_title_sub_title">Contact : </span>
+            <span class="label_title_sub_title">{{$utilisateur->contact}}</span>
+        </label>
 
-        <div class="label">
-            <label>Ville : </label>
-            <label>{{$utilisateur->adresse["ville"]}}</label>
-        </div>
+        <label>
+            <span class="label_title_sub_title">Ville : </span>
+            <span class="label_title_sub_title">{{$utilisateur->adresse["ville"]}}</span>
+        </label>
 
-        <div class="label">
-            <label>Quartier : </label>
-            <label>{{$utilisateur->adresse["quartier"]}}</label>
-        </div>
+        <label>
+            <span class="label_title_sub_title">Quartier : </span>
+            <span class="label_title_sub_title">{{$utilisateur->adresse["quartier"]}}</span>
+        </label>
 
-        <div class="label">
-            <label>Numero de maison : </label>
-            <label>{{$utilisateur->adresse["numero_maison"]}}</label>
-        </div>
+        <label>
+            <span class="label_title_sub_title">Numero de maison : </span>
+            <span class="label_title_sub_title">{{$utilisateur->adresse["numero_maison"]}}</span>
+        </label>
 
-        <div class="label">
-            <label>Sexe : </label>
-            <label>{{$utilisateur->sexe}}</label>
-        </div>
+        <label>
+            <span class="label_title_sub_title">Sexe : </span>
+            <span class="label_title_sub_title">{{$utilisateur->sexe}}</span>
+        </label>
     
 
     @yield('abonne')
     @yield('personnel')
+        </div>
     </div>
 </div>
 </fieldset>
@@ -75,4 +72,5 @@
         </form>
     </div>
 @endif
+</main>
 @stop
