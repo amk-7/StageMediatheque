@@ -35,12 +35,12 @@
 
     Pour installer le debuge bar il faut lancer la commande:
 
-`composer require barryvdh/laravel-debugbar:* --dev`
+`composer require barryvdh/laravel-debugbar:* --dev --ignore-platform-req=ext-mysql_xdevapi`
 
 
 ## Installation du package helper
 
-`composer require mercuryseries/laravel-helpers `
+`composer require mercuryseries/laravel-helpers --ignore-platform-req=ext-mysql_xdevapi`
 
     Ajout d'un provider
     Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
@@ -63,14 +63,18 @@
 
 ## Installation du module pour l'importation en excel.
 
-    composer require maatwebsite/excel
+    composer require maatwebsite/excel --ignore-platform-req=ext-mysql_xdevapi
     php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
     php artisan make:import UsersImport --model=User
 
 ## Installation du module de qr-code
 
-    composer require simplesoftwareio/simple-qrcode "~4"
+    composer require simplesoftwareio/simple-qrcode "~4" --ignore-platform-req=ext-mysql_xdevapi
     
 ## Authentification.
-composer require laravel/breeze --dev 
+composer require laravel/breeze --dev
+
+--ignore-platform-req=ext-mysql_xdevapi
+
+ 
     
