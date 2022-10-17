@@ -42,7 +42,7 @@ class UserService
         $utilisateur->prenom = $request->prenom;
         $utilisateur->nom_utilisateur = $request->nom_utilisateur;
         $utilisateur->email = $request->email;
-        $utilisateur->password = $request->password;
+        //$utilisateur->password = $request->password;
         $utilisateur->contact = $request->contact;
         $utilisateur->adresse = $request->adresse;
         $utilisateur->sexe = $request->sexe;
