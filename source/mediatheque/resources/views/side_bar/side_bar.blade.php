@@ -132,6 +132,9 @@
                                <li>
                                    <a href="/liste_des_restitutions" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réstitution</a>
                                </li>
+                               <li>
+                                   <a href="/" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réservation</a>
+                               </li>
                            </ul>
                        </li>
                        <li>
