@@ -30,6 +30,7 @@ class LivresPapierImport implements ToModel
         $indice_type = 8;
         $indice_domaine = 9;
         $indice_niveau = 10;
+        
         for($i=0; $i<11; $i++){
             if (! $row[$i])
             {

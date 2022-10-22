@@ -38,8 +38,8 @@ class UserService
 
     public static function modifierUtilisateur(Request $request, $id_utilisateur){
         $utilisateur = User::find($id_utilisateur);
-        $utilisateur->nom = $request->nom;
-        $utilisateur->prenom = $request->prenom;
+        $utilisateur->nom = strtoupper($request->nom);
+        $utilisateur->prenom = strtolower($request->prenom);
         $utilisateur->nom_utilisateur = $request->nom_utilisateur;
         $utilisateur->email = $request->email;
         //$utilisateur->password = $request->password;

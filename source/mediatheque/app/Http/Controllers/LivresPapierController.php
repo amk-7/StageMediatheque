@@ -204,6 +204,7 @@ class LivresPapierController extends Controller
 
     public function uploadLivresPapierCreate()
     {
+      
        return view('livresPapier.excel_import');
     }
 
@@ -215,9 +216,11 @@ class LivresPapierController extends Controller
             $request->url->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
         } else
         {
-            return redirect()->route('formulaireImportExcel')->withErrors(array("url","Fichier non trouvé"))->withInput();
+            return redirect()->route('formulaireImportExcel');
         }
+        
         Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel);
+        //dd("OK");
         return redirect()->route('listeLivresPapier');
     }
 

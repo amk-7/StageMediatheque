@@ -77,7 +77,7 @@
                         @for($i=$j; $i<$j+4; $i++)
                             @if($livresNumeriques[$i])
                                 <div class="card">
-                                    <a href="{{route('affichageLivrePapier', $livresNumeriques[$i])}}" class="">
+                                    <a href="{{route('affichageLivreNumerique', $livresNumeriques[$i])}}" class="">
                                         <div class="image">
                                             <img src="{{ asset('storage/images/images_livre/'.$livresNumeriques[$i]->ouvragesElectronique->ouvrage->image) }}"
                                                  alt="{{$livresNumeriques[$i]->ouvragesElectronique->ouvrage->image}}" class="border border-solid"/>
