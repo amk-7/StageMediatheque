@@ -11,19 +11,19 @@
 <div class="flex flex-row m-auto p-3.5">
     <div class="">
         <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}" width="350" height="300"></br>
-    </div> 
+    </div>
     <div class="pl-6">
         <div class="flex flex-col">
             <label>
                 <span class="label_title_sub_title">Nom : </span>
                 <span class="label_title_sub_title">{{$utilisateur->nom}}</span>
             </label>
-        
+
             <label>
                 <span class="label_title_sub_title">Prenom : </span>
                 <span class="label_title_sub_title">{{$utilisateur->prenom}}</span>
             </label>
-        
+
         <label>
             <span class="label_title_sub_title">Nom d'utilisateur : </span>
             <span class="label_title_sub_title">{{$utilisateur->nom_utilisateur}}</span>
@@ -57,7 +57,7 @@
             <span class="label_title_sub_title">Sexe : </span>
             <span class="label_title_sub_title">{{$utilisateur->sexe}}</span>
         </label>
-    
+
 
     @yield('abonne')
     @yield('personnel')
