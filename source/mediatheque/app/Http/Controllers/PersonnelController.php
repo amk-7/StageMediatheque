@@ -6,6 +6,7 @@ use App\Models\Personnel;
 use App\Models\User;
 use App\Service\UserService;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class PersonnelController extends Controller
 {
@@ -75,6 +76,8 @@ class PersonnelController extends Controller
             'adresse' => $request->adresse,
             'sexe' => $request->sexe
         ]);
+        
+        $utilisateur->assignRole([Role::find(1), Role::find(2)]);
 
         $personnel = Personnel::create([
             'statut' => $request->statut,

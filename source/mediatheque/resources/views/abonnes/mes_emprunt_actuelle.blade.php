@@ -4,7 +4,7 @@
     <div class="flex flex-col justify-center items-center">
         <h1 class="label_title"> Liste de mes emprunts en cours </h1>
         <div class="space-y-2">
-            @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
+            @if(!empty($emprunts ?? "") && count($emprunts) > 0)
                 <div>
                     <form method="GET" action="{{route('createEmprunt')}}">
                         <button type="Submit" class="button button_primary">Ajouter</button>
