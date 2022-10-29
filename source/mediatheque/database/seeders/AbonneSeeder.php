@@ -25,7 +25,7 @@ class AbonneSeeder extends Seeder
             'email' => 'Alhassan.blog@gmail.com',
             'password' => Hash::make('moprte789654'),
             'contact' => '91817907',
-            'photo_profil' => 'personne.jpg',
+            'photo_profil' => 'profil.png',
             'adresse' => array(
                 'ville' => 'Sokode',
                 'quartier' => 'Lome',
@@ -50,7 +50,7 @@ class AbonneSeeder extends Seeder
             'email' => 'hafiz@gmail.com',
             'password' => Hash::make('123456789'),
             'contact' => '90229029',
-            'photo_profil' => 'personne.jpg',
+            'photo_profil' => 'profil.png',
             'adresse' => array(
                 'ville' => 'Dakar',
                 'quartier' => 'Sédhiou',
@@ -75,7 +75,7 @@ class AbonneSeeder extends Seeder
             'email' => 'Daniel@gmail.com',
             'password' => Hash::make('123456789'),
             'contact' => '91919191',
-            'photo_profil' => 'personne.jpg',
+            'photo_profil' => 'profil.png',
             'adresse' => array(
                 'ville' => 'Sokode',
                 'quartier' => 'Komah',

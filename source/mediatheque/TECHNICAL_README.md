@@ -76,5 +76,4 @@ composer require laravel/breeze --dev
 
 --ignore-platform-req=ext-mysql_xdevapi
 
- 
-    
+--php artisan storage:link

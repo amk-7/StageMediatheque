@@ -33,7 +33,6 @@ class LiquideController extends Controller
     public function create()
     {
         return view('liquide.create')->with([
-            "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
             "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
             "tarifs" => TarifAbonnement::all()->toJson(),
         ]);
@@ -52,13 +51,9 @@ class LiquideController extends Controller
             "nom_abonnes" => "required",
             "prenom_abonnes" => "required",
             "tarifs" => "required",
-            "paye" => "required",
         ]);
 
-        if ($request->paye == "non"){
-            return redirect()->route("listeLiquides");
-        }
-        $tarifs = TarifAbonnement::all()->where("designation", $request->tarifs)->first();
+        $tarifs = TarifAbonnement::all()->where("id_tarif_abonnement", $request->tarifs)->first();
         $registration = Registration::create([
             "id_tarif_abonnement" => $tarifs->id_tarif_abonnement,
             'id_abonne'=>$request->prenom_abonnes,

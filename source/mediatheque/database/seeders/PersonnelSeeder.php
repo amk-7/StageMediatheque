@@ -25,7 +25,7 @@ class PersonnelSeeder extends Seeder
             'email' => 'Alhassan.tuto@gmail.com',
             'password' => Hash::make('123456789'),
             'contact' => '91767676',
-            'photo_profil' => 'personne.jpg',
+            'photo_profil' => 'profil.png',
             'adresse' => array(
                 'ville' => 'Dakar',
                 'quartier' => 'Sédhiou',
@@ -47,7 +47,7 @@ class PersonnelSeeder extends Seeder
             'email' => 'abdoulmalikkondi8@gmail.com',
             'password' => Hash::make('amk2048'),
             'contact' => '93561240',
-            'photo_profil' => 'profils.png',
+            'photo_profil' => 'profil.png',
             'adresse' => array(
                 'ville' => 'Sokode',
                 'quartier' => 'komah 2',

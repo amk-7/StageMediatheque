@@ -1,4 +1,4 @@
-@extends('layout.user.userShow', ['action'=>"showAbonne", 'title'=>"Afficher un abonne", 'utilisateur'=>$abonne->utilisateur, 'model'=>$abonne])
+@extends('layout.user.userShow', ['action'=>"editAbonne", 'title'=>"Afficher un abonne", 'utilisateur'=>$abonne->utilisateur, 'model'=>$abonne])
 
 @section('abonne')
 
@@ -11,7 +11,7 @@
                 <span class="label_title_sub_title"> Niveau Etude : </span>
                 <span class="label_show_value">{{$abonne->niveau_etude}}</span>
         </label>
-        
+
         <label>
                 <span class="label_title_sub_title"> Profession : </span>
                 <span class="label_show_value">{{$abonne->profession}}</span>

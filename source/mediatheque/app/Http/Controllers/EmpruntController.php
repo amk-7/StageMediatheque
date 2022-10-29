@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
 use App\Models\LignesEmprunt;
+use App\Models\Personnel;
 use App\Service\LignesEmpruntService;
+use Auth;
 use Illuminate\Http\Request;
 use App\Service\OuvragesPhysiqueService;
 use App\Service\PersonnelService;
@@ -53,11 +55,9 @@ class EmpruntController extends Controller
     {
         //
 
-        //dd($request);
+        //dd(Personnel::all()->where("id_utilisateur", Auth::user()->id_utilisateur)->first()->id_personnel);
 
         $request->validate([
-            'nom' => 'required',
-            'prenom' => 'required',
             'nom_abonne'=>'required',
             'prenom_abonne'=>'required',
             'data'=>'required',
@@ -71,7 +71,7 @@ class EmpruntController extends Controller
             'date_emprunt' => date('Y-m-d'),
             'date_retour' => $date_retour,
             'id_abonne' => $request->prenom_abonne,
-            'id_personnel' => $request->prenom,
+            'id_personnel' => Personnel::all()->where("id_utilisateur", Auth::user()->id_utilisateur)->first()->id_personnel,
         ]);
 
         //dd($listesEmprunts->restitution);

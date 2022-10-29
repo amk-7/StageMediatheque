@@ -7,13 +7,8 @@ use App\Models\User;
 use App\Service\UserService;
 use App\Service\GlobaleService;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
-use Spatie\Permission\Models\Role;
-
-=======
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
->>>>>>> 4d09073acd175c47ba52c39eb37190c2601543fa
 class PersonnelController extends Controller
 {
     /**
@@ -109,13 +104,7 @@ class PersonnelController extends Controller
             'photo_profil' => $request->photo_profil,
             'adresse' => $request->adresse,
             'sexe' => $request->sexe
-<<<<<<< HEAD
-        ]);
-        
-        $utilisateur->assignRole([Role::find(1), Role::find(2)]);
-=======
         ]);*/
->>>>>>> 4d09073acd175c47ba52c39eb37190c2601543fa
 
         $utilisateur = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom)->first();
         if(! $utilisateur){
