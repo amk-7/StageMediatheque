@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -18,11 +20,11 @@ class Abonne extends Model
     }
 
     public function restitutions(){
-        return $this->hasMany(Restitution::class, 'id_restitution');
+        return $this->hasMany(Restitution::class, 'id_abonne');
     }
 
     public function registrations(){
-        return $this->hasMany('App\Models\Registration', 'id_registraton');
+        return $this->hasMany('App\Models\Registration', 'id_abonne');
     }
 
     public function reservations(){
@@ -35,6 +37,21 @@ class Abonne extends Model
 
     public function telechargements(){
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
+    }
+
+    public function isRegistrate()
+    {
+        $liste = $this->registrations;
+        foreach ($liste as $l)
+        {
+            $date1 = $l->date_fin;
+            $date2 = Carbon::now();
+            if ($date1->gte($date2))
+            {
+               return true;
+            }
+        }
+        return false;
     }
 
     public function getEmpruntsEnCours()

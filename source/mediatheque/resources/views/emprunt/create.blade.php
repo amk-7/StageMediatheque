@@ -9,25 +9,6 @@
                <h3 class="label_title_sub_title">Date {{ date('Y-m-d') }}</h3>
            </div>
             <fieldset class="fieldset_border" >
-                <legend>Personnel</legend>
-                <div class="flex flex-col">
-                    <label for="nom" class="">Nom</label>
-                    <select name="nom" id="nom_personnes" class="select_btn w-full"></select>
-                </div>
-                <div class="alert">
-                    <p id="nom_erreur" hidden>Vous devez séléctionner le nom</p>
-                </div>
-                <div class="flex flex-col">
-                    <label for="prenom">Prenom</label>
-                    <select name="prenom" id="prenom_personnes" class="select_btn w-full">
-                        <option>Séléctionner prénom</option>
-                    </select>
-                </div>
-                <div class="alert">
-                    <p id="prenom_erreur" hidden>Vous devez séléctionner le prenom</p>
-                </div>
-            </fieldset>
-            <fieldset class="fieldset_border" >
                 <legend>Abonné</legend>
                 <div class="flex flex-col">
                     <label for="nom_abonnee">Nom</label>
@@ -70,7 +51,7 @@
                 <div>
                     <div class="flex flex-col">
                         <label for="titre_ouvrage">Titre</label>
-                        <input id="titre_ouvrage" type="text" name="titre" class="input disabled:opacity-10" disabled>
+                        <input id="titre_ouvrage" type="text" name="titre" class="input disabled:opacity-90" disabled>
                         <input name="data" id="data" type="text" hidden>
                     </div>
                 </div>
@@ -150,13 +131,10 @@
 @section("js")
     <script type="text/javascript" async>
 
-        let personnels = {!! $personnels !!};
         let abonnes = {!! $abonnes !!};
         let livres_papier = {!! $livre_papier !!};
         let doc_av = {!! $document_audio_visuel !!};
-        console.log(abonnes);
-        let nom_personnes = document.getElementById('nom_personnes');
-        let prenom_personnes = document.getElementById('prenom_personnes');
+
         let nom_abonnes = document.getElementById('nom_abonnes');
         let prenom_abonnes = document.getElementById('prenom_abonnes');
         let cote_ouvrage = document.getElementById('ouvrage_cote');
@@ -188,7 +166,6 @@
 
         console.log(nombre_emprunt_erreur);
 
-        setLiteOptions(nom_personnes, personnels);
         setLiteOptions(nom_abonnes, abonnes);
         cleanALl();
 
@@ -203,9 +180,6 @@
             rechercherTitreParCote();
         });
 
-        nom_personnes.addEventListener('change', function (e) {
-            mettreListePrenomParNom(prenom_personnes, nom_personnes.value, personnels);
-        });
 
         nom_abonnes.addEventListener('change', function (e) {
             mettreListePrenomParNom(prenom_abonnes, nom_abonnes.value, abonnes);
@@ -230,8 +204,8 @@
         }
 
         function stopPropagation() {
-            event.preventDefault();
             event.stopPropagation();
+            event.preventDefault();
         }
 
         function setLiteOptions(elt, liste) {
@@ -250,14 +224,13 @@
 
         btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
             console.log("::::::::Add:::::::::");
+            stopPropagation();
             if(validateUser()){
                 console.log("::::::::Validate::::::::");
                 let id_abonne = prenom_abonnes.value;
-                console.log(verfierSiAbonneEstEligible(id_abonne));
                 if(verfierSiAbonneEstEligible(id_abonne)=="false"){
                     //console.log("abonne non eligible");
                     non_eligble_erreur.hidden = false;
-                    stopPropagation();
                     return;
                 }
             }
@@ -270,9 +243,6 @@
             non_eligble_erreur.hidden = true;
             //nombre_emprunt_erreur.hidden = true;
 
-            //console.log("Salut");
-            e.preventDefault();
-            //return;
             if (validate()) {
                 console.log(verifierSiOuvrageExisteDansEmprunt(cote_ouvrage.value))
                 if(verifierSiOuvrageExisteDansEmprunt(cote_ouvrage.value)){
@@ -387,15 +357,12 @@
 
         function cleanALl() {
             cleanInput();
-            nom_personnes.value = "Séléctionner nom";
-            prenom_personnes.value = "Séléctionner prénom";
             nom_abonnes.value = "Séléctionner nom";
             prenom_abonnes.value = "Séléctionner prénom";
             donne.value = "";
         }
 
         function rechercherTitreParCote() {
-            console.log("recherche....");
             let cote = cote_ouvrage.value;
             if (cote.substring(0, 2) === "LP") {
                 for (let i = 0; i < livres_papier.length; i++) {
@@ -450,30 +417,15 @@
         });
 
         function validateUser(){
-            if (nom_personnes.value === "Séléctionner nom" || nom_personnes.value === "") {
-                nom_erreur.hidden = false;
-                stopPropagation();
-                return false;
-            }
-            nom_erreur.hidden = true;
-
-            if (prenom_personnes.value === "Séléctionner prénom" || prenom_personnes.value === "") {
-                prenom_erreur.hidden = false;
-                stopPropagation();
-                return false;
-            }
-            prenom_erreur.hidden = true;
 
             if (nom_abonnes.value === "Séléctionner nom" || nom_abonnes.value === "") {
                 nom_abonne_erreur.hidden = false;
-                stopPropagation();
                 return false;
             }
             nom_abonne_erreur.hidden = true;
 
             if (prenom_abonnes.value === "Séléctionner prénom" || prenom_abonnes.value === "") {
                 prenom_abonne_erreur.hidden = false;
-                stopPropagation();
                 return false;
             }
             prenom_abonne_erreur.hidden = true;
