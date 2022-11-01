@@ -30,6 +30,8 @@ class AbonneService
         return $abonnes;
     }
 
+    public static function recherche(no){}
+
 }
 
 
