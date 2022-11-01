@@ -76,4 +76,19 @@ composer require laravel/breeze --dev
 
 --ignore-platform-req=ext-mysql_xdevapi
 
---php artisan storage:link
+## Regler le problème de imagick
+    composer require bacon/bacon-qr-code
+Etape 1 : 
+ sudo apt install php-imagick
+ php -m | grep imagick
+ sudo /etc/init.d/apache2 restart
+
+Etape 2 : installation de livewire
+ composer require livewire/livewire
+ php artisan livewire:publish --config
+ php artisan livewire:publish --assets
+
+Etape 3 :
+ composer dump-autoload
+
+    

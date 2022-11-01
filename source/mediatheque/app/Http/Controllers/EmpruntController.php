@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
+use App\Models\User;
+use App\Models\Abonne;
 use App\Models\LignesEmprunt;
 use App\Models\Personnel;
 use App\Service\LignesEmpruntService;
@@ -24,9 +26,21 @@ class EmpruntController extends Controller
     public function index()
     {
         //
-        $emprunts = Emprunt::all();
+        //$emprunts = Emprunt::all();
+        /*$utilisateur = User::all();
+        //dd($utilisateur.Emprunt::all()->first());
+        $emprunts = Emprunt::with('abonne')->get();*/
+        if ($_REQUEST['element'] ?? null) {
+            $emprunts = Emprunt::where('id_abonne', $_REQUEST['element'])->get();
+        } else {
+            $emprunts = Emprunt::all();
+        }
         //dd($emprunts);
-        return view('emprunt.index')->with('emprunts', $emprunts);
+        
+        return view('emprunt.index')->with([
+            'emprunts' => $emprunts,
+            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()), 
+        ]);
     }
 
     /**
