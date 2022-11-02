@@ -184,6 +184,9 @@ return [
         // spatie
         Spatie\Permission\PermissionServiceProvider::class,
 
+        //language
+        Bestmomo\ArtisanLanguage\ArtisanLanguageProvider::class,
+
     ],
 
     /*

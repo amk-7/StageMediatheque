@@ -20,39 +20,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('auth')->group(function(){
+Route::group(['middleware' => ['role:responsable|bibliothecaire|abonne', 'auth']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
 
-    Route::get('searchByTitleAndKeyWord', [LivresPapierController::class, 'searchByTitleAndKeyWord']);
+Route::group(['middleware' => ['role:abonne', 'auth']], function () {
+    Route::get('liste_mes_emprunts/{abonne}', 'App\Http\Controllers\AbonneController@mesEmprunts')->name('ListemesEmprunts');
+    Route::get('liste_mes_emprunts_actuelle/{abonne}', 'App\Http\Controllers\AbonneController@mesEmpruntsEnCours')->name('ListemesEmpruntsActuelle');
+});
 
-// Path: Abonne routes/web.php
-    Route::get('liste_des_abonnes', 'App\Http\Controllers\AbonneController@index')->name('listeAbonnes');
+Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function () {
     Route::get('affiche_abonne/{abonne}', 'App\Http\Controllers\AbonneController@show')->name('showAbonne');
     Route::get('formulaire_edition_des_abonnes/{abonne}/edit', 'App\Http\Controllers\AbonneController@edit')->name('editAbonne');
     Route::put('mise_a_jour_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
+});
+
+Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
+    Route::get('searchByTitleAndKeyWord', [LivresPapierController::class, 'searchByTitleAndKeyWord']);
+
+    // Path: Abonne routes/web.php
+    Route::get('liste_des_abonnes', 'App\Http\Controllers\AbonneController@index')->name('listeAbonnes');
     Route::delete('suppression_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@destroy')->name('destroyAbonne');
     Route::get('formulaire_Abonne', 'App\Http\Controllers\AbonneController@create')->name('createAbonne');
     Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
-    Route::get('liste_mes_emprunts/{abonne}', 'App\Http\Controllers\AbonneController@mesEmprunts')->name('ListemesEmprunts');
-    Route::get('liste_mes_emprunts_actuelle/{abonne}', 'App\Http\Controllers\AbonneController@mesEmpruntsEnCours')->name('ListemesEmpruntsActuelle');
 
-
-// Path: Personnel routes/web.php
-    Route::get('liste_des_personnels', 'App\Http\Controllers\PersonnelController@index')->name('listePersonnels');
-    Route::get('affiche_personnel/{personnel}', 'App\Http\Controllers\PersonnelController@show')->name('showPersonnel');
-    Route::get('formulaire_edition_des_personnels/{personnel}/edition', 'App\Http\Controllers\PersonnelController@edit')->name('editPersonnel');
-    Route::put('mise_a_jour_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@update')->name('updatePersonnel');
-    Route::delete('suppression_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@destroy')->name('destroyPersonnel');
-    Route::get('formulaire_Personnel', 'App\Http\Controllers\PersonnelController@create')->name('createPersonnel');
-    Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelController@store')->name('storePersonnel');
-
-// Path: Emprunt routes/web.php
+    // Path: Emprunt routes/web.php
     Route::get('liste_des_emprunts', 'App\Http\Controllers\EmpruntController@index')->name('listeEmprunts');
     Route::get('affiche_emprunt/{emprunt}', 'App\Http\Controllers\EmpruntController@show')->name('showEmprunt');
     Route::get('formulaire_edition_emprunts/{emprunt}/edition', 'App\Http\Controllers\EmpruntController@edit')->name('editEmprunt');
@@ -121,12 +120,6 @@ Route::middleware('auth')->group(function(){
     Route::delete('suppression_livre_papier/{livres_papier}', [LivresPapierController::class, 'destroy'])->name('suppressionLivrePapier');
     Route::get('data_class_dizaine', [LivresPapierController::class, 'echoclassification_dewey_dizaines'])->name('dataClassDizain');
 
-    Route::get('formulaire_import_excel', [LivresPapierController::class, 'uploadLivresPapierCreate'])->name('formulaireImportExcel');
-    Route::put('enregistrement_import_excel', [LivresPapierController::class, 'uploadLivresPapierStore'])->name('enregistrementImportExcel');
-
-    Route::get('formulaire_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueCreate'])->name('formulaireImportExcelLivresNumerique');
-    Route::put('enregistrement_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueStore'])->name('enregistrementImportExcelLivresNumerique');
-
     Route::get('imprimer_ouvrages_physique_code/{livres_papier}', [LivresPapierController::class, 'downloadCoteQrcode'])->name('imprimerOuvragesPhysiqueCode');
 
     Route::get('liste_documents_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'index'])->name('listeDocumentsAudioVisuelsElectroniques');
@@ -161,10 +154,36 @@ Route::middleware('auth')->group(function(){
     Route::post('modification_restitution/{restitution}', [RestitutionController::class, 'update'])->name('modificationRestitution');
     Route::delete('suppression_restitution', [RestitutionController::class, 'destroy'])->name('suppressionRestitution');
 
+});
+
+Route::group(['middleware' => ['role:responsable', 'auth']], function () {
+    // Path: Personnel routes/web.php
+    Route::get('liste_des_personnels', 'App\Http\Controllers\PersonnelController@index')->name('listePersonnels');
+    Route::get('affiche_personnel/{personnel}', 'App\Http\Controllers\PersonnelController@show')->name('showPersonnel');
+    Route::get('formulaire_edition_des_personnels/{personnel}/edition', 'App\Http\Controllers\PersonnelController@edit')->name('editPersonnel');
+    Route::put('mise_a_jour_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@update')->name('updatePersonnel');
+    Route::delete('suppression_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@destroy')->name('destroyPersonnel');
+    Route::get('formulaire_Personnel', 'App\Http\Controllers\PersonnelController@create')->name('createPersonnel');
+    Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelController@store')->name('storePersonnel');
+
+    Route::get('formulaire_import_excel', [LivresPapierController::class, 'uploadLivresPapierCreate'])->name('formulaireImportExcel');
+    Route::put('enregistrement_import_excel', [LivresPapierController::class, 'uploadLivresPapierStore'])->name('enregistrementImportExcel');
+
+    Route::get('formulaire_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueCreate'])->name('formulaireImportExcelLivresNumerique');
+    Route::put('enregistrement_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueStore'])->name('enregistrementImportExcelLivresNumerique');
+
+});
+
+
+
+/*Route::middleware('auth')->group(function(){
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
     Route::get('/getCodeIDTitle', [\App\Service\OuvragesPhysiqueService::class, 'getCodeIDTitle'] );
     Route::get('/getCodeID', [\App\Service\OuvragesPhysiqueService::class, 'getCodeID'] );
     Route::get('/getOuvragePhysiqueByType', [\App\Service\OuvragesPhysiqueService::class, 'getOuvragePhysiqueByType'] );
-});
+});*/
 
 Route::get('affichage_livre_papier/{livres_papier}', [LivresPapierController::class, 'show'])->name('affichageLivrePapier');
 Route::get('affichage_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'show'])->name('affichageLivreNumerique');
