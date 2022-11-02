@@ -24,9 +24,9 @@ class AbonneService
                 'estEligible'=>count($p->getEmpruntsEnCours()) == 0 ? 'true' : 'false',
             );
             array_push($abonnes, $personne);
-            
+
         }
-        //dd('fin');
+
         return $abonnes;
     }
 

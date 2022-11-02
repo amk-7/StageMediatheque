@@ -124,6 +124,9 @@ Route::middleware('auth')->group(function(){
     Route::get('formulaire_import_excel', [LivresPapierController::class, 'uploadLivresPapierCreate'])->name('formulaireImportExcel');
     Route::put('enregistrement_import_excel', [LivresPapierController::class, 'uploadLivresPapierStore'])->name('enregistrementImportExcel');
 
+    Route::get('formulaire_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueCreate'])->name('formulaireImportExcelLivresNumerique');
+    Route::put('enregistrement_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueStore'])->name('enregistrementImportExcelLivresNumerique');
+
     Route::get('imprimer_ouvrages_physique_code/{livres_papier}', [LivresPapierController::class, 'downloadCoteQrcode'])->name('imprimerOuvragesPhysiqueCode');
 
     Route::get('liste_documents_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'index'])->name('listeDocumentsAudioVisuelsElectroniques');

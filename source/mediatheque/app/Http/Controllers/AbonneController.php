@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Service\GlobaleService;
 use App\Service\UserService;
 use DB;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
@@ -20,12 +21,41 @@ class AbonneController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        //return 'salut';
-        $abonnes = Abonne::all();
-        return view('abonnes.index')->with('listeAbonnes', $abonnes);
+        $abonnes = "";
+        $paginate = 10;
+        if (isset($request->search_by) || isset($request->profession) || isset($request->niveau_etude)){
+            $users = DB::table('users')
+                ->select("id_utilisateur")
+                ->where("nom", "like", "%".strtoupper($request->search_by)."%")
+                ->orWhere("prenom", "like", "%".strtolower($request->search_by)."%")
+                ->get();
+            $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
+
+            $professions = ["Retraite", "Etudiant", "Fonctionnaire", "Eleve"];
+            if (! empty($request->profession)){
+                $professions = [$request->profession];
+            }
+
+            $niveau_etudes = ["Université", "Lycée", "Collège", "Primaire"];
+            if (! empty($request->niveau_etude)){
+                $niveau_etudes = [$request->niveau_etude];
+            }
+
+            $abonnes = Abonne::whereIn("id_utilisateur", $users)
+                        ->whereIn("profession", $professions)
+                        ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
+            //dd($abonnes);
+        } else {
+            $abonnes = Abonne::paginate($paginate);
+        }
+        //$abonnes = $abonnes->paginate(1);
+        //dd($abonnes);
+        return view('abonnes.index')->with([
+                'abonnes' => $abonnes,
+                'paye' => $request->paye,
+                ]);
     }
 
     /**
@@ -159,7 +189,7 @@ class AbonneController extends Controller
     {
         //
 
-
+        //dd($request);
         /*$abonne->update(array([
             'date_naissance' => $request["date_naissance"],
             'niveau_etude' => $request["niveau_etude"],
@@ -183,7 +213,12 @@ class AbonneController extends Controller
         $abonne->numero_carte = $request["numero_carte"];
         $abonne->type_de_carte = $request["type_de_carte"];
         $abonne->save();
-        return redirect()->route('listeAbonnes');
+        if (Auth::user()->hasRole("abonne")){
+            return redirect()->route('showAbonne/{'.Auth::user()->id_utilisateur.'}');
+        } else{
+            return redirect()->route('listeAbonnes');
+        }
+
 
 
     }
