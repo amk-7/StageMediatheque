@@ -19,8 +19,8 @@ class AbonneSeeder extends Seeder
     {
         //
         $utilisateur = User::create([
-            'nom' => 'Shintaro',
-            'prenom' => 'Midorima',
+            'nom' => strtoupper('Shintaro'),
+            'prenom' => strtolower('Midorima'),
             'nom_utilisateur' => 'Daiki5',
             'email' => 'Alhassan.blog@gmail.com',
             'password' => Hash::make('moprte789654'),
@@ -44,8 +44,8 @@ class AbonneSeeder extends Seeder
         ]);
 
         $utilisateur2 = User::create([
-            'nom' => 'Tchabana',
-            'prenom' => 'Hafiz',
+            'nom' => strtoupper('Tchabana'),
+            'prenom' => strtolower('Hafiz'),
             'nom_utilisateur' => 'Haf',
             'email' => 'hafiz@gmail.com',
             'password' => Hash::make('123456789'),
@@ -69,8 +69,8 @@ class AbonneSeeder extends Seeder
         ]);
 
         $utilisateur3 = User::create([
-            'nom' => 'Tabate',
-            'prenom' => 'Daniel',
+            'nom' => strtoupper('Tabate'),
+            'prenom' => strtolower('Daniel'),
             'nom_utilisateur' => 'James',
             'email' => 'Daniel@gmail.com',
             'password' => Hash::make('123456789'),
