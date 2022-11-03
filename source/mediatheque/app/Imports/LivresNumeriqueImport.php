@@ -2,17 +2,18 @@
 
 namespace App\Imports;
 
-use App\Models\LivresPapier;
+use App\Models\LivresNumerique;
 use App\Models\Ouvrage;
-use App\Models\OuvragesPhysique;
+use App\Models\OuvragesElectronique;
 use App\Service\AuteurService;
 use App\Service\GlobaleService;
 use App\Service\ImportExcelService;
+use App\Service\OuvragesElectroniqueService;
 use App\Service\OuvrageService;
-use App\Service\OuvragesPhysiqueService;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class LivresPapierImport implements ToModel
+class LivresNumeriqueImport implements ToModel
 {
     /**
     * @param array $row
@@ -27,22 +28,27 @@ class LivresPapierImport implements ToModel
         $indice_isbn = 4;
         $indice_lieu = 5;
         $indice_annee = 6;
-        $indice_nombre_exemplaire = 7;
-        $indice_type = 8;
-        $indice_domaine = 9;
-        $indice_niveau = 10;
+        $indice_type = 7;
+        $indice_domaine = 8;
+        $indice_niveau = 9;
 
-        $size = 11;
+        $size = 10;
+
+        $name = str_replace(" ", "_", trim($row[$indice_titre], ' '));
 
         if (ImportExcelService::controlleValidite($row, $indice_titre, $indice_annee, $size) == null){
             return null;
         };
 
+        // Creation d'un ou des auteurs .
         $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
         $auteurs = AuteurService::enregistrerAuteur(array($data_auteurs));
 
+
         // Creation de l'ouvrage
-        $chemin_image = "default_book_image.png";
+        $mots_cle = GlobaleService::extractLineToData($row[$indice_mot_cle])[0];
+
+        $chemin_image = $name.".jpg";
 
         $ouvrage = Ouvrage::create([
             'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
@@ -55,24 +61,22 @@ class LivresPapierImport implements ToModel
             'resume'=>strtolower("pas de resumé"),
             'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle]),
         ]);
+
         // Definire les auteurs de l'ouvrage
         OuvrageService::definireAuteur($ouvrage, $auteurs);
 
-        // Création d'un ouvrage physique
-        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", "COT", [$ouvrage->auteurs()->first()], $ouvrage);
-
-        $ouvragePhysique = OuvragesPhysique::Create([
-            'nombre_exemplaire' => $row[$indice_nombre_exemplaire],
-            'id_ouvrage'=>$ouvrage->id_ouvrage,
-            'cote' => $cote,
-            'id_classification_dewey_dizaine'=>null,
+        // Création d'un ouvrage electronique
+        $chemin_ouvrage = $name ;
+        $ouvrageElectronique = OuvragesElectronique::create([
+            'url' => $chemin_ouvrage,
+            'id_ouvrage' => $ouvrage->id_ouvrage,
         ]);
+        $categories = GlobaleService::extractLineToData($row[$indice_domaine])[0];
 
-        return LivresPapier::create([
-            'categorie'=>[strtolower($row[$indice_domaine]), ""],
-            'ISBN'=>$row[$indice_isbn],
-            'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
+        return LivresNumerique::create([
+            'categorie'=>$categories,
+            'ISBN'=>strtoupper($row[$indice_isbn]),
+            'id_ouvrage_electronique'=>$ouvrageElectronique->id_ouvrage_electronique,
         ]);
     }
-
 }

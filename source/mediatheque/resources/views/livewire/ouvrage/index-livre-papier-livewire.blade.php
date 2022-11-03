@@ -101,7 +101,7 @@
                                <div class="">
                                    <a href="{{route('affichageLivrePapier', $livresPapiers[$i])}}" class="card">
                                        <div class="image">
-                                           <img src="{{ asset('storage/images/images_livre/'.$livresPapiers[$i]->ouvragesPhysique->ouvrage->image) }}"
+                                           <img src="{{ asset('storage/ouvrage_electonique/'.$livresPapiers[$i]->ouvragesPhysique->ouvrage->image) }}"
                                                 alt="{{$livresPapiers[$i]->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>
                                        </div>
                                        <div class="label">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\LivresNumeriqueImport;
 use App\Imports\LivresPapierImport;
 use App\Models\LivresNumerique;
 use App\Models\LivresPapier;
@@ -203,18 +204,19 @@ class LivreNumeriqueController extends Controller
 
     public function uploadLivresNumeriqueStore(Request $request)
     {
-        dd($request->directory);
+        //dd($request->fileList);
         if (! $request->url == null)
         {
-            $chemin_ouvrage_excel = strtolower('livres_papier').'.'.$request->url->extension();
+            $chemin_ouvrage_excel = strtolower('livres_numerique').'.'.$request->url->extension();
             $request->url->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
         } else
         {
             return redirect()->route('formulaireImportExcel');
         }
 
-        Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel);
-        //dd("OK");
-        return redirect()->route('listeLivresPapier');
+        //dd($request->url);
+
+        Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$chemin_ouvrage_excel);
+        return redirect()->route('listeLivresNumerique');
     }
 }
