@@ -88,12 +88,8 @@
             @endif
         </div>
     </div>
-<script type='text/js' async>
-    consol.log({!!$abonnes!!});
-</script>
+<!--script type='text/js' async>
+    
+</script-->
 @endsection
-@section('js')
-<script type='text/js' async>
-    consol.log({!!$abonnes!!});
-</script>
-@endsection
+
