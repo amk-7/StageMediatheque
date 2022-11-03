@@ -14,7 +14,7 @@ class EmpruntSeeder extends Seeder
         $abonne = Abonne::all()[0];
         $emprunt = Emprunt::create([
             'date_emprunt' => '2022-08-30',
-            'date_retour' => '2022-09-06',
+            'date_retour' => '2022-09-13',
             'id_abonne' => 1,
             'id_personnel' => 1
         ]);
@@ -34,7 +34,7 @@ class EmpruntSeeder extends Seeder
 
         $emprunt1 = Emprunt::create([
             'date_emprunt' => '2022-09-07',
-            'date_retour' => '2022-09-14',
+            'date_retour' => '2022-09-21',
             'id_abonne' => 1,
             'id_personnel' => 1
         ]);

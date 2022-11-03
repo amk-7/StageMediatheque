@@ -132,9 +132,6 @@
                                <li>
                                    <a href="/liste_des_restitutions" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réstitution</a>
                                </li>
-                               <li>
-                                   <a href="/" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réservation</a>
-                               </li>
                            </ul>
                        </li>
                        <li>
@@ -161,6 +158,11 @@
                            <ul id="dropdown-example" class="ml-12">
                                <li>
                                    <a href="/formulaire_import_excel" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres papier</a>
+                               </li>
+                           </ul>
+                           <ul id="dropdown-example" class="ml-12">
+                               <li>
+                                   <a href="/formulaire_import_excel_livres_numerique" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres Numérique</a>
                                </li>
                            </ul>
                        </li>

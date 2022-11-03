@@ -7,6 +7,7 @@ use App\Models\Emprunt;
 use App\Models\LignesEmprunt;
 use App\Models\OuvragesPhysique;
 use App\Models\Restitution;
+use Carbon\Carbon;
 use Nette\Utils\Strings;
 
 class EmpruntService
@@ -37,10 +38,8 @@ class EmpruntService
     public static function determinerDateRetour(String $duree_emprunt)
     {
         $nbjour = (integer) $duree_emprunt;
-        $nbjour = ($nbjour * 7)-1;
-        $date = date_create();
-        date_add($date,date_interval_create_from_date_string("$nbjour days"));
-        $date_retour = date_format($date, 'Y-m-d');
+        $nbjour = ($nbjour * 7);
+        $date_retour = Carbon::now()->addDay($nbjour);
 
         return $date_retour;
     }
@@ -79,20 +78,8 @@ class EmpruntService
         }
         return true;
     }
-/*
-    public static function modifierDateRetour($id_emprunt, $date_retour)
-    {
-        $emprunt = Emprunt::find($id_emprunt);
-        $emprunt->date_retour = $date_retour;
-        $emprunt->save();
-    }
 
-    public static function updateDateRetour($id_emprunt)
-    {
-        $emprunt = Emprunt::find($id_emprunt);
-        $emprunt->date_retour = date('Y-m-d');
-        $emprunt->save();
-    }*/
+
 
 }
 

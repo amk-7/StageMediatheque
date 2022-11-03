@@ -79,7 +79,7 @@
                                 <div class="card">
                                     <a href="{{route('affichageLivreNumerique', $livresNumeriques[$i])}}" class="">
                                         <div class="image">
-                                            <img src="{{ asset('storage/images/images_livre/'.$livresNumeriques[$i]->ouvragesElectronique->ouvrage->image) }}"
+                                            <img src="{{ asset('storage/ouvrage_electonique/'.$livresNumeriques[$i]->ouvragesElectronique->ouvrage->image) }}"
                                                  alt="{{$livresNumeriques[$i]->ouvragesElectronique->ouvrage->image}}" class="border border-solid"/>
                                         </div>
                                         <div class="label">

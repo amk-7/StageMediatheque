@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,20 @@ class Emprunt extends Model
     public function getNombreOuvrageEmprunteAttribute()
     {
         return $this->lignesEmprunts()->count();
+    }
+
+    public  function  empruntExpierAttribute(){
+        return Carbon::now()->gt($this->date_retour);
+    }
+    public function getJourRestantAttribute(){
+        $nbJour = -1;
+        if (! $this->empruntExpierAttribute()){
+            $nbJour = $this->date_retour->diffInDays($this->date_emprunt);
+        } else {
+            $nbJour = Carbon::now()->diffInDays($this->date_retour)*-1;
+        }
+
+        return $nbJour;
     }
 
     public function abonne()

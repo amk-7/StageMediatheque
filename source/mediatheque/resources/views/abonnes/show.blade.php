@@ -31,6 +31,4 @@
                 <span class="label_title_sub_title"> Type de Carte : </span>
                 <span class="label_show_value">{{$abonne->type_de_carte}}</span>
         </label>
-
-
 @endsection

@@ -51,8 +51,9 @@ class GlobaleService
     {
         $array_collection = $collection->toArray();
         $array_key = array();
-        foreach ($array_collection as $ouvrage){
-            array_push($array_key, $ouvrage[$key]);
+        foreach ($array_collection as $elt){
+            $elt = (array) $elt;
+            array_push($array_key, $elt[$key]);
         }
         return $array_key;
     }
