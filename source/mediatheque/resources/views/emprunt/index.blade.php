@@ -3,6 +3,17 @@
 @section('content')
     <div class="flex flex-col justify-center items-center">
         <h1 class="label_title"> Liste des Emprunts </h1>
+        <form>
+            <nav class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <select name="search">
+                    <option>Selectionner</option>
+                    <option value="">Terminé</option>
+                    
+                </select>
+                <input type="text" name="element" placeholder="Nom">
+                <button class="btn btn-primary" type="submit">Rechercher</button>
+            </nav>               
+        </form>
         <div class="space-y-2">
             @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
                 <div>
@@ -80,4 +91,8 @@
             @endif
         </div>
     </div>
+<!--script type='text/js' async>
+    
+</script-->
 @endsection
+

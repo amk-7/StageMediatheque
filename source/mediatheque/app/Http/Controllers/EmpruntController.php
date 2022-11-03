@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
+use App\Models\User;
+use App\Models\Abonne;
 use App\Models\LignesEmprunt;
 use App\Models\Personnel;
 use App\Service\LignesEmpruntService;
@@ -24,9 +26,59 @@ class EmpruntController extends Controller
     public function index()
     {
         //
-        $emprunts = Emprunt::all();
+        //$emprunts = Emprunt::all();
+        /*$utilisateur = User::all();
+        //dd($utilisateur.Emprunt::all()->first());
+        $emprunts = Emprunt::with('abonne')->get();*/
+        /*if (isset($request->nom_prenom) || isset($request->etat)){
+            $emprunts = Emprunt::whereIn('id_abonne', AbonneService::getAbonnesId($request->nom_prenom))
+                ->whereIn('id_emprunt', EmpruntService::getEmpruntsId($request->etat))
+                ->get();
+            //dd($emprunts);
+        }else{
+            $emprunts = Emprunt::all();
+            //dd($emprunts);
+        }*/
+        /*if ($_REQUEST['element'] ?? null) {
+            //dd('a');
+            $emprunts = Emprunt::whereIn('id_abonne', array($abonnesId))->get();
+            dd($emprunts);
+        } else {
+            //dd('b');
+            $emprunts = Emprunt::all();
+        }*/
         //dd($emprunts);
-        return view('emprunt.index')->with('emprunts', $emprunts);
+        /*if($_REQUEST['element'] ?? null){
+            $abonnesId = AbonneService::getAbonnesId($request->nom_prenom);
+            $emprunts = Emprunt::whereIn('id_abonne', $abonnesId)->get();
+        }else{
+            $emprunts = Emprunt::all();
+        }*/
+
+        /*if($_REQUEST['element'] ?? null){
+            $emprunts = Emprunt::where($_REQUEST['search'], 'like', '%'.$_REQUEST['element'].'%')->get();
+
+        }else{
+            $emprunts = Emprunt::all();
+
+        }*/
+        if ($_REQUEST['element'] ?? null) {
+            //dd('a');
+            $utilisateur = User::where('nom', $_REQUEST['element'])->orWhere('prenom', $_REQUEST['element'])->get();
+            //dd($utilisateur);
+            $abonne = Abonne::where('id_utilisateur', $utilisateur->first()->id_utilisateur)->get();
+            //dd($abonne);
+            $emprunts = Emprunt::whereIn('id_abonne', array($abonne->first()->id_abonne))->get();
+            //dd($emprunts);
+        } else {
+            //dd('b');
+            $emprunts = Emprunt::all();
+        }
+
+
+        return view('emprunt.index')->with([
+            'emprunts' => $emprunts,
+        ]);
     }
 
     /**
