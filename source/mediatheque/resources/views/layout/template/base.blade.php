@@ -21,7 +21,7 @@
 <body class="bg-gray-100">
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
     <!-- nav bar -->
-    @include('layouts.navigation')
+    @include('layout.template.navigation')
     <div class="flex h-screen antialiased text-gray-900 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
         <div

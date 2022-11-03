@@ -7,7 +7,7 @@
 <fieldset>
     {{csrf_field()}}
     {{ method_field('PUT') }}
-    
+
     <div class="flex flex-row space-x-3 justify-center items-center">
         <div class="w-2/6" >
             <label class="label" for="nom">Nom</label>
@@ -36,7 +36,7 @@
             <div class="flex flex-col-reverse p-2">
                 <input type="file" name="photo_profil" value="{{$utilisateur->photo_profil}}">
             </div>
-            
+
         </div>
         <div class="flex flex-col w-2/3 mt-6">
             <div>
@@ -72,17 +72,17 @@
     </div>
 
     <div class="flex flex-col">
-                <label class="label" for="sexe">Sexe : </label>
-                <div class="flex flex-row space-x-8 text-center">
-                    <div class="label">
-                        <input type="radio" name="sexe" value="{{$utilisateur->sexe}}"/>
-                        <label>Masculin</label>
-                    </div>
-                    <div class="label">
-                        <input type="radio" name="sexe" value="{{$utilisateur->sexe}}"/>
-                        <label>Feminin</label>
-                    </div>
+            <label class="label" for="sexe">Sexe : </label>
+            <div class="flex flex-row space-x-8 text-center">
+                <div class="label">
+                    <input type="radio" name="sexe" value="Masculin" {{ $utilisateur->sexe == "Masculin" ? "checked" : "" }}/>
+                    <label>Masculin</label>
                 </div>
+                <div class="label">
+                    <input type="radio" name="sexe" value="Feminin" {{ $utilisateur->sexe == "Feminin" ? "checked" : "" }}/>
+                    <label>Feminin</label>
+                </div>
+            </div>
     </div>
 
     @yield('abonne')

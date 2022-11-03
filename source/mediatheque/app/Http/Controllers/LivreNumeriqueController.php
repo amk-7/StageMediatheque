@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\LivresNumeriqueImport;
+use App\Imports\LivresPapierImport;
 use App\Models\LivresNumerique;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
@@ -16,6 +18,7 @@ use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LivreNumeriqueController extends Controller
 {
@@ -191,5 +194,29 @@ class LivreNumeriqueController extends Controller
     public function readPdf(Ouvrage $ouvrage)
     {
         return view('livresNumerique.lire', compact('ouvrage'));
+    }
+
+    public function uploadLivresNumeriqueCreate()
+    {
+
+        return view('livresNumerique.excel_import');
+    }
+
+    public function uploadLivresNumeriqueStore(Request $request)
+    {
+        //dd($request->fileList);
+        if (! $request->url == null)
+        {
+            $chemin_ouvrage_excel = strtolower('livres_numerique').'.'.$request->url->extension();
+            $request->url->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
+        } else
+        {
+            return redirect()->route('formulaireImportExcel');
+        }
+
+        //dd($request->url);
+
+        Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$chemin_ouvrage_excel);
+        return redirect()->route('listeLivresNumerique');
     }
 }

@@ -23,7 +23,7 @@
 }
 
 .info {
-    @apply text-green-600;
+    @apply text-green-600 text-center;
 }
 
 .search {

@@ -4,8 +4,8 @@
         <h1 class="text-2xl">{{$ouvrage->titre }}</h1>
         <div class="flex flex-row m-auto p-3.5">
             <div class="">
-                <img src="{{ asset('storage/images/images_livre/'.$ouvrage->image) }}"
-                     alt="{{$ouvrage->image}}" class="border border-solid"/>
+                <img src="{{ asset('storage/ouvrage_electonique/'.$ouvrage->image) }}"
+                     alt="{{$ouvrage->image}}" class="border border-solid" style="width: 198px;height: 300px;"/>
             </div>
             <div class="pl-6">
                 <div class="flex flex-col">

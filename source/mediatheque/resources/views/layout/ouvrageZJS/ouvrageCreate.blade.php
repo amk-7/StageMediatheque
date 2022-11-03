@@ -1,5 +1,5 @@
 <script type="text/javascript" async>
-    console.log("D'accord....");
+
     let id_search_bar = "nom";
     let options_class_name = "auteurs";
     let id_select_prenom = "prenom";

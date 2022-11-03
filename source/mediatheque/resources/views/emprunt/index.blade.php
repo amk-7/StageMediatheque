@@ -15,8 +15,9 @@
                     <tr class="fieldset_border">
                         <th class="fieldset_border" >Numéro</th>
                         <th class="fieldset_border" >Date de l'emprunt</th>
-                        <th class="fieldset_border" >Nombre Ouvrage</th>
                         <th class="fieldset_border" >Date de retour</th>
+                        <th class="fieldset_border" >Jour restant</th>
+                        <th class="fieldset_border" >Nombre Ouvrage</th>
                         <th class="fieldset_border" >Abonné</th>
                         <th class="fieldset_border" >personnel</th>
                         <th class="fieldset_border" >Consulter</th>
@@ -27,11 +28,13 @@
                     </thead>
                     <tbody>
                     @foreach($emprunts as $emprunt)
+
                         <tr class="fieldset_border" >
                             <td class="fieldset_border" > {{ $emprunt->id_emprunt }} </td>
-                            <td class="fieldset_border" > {{ $emprunt->date_emprunt->format('Y-m-d') }} </td>
+                            <td class="fieldset_border" > {{ \App\Service\GlobaleService::afficherDate($emprunt->date_emprunt) }} </td>
+                            {!! \App\Helpers\RestitutionHelper::afficherDateRetoure($emprunt) !!}
+                            {!! \App\Helpers\RestitutionHelper::afficherEnpruntJourRestant($emprunt) !!}
                             <td class="fieldset_border" > {{ $emprunt->nombreOuvrageEmprunte }} </td>
-                            <td class="fieldset_border" > {{ $emprunt->date_retour->format('Y-m-d') }} </td>
                             <td class="fieldset_border" > {{ $emprunt->abonne->utilisateur->userFullName ?? "" }} </td>
                             <td class="fieldset_border" > {{ $emprunt->personnel->utilisateur->userFullName ?? "" }} </td>
                             <td class="fieldset_border" >

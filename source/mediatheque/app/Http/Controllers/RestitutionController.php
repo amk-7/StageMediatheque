@@ -18,10 +18,14 @@ class RestitutionController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $restitution = Restitution::all();
+
         return view('restitution.index')->with([
-            'restitutions' => Restitution::all(),
+            'restitutions' => $restitution,
+            'etat' => $request->etat,
+            'search_by' => $request->search_by,
         ]);
     }
 

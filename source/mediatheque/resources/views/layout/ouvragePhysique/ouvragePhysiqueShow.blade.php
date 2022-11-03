@@ -8,9 +8,4 @@
         <span class="label_title_sub_title">Disponibilité :</span>
         <span class="label_show_value">{!! \App\Helpers\OuvragesPhysiqueHelper::afficherDisponibilite($ouvragesPhysique) !!}</span>
     </label>
-    <div>
-        <form method="" action="">
-            <input type="submit" name="reserver" value="Reserver" class="button button_show">
-        </form>
-    </div>
 @stop
