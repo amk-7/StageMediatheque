@@ -42,7 +42,7 @@
                 @endforeach
             </select>
             <select wire:model="niveau" name="niveau" class="select_btn">
-                <option value="">Toute niveaus</option>
+                <option value="">Tous niveaus</option>
                 @foreach($niveaus as $niveau)
                     <option value="{{ $niveau }}"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($niveau)}} </option>
                 @endforeach

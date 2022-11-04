@@ -4,13 +4,10 @@ namespace App\Service;
 
 class ImportExcelService
 {
-    public static function controlleValidite($row, $indice_titre, $indice_annee, $indice)
+    public static function controlleValidite($row, $indice_titre, $indice_annee)
     {
-        for($i=0; $i<$indice; $i++){
-            if (! $row[$i])
-            {
-                return null;
-            }
+        if ($row[$indice_titre]==null){
+            return null;
         }
 
         if (in_array('N°', $row, true))

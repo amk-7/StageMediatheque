@@ -16,7 +16,7 @@ class CreateLivresNumeriquesTable extends Migration
         Schema::create('livres_numeriques', function (Blueprint $table) {
             $table->bigIncrements('id_livre_numerique');
             $table->json('categorie');
-            $table->string('ISBN')->unique();
+            $table->string('ISBN');
             $table->bigInteger('id_ouvrage_electronique');
             $table->timestamps();
             $table->foreign('id_ouvrage_electronique')->references('id_ouvrage_electronique')->on('ouvrages_electroniques')->cascadeOnDelete();
