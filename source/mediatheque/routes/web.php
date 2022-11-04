@@ -40,6 +40,8 @@ Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function 
     Route::get('affiche_abonne/{abonne}', 'App\Http\Controllers\AbonneController@show')->name('showAbonne');
     Route::get('formulaire_edition_des_abonnes/{abonne}/edit', 'App\Http\Controllers\AbonneController@edit')->name('editAbonne');
     Route::put('mise_a_jour_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
+    Route::get('lire_pdf/{ouvragesElectronique}/lecture', [LivreNumeriqueController::class, 'readPdf'])->name('lirePDF');
+
 });
 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
@@ -111,7 +113,6 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('formulaire_modification_livre_numerique/{livres_numerique}/edite', [LivreNumeriqueController::class, 'edit'])->name('formulaireModificationLivreNumerique');
     Route::put('modification_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'update'])->name('modificationLivreNumerique');
     Route::delete('suppression_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreNumerique');
-    Route::get('lire_pdf/{ouvrage}/lecture', [LivreNumeriqueController::class, 'readPdf'])->name('lirePDF');
 
     Route::get('formulaire_enregistrement_livre_papier', [LivresPapierController::class, 'create'])->name('formulaireEnregistrementLivrePapier');
     Route::post('enregistrement_livre_papier', [LivresPapierController::class, 'store'])->name('enregistementLivrePapier');

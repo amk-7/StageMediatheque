@@ -33,7 +33,7 @@ class LivrePapierSeeder extends Seeder
         ]);
 
         $ouvrage5 = Ouvrage::Create([
-            'titre'=>'CREPUSCULE DES TEMPS ANCIEN EPA',
+            'titre'=>'CREPUSCULE DES TEMPS ANCIENS EPA',
             'mot_cle'=> array(
                 "temps",
                 "anciens",
@@ -115,7 +115,7 @@ class LivrePapierSeeder extends Seeder
 
 
         $ouvrage = Ouvrage::Create([
-            'titre'=>"LE MOMDE S'EFONDRE",
+            'titre'=>"LE MONDE S'EFFONDRE PA ",
             'mot_cle'=> [
                 "monde",
                 ""
@@ -125,7 +125,7 @@ class LivrePapierSeeder extends Seeder
             'type'=>'nouvelle',
             'image' => 'default_book_image.png',
             'langue'=>'français',
-            'annee_apparution'=>'2013',
+            'annee_apparution'=>'1972',
             'lieu_edition'=>'Pocket',
         ]);
 

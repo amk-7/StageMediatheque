@@ -31,7 +31,7 @@
                 </label>
             </div>
         </fieldset>
-        <input type="submit" value="Enregistré">
+        <input type="submit" value="Enregistré" class="button button_primary">
     </form>
 </div>
 @endsection
@@ -42,7 +42,7 @@
         let tarifs = {!! $tarifs !!};
 
         console.log(tarifs);
-    
+
         let nom_abonnes = document.getElementById('nom_abonnes');
         let prenom_abonnes = document.getElementById('prenom_abonnes');
         let balise_tarifs = document.getElementById('tarifs');
