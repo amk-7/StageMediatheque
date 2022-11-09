@@ -5,13 +5,13 @@
         <h1 class="label_title"> Liste des Emprunts </h1>
         <form>
             <nav class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <select name="search">
+                <!--select name="search">
                     <option>Selectionner</option>
                     <option value="">Terminé</option>
                     
-                </select>
+                </select-->
                 <input type="text" name="element" placeholder="Nom">
-                <button class="btn btn-primary" type="submit">Rechercher</button>
+                <button class="button button_primary" type="submit">Rechercher</button>
             </nav>               
         </form>
         <div class="space-y-2">
@@ -86,6 +86,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                {!! $emprunts->links() !!}
             @else
                 <h4>Aucun emprunt</h4>
             @endif

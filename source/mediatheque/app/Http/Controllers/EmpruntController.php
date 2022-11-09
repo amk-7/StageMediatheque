@@ -15,6 +15,8 @@ use App\Service\PersonnelService;
 use App\Service\AbonneService;
 use App\Service\EmpruntService;
 use App\Service\GlobaleService;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class EmpruntController extends Controller
 {
@@ -62,17 +64,35 @@ class EmpruntController extends Controller
             $emprunts = Emprunt::all();
 
         }*/
+        $paginate = 10;
         if ($_REQUEST['element'] ?? null) {
             //dd('a');
-            $utilisateur = User::where('nom', $_REQUEST['element'])->orWhere('prenom', $_REQUEST['element'])->get();
-            //dd($utilisateur);
-            $abonne = Abonne::where('id_utilisateur', $utilisateur->first()->id_utilisateur)->get();
-            //dd($abonne);
-            $emprunts = Emprunt::whereIn('id_abonne', array($abonne->first()->id_abonne))->get();
+            //$utilisateur = User::where('nom', 'like', '%'.$_REQUEST['element'].'%')->orWhere('prenom', 'like', '%'.$_REQUEST['element'].'%')->get();
+            $users = DB::table('users')
+                ->select("id_utilisateur")
+                ->where("nom", "like", "%".strtoupper($_REQUEST['element'])."%")
+                ->orWhere("prenom", "like", "%".strtolower($_REQUEST['element'])."%")
+                ->get();
+            $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
+            //dd($utilisateur->count());
+            //dd($users);
+            if(count($users) != 0){
+                //dd($users);
+                //$abonne = Abonne::whereIn('id_utilisateur', $utilisateur->first()->id_utilisateur)->get();
+                $abonnes = DB::table('abonnes')->select('id_abonne')->whereIn('id_utilisateur', $users)->get();
+                //$abonne = Abonne::where('id_utilisateur', 'like', '%'.$utilisateur->first()->id_utilisateur.'%')->get();
+                //dd($abonne);
+                $abonnes = GlobaleService::getArrayKeyFromDBResult($abonnes, "id_abonne");
+                $emprunts = Emprunt::whereIn('id_abonne', $abonnes)->paginate($paginate);
+                //dd($emprunts);
+            }else{
+                $emprunts = new Collection();
+                //dd($emprunts);
+            }
             //dd($emprunts);
         } else {
             //dd('b');
-            $emprunts = Emprunt::all();
+            $emprunts = Emprunt::paginate($paginate);
         }
 
 
