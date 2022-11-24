@@ -23,10 +23,10 @@ class Emprunt extends Model
     }
     public function getJourRestantAttribute(){
         $nbJour = -1;
-        if (! $this->empruntExpierAttribute()){
-            $nbJour = $this->date_retour->diffInDays($this->date_emprunt);
-        } else {
-            $nbJour = Carbon::now()->diffInDays($this->date_retour)*-1;
+        $nbJour = $this->date_retour->diffInDays(Carbon::now());
+
+        if ($this->empruntExpierAttribute()){
+            $nbJour = $nbJour*-1;
         }
 
         return $nbJour;

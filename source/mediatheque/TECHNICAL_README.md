@@ -29,7 +29,7 @@
         * sudo systemctl restart apache2
     6.Installation des instensions php:
 
-`sudo apt install php8.1-common php8.1-mysql php8.1-xml php8.1-xmlrpc php8.1-curl php8.1-gd php8.1-imagick php8.1-cli php8.1-dev php8.1-imap php8.1-mbstring php8.1-opcache php8.1-soap php8.1-zip php8.1-intl -y`
+`sudo apt install php8.1-common php8.1-pgsql php8.1-xml php8.1-xmlrpc php8.1-curl php8.1-gd php8.1-imagick php8.1-cli php8.1-dev php8.1-imap php8.1-mbstring php8.1-opcache php8.1-soap php8.1-zip php8.1-intl -y`
 
     7.Vérification de la nouvelle version : php -v
 
@@ -70,6 +70,8 @@
 ## Installation du module de qr-code
 
     composer require simplesoftwareio/simple-qrcode "~4" --ignore-platform-req=ext-mysql_xdevapi
+    
+    composer require barryvdh/laravel-dompdf
     
 ## Authentification.
 composer require laravel/breeze --dev

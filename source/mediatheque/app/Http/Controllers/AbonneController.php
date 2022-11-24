@@ -148,6 +148,7 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
+        dd($utilisateur);
         $utilisateur->assignRole(Role::find(3));
 
         return redirect()->route('listeAbonnes');
@@ -214,8 +215,7 @@ class AbonneController extends Controller
         $abonne->type_de_carte = $request["type_de_carte"];
         $abonne->save();
         if (Auth::user()->hasRole("abonne")){
-            //return redirect()->route('showAbonne/{'.Auth::user()->id_utilisateur.'}');
-            return redirect()->route('listeLivresPapier');
+            return redirect()->route('showAbonne', $abonne);
         } else{
             return redirect()->route('listeAbonnes');
         }

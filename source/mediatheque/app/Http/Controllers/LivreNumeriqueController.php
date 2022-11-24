@@ -205,16 +205,13 @@ class LivreNumeriqueController extends Controller
 
     public function uploadLivresNumeriqueStore(Request $request)
     {
-        //dd("Okay");
         $destination_path = "public/ouvrage_electonique/";
         $path = "";
         if ($request->file("fileList"))
         {
            foreach ($request->file("fileList") as $file){
-               //dump($file);
                if ($file->isReadable()){
                    if (! in_array($file->extension(), ["xlsx", "odt"])){
-
                        $file->storeAs($destination_path, $file->getClientOriginalName());
                    } else {
                        $destination_path = "public/fichier_excel/";
@@ -223,15 +220,12 @@ class LivreNumeriqueController extends Controller
                    }
                }
            }
-           //dd("pk");
         } else {
             return redirect()->route('formulaireImportExcel');
         }
 
-        //dd($request->url);
-
         Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$path);
-        //dd('Okay...');
+        //dd("::::::END");
         return redirect()->route('listeLivresNumerique');
     }
 }

@@ -1,5 +1,4 @@
 @extends("layout.template.base")
-
 @section("content")
     <div class="flex flex-col justify-center items-center m-auto">
         <form action="{{route('storeEmprunt')}}" method="post" class="bg-white p-12 mb-12 space-y-3">
@@ -39,8 +38,11 @@
                 <div>
                     <div class="flex flex-col">
                         <label for="ouvrage_cote">Cote</label>
-                        <input type="text" name="ouvrage_cote" id="ouvrage_cote" class="input"
-                               placeholder="Saisire l'idendifiant la cote de l'ouvrage" autocomplete="off">
+                        <div class="flex space-x-8">
+                            <button name="scan_qrcode" id="scan_qrcode" class="button button_primary p-2 w-1/3">Scanner</button>
+                            <input type="text" name="ouvrage_cote" id="ouvrage_cote" class="input w-2/3"
+                                   placeholder="Saisire l'idendifiant la cote de l'ouvrage" autocomplete="off">
+                        </div>
                     </div>
                     <div class="alert">
                         <p id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
@@ -84,7 +86,7 @@
             </fieldset>
             <div>
                 <div class="flex space-x-8">
-                    <button name="ajouter_emprunt" id="ajouter_emprunt" class="button button_primary w-1/5 p-2">Ajouter</button>
+                    <button name="ajouter_emprunt" id="ajouter_emprunt" class="button button_primary w-2/5 p-2">Ajouter</button>
                 </div>
                 <div class="alert">
                     <p id="emprunt_erreur" hidden>Veuillez ajouter cet d'ouvrage.</p>
@@ -109,19 +111,14 @@
             <div id="overlay" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
             <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
                 <div class="flex flex-col items-center space-y-4">
-                    <div>
-                        <label>Etat entree</label>
-                        <select name="" id="etat_ouvrage_edite">
-                            <option selected>Séléctionner etat</option>
-                            @for($i=4; $i>0; $i--)
-                                <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
-                            @endfor
-                        </select>
+                    <div class="flex flex-col justify-center items-center m-auto">
+                        <div class="flex flex-col">
+                            <div class="w-full">
+                                <div id="reader"></div>
+                            </div>
+                            <button name="quit" id="quit" class="button button_primary w-2/5 p-2">Quitter</button>
+                        </div>
                     </div>
-                    <div class="alert">
-                        <p id="etat_ouvrage_modif_erreur" hidden>Vous devez renseigner l'état de l'ouvrage restituer .</p>
-                    </div>
-                    <button id="btn_modifier" class="button button_primary">modifier</button>
                 </div>
             </div>
             <input type="submit" id="action_emprunter" name="action_emprunt" value="Emprunter" class="button button_primary w-full mt-3">
@@ -129,6 +126,7 @@
     </div>
 @stop
 @section("js")
+    <script src="https://reeteshghimire.com.np/wp-content/uploads/2021/05/html5-qrcode.min_.js"></script>
     <script type="text/javascript" async>
 
         let abonnes = {!! $abonnes !!};
@@ -146,11 +144,10 @@
         let duree_emprunt = document.getElementById('duree_emprunt');
         let overlay = document.getElementById('overlay');
         let div_modal = document.getElementById("modal_editer");
+        let button_scan = document.getElementById("scan_qrcode");
+        let button_scan_quit = document.getElementById("quit");
 
-        //declarer une variable nbre d'emprunt
         let nombre_emprunt = 0;
-
-        //let btn_modifier = document.getElementById('btn_modifier');
 
         let nom_abonne_erreur = document.getElementById('nom_abonne_erreur');
         let prenom_abonne_erreur = document.getElementById('prenom_abonne_erreur');
@@ -162,28 +159,21 @@
         let emprunts_erreur = document.getElementById('emprunt_erreur');
         let non_eligble_erreur = document.getElementById('abonne_non_eligible');
         let nombre_emprunt_erreur = document.getElementById('nombre_emprunt');
-        let cote_ouvrage_exist = document.getElementById('cote_ouvrage_exist');
-
-        console.log(nombre_emprunt_erreur);
+        let cote_ouvrage_exist = document.getElementById('scan_qrcode');
 
         setLiteOptions(nom_abonnes, abonnes);
-        cleanALl();
-
-        let numero_ligne_edite = -1;
-
-        btn_modifier.addEventListener('click', function (e) {
-            stopPropagation(e);
-            modifierEtatOuvrage();
-        });
-
-        cote_ouvrage.addEventListener('keyup', function (e) {
-            rechercherTitreParCote();
-        });
-
-
         nom_abonnes.addEventListener('change', function (e) {
             mettreListePrenomParNom(prenom_abonnes, nom_abonnes.value, abonnes);
         });
+
+        function ouvrageExiste(cote){
+            for (let i = 0; i < livres_papier.length; i++){
+                if (livres_papier[i]['cote'] === cote){
+                    return true;
+                }
+            }
+            return false;
+        }
 
         function mettreListePrenomParNom(balise, elt, liste) {
             while (balise.firstChild) {
@@ -196,7 +186,6 @@
                 if (elt === liste[i]['nom']) {
                     let option = document.createElement('option');
                     option.value = liste[i]['id'];
-                    console.log(option.value)
                     option.innerText = liste[i]['prenom'];
                     balise.appendChild(option);
                 }
@@ -223,29 +212,29 @@
         let number = 1;
 
         btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
-            console.log("::::::::Add:::::::::");
             stopPropagation();
             if(validateUser()){
-                console.log("::::::::Validate::::::::");
                 let id_abonne = prenom_abonnes.value;
                 if(verfierSiAbonneEstEligible(id_abonne)=="false"){
-                    //console.log("abonne non eligible");
                     non_eligble_erreur.hidden = false;
                     return;
                 }
             }
             /*if(verifierNombreMaxEmprunt(prenom_abonnes.value)){
-                    console.log("AAAAAAAAAAAAAAAA");
                     nombre_emprunt_erreur.hidden = false;
                     stopPropagation();
                     return;
                 }*/
             non_eligble_erreur.hidden = true;
-            //nombre_emprunt_erreur.hidden = true;
 
             if (validate()) {
-                console.log(verifierSiOuvrageExisteDansEmprunt(cote_ouvrage.value))
-                if(verifierSiOuvrageExisteDansEmprunt(cote_ouvrage.value)){
+                let cote = cote_ouvrage.value;
+                if (! ouvrageExiste(cote))
+                {
+                    return;
+                }
+
+                if(verifierSiOuvrageExisteDansEmprunt(cote)){
                     cote_ouvrage_exist.hidden = false;
                     return;
                 }
@@ -257,6 +246,7 @@
                     stopPropagation();
                     return ;
                 }
+
                 nombre_emprunt_erreur.hidden = true;
                 let table_body = document.getElementById('liste_emprunt').children[1];
                 let row = document.createElement('tr');
@@ -300,6 +290,7 @@
 
                 //incrementer le nombre d'emprunt
                 nombre_emprunt = nombre_emprunt + 1;
+                button_scan.hidden = false;
             }
         });
 
@@ -310,7 +301,6 @@
         }
 
         function modifierEtatOuvrage() {
-            //console.log("modification.... "+numero_ligne_edite);
             let table_body = document.getElementById('liste_emprunt').children[1];
             let etat_ouvrage_edite = document.getElementById('etat_ouvrage_edite');
             let lines = table_body.children;
@@ -457,19 +447,13 @@
         //verfierSiAbonneEstEligible(2);
         function verfierSiAbonneEstEligible(id_abonne)
         {
-            //abonnes.forEach(element => console.log(element));
             for(let i = 0; i < abonnes.length; i++)
             {
-                //console.log(abonnes[i]['id']);
                 if(abonnes[i]['id'] == id_abonne)
                 {
-                    console.log(abonnes[i]['estEligible']);
                     return abonnes[i]['estEligible'];
                 }
-
             }
-            //console.log(abonnes);
-
         }
 
         verifierNombreMaxEmprunt(1);
@@ -499,6 +483,35 @@
             }
             return false;
         }
+
+        button_scan.addEventListener("click", function (){
+            stopPropagation();
+            div_modal.classList.remove('hidden');
+            overlay.classList.remove('hidden');
+        });
+
+        button_scan_quit.addEventListener("click", function (){
+            stopPropagation();
+            div_modal.classList.add('hidden');
+            overlay.classList.add('hidden');
+        });
+
+        function onScanSuccess(qrCodeMessage) {
+            cote_ouvrage.value = qrCodeMessage;
+            rechercherTitreParCote();
+        }
+
+        function onScanError(errorMessage) {
+            //handle scan error
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+        cote_ouvrage.addEventListener('keyup', function (e) {
+            rechercherTitreParCote();
+        });
 
     </script>
 @stop

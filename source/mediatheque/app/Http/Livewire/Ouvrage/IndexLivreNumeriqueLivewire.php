@@ -26,7 +26,7 @@ class IndexLivreNumeriqueLivewire extends Component
     public $type ;
     public $categorie ;
     public $niveau ;
-    public $par_page=5;
+    public $par_page=20;
 
     public function searchByParameters()
     {
