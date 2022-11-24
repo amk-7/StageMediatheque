@@ -15,15 +15,16 @@ class ImportExcelService
             return null;
         }
 
-        if (OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee])) != null)
-        {
-            return null;
-        }
-
         return true;
     }
 
     public static function exctratUserInfo(String $auteur)
+    {
+        $auteurs = explode(" ", trim($auteur));
+        return $auteurs;
+    }
+
+    public static function exctratUserInfo1(String $auteur)
     {
         $auteur = str_replace(' ', '', $auteur);
         $auteur = str_replace('(', ',', $auteur);

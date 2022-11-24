@@ -64,15 +64,17 @@ class OuvragesPhysiqueService
         $livresComplet = array();
         foreach ($livresCollection as $lpc)
         {
-            $livre = array(
-                'id_livre'=>$lpc->id_livre_papier,
-                'titre'=>$lpc->ouvragesPhysique->ouvrage->titre,
-                'ISBN'=>$lpc->ISBN,
-                'cote'=>$lpc->ouvragesPhysique->cote,
-                'nombre_exemplaire'=>$lpc->ouvragesPhysique->nombre_exemplaire,
-            );
+            if ($lpc->ouvragesPhysique->nombre_exemplaire > 0){
+                $livre = array(
+                    'id_livre'=>$lpc->id_livre_papier,
+                    'titre'=>$lpc->ouvragesPhysique->ouvrage->titre,
+                    'ISBN'=>$lpc->ISBN,
+                    'cote'=>$lpc->ouvragesPhysique->cote,
+                    'nombre_exemplaire'=>$lpc->ouvragesPhysique->nombre_exemplaire,
+                );
 
-            array_push($livresComplet, $livre);
+                array_push($livresComplet, $livre);
+            }
         }
 
         return $livresComplet;

@@ -12,8 +12,9 @@ class AuteurService
     {
         $auteurs = [];
         foreach ($data_auteurs as $info_auteur){
+            //dd($info_auteur);
             if (!empty($info_auteur[0])){
-                $auteur = self::auteur($info_auteur[0], $info_auteur[1]);
+                $auteur = self::auteur(strtoupper($info_auteur[0]), strtolower($info_auteur[1]));
                 if (! $auteur){
                     $auteur = Auteur::Create([
                         "nom"=>trim(strtoupper($info_auteur[0])),

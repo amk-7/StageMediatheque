@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\Auteur;
 use App\Models\Ouvrage;
+use App\Models\OuvragesElectronique;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -198,5 +199,15 @@ class OuvrageService
     public static function ouvrageExist($titre, $annee)
     {
         return Ouvrage::all()->where('titre', $titre)->where('annee_apparution', $annee)->first();
+    }
+
+    public static function ouvragePhysiqueExist($ouvrage)
+    {
+        return OuvragesPhysique::all()->where("id_ouvrage", $ouvrage->id_ouvrage)->first();
+    }
+
+    public static function ouvrageNumeriqeExist($ouvrage)
+    {
+        return OuvragesElectronique::all()->where("id_ouvrage", $ouvrage->id_ouvrage)->first();
     }
 }
