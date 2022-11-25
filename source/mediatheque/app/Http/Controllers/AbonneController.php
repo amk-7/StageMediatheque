@@ -13,6 +13,9 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
+use App\Mail\MailInscription;
+use Illuminate\Support\Facades\Mail;
+
 
 class AbonneController extends Controller
 {
@@ -83,7 +86,7 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
-        Validator::make($request->all(), [
+        /*Validator::make($request->all(), [
             'numero_carte'=>['required',
                 function ($attribute, $value, $flail){
                     if (! GlobaleService::verifieCart($value)){
@@ -91,7 +94,7 @@ class AbonneController extends Controller
                     }
                 }
             ],
-        ])->validate();
+        ])->validate();*/
 
         Validator::make($request->all(), [
             'contact'=>['required',
@@ -150,6 +153,10 @@ class AbonneController extends Controller
         }
         dd($utilisateur);
         $utilisateur->assignRole(Role::find(3));
+
+        //Mail
+        Mail::to($utilisateur->email)->queue(new MailInscription($utilisateur));
+
 
         return redirect()->route('listeAbonnes');
     }

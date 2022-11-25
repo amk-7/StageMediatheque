@@ -94,3 +94,29 @@ Etape 3 :
  composer dump-autoload
 
     
+## Envoi de Mail.
+Etape 1 : 
+ creer un mail avec la commande : php artisan make:mail 'NomDuMail'
+Etape 2 :
+    creer une vue dans le dossier ressources/views/email
+    puis creer un fichier dans le dossier ressources/views/email/
+
+Etape 3 :
+    Faire quelques configuration dans le fichier créer a partir de la commande 'make:mail'
+
+
+Etape 4 :
+    Dans le fichier controller ou on veut envoyer le mail on fait appel a la fonction 'send' de la classe Mail
+    Mail::to('email')->queue(new 'NomDuMail'(les informations a envoyer));
+
+Etape 5 :
+    Dans le fichier .env ajouter les informations suivantes:
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.googlemail.com
+    MAIL_PORT=465
+    MAIL_USERNAME=alhassan.blog@gmail.com     ## c'est l'adresse mail qui va envoyer le mail
+    MAIL_PASSWORD=nfubxbxnkpjhwmif  #c'est le mot de passe de l'adresse mail qui va envoyer le mail
+    MAIL_ENCRYPTION=ssl
+    MAIL_FROM_ADDRESS=alhassan.blog@gmail.com
+    MAIL_FROM_NAME="${APP_NAME}"
+
