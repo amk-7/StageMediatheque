@@ -17,6 +17,9 @@ use App\Service\EmpruntService;
 use App\Service\GlobaleService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AlertMessage;
 
 class EmpruntController extends Controller
 {
@@ -149,6 +152,46 @@ class EmpruntController extends Controller
         //dd($listesEmprunts->restitution);
         LignesEmpruntService::enregistrerLignesEmprunt($request->data, $emprunt);
         //dd($request);
+
+        //Envoyer un mail à l'abonné lorsque la date de retour est proche
+        $abonne = Abonne::find($request->prenom_abonne);
+        //dd($abonne);
+        $utilisateur = User::find($abonne->id_utilisateur);
+        //dd($utilisateur);
+        $email = $utilisateur->email;
+        //dd($email);
+        $date_retour = $emprunt->date_retour;
+        //dd($date_retour);
+        $date_emprunt = $emprunt->date_emprunt;
+        //dd($date_emprunt);
+        $duree_emprunt = $request->duree_emprunt;
+        //dd($duree_emprunt);
+
+        $data = array(
+            'nom' => $utilisateur->nom,
+            'prenom' => $utilisateur->prenom,
+            'date_retour' => $date_retour,
+            'date_emprunt' => $date_emprunt,
+            'duree_emprunt' => $duree_emprunt,
+        );
+
+        //dd($data);
+
+        //Mail::to($email)->queue(new AlertMessage($data));
+
+        Mail::to($email)->send(new AlertMessage($data));
+        /*Mail::send('mails.alertMessage', $data, function($message) use ($email) {
+            $message->to($email, 'Alerte')->subject
+            ('Alerte de date de retour');
+            $message->from('alertMessage','Alerte');    
+        });*/
+        
+        /*
+        Mail::send('mails.mail', $data, function($message) use ($email) {
+            $message->to($email, 'To Abonne')->subject
+            ('Notification de date de retour');
+            $message->from('a', 'Bibliothèque');
+        });*/
 
         return redirect()->route("listeEmprunts");
     }
