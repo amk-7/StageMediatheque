@@ -4,21 +4,13 @@ namespace App\Service;
 
 class ImportExcelService
 {
-    public static function controlleValidite($row, $indice_titre, $indice_annee, $indice)
+    public static function controlleValidite($row, $indice_titre, $indice_annee)
     {
-        for($i=0; $i<$indice; $i++){
-            if (! $row[$i])
-            {
-                return null;
-            }
-        }
-
-        if (in_array('N°', $row, true))
-        {
+        if ($row[$indice_titre]==null){
             return null;
         }
 
-        if (OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee])) != null)
+        if (in_array('N°', $row, true))
         {
             return null;
         }
@@ -27,6 +19,12 @@ class ImportExcelService
     }
 
     public static function exctratUserInfo(String $auteur)
+    {
+        $auteurs = explode(" ", trim($auteur));
+        return $auteurs;
+    }
+
+    public static function exctratUserInfo1(String $auteur)
     {
         $auteur = str_replace(' ', '', $auteur);
         $auteur = str_replace('(', ',', $auteur);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Approvisionnement;
 use App\Models\OuvragesPhysique;
 use App\Models\Personnel;
+use App\Service\AbonneService;
 use App\Service\ApprovisionnementService;
 use App\Service\OuvragesPhysiqueService;
 use App\Service\PersonnelService;
@@ -32,9 +33,10 @@ class ApprovisionnementsController extends Controller
     public function create()
     {
         return view('approvisionnements.create')->with([
-            "livre_papier"=>json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
-            "document_audio_visuel"=>json_encode(OuvragesPhysiqueService::getDocAVWithAllAttribute()),
-            "personnels"=>json_encode(PersonnelService::getPersonnelWithAllAttribut()),
+            "livre_papier" => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
+            "document_audio_visuel" => json_encode(OuvragesPhysiqueService::getDocAVWithAllAttribute()),
+            "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
+            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
         ]);
     }
 
@@ -48,12 +50,10 @@ class ApprovisionnementsController extends Controller
     {
         //dd($request);
         $request->validate([
-            'nom'=>'required',
-            'prenom'=>'required',
             'data'=>'required',
         ]);
 
-        ApprovisionnementService::enregistrerPlusieursApprosionnement($request->data, $request->id_personnel);
+        ApprovisionnementService::enregistrerPlusieursApprosionnement($request->data);
         return redirect()->route('listeApprovisionnements');
     }
 

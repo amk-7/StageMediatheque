@@ -31,44 +31,51 @@ class LivresNumeriqueImport implements ToModel
         $indice_type = 7;
         $indice_domaine = 8;
         $indice_niveau = 9;
+        $indice_image = 10;
+        $indice_pdf = 11;
 
-        $size = 10;
-
-        $name = str_replace(" ", "_", trim($row[$indice_titre], ' '));
-
-        if (ImportExcelService::controlleValidite($row, $indice_titre, $indice_annee, $size) == null){
+        if (ImportExcelService::controlleValidite($row, $indice_titre, $indice_annee) == null){
             return null;
         };
+        $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee])) ;
+        if ($ouvrage)
+        {
+            $ouvrageElec = OuvrageService::ouvrageNumeriqeExist($ouvrage);
+            $ouvragePhys = OuvrageService::ouvragePhysiqueExist($ouvrage);
+            if ($ouvrageElec != null){
+                return ;
+            }
+            $ouvrage->image = $row[$indice_image];
+            $ouvrage->save();
+            //dd($ouvrage);
+        } else {
+            // Creation d'un ou des auteurs .
+            $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
+            $auteurs = AuteurService::enregistrerAuteur(array($data_auteurs));
 
-        // Creation d'un ou des auteurs .
-        $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
-        $auteurs = AuteurService::enregistrerAuteur(array($data_auteurs));
 
+            // Creation de l'ouvrage
+            $mots_cle = GlobaleService::extractLineToData($row[$indice_mot_cle])[0];
 
-        // Creation de l'ouvrage
-        $mots_cle = GlobaleService::extractLineToData($row[$indice_mot_cle])[0];
+            $ouvrage = Ouvrage::create([
+                'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
+                'lieu_edition'=>$row[$indice_lieu],
+                'annee_apparution'=>str_replace(' ', '', $row[$indice_annee]),
+                'type'=>ImportExcelService::formatString($row[$indice_type]),
+                'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau]),
+                'image' => $row[$indice_image],
+                'langue'=>strtolower('français'),
+                'resume'=>strtolower("pas de resumé"),
+                'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle]),
+            ]);
 
-        $chemin_image = $name.".jpg";
-
-        $ouvrage = Ouvrage::create([
-            'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
-            'lieu_edition'=>$row[$indice_lieu],
-            'annee_apparution'=>str_replace(' ', '', $row[$indice_annee]),
-            'type'=>ImportExcelService::formatString($row[$indice_type]),
-            'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau]),
-            'image' => $chemin_image,
-            'langue'=>strtolower('français'),
-            'resume'=>strtolower("pas de resumé"),
-            'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle]),
-        ]);
-
-        // Definire les auteurs de l'ouvrage
-        OuvrageService::definireAuteur($ouvrage, $auteurs);
+            // Definire les auteurs de l'ouvrage
+            OuvrageService::definireAuteur($ouvrage, $auteurs);
+        }
 
         // Création d'un ouvrage electronique
-        $chemin_ouvrage = $name ;
         $ouvrageElectronique = OuvragesElectronique::create([
-            'url' => $chemin_ouvrage,
+            'url' => $row[$indice_pdf],
             'id_ouvrage' => $ouvrage->id_ouvrage,
         ]);
         $categories = GlobaleService::extractLineToData($row[$indice_domaine])[0];

@@ -25,6 +25,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/scanQr', function () {
+    return view('emprunt/create2');
+});
+
 Route::group(['middleware' => ['role:responsable|bibliothecaire|abonne', 'auth']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -40,6 +44,8 @@ Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function 
     Route::get('affiche_abonne/{abonne}', 'App\Http\Controllers\AbonneController@show')->name('showAbonne');
     Route::get('formulaire_edition_des_abonnes/{abonne}/edit', 'App\Http\Controllers\AbonneController@edit')->name('editAbonne');
     Route::put('mise_a_jour_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
+    Route::get('lire_pdf/{ouvragesElectronique}/lecture', [LivreNumeriqueController::class, 'readPdf'])->name('lirePDF');
+
 });
 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
@@ -111,7 +117,6 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('formulaire_modification_livre_numerique/{livres_numerique}/edite', [LivreNumeriqueController::class, 'edit'])->name('formulaireModificationLivreNumerique');
     Route::put('modification_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'update'])->name('modificationLivreNumerique');
     Route::delete('suppression_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'destroy'])->name('suppressionLivreNumerique');
-    Route::get('lire_pdf/{ouvrage}/lecture', [LivreNumeriqueController::class, 'readPdf'])->name('lirePDF');
 
     Route::get('formulaire_enregistrement_livre_papier', [LivresPapierController::class, 'create'])->name('formulaireEnregistrementLivrePapier');
     Route::post('enregistrement_livre_papier', [LivresPapierController::class, 'store'])->name('enregistementLivrePapier');
@@ -138,14 +143,6 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::post('modification_document_audio_visuels', [DocumentAudioVisuelController::class, 'update'])->name('modificationDocumentAudioVisuels');
     Route::delete('suppression_document_audio_visuels', [DocumentAudioVisuelController::class, 'destroy'])->name('suppressionDocumentAudioVisuels');
 
-    Route::get('liste_approvisionnements', [ApprovisionnementsController::class, 'index'])->name('listeApprovisionnements');
-    Route::get('formulaire_enregistrement_approvisionnements', [ApprovisionnementsController::class, 'create'])->name('formulaireEnregistrementApprovisionnements');
-    Route::post('enregistrement_approvisionnements', [ApprovisionnementsController::class, 'store'])->name('enregistementApprovisionnements');
-    Route::get('affichage_approvisionnements', [ApprovisionnementsController::class, 'show'])->name('affichageApprovisionnements');
-    Route::get('formulaire_modification_approvisionnements/{approvisionnements}/modification', [ApprovisionnementsController::class, 'edit'])->name('formulaireModificationApprovisionnements');
-    Route::post('modification_approvisionnements', [ApprovisionnementsController::class, 'update'])->name('modificationApprovisionnements');
-    Route::delete('suppression_approvisionnements', [ApprovisionnementsController::class, 'destroy'])->name('suppressionApprovisionnements');
-
     Route::get('liste_des_restitutions', [RestitutionController::class, 'index'])->name('listeRestitutions');
     Route::get('formulaire_enregistrement_restitution/{emprunt}/formulaire', [RestitutionController::class, 'create'])->name('formulaireEnregistrementRestitution');
     Route::post('enregistrement_restitution', [RestitutionController::class, 'store'])->name('enregistementRestitution');
@@ -165,6 +162,14 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::delete('suppression_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@destroy')->name('destroyPersonnel');
     Route::get('formulaire_Personnel', 'App\Http\Controllers\PersonnelController@create')->name('createPersonnel');
     Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelController@store')->name('storePersonnel');
+
+    Route::get('liste_approvisionnements', [ApprovisionnementsController::class, 'index'])->name('listeApprovisionnements');
+    Route::get('formulaire_enregistrement_approvisionnements', [ApprovisionnementsController::class, 'create'])->name('formulaireEnregistrementApprovisionnements');
+    Route::post('enregistrement_approvisionnements', [ApprovisionnementsController::class, 'store'])->name('enregistementApprovisionnements');
+    Route::get('affichage_approvisionnements', [ApprovisionnementsController::class, 'show'])->name('affichageApprovisionnements');
+    Route::get('formulaire_modification_approvisionnements/{approvisionnements}/modification', [ApprovisionnementsController::class, 'edit'])->name('formulaireModificationApprovisionnements');
+    Route::post('modification_approvisionnements', [ApprovisionnementsController::class, 'update'])->name('modificationApprovisionnements');
+    Route::delete('suppression_approvisionnements', [ApprovisionnementsController::class, 'destroy'])->name('suppressionApprovisionnements');
 
     Route::get('formulaire_import_excel', [LivresPapierController::class, 'uploadLivresPapierCreate'])->name('formulaireImportExcel');
     Route::put('enregistrement_import_excel', [LivresPapierController::class, 'uploadLivresPapierStore'])->name('enregistrementImportExcel');

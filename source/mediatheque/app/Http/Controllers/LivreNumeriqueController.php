@@ -17,6 +17,7 @@ use App\Service\OuvragesElectroniqueService;
 use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -191,9 +192,9 @@ class LivreNumeriqueController extends Controller
         return redirect()->route('listeLivresNumerique');
     }
 
-    public function readPdf(Ouvrage $ouvrage)
+    public function readPdf(OuvragesElectronique $ouvragesElectronique)
     {
-        return view('livresNumerique.lire', compact('ouvrage'));
+        return view('livresNumerique.lire', compact('ouvragesElectronique'));
     }
 
     public function uploadLivresNumeriqueCreate()
@@ -204,19 +205,27 @@ class LivreNumeriqueController extends Controller
 
     public function uploadLivresNumeriqueStore(Request $request)
     {
-        //dd($request->fileList);
-        if (! $request->url == null)
+        $destination_path = "public/ouvrage_electonique/";
+        $path = "";
+        if ($request->file("fileList"))
         {
-            $chemin_ouvrage_excel = strtolower('livres_numerique').'.'.$request->url->extension();
-            $request->url->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
-        } else
-        {
+           foreach ($request->file("fileList") as $file){
+               if ($file->isReadable()){
+                   if (! in_array($file->extension(), ["xlsx", "odt"])){
+                       $file->storeAs($destination_path, $file->getClientOriginalName());
+                   } else {
+                       $destination_path = "public/fichier_excel/";
+                       $path = $file->getClientOriginalName();
+                       $file->storeAs("$destination_path", $path);
+                   }
+               }
+           }
+        } else {
             return redirect()->route('formulaireImportExcel');
         }
 
-        //dd($request->url);
-
-        Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$chemin_ouvrage_excel);
+        Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$path);
+        //dd("::::::END");
         return redirect()->route('listeLivresNumerique');
     }
 }

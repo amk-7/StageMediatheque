@@ -36,7 +36,7 @@ class LivreNumeriqueSeeder extends Seeder
         $ouvrage5->auteurs()->attach($auteur5->id_auteur);
 
         $ouvrageNumeri = OuvragesElectronique::create([
-            'url'=>'ouvrage_test',
+            'url'=>'ouvrage_test.pdf',
             'id_ouvrage'=>$ouvrage5->id_ouvrage,
         ]);
 

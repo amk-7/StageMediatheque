@@ -5,14 +5,15 @@
         @csrf
         <fieldset class="fieldset_border">
             <legend>Fichier excel</legend>
-            <div>
+            <!--div>
                 <label>Fichier </label>
                 <input type="file" name="url" />
-            </div>
-            <!--div>
-                <input type="file" id="filepicker" name="fileList" webkitdirectory = "true" multiple />
-                <ul id="listing"></ul>
             </div-->
+            <div>
+                <label>Fichier </label>
+                <input type="file" id="filepicker" name="fileList[]" webkitdirectory = "true" multiple />
+                <ul id="listing"></ul>
+            </div>
             @error('url')
                 <div class="alert">{{ $message }}</div>
             @enderror

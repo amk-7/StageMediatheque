@@ -34,29 +34,40 @@ class LivresPapierImport implements ToModel
 
         $size = 11;
 
-        if (ImportExcelService::controlleValidite($row, $indice_titre, $indice_annee, $size) == null){
+        if (ImportExcelService::controlleValidite($row, $indice_titre, $indice_annee) == null){
             return null;
         };
 
-        $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
-        $auteurs = AuteurService::enregistrerAuteur(array($data_auteurs));
+        $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee])) ;
+        if ($ouvrage)
+        {
+            $ouvrageElec = OuvrageService::ouvrageNumeriqeExist($ouvrage);
+            $ouvragePhys = OuvrageService::ouvragePhysiqueExist($ouvrage);
+            if ($ouvragePhys != null){
+                return ;
+            }
+        } else {
+            $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
+            $auteurs = AuteurService::enregistrerAuteur(array($data_auteurs));
 
-        // Creation de l'ouvrage
-        $chemin_image = "default_book_image.png";
+            // Creation de l'ouvrage
+            $chemin_image = "default_book_image.png";
 
-        $ouvrage = Ouvrage::create([
-            'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
-            'lieu_edition'=>$row[$indice_lieu],
-            'annee_apparution'=>str_replace(' ', '', $row[$indice_annee]),
-            'type'=>ImportExcelService::formatString($row[$indice_type]),
-            'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau]),
-            'image' => $chemin_image,
-            'langue'=>strtolower('français'),
-            'resume'=>strtolower("pas de resumé"),
-            'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle]),
-        ]);
-        // Definire les auteurs de l'ouvrage
-        OuvrageService::definireAuteur($ouvrage, $auteurs);
+            $ouvrage = Ouvrage::create([
+                'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
+                'lieu_edition'=>$row[$indice_lieu],
+                'annee_apparution'=>str_replace(' ', '', $row[$indice_annee]),
+                'type'=>ImportExcelService::formatString($row[$indice_type]),
+                'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau]),
+                'image' => $chemin_image,
+                'langue'=>strtolower('français'),
+                'resume'=>strtolower("pas de resumé"),
+                'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle]),
+            ]);
+            // Definire les auteurs de l'ouvrage
+            OuvrageService::definireAuteur($ouvrage, $auteurs);
+        }
+
 
         // Création d'un ouvrage physique
         $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", "COT", [$ouvrage->auteurs()->first()], $ouvrage);

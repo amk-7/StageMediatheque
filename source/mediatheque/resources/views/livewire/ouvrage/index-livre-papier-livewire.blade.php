@@ -8,10 +8,14 @@
             <div class="m-3">
                 <div class="flex flex-row content-center space-x-3">
                     @if(Auth::user()->hasRole('responsable'))
-                        <td>
+                        <td class="flex flex-row mb-3">
                             <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
                                 @csrf
                                 <input type="submit" class="button button_primary" name="ajouter" value="ajouter">
+                            </form>
+                            <form action="{{route('formulaireEnregistrementApprovisionnements')}}" method="get">
+                                @csrf
+                                <input type="submit" class="button button_primary" name="approvisionement" value="approvisionner">
                             </form>
                         </td>
                     @endif
@@ -57,7 +61,7 @@
                                           {{ QrCode::generate($livresPapier->ouvragesPhysique->cote) }}
                                       </div>
                                        <div>
-                                           <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->backgroundColor(255,255,255)->size(400)->generate($livresPapier->ouvragesPhysique->cote)) }}"
+                                           <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->color(224, 224, 224)->backgroundColor(0, 0, 0)->size(400)->generate($livresPapier->ouvragesPhysique->cote)) }}"
                                               download="{{ 'cote'.str_replace(' ', '_', strtolower($livresPapier->ouvragesPhysique->ouvrage->titre)).'qrcode.png' }}"
                                               class="text-center text-white bg-green-600 p-1 hover:bg-green-700 mt-2"
                                            >Imprimer

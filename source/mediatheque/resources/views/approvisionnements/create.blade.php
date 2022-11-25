@@ -1,251 +1,231 @@
 @extends("layout.template.base")
-
 @section("content")
-    <div>
-        <h1>Approvisionnements</h1>
-        <form action="{{route('enregistementApprovisionnements')}}" method="post">
+    <div class="flex flex-col justify-center items-center m-auto">
+        <form action="{{route('enregistementApprovisionnements')}}" method="post" class="bg-white p-12 mb-12 space-y-3">
             @csrf
-            <fieldset>
-                <legend>Personnel</legend>
-                <div>
-                    <label for="nom">Nom</label>
-                    <select name="nom" id="nom_personnes"></select>
-                </div>
-                <div class="alert">
-                    <p id="nom_erreur" hidden>Vous devez séléctionner le nom</p>
-                </div>
-                <div>
-                    <label for="prenom">Prenom</label>
-                    <select name="prenom" id="prenom_personnes">
-                        <option>Séléctionner prénom</option>
-                    </select>
-                </div>
-                <div class="alert">
-                    <p id="prenom_erreur" hidden>Vous devez séléctionner le prenom</p>
-                </div>
-                <div>
-                    <label for="date_approvisionement">Date</label>
-                    <input type="date" name="date_approvisionnement" id="date_approvisionnement"
-                           value="{{ date('Y-m-d') }}" disabled>
-                </div>
-            </fieldset>
-            <fieldset>
+            <div class="flex flex-col items-center justify-center">
+                <h1 class="label_title" >Approvisionnement</h1>
+                <h3 class="label_title_sub_title">Date {{ date('Y-m-d') }}</h3>
+            </div>
+
+            <fieldset class="fieldset_border" >
                 <legend>Ouvrage</legend>
                 <div>
-                    <div>
+                    <div class="flex flex-col">
                         <label for="ouvrage_cote">Cote</label>
-                        <input type="text" name="ouvrage_cote" id="ouvrage_cote"
-                               placeholder="Saisire l'idendifiant la cote de l'ouvrage">
-                        <div class="alert">
-                            <p id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
-                            <p id="cote_ouvrage_not_found" hidden>Cet ouvrage n'existe pas</p>
+                        <div class="flex space-x-8">
+                            <button name="scan_qrcode" id="scan_qrcode" class="button button_primary p-2 w-1/3">Scanner</button>
+                            <input type="text" name="ouvrage_cote" id="ouvrage_cote" class="input w-2/3"
+                                   placeholder="Saisire l'idendifiant la cote de l'ouvrage" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="alert">
+                        <p id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
+                        <p id="cote_ouvrage_not_found" hidden>Cet ouvrage n'existe pas</p>
+                        <p id="cote_ouvrage_exist" hidden>Cet ouvrage existe déjà dans cet emprunt</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col">
+                        <label for="nombre_examplaire">Nombre d'examplaire</label>
+                        <input id="nombre_examplaire" type="number" name="nombre_examplaire" class="input" value="0">
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col">
+                        <label for="titre_ouvrage">Titre</label>
+                        <input id="titre_ouvrage" type="text" name="titre" class="input disabled:opacity-90" disabled>
+                        <input name="data" id="data" type="text" hidden>
+                    </div>
+                </div>
+            </fieldset>
+            <div>
+                <div class="flex space-x-8">
+                    <button name="ajouter_ouvrage" id="ajouter_ouvrage" class="button button_primary w-2/5 p-2">Ajouter</button>
+                </div>
+                <div class="alert">
+                    <p id="approvisionement_erreur" hidden>Veuillez ajouter cet d'ouvrage.</p>
+                </div>
+            </div>
+            <fieldset class="fieldset_border flex flex-col items-center space-y-4">
+                <h3 class="label_title_sub_title">Liste des approvisionnements</h3>
+                <table border="1" id="liste_ouvrages" class="fieldset_border">
+                    <thead class="fieldset_border" >
+                    <tr class="fieldset_border" >
+                        <th class="fieldset_border" >N°</th>
+                        <th class="fieldset_border" >Cote</th>
+                        <th class="fieldset_border" >Titre ouvrage</th>
+                        <th class="fieldset_border" >Nombre d'examplaire</th>
+                        <th class="fieldset_border" >Supprimer</th>
+                    </tr>
+                    </thead>
+                    <tbody class="fieldset_border" ></tbody>
+                </table>
+            </fieldset>
+            <!-- Overlay element -->
+            <div id="overlay" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
+            <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="flex flex-col justify-center items-center m-auto">
+                        <div class="flex flex-col">
+                            <div class="w-full">
+                                <div id="reader"></div>
+                            </div>
+                            <button name="quit" id="quit" class="button button_primary w-2/5 p-2">Quitter</button>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <label for="titre_ouvrage">Titre</label>
-                        <input id="titre_ouvrage" type="text" name="titre">
-                        <input name="data" id="data" type="text">
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <label for="nombre_exemplaire">Nombre d'exemplaire</label>
-                        <input type="number" name="nombre_exemplaire" id="nombre_exemplaire"
-                               placeholder="Saisire le nombre d'exemplaire.">
-                    </div>
-                    <div class="alert">
-                        <p id="nombre_exemplaire_erreur" hidden>Vous devez indiquer le nombre d'exemplaire
-                            approvisionné</p>
-                        <p id="nombre_exemplaire_valeur_erreur" hidden>Le nombre d'exemplaire approvisionné doit être
-                            supérieure à 0</p>
-                    </div>
-                </div>
-                <div>
-                    <button name="ajouter_approvisionnement" id="ajouter_approvisionnement">Ajouter</button>
-                    <input type="submit" id="action_approvisionnement" name="action_approvisionnement"
-                           value="Approvisionner">
-                </div>
-            </fieldset>
-            <div>
-                <h3>Liste des approvisionnements</h3>
-                <table border="1" id="liste_approvisionnement">
-                    <thead>
-                    <tr>
-                        <th>N°</th>
-                        <th>Cote</th>
-                        <th>Titre ouvrage</th>
-                        <th>Nombres d'exempalire</th>
-                        <th>Editer</th>
-                        <th>Supprimer</th>
-                    </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
             </div>
+            <input type="submit" id="action_approvisionner" name="action_approvisionner" value="Approvisionner" class="button button_primary w-full mt-3">
         </form>
-        <div class="modal_editer" id="modal_editer" hidden>
-            <div>
-                <div>
-                    <label for="nombre_exemplaire_edite">Nombre d'exemplaire</label>
-                    <input type="number" id="nombre_exemplaire_edite" placeholder="Saisire le nombre d'exemplaire.">
-                </div>
-                <div class="alert">
-                    <p id="nombre_exemplaire_modif_erreur" hidden>Vous devez indiquer le nombre d'exemplaire
-                        approvisionné</p>
-                    <p id="nombre_exemplaire_modif_valeur_erreur" hidden>Le nombre d'exemplaire approvisionné doit être
-                        supérieure à 0</p>
-                </div>
-                <button id="btn_modifier">modifier</button>
-            </div>
-        </div>
     </div>
 @stop
 @section("js")
+    <script src="https://reeteshghimire.com.np/wp-content/uploads/2021/05/html5-qrcode.min_.js"></script>
     <script type="text/javascript" async>
 
-        let personnels = {!! $personnels !!};
         let livres_papier = {!! $livre_papier !!};
         let doc_av = {!! $document_audio_visuel !!};
 
-        let nom_personnes = document.getElementById('nom_personnes');
-        let prenom_personnes = document.getElementById('prenom_personnes');
         let cote_ouvrage = document.getElementById('ouvrage_cote');
         let titre = document.getElementById('titre_ouvrage');
-        let nb_exemplaire = document.getElementById('nombre_exemplaire');
+        let nombre_examplaire = document.getElementById('nombre_examplaire');
         let donne = document.getElementById('data');
-        let terminate_btn = document.getElementById('ajouter_donnee'); //????????
-        let btn_ajouter = document.getElementById('ajouter_approvisionnement');
-        let submit_btn = document.getElementById('action_approvisionnement');
-        let btn_modifier = document.getElementById('btn_modifier');
+        let btn_ajouter = document.getElementById('ajouter_ouvrage');
+        let submit_btn = document.getElementById('action_approvisionner');
+        let overlay = document.getElementById('overlay');
+        let div_modal = document.getElementById("modal_editer");
+        let button_scan = document.getElementById("scan_qrcode");
+        let button_scan_quit = document.getElementById("quit");
 
-        let nom_erreur = document.getElementById('nom_erreur');
-        let prenom_erreur = document.getElementById('prenom_erreur');
+        let nombre_emprunt = 0;
+
         let cote_erreur = document.getElementById('cote_ouvrage_erreur');
         let cote_no_trouve = document.getElementById('cote_ouvrage_not_found');
-        let nb_exemplaire_erreur = document.getElementById('nombre_exemplaire_erreur');
-        let nb_exemplaire_valeur_erreur = document.getElementById('nombre_exemplaire_valeur_erreur');
+        let approvisionements_erreur = document.getElementById('approvisionement_erreur');
+        let cote_ouvrage_exist = document.getElementById('scan_qrcode');
 
-        let numero_ligne_edite = -1;
+        function ouvrageExiste(cote){
+            for (let i = 0; i < livres_papier.length; i++){
+                if (livres_papier[i]['cote'] === cote){
+                    return true;
+                }
+            }
+            return false;
+        }
 
-        setLiteNoms(nom_personnes);
-        cleanALl();
-
-        btn_modifier.addEventListener('click', function (e) {
-            stopPropagation(e);
-            modifierNbExemplaire();
-        });
-
-        cote_ouvrage.addEventListener('keyup', function (e) {
-            rechercherTitreParCote();
-        });
-
-        nom_personnes.addEventListener('change', function (e) {
-            while (prenom_personnes.firstChild) {
-                prenom_personnes.removeChild(prenom_personnes.firstChild);
+        function mettreListePrenomParNom(balise, elt, liste) {
+            while (balise.firstChild) {
+                balise.removeChild(balise.firstChild);
             }
             let option = document.createElement('option');
             option.innerText = "Séléctionner prénom";
-            prenom_personnes.appendChild(option);
-            for (let i = 0; i < personnels.length; i++) {
-                if (nom_personnes.value == personnels[i]['nom']) {
+            balise.appendChild(option);
+            for (let i = 0; i < liste.length; i++) {
+                if (elt === liste[i]['nom']) {
                     let option = document.createElement('option');
-                    option.value = personnels[i]['id_personnel'];
-                    option.innerText = personnels[i]['prenom'];
-                    prenom_personnes.appendChild(option);
+                    option.value = liste[i]['id'];
+                    option.innerText = liste[i]['prenom'];
+                    balise.appendChild(option);
                 }
             }
-        });
-
-        function stopPropagation(e) {
-            e.preventDefault();
-            e.stopPropagation();
         }
 
-        function setLiteNoms(nom_personnes) {
+        function stopPropagation() {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        function setLiteOptions(elt, liste) {
             let option = document.createElement('option');
             option.innerText = "Séléctionner nom";
-            nom_personnes.appendChild(option);
-            for (let i = 0; i < personnels.length; i++) {
+            elt.appendChild(option);
+            for (let i = 0; i < liste.length; i++) {
                 let option = document.createElement('option');
-                option.value = personnels[i]['nom'];
+                option.value = liste[i]['nom'];
                 option.innerText = option.value;
-                nom_personnes.appendChild(option);
+                elt.appendChild(option);
             }
         }
 
         let number = 1;
 
         btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
-            e.preventDefault();
+            stopPropagation();
             if (validate()) {
-                let table_body = document.getElementById('liste_approvisionnement').children[1];
+                let cote = cote_ouvrage.value;
+                if (! ouvrageExiste(cote))
+                {
+                    return;
+                }
+
+                if(verifierSiOuvrageExisteDansEmprunt(cote)){
+                    cote_ouvrage_exist.hidden = false;
+                    return;
+                }
+                cote_ouvrage_exist.hidden = true;
+
+                let table_body = document.getElementById('liste_ouvrages').children[1];
                 let row = document.createElement('tr');
                 let cell_number = document.createElement('td');
                 let cell_code = document.createElement('td');
                 let cell_ouvrage = document.createElement('td');
-                let cell_nb_exemplaire = document.createElement('td');
-                let cell_editer = document.createElement('td');
+                let cell_nombre_examplaire = document.createElement('td');
                 let cell_supprimer = document.createElement('td');
-
-                let button_editer = document.createElement('button');
                 let button_supprimer = document.createElement('button');
 
-                button_editer.innerText = "Editer";
                 button_supprimer.innerText = "Supprimer";
-                button_editer.id = number - 1;
                 button_supprimer.id = number - 1;
-
-                button_editer.addEventListener('click', function (e) {
-                    stopPropagation(e);
-                    editerLigne(button_editer.id);
-                });
+                button_supprimer.classList = "button button_delete";
 
                 button_supprimer.addEventListener('click', function (e) {
                     stopPropagation(e);
                     removeLine(button_supprimer.id, table_body)
                 });
-
+                cell_nombre_examplaire.innerText = nombre_examplaire.value;
                 cell_number.innerText = number;
                 cell_ouvrage.innerText = titre.value;
-                cell_nb_exemplaire.innerText = nb_exemplaire.value;
                 cell_code.innerText = cote_ouvrage.value;
 
-                cell_editer.appendChild(button_editer);
                 cell_supprimer.appendChild(button_supprimer);
                 number++;
+                cell_number.classList = "fieldset_border";
+                cell_code.classList = "fieldset_border";
+                cell_ouvrage.classList = "fieldset_border";
+                cell_supprimer.classList = "fieldset_border";
 
                 row.appendChild(cell_number);
                 row.appendChild(cell_code);
                 row.appendChild(cell_ouvrage);
-                row.appendChild(cell_nb_exemplaire);
-                row.appendChild(cell_editer);
+                row.append(cell_nombre_examplaire);
                 row.appendChild(cell_supprimer);
 
                 table_body.appendChild(row);
+                nombre_emprunt = nombre_emprunt + 1;
+                //incrementer le nombre d'emprunt
+                button_scan.hidden = false;
                 cleanInput();
             }
         });
 
         function editerLigne(numero_ligne) {
-            let div_modal = document.getElementById("modal_editer");
-            div_modal.hidden = false;
-            console.log(numero_ligne);
+            div_modal.classList.remove('hidden');
+            overlay.classList.remove('hidden');
             numero_ligne_edite = numero_ligne;
         }
 
-        function modifierNbExemplaire() {
-            console.log("modification.... " + numero_ligne_edite);
-            let table_body = document.getElementById('liste_approvisionnement').children[1];
+        function modifierEtatOuvrage() {
+            let table_body = document.getElementById('liste_ouvrages').children[1];
+            let etat_ouvrage_edite = document.getElementById('etat_ouvrage_edite');
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
                 if (i === parseInt(numero_ligne_edite)) {
                     let line = lines[i].children;
-                    line[3].innerText = nombre_exemplaire_edite.value;
+                    line[3].innerText = etat_ouvrage_edite.value;
                     let div_modal = document.getElementById("modal_editer");
-                    div_modal.hidden = true;
-                    nombre_exemplaire_edite.value = "";
+                    div_modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                    etat_ouvrage_edite.value = "Séléctionner etat";
                 }
             }
         }
@@ -260,18 +240,12 @@
                 return false;
             }
 
+            if (nombre_examplaire.value === "0"){
+                return false;
+            }
+
             if (titre.value === "Aucun ouvrage trouvé") {
                 cote_no_trouve.hidden = false;
-                return false;
-            }
-
-            if (nb_exemplaire.value === "") {
-                nb_exemplaire_erreur.hidden = false;
-                return false;
-            }
-
-            if (nb_exemplaire.value <= 0) {
-                nb_exemplaire_valeur_erreur.hidden = false;
                 return false;
             }
 
@@ -281,20 +255,18 @@
         function cleanInput() {
             cote_ouvrage.value = "";
             titre.value = "";
-            nb_exemplaire.value = "";
         }
 
         function cleanALl() {
             cleanInput();
-            nom_personnes.value = "Séléctionner nom";
-            prenom_personnes.value = "Séléctionner prénom";
-            data.value = "";
+            nom_abonnes.value = "Séléctionner nom";
+            prenom_abonnes.value = "Séléctionner prénom";
+            donne.value = "";
         }
 
         function rechercherTitreParCote() {
             let cote = cote_ouvrage.value;
             if (cote.substring(0, 2) === "LP") {
-                console.log("LP---Yes");
                 for (let i = 0; i < livres_papier.length; i++) {
                     if (livres_papier[i]['cote'] === cote) {
                         titre.value = livres_papier[i]['titre'];
@@ -302,9 +274,8 @@
                     }
                 }
             } else if (cote.substring(0, 2) === "DA") {
-                console.log("DA---Yes");
                 for (let i = 0; i < doc_av.length; i++) {
-                    if (doc_av[i]['cote'] == titre) {
+                    if (doc_av[i]['cote'] === cote) {
                         titre.value = doc_av[i]['titre'];
                         return;
                     }
@@ -316,17 +287,16 @@
 
         // format table before send
         function formatTableDataBeforeSend() {
-            let table_body = document.getElementById('liste_approvisionnement').children[1];
+            let table_body = document.getElementById('liste_ouvrages').children[1];
             let lines = table_body.children;
             for (let i = 0; i < lines.length; i++) {
-                submit_btn.disabled = false;
                 let line = lines[i].children;
-                data.value += `${dernierCarracter(line[1].innerText)},${line[3].innerText},${prenom_personnes.value};`;
+                donne.value += `${dernierCarracter(line[1].innerText)},${line[3].innerText};`;
             }
         }
 
         function dernierCarracter(str) {
-            return str.substring(str.length - 1, str.length);
+            return str.substring(str.length - 6, str.length);
         }
 
         function getType(str) {
@@ -336,26 +306,91 @@
             return "document_av";
         }
 
-        submit_btn.addEventListener('click', function (e) {
-            console.log("OKKKKKKKK..............");
-            if (nom_personnes.value === "Séléctionner nom" || nom_personnes.value === "") {
-                nom_erreur.hidden = false;
-                stopPropagation(e);
-                return;
+        submit_btn.addEventListener('click', function (e){
+            if (! validerFormulaire(e)){
+                stopPropagation();
+                return ;
             }
-            console.log("OKKKKKKKK..............2222");
-            if (prenom_personnes.value === "Séléctionner prénom" || prenom_personnes.value === "") {
-                prenom_erreur.hidden = false;
-                stopPropagation(e);
-                return;
-            }
-            console.log("OKKKKKKKK..............3333");
             formatTableDataBeforeSend();
-            if (data.value === "") {
-                stopPropagation(e);
-                return;
+            if (donne.value === "") {
+                stopPropagation();
             }
+            //console.log(donne.value);
+            //stopPropagation()
         });
+
+        function validerFormulaire(e) {
+            if (cote_ouvrage.value !== "") {
+                approvisionements_erreur.hidden = false;
+                stopPropagation();
+                return false;
+            }
+            return true;
+        }
+
+        /*function verifierEmpruntEnCours(id_abonne) {
+            let emprunts = [];
+            for (let i = 0; i < emprunts_en_cours.length; i++) {
+                if (emprunts_en_cours[i]['id_abonne'] === id_abonne) {
+                    emprunts.push(emprunts_en_cours[i]);
+                }
+            }
+            return emprunts;
+        }*/
+        //verfierSiAbonneEstEligible(2);
+        function verfierSiAbonneEstEligible(id_abonne)
+        {
+            for(let i = 0; i < abonnes.length; i++)
+            {
+                if(abonnes[i]['id'] == id_abonne)
+                {
+                    return abonnes[i]['estEligible'];
+                }
+            }
+        }
+
+        function verifierSiOuvrageExisteDansEmprunt(cote)
+        {
+            let table_body = document.getElementById('liste_ouvrages').children[1];
+            let lines = table_body.children;
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].children[1].innerText == cote)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        button_scan.addEventListener("click", function (){
+            stopPropagation();
+            div_modal.classList.remove('hidden');
+            overlay.classList.remove('hidden');
+        });
+
+        button_scan_quit.addEventListener("click", function (){
+            stopPropagation();
+            div_modal.classList.add('hidden');
+            overlay.classList.add('hidden');
+        });
+
+        function onScanSuccess(qrCodeMessage) {
+            cote_ouvrage.value = qrCodeMessage;
+            rechercherTitreParCote();
+        }
+
+        function onScanError(errorMessage) {
+            //handle scan error
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+        cote_ouvrage.addEventListener('keyup', function (e) {
+            rechercherTitreParCote();
+        });
+
     </script>
 @stop
 
