@@ -51,8 +51,8 @@ class LivresNumeriqueImport implements ToModel
         } else {
             // Creation d'un ou des auteurs .
             $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
-            $auteurs = AuteurService::enregistrerAuteur(array($data_auteurs));
-
+            $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
+            //dump($auteurs);
 
             // Creation de l'ouvrage
             $mots_cle = GlobaleService::extractLineToData($row[$indice_mot_cle])[0];
@@ -63,7 +63,7 @@ class LivresNumeriqueImport implements ToModel
                 'annee_apparution'=>str_replace(' ', '', $row[$indice_annee]),
                 'type'=>ImportExcelService::formatString($row[$indice_type]),
                 'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau]),
-                'image' => $row[$indice_image],
+                'image' => trim($row[$indice_image]),
                 'langue'=>strtolower('français'),
                 'resume'=>strtolower("pas de resumé"),
                 'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle]),
@@ -75,7 +75,7 @@ class LivresNumeriqueImport implements ToModel
 
         // Création d'un ouvrage electronique
         $ouvrageElectronique = OuvragesElectronique::create([
-            'url' => $row[$indice_pdf],
+            'url' => trim($row[$indice_pdf]),
             'id_ouvrage' => $ouvrage->id_ouvrage,
         ]);
         $categories = GlobaleService::extractLineToData($row[$indice_domaine])[0];

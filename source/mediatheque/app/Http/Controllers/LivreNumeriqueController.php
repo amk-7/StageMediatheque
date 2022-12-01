@@ -225,7 +225,6 @@ class LivreNumeriqueController extends Controller
         }
 
         Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$path);
-        //dd("::::::END");
         return redirect()->route('listeLivresNumerique');
     }
 }

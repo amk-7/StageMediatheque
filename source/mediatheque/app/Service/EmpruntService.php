@@ -8,6 +8,7 @@ use App\Models\LignesEmprunt;
 use App\Models\OuvragesPhysique;
 use App\Models\Restitution;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Nette\Utils\Strings;
 
 class EmpruntService
@@ -79,7 +80,9 @@ class EmpruntService
         return true;
     }
 
-
+    public static function setEmpruntLIstInSession($liste){
+        \session(['emprunts_key' => $liste]);
+    }
 
 }
 

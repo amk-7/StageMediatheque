@@ -68,4 +68,14 @@ class Abonne extends Model
 
         return $empuntNonRestitue;
     }
+
+    public function getNombreEprunt()
+    {
+        return Emprunt::all()->where('id_abonne', $this->id_abonne)->count();
+    }
+
+    public function getNombreRestitution()
+    {
+        return Restitution::all()->where('id_abonne', $this->id_abonne)->count();
+    }
 }

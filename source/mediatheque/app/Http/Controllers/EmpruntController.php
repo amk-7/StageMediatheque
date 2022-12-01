@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmpruntExport;
 use App\Models\Emprunt;
 use App\Models\User;
 use App\Models\Abonne;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AlertMessage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmpruntController extends Controller
 {
@@ -30,43 +32,6 @@ class EmpruntController extends Controller
      */
     public function index()
     {
-        //
-        //$emprunts = Emprunt::all();
-        /*$utilisateur = User::all();
-        //dd($utilisateur.Emprunt::all()->first());
-        $emprunts = Emprunt::with('abonne')->get();*/
-        /*if (isset($request->nom_prenom) || isset($request->etat)){
-            $emprunts = Emprunt::whereIn('id_abonne', AbonneService::getAbonnesId($request->nom_prenom))
-                ->whereIn('id_emprunt', EmpruntService::getEmpruntsId($request->etat))
-                ->get();
-            //dd($emprunts);
-        }else{
-            $emprunts = Emprunt::all();
-            //dd($emprunts);
-        }*/
-        /*if ($_REQUEST['element'] ?? null) {
-            //dd('a');
-            $emprunts = Emprunt::whereIn('id_abonne', array($abonnesId))->get();
-            dd($emprunts);
-        } else {
-            //dd('b');
-            $emprunts = Emprunt::all();
-        }*/
-        //dd($emprunts);
-        /*if($_REQUEST['element'] ?? null){
-            $abonnesId = AbonneService::getAbonnesId($request->nom_prenom);
-            $emprunts = Emprunt::whereIn('id_abonne', $abonnesId)->get();
-        }else{
-            $emprunts = Emprunt::all();
-        }*/
-
-        /*if($_REQUEST['element'] ?? null){
-            $emprunts = Emprunt::where($_REQUEST['search'], 'like', '%'.$_REQUEST['element'].'%')->get();
-
-        }else{
-            $emprunts = Emprunt::all();
-
-        }*/
         $paginate = 10;
         if ($_REQUEST['element'] ?? null) {
             //dd('a');
@@ -183,9 +148,9 @@ class EmpruntController extends Controller
         /*Mail::send('mails.alertMessage', $data, function($message) use ($email) {
             $message->to($email, 'Alerte')->subject
             ('Alerte de date de retour');
-            $message->from('alertMessage','Alerte');    
+            $message->from('alertMessage','Alerte');
         });*/
-        
+
         /*
         Mail::send('mails.mail', $data, function($message) use ($email) {
             $message->to($email, 'To Abonne')->subject
@@ -279,5 +244,10 @@ class EmpruntController extends Controller
         }
         $emprunt->delete();
         return redirect()->route('listeEmprunts');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new EmpruntExport(), 'liste_des_emprunt.xlsx');
     }
 }

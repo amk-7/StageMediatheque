@@ -60,9 +60,12 @@
                     </label>
                 </div>
             </div-->
-            <div>
+            <div class="flex flex-row space-x-3 mb-3">
                 <form method="GET" action="{{route('createAbonne')}}">
                     <button class="button button_primary" type="Submit">Ajouter</button>
+                </form>
+                <form method="GET" action="{{ route('downloadExcelListeAbonnes')}}">
+                    <button class="button button_primary" type="Submit">Exporter</button>
                 </form>
             </div>
             @if(!empty($abonnes ?? "") && $abonnes->count() > 0)
@@ -109,7 +112,7 @@
                                         <button class="button button_primary" type="Submit">Editer</button>
                                     </form>
                                 </td>
-                                <td class="fieldset_border" >
+                                <td class="fieldset_border">
                                     <form methode="GET" action="{{route('showAbonne', $abonne->id_abonne)}}">
                                         <button class="button button_show" type="Submit">Consulter</button>
                                     </form>

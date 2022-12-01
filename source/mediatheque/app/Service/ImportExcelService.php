@@ -14,13 +14,15 @@ class ImportExcelService
         {
             return null;
         }
-
         return true;
     }
 
     public static function exctratUserInfo(String $auteur)
     {
-        $auteurs = explode(" ", trim($auteur));
+        $auteurs = explode(",", trim($auteur));
+        for ($i=0; $i<count($auteurs); $i++){
+            $auteurs[$i] = explode(' ', $auteurs[$i]);
+        }
         return $auteurs;
     }
 

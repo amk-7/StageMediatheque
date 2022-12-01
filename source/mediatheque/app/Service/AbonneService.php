@@ -14,6 +14,34 @@ class AbonneService
         return true;
     }
 
+    public static function formatAbonneListForExport(){
+        $result = Abonne::all();
+        $abonnes = array();
+        foreach ($result as $p){
+            $personne = array(
+                'id'=>$p->id_abonne,
+                'nom'=>$p->utilisateur->nom,
+                'prenom'=>$p->utilisateur->prenom,
+                'nomUtilisateur' => $p->utilisateur->nom_utilisateur,
+                'email' => $p->utilisateur->email,
+                'contact' => $p->utilisateur->contact,
+                'ville' => $p->utilisateur->adresse['ville'],
+                'quartier' => $p->utilisateur->adresse['quartier'],
+                'numéro_maison' => '',
+                'profession' => $p->profession,
+                'cntact_a_prevenir' => $p->utilisateur->cntact_a_prevenir,
+                'type_carte' => $p->type_de_carte,
+                'numero_carte' => $p->numero_carte,
+                'a_payer' => $p->isRegistrate() ? 'Oui' : 'Non',
+                'nombre_emprunts' => $p->getNombreEprunt() != 0 ? $p->getNombreEprunt(): '0',
+                'nombre_restitutions' => $p->getNombreRestitution() != 0 ? $p->getNombreRestitution() : '0',
+                'nombre_emprunt_non_restituer' => count($p->getEmpruntsEnCours()) != 0 ? count($p->getEmpruntsEnCours()) : '0',
+            );
+            array_push($abonnes, $personne);
+        }
+        return $abonnes;
+    }
+
     public static function formatAbonneList(Collection $abonnes){
         $result = Abonne::all();
         $abonnes = array();
@@ -43,7 +71,7 @@ class AbonneService
     public static function recherche($etat, $nom){
         $abonnes = Abonne::all()->where('nom', 'like', '%'.$nom.'%');
         $abonnes = AbonneService::formatAbonneList($abonnes);
-        
+
         /*$abonnes_final = array();
 
         str_contains($etat, $a["estEligible"]);*/

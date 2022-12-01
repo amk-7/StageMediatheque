@@ -8,17 +8,21 @@
                 <!--select name="search">
                     <option>Selectionner</option>
                     <option value="">Terminé</option>
-                    
+
                 </select-->
                 <input type="text" name="element" placeholder="Nom">
                 <button class="button button_primary" type="submit">Rechercher</button>
-            </nav>               
+            </nav>
         </form>
         <div class="space-y-2">
             @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
-                <div>
+                <div class="flex space-x-3">
                     <form method="GET" action="{{route('createEmprunt')}}">
                         <button type="Submit" class="button button_primary">Ajouter</button>
+                    </form>
+                    <form method="GET" action="{{ route('downloadExcelListeEnprunt') }}">
+                        {{ \App\Service\EmpruntService::setEmpruntLIstInSession(collect($emprunts)['data']) }}
+                        <button type="Submit" class="button button_primary">Export</button>
                     </form>
                 </div>
                 <table class="fieldset_border bg-white">
@@ -93,7 +97,7 @@
         </div>
     </div>
 <!--script type='text/js' async>
-    
+
 </script-->
 @endsection
 
