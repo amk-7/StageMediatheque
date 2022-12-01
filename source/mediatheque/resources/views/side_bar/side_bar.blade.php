@@ -34,6 +34,9 @@
             <a href="/liste_livres_papier">
                 <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
             </a>
+            <a href="/liste_livres_papier">
+                <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
+            </a>
         </a>
     </nav>
 
@@ -46,7 +49,7 @@
         <div class="flex-shrink-0 py-4">
             <a href="#">
                 <a href="/liste_livres_papier">
-                    <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
+                    <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                 </a>
             </a>
         </div>
@@ -87,6 +90,9 @@
             <div class="flex items-center justify-center flex-shrink-0 py-10">
                 <a href="/liste_livres_papier">
                     <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
+                </a>
+                <a href="/liste_livres_papier">
+                    <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                 </a>
             </div>
             <!-- Links -->

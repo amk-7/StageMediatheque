@@ -16,6 +16,7 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id_reservation');
             $table->date('date_reservation')->default('now()');
+            $table->string('etat');
             $table->bigInteger('id_abonne');
             $table->foreign('id_abonne')->references('id_abonne')->on('abonnes');
             $table->timestamps();

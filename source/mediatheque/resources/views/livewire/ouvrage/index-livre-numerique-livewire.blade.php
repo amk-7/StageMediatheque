@@ -38,7 +38,7 @@
                     <tbody class="all_data">
                     @foreach($livresNumeriques as $livresNumerique)
                         <tr class="dark:text-gray-500 text-center">
-                            <td class="fieldset_border" >{{ $livresNumerique->id_livre_numerique }}</td>
+                            <td class="fieldset_border" >{{ $loop->index+1 }}</td>
                             <td class="fieldset_border"> {{ $livresNumerique->ouvragesElectronique->ouvrage->titre}} </td>
                             <td class="fieldset_border"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($livresNumerique->ouvragesElectronique->ouvrage->niveau) }} </td>
                             <td class="fieldset_border"> {{ $livresNumerique->ouvragesElectronique->ouvrage->type }} </td>

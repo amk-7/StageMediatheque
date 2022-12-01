@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AbonnesExport;
 use App\Helpers\UtilisateurHelper;
 
 use App\Models\Abonne;
@@ -12,6 +13,7 @@ use DB;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 use App\Mail\MailInscription;
 use Illuminate\Support\Facades\Mail;
@@ -254,5 +256,10 @@ class AbonneController extends Controller
     {
         $emprunts = $abonne->getEmpruntsEnCours();
         return view('abonnes.mes_emprunt_actuelle')->with('emprunts', $emprunts);
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
     }
 }

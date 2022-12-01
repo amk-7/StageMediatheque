@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
-    protected $fillable = ['date_reservation', 'date_expiration', 'id_abonne', 'id_ouvrage_physique'];
+    protected $fillable = ['date_reservation', 'etat', 'id_abonne', 'id_ouvrage_physique'];
     protected $primaryKey = 'id_reservation';
-    protected $dates = ['date_reservation', 'date_expiration'];
+    protected $dates = ['date_reservation'];
 
     public function abonne()
     {

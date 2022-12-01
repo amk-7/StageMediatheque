@@ -22,6 +22,15 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
+    $reservations = \App\Models\Reservation::all();
+    if ($reservations->count() > 0){
+        foreach ($reservations as $reservation){
+            $dateExpiration = $reservation->date_reservation->addDay(1);
+            if ($dateExpiration->gt(\Carbon\Carbon::now())){
+
+            }
+        }
+    }
     return view('welcome');
 });
 
@@ -177,8 +186,10 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::get('formulaire_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueCreate'])->name('formulaireImportExcelLivresNumerique');
     Route::put('enregistrement_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueStore'])->name('enregistrementImportExcelLivresNumerique');
 
-});
+    Route::get('download_excel_liste_abonnes', [\App\Http\Controllers\AbonneController::class, 'exportExcel'])->name('downloadExcelListeAbonnes');
+    Route::get('download_excel_liste_emprunts', [\App\Http\Controllers\EmpruntController::class, 'exportExcel'])->name('downloadExcelListeEnprunt');
 
+});
 
 
 /*Route::middleware('auth')->group(function(){
@@ -197,3 +208,7 @@ Route::get('liste_livres_papier', [LivresPapierController::class, 'index'])->nam
 Route::get('liste_livres_numerique', [LivreNumeriqueController::class, 'index'])->name('listeLivresNumerique');
 
 require __DIR__.'/auth.php';
+
+Route::fallback(function (){
+    return view('404');
+});

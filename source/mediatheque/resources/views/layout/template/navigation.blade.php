@@ -8,6 +8,9 @@
                     <a href="{{ route('listeLivresNumerique') }}">
                         <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                     </a>
+                    <a href="{{ route('listeLivresNumerique') }}">
+                        <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
+                    </a>
                 </div>
 
                 <!-- Navigation Links -->
