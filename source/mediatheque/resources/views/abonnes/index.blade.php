@@ -65,12 +65,13 @@
                     <button class="button button_primary" type="Submit">Ajouter</button>
                 </form>
                 <form method="GET" action="{{ route('downloadExcelListeAbonnes')}}">
+                    {{ \App\Service\AbonneService::setAbonnesLIstInSession(collect($abonnes)['data']) }}
                     <button class="button button_primary" type="Submit">Exporter</button>
                 </form>
             </div>
             @if(!empty($abonnes ?? "") && $abonnes->count() > 0)
                 <table class="fieldset_border">
-                    <tr class="fieldset_border" >
+                    <tr class="fieldset_border">
                         <th class="fieldset_border" >N°</th>
                         <th class="fieldset_border" >Profil</th>
                         <th class="fieldset_border" >Nom</th>

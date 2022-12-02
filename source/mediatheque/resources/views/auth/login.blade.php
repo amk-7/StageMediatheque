@@ -2,8 +2,9 @@
 @section('content')
         <x-auth-card>
             <x-slot name="logo">
-                <a href="{{ route('listeLivresNumerique') }}">
+                <a href="{{ route('listeLivresNumerique') }}" class="flex">
                     <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
+                    <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                 </a>
             </x-slot>
 
