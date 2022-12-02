@@ -14,14 +14,27 @@ class AbonneService
         return true;
     }
 
-    public static function formatAbonneListForExport(){
-        $result = Abonne::all();
+    public static function formatAbonneListForExport($result){
         $abonnes = array();
+
+        $nombre_abonnne_masculin = 0;
+        $nombre_abonnne_feminin = 0;
+        $nombre_de_non_paye = 0;
+
         foreach ($result as $p){
+            if ($p->utilisateur->sexe == "Masculin"){
+                $nombre_abonnne_masculin++;
+            } else {
+                $nombre_abonnne_feminin++;
+            }
+            if (! $p->isRegistrate()){
+                $nombre_de_non_paye++;
+            }
             $personne = array(
                 'id'=>$p->id_abonne,
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
+                'prenom'=>$p->utilisateur->sexe,
                 'nomUtilisateur' => $p->utilisateur->nom_utilisateur,
                 'email' => $p->utilisateur->email,
                 'contact' => $p->utilisateur->contact,
@@ -39,7 +52,7 @@ class AbonneService
             );
             array_push($abonnes, $personne);
         }
-        return $abonnes;
+        return array($abonnes, $nombre_abonnne_masculin, $nombre_abonnne_feminin, $nombre_de_non_paye);
     }
 
     public static function formatAbonneList(Collection $abonnes){
@@ -90,6 +103,11 @@ class AbonneService
             array_push($abonnesId, $abonne->id_abonne);
         }
         return $abonnesId;
+    }
+
+    public static function setAbonnesLIstInSession(array $liste)
+    {
+        \session(['abonnes_key' => $liste]);
     }
 
 }

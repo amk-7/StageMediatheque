@@ -12,7 +12,7 @@
                         <label class="label">Titre</label>
                         <input type="text" name="titre" class="input" value="{{$ouvrage->titre }}"
                                placeholder="saisir le titre du livre">
-                               
+
                     </div>
                     <div class="flex flex-row space-x-3">
                         <div class="flex flex-col w-1/3 mt-6 mr-3">
@@ -25,10 +25,10 @@
                             <div class="flex flex-col-reverse p-2">
                                 <input type="file" onchange="previewPicture(this)" name="image_livre" id="" value="{{$ouvrage->image}}"
                                        accept="image/jpg, image/jpeg, image/png, image/jpeg"><br>
-                                       
+
                             </div>
-                            
-                            
+
+
                         </div>
                         <div class="flex flex-col">
                             <div class="flex flex-row">
@@ -173,7 +173,7 @@
                 @enderror
             </fieldset>
             @yield("stock")
-            <button id="enregistrer" type="submit">Enregister</button>
+            <button class="button button_primary w-full mt-12" id="enregistrer" type="submit">Enregister</button>
         </form>
     </main>
 @stop
