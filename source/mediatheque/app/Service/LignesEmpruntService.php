@@ -34,6 +34,11 @@ class LignesEmpruntService
         ]);
     }
 
+    public static function ligneEnrpruntCreate()
+    {
+        
+    }
+
     public static function getAllLignesEmpruntByEmprunt(Emprunt $emprunt)
     {
         //dd("Re");

@@ -126,7 +126,8 @@
     </div>
 @stop
 @section("js")
-    <script src="https://reeteshghimire.com.np/wp-content/uploads/2021/05/html5-qrcode.min_.js"></script>
+    <!--script src="https://reeteshghimire.com.np/wp-content/uploads/2021/05/html5-qrcode.min_.js"></script-->
+    <script src="{{ url('js/html5-qrcode/html5-qrcode.min.js') }}"></script>
     <script type="text/javascript" async>
 
         let abonnes = {!! $abonnes !!};
@@ -501,13 +502,19 @@
             rechercherTitreParCote();
         }
 
-        function onScanError(errorMessage) {
+        setTimeout( () => {
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", { fps: 10, qrbox: 250 });
+            html5QrcodeScanner.render(onScanSuccess);
+        }, 1000)
+
+        /*function onScanError(errorMessage) {
             //handle scan error
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", { fps: 10, qrbox: 250 });
-        html5QrcodeScanner.render(onScanSuccess, onScanError);
+        html5QrcodeScanner.render(onScanSuccess, onScanError);*/
 
         cote_ouvrage.addEventListener('keyup', function (e) {
             rechercherTitreParCote();

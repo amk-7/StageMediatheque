@@ -10,6 +10,7 @@ class AuteurService
 {
     public static function enregistrerAuteur(Array $data_auteurs)
     {
+        $data_auteurs = $data_auteurs[0];
         $auteurs = [];
         foreach ($data_auteurs as $info_auteur){
             if (!empty($info_auteur[0])){

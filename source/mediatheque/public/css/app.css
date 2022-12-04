@@ -747,6 +747,9 @@ select {
 .-mr-2 {
   margin-right: -0.5rem;
 }
+.mt-8 {
+  margin-top: 2rem;
+}
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -776,9 +779,6 @@ select {
 }
 .ml-4 {
   margin-left: 1rem;
-}
-.mt-8 {
-  margin-top: 2rem;
 }
 .ml-12 {
   margin-left: 3rem;
@@ -1065,6 +1065,11 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
+}
+.space-x-10 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(2.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .space-x-32 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -2017,12 +2022,12 @@ select {
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
-.disabled\:opacity-90:disabled {
-  opacity: 0.9;
-}
-
 .disabled\:opacity-25:disabled {
   opacity: 0.25;
+}
+
+.disabled\:opacity-90:disabled {
+  opacity: 0.9;
 }
 
 .group:hover .group-hover\:text-gray-900 {

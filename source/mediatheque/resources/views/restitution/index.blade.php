@@ -13,9 +13,11 @@
                         </select>
                     </div>
                     <div class="flex flex-row w-96">
-                        <input class="search w-5/6" type="search" name="search_by" id="search_by" placeholder="rechercher par nom, prénom">
+                        <input class="search w-5/6" type="search" name="search_by" id="search_by"
+                               placeholder="rechercher par nom, prénom">
                         <button type="submit" class="button button_primary w-1/6">
-                            <img src="{{ asset('storage/images/search.png') }}" class="block h-auto w-auto fill-current text-gray-600">
+                            <img src="{{ asset('storage/images/search.png') }}"
+                                 class="block h-auto w-auto fill-current text-gray-600">
                         </button>
                     </div>
                 </div>
@@ -24,13 +26,13 @@
                 <table class="fieldset_border bg-white">
                     <thead class="fieldset_border">
                     <tr>
-                        <th class="fieldset_border" >Numer</th>
-                        <th class="fieldset_border" >Nombre ouvrage</th>
-                        <th class="fieldset_border" >Abonne</th>
-                        <th class="fieldset_border" >Personnel</th>
-                        <th class="fieldset_border" >Etat</th>
-                        <th class="fieldset_border" >Date</th>
-                        <th class="fieldset_border" >Editer</th>
+                        <th class="fieldset_border">Numer</th>
+                        <th class="fieldset_border">Nombre ouvrage</th>
+                        <th class="fieldset_border">Abonne</th>
+                        <th class="fieldset_border">Personnel</th>
+                        <th class="fieldset_border">Etat</th>
+                        <th class="fieldset_border">Date</th>
+                        <th class="fieldset_border">Editer</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,15 +42,16 @@
                     @foreach($restitutions as $restitution)
                         @if(str_contains(strtolower($restitution->abonne->utilisateur->userFullName), strtolower($search_by) ?? ""))
                             @if($etat==null ? true : false || $restitution->etat == $etatB)
-                                <tr class="fieldset_border" >
-                                    <td class="fieldset_border" > {{ $restitution->id_restitution }} </td>
-                                    <td class="fieldset_border" > {{ $restitution->nombreOuvrages }} </td>
-                                    <td class="fieldset_border" > {{ $restitution->abonne->utilisateur->userFullName }} </td>
-                                    <td class="fieldset_border" > {{ $restitution->personnel->utilisateur->userFullName }} </td>
+                                <tr class="fieldset_border">
+                                    <td class="fieldset_border"> {{ $restitution->id_restitution }} </td>
+                                    <td class="fieldset_border"> {{ $restitution->nombreOuvrages }} </td>
+                                    <td class="fieldset_border"> {{ $restitution->abonne->utilisateur->userFullName }} </td>
+                                    <td class="fieldset_border"> {{ $restitution->personnel->utilisateur->userFullName }} </td>
                                     {!! \App\Helpers\RestitutionHelper::afficherEtatREstitution($restitution)  !!}
-                                    <td class="fieldset_border" > {{ $restitution->date_restitution }} </td>
-                                    <td class="fieldset_border" >
-                                        <form action="{{ route('formulaireModificationRestitution', $restitution) }}" method="get">
+                                    <td class="fieldset_border"> {{ $restitution->date_restitution }} </td>
+                                    <td class="fieldset_border">
+                                        <form action="{{ route('formulaireModificationRestitution', $restitution) }}"
+                                              method="get">
                                             {!! \App\Helpers\RestitutionHelper::afficherBtn($restitution)  !!}
                                         </form>
                                     </td>

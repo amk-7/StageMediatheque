@@ -53,9 +53,9 @@ class OuvragesPhysique extends Model
         return $this->hasMany(LignesRestitution::class, 'id_ouvrage_physique');
     }
 
-    public function reservation()
+    public function reservations()
     {
-        return $this->belongsToMany(Reservation::class)->using(OuvrageReservation::class);
+        return $this->hasMany(Reservation::class, 'id_ouvrage_physique');
     }
     public function lignesEmprunts()
     {

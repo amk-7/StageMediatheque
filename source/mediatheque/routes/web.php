@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    $reservations = \App\Models\Reservation::all();
+    /*$reservations = \App\Models\Reservation::all();
     if ($reservations->count() > 0){
         foreach ($reservations as $reservation){
             $dateExpiration = $reservation->date_reservation->addDay(1);
@@ -30,7 +30,7 @@ Route::get('/', function () {
 
             }
         }
-    }
+    }*/
     return view('welcome');
 });
 
@@ -47,6 +47,7 @@ Route::group(['middleware' => ['role:responsable|bibliothecaire|abonne', 'auth']
 Route::group(['middleware' => ['role:abonne', 'auth']], function () {
     Route::get('liste_mes_emprunts/{abonne}', 'App\Http\Controllers\AbonneController@mesEmprunts')->name('ListemesEmprunts');
     Route::get('liste_mes_emprunts_actuelle/{abonne}', 'App\Http\Controllers\AbonneController@mesEmpruntsEnCours')->name('ListemesEmpruntsActuelle');
+    Route::post('enregistrer_une_reservation', [\App\Http\Controllers\ReservationController::class, 'store'])->name('enregistrerReservation');
 });
 
 Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function () {
@@ -59,6 +60,8 @@ Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function 
 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('searchByTitleAndKeyWord', [LivresPapierController::class, 'searchByTitleAndKeyWord']);
+    Route::get('liste_des_reservations', [\App\Http\Controllers\ReservationController::class, 'index'])->name('listeReservations');
+    Route::post('enregistrer_une_reservation/{reservation}', [\App\Http\Controllers\EmpruntController::class, 'storeReservationEmprunt'])->name('enregistrerReservationEmprunt');
 
     // Path: Abonne routes/web.php
     Route::get('liste_des_abonnes', 'App\Http\Controllers\AbonneController@index')->name('listeAbonnes');
