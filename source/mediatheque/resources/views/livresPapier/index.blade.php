@@ -53,5 +53,9 @@
 @section("livewire_scripts_content")
     @livewireScripts
 @stop
-
+@section('js')
+    <script type='text/js' async>
+        console.log("");
+    </script>
+@endsection
 

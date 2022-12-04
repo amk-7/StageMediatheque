@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Helpers\RestitutionHelper;
+use App\Helpers\ReservationHelper;
 use App\Models\Emprunt;
 use App\Service\GlobaleService;
 use Maatwebsite\Excel\Concerns\FromCollection;

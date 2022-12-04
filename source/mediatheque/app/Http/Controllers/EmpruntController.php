@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exports\EmpruntExport;
+use App\Helpers\OuvragesPhysiqueHelper;
 use App\Models\Emprunt;
+use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Abonne;
 use App\Models\LignesEmprunt;
@@ -18,6 +20,7 @@ use App\Service\EmpruntService;
 use App\Service\GlobaleService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AlertMessage;
@@ -161,6 +164,27 @@ class EmpruntController extends Controller
         return redirect()->route("listeEmprunts");
     }
 
+    public function storeReservationEmprunt(Request $request, Reservation $reservation){
+
+        $date_retour = EmpruntService::determinerDateRetour("2");
+        $reservation->etat = 0;
+        $reservation->save();
+        $emprunt = Emprunt::create([
+            'date_emprunt' => date('Y-m-d'),
+            'date_retour' => $date_retour,
+            'id_abonne' => $reservation->abonne->id_abonne,
+            'id_personnel' => Personnel::all()->where("id_utilisateur", Auth::user()->id_utilisateur)->first()->id_personnel,
+        ]);
+        LignesEmprunt::create([
+            'etat_sortie' => array_search("Bon état", OuvragesPhysiqueHelper::demanderEtat()),
+            'disponibilite' => false,
+            'id_ouvrage_physique' => $reservation->ouvragePhysique->id_ouvrage_physique,
+            'id_emprunt' => $emprunt->id_emprunt,
+        ]);
+
+        return redirect()->route("listeReservations");
+    }
+
     /**
      * Display the specified resource.
      *
@@ -202,7 +226,7 @@ class EmpruntController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Emprunt  $emprunt
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Emprunt $emprunt)
     {

@@ -21,6 +21,6 @@
         "tailwindcss-plugins": "^0.3.0"
     },
     "dependencies": {
-        "html5-qrcode": "^2.3.0"
+        "html5-qrcode": "^2.3.4"
     }
 }

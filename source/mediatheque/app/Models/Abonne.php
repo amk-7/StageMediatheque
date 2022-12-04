@@ -28,7 +28,7 @@ class Abonne extends Model
     }
 
     public function reservations(){
-        return $this->hasMany('App\Models\Reservation', 'id_reservation');
+        return $this->hasMany(Reservation::class, 'id_abonne');
     }
 
     public function emprunts(){
@@ -37,6 +37,12 @@ class Abonne extends Model
 
     public function telechargements(){
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
+    }
+
+    public function reservationValide()
+    {
+        $reservation = $this->reservations;
+        return $reservation;
     }
 
     public function isRegistrate()

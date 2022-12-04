@@ -108,6 +108,16 @@
                                            <img src="{{ asset('storage/ouvrage_electonique/'.$livresPapiers[$i]->ouvragesPhysique->ouvrage->image) }}"
                                                 alt="{{$livresPapiers[$i]->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>
                                        </div>
+                                       @if(Auth::user() && Auth::user()->hasRole('abonne'))
+                                           <div class="flex flex-row space-x-10">
+                                               <form method="post" action="{{route('enregistrerReservation')}}">
+                                                   @csrf
+                                                   <input type="text" name="data" value="{{ $livresPapiers[$i]->ouvragesPhysique->id_ouvrage }}" hidden="true">
+                                                   <input type="submit" class="button button_primary" name="reservation" value="reserver">
+                                               </form>
+                                               <label class="button button_delete">{{ $livresPapiers[$i]->ouvragesPhysique->nombre_exemplaire }}</label>
+                                           </div>
+                                       @endif
                                        <div class="label">
                                            <label>
                                                <span>{{ \App\Helpers\OuvrageHelper::formatString(strtolower($livresPapiers[$i]->ouvragesPhysique->ouvrage->titre)) }}</span>

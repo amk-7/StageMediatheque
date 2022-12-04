@@ -21,3 +21,5 @@ mix.webpackConfig({
         children: true,
     },
 });
+
+mix.copyDirectory('node_modules/html5-qrcode/', 'public/js/html5-qrcode/');

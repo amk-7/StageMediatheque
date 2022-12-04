@@ -120,3 +120,6 @@ Etape 5 :
     MAIL_FROM_ADDRESS=alhassan.blog@gmail.com
     MAIL_FROM_NAME="${APP_NAME}"
 
+composer require predis/predis:* --ignore-platform-req=ext-mysql_xdevapi
+
+redis-cli monitor
