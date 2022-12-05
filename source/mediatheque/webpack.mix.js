@@ -22,4 +22,4 @@ mix.webpackConfig({
     },
 });
 
-mix.copyDirectory('node_modules/html5-qrcode/', 'public/js/html5-qrcode/');
+//mix.copyDirectory('node_modules/html5-qrcode/', 'public/js/html5-qrcode/');
