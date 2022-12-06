@@ -99,7 +99,7 @@
             <div class="flex-1 px-4 space-y-2 overflow-hidden hover:overflow-auto">
                <ul>
                    <li>
-                       <a href="/liste_livres_papier" class="flex items-center w-full space-x-2 text-white bg-green-600 rounded-lg" :active="request()->routeIs('listeLivresPapier')">
+                       <a href="/liste_livres_papier" class="flex items-center w-full space-x-2 text-white bg-green-600 rounded-lg">
                   <span aria-hidden="true" class="p-2 bg-green-700 rounded-lg">
                     <svg
                         class="w-6 h-6"
@@ -137,6 +137,9 @@
                                </li>
                                <li>
                                    <a href="/liste_des_restitutions" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réstitution</a>
+                               </li>
+                               <li>
+                                   <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réservation</a>
                                </li>
                            </ul>
                        </li>
@@ -190,6 +193,11 @@
                            <ul id="dropdown-example" class="">
                                <li>
                                    <a href="/liste_mes_emprunts_actuelle/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunts en cours</a>
+                               </li>
+                           </ul>
+                           <ul id="dropdown-example" class="">
+                               <li>
+                                   <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes réservation</a>
                                </li>
                            </ul>
                        </li>

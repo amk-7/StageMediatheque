@@ -33,42 +33,36 @@ class EmpruntController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $paginate = 10;
-        if ($_REQUEST['element'] ?? null) {
-            //dd('a');
-            //$utilisateur = User::where('nom', 'like', '%'.$_REQUEST['element'].'%')->orWhere('prenom', 'like', '%'.$_REQUEST['element'].'%')->get();
-            $users = DB::table('users')
-                ->select("id_utilisateur")
-                ->where("nom", "like", "%".strtoupper($_REQUEST['element'])."%")
-                ->orWhere("prenom", "like", "%".strtolower($_REQUEST['element'])."%")
-                ->get();
-            $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
-            //dd($utilisateur->count());
-            //dd($users);
-            if(count($users) != 0){
-                //dd($users);
-                //$abonne = Abonne::whereIn('id_utilisateur', $utilisateur->first()->id_utilisateur)->get();
+        if (! in_array($request->nom_abonne, ["Séléctionner nom", null])) {
+            if ($request->prenom_abonne != "Séléctionner prénom" ?? null){
+                $abonnes = array($request->prenom_abonne);
+            } else {
+                $users = DB::table('users')
+                    ->select("id_utilisateur")
+                    ->where("nom", "like", "%".strtoupper($request->nom_abonne)."%")
+                    ->get();
+                $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
                 $abonnes = DB::table('abonnes')->select('id_abonne')->whereIn('id_utilisateur', $users)->get();
-                //$abonne = Abonne::where('id_utilisateur', 'like', '%'.$utilisateur->first()->id_utilisateur.'%')->get();
-                //dd($abonne);
                 $abonnes = GlobaleService::getArrayKeyFromDBResult($abonnes, "id_abonne");
+            }
+            if(count($abonnes) != 0){
+
                 $emprunts = Emprunt::whereIn('id_abonne', $abonnes)->paginate($paginate);
-                //dd($emprunts);
+
             }else{
                 $emprunts = new Collection();
-                //dd($emprunts);
             }
-            //dd($emprunts);
         } else {
-            //dd('b');
             $emprunts = Emprunt::paginate($paginate);
         }
 
 
         return view('emprunt.index')->with([
             'emprunts' => $emprunts,
+            'abonnes' => json_encode(AbonneService::getAbonnesWithAllAttribut()),
         ]);
     }
 
@@ -176,7 +170,7 @@ class EmpruntController extends Controller
             'id_personnel' => Personnel::all()->where("id_utilisateur", Auth::user()->id_utilisateur)->first()->id_personnel,
         ]);
         LignesEmprunt::create([
-            'etat_sortie' => array_search("Bon état", OuvragesPhysiqueHelper::demanderEtat()),
+            'etat_sortie' => array_search($request->etat, OuvragesPhysiqueHelper::demanderEtat()),
             'disponibilite' => false,
             'id_ouvrage_physique' => $reservation->ouvragePhysique->id_ouvrage_physique,
             'id_emprunt' => $emprunt->id_emprunt,

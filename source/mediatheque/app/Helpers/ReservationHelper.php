@@ -17,5 +17,17 @@ class ReservationHelper
             return "<td class='fieldset_border info'>Valide</td>";
         }
     }
+
+    public static function afficherDurreRestante($durre)
+    {
+        if ($durre == 0){
+            return "0 H 0 min";
+        }
+
+        $durre = explode('.', $durre/60) ;
+        $heur = $durre[0];
+        $minute = ($durre[0])."";
+        return $heur." H ".$minute[0].$minute[1]." min ";
+    }
 }
 ?>

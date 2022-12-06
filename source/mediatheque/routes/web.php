@@ -51,16 +51,15 @@ Route::group(['middleware' => ['role:abonne', 'auth']], function () {
 });
 
 Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function () {
+    Route::get('liste_des_reservations', [\App\Http\Controllers\ReservationController::class, 'index'])->name('listeReservations');
     Route::get('affiche_abonne/{abonne}', 'App\Http\Controllers\AbonneController@show')->name('showAbonne');
     Route::get('formulaire_edition_des_abonnes/{abonne}/edit', 'App\Http\Controllers\AbonneController@edit')->name('editAbonne');
     Route::put('mise_a_jour_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
     Route::get('lire_pdf/{ouvragesElectronique}/lecture', [LivreNumeriqueController::class, 'readPdf'])->name('lirePDF');
-
 });
 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('searchByTitleAndKeyWord', [LivresPapierController::class, 'searchByTitleAndKeyWord']);
-    Route::get('liste_des_reservations', [\App\Http\Controllers\ReservationController::class, 'index'])->name('listeReservations');
     Route::post('enregistrer_une_reservation/{reservation}', [\App\Http\Controllers\EmpruntController::class, 'storeReservationEmprunt'])->name('enregistrerReservationEmprunt');
 
     // Path: Abonne routes/web.php

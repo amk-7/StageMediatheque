@@ -21,35 +21,47 @@ class ReservationController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $paginate = 10;
         $reservation = array();
-        if ($_REQUEST['element'] ?? null) {
-
-            $users = DB::table('users')
-                ->select("id_utilisateur")
-                ->where("nom", "like", "%".strtoupper($_REQUEST['element'])."%")
-                ->orWhere("prenom", "like", "%".strtolower($_REQUEST['element'])."%")
-                ->get();
-            $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
-
-            if(count($users) != 0){
-
+        //dd($request);
+        if (! in_array($request->nom_abonne, ["Séléctionner nom", null])) {
+            if ($request->prenom_abonne != "Séléctionner prénom" ?? null){
+                $abonnes = array($request->prenom_abonne);
+            } else {
+                $users = DB::table('users')
+                    ->select("id_utilisateur")
+                    ->where("nom", "like", "%".strtoupper($request->nom_abonne)."%")
+                    ->get();
+                $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
                 $abonnes = DB::table('abonnes')->select('id_abonne')->whereIn('id_utilisateur', $users)->get();
-
                 $abonnes = GlobaleService::getArrayKeyFromDBResult($abonnes, "id_abonne");
-                $reservation = Reservation::whereIn('id_abonne', $abonnes)->paginate($paginate);
+            }
+
+            if(count($abonnes) != 0){
+                if ($request->etat == "-1"){
+                    $reservation = Reservation::whereIn('id_abonne', $abonnes)->paginate($paginate);
+                } else {
+                    $etat = (int) $request->etat;
+                    $reservation = Reservation::whereIn('id_abonne', $abonnes)
+                                                ->where('etat', $etat)->paginate($paginate);
+                }
             }else{
                 $reservation = new Collection();
             }
         } else {
-            $reservation = Reservation::paginate($paginate);
+            if ( in_array($request->etat, ["-1", null])){
+                $reservation = Reservation::paginate($paginate);
+            } else {
+                $etat = (int) $request->etat;
+                $reservation = Reservation::where('etat', $etat)->paginate($paginate);
+            }
         }
 
         return view('reservation.index')->with(array(
             'reservations' => $reservation,
-            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
+            'abonnes' => json_encode(AbonneService::getAbonnesWithAllAttribut()),
         ));
     }
 
@@ -71,30 +83,43 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
+        \session(['my_valiation_message' => ""]);
+        \session(['my_message' => ""]);
+
         $abonne = Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first();
         $ouvragep = OuvragesPhysique::all()->where('id_ouvrage_physique', $request->data)->first();
         $ouvrageDejaReserver = Reservation::all()->where('id_abonne', $abonne->id_abonne)->where('id_ouvrage_physique', $ouvragep->id_ouvrage_physique)->first();
+
         if ( ! $ouvragep->estDisponible()){
+            $message = "L'ouvrage n'est plus disponible.";
+            \session(['my_message' => $message]);
             return redirect()->route('listeLivresPapier');
         }
         if ($ouvrageDejaReserver){
+            $message = "Vous avez déjà reserver un exemplaire de cet ouvrage.";
+            \session(['my_message' => $message]);
             return redirect()->route('listeLivresPapier');
         }
         if ($abonne->reservationValide()->count() > 4){
+            $message = "Vous avez atteind le nombre de réservation";
+            \session(['my_message' => $message]);
             return redirect()->route('listeLivresPapier');
         }
 
         $reservation = Reservation::create(array(
+            'date_reservation' =>Carbon::now(),
             'id_abonne' => $abonne->id_abonne,
             'id_ouvrage_physique' => $ouvragep->id_ouvrage_physique,
         ));
 
         $jobCancelReservation = new CancelReservationJob($reservation->id_reservation);
-        $jobCancelReservation->delay(Carbon::now()->addHour(10));
+        $jobCancelReservation->delay(Carbon::now()->addHour(24));
         $this->dispatch($jobCancelReservation);
 
         $ouvragep->decrementerNombreExemplaire();
 
+        $validatonMessage = "Vous avez reservé l'ouvrage : ".$ouvragep->ouvrage->titre;
+        \session(['my_valiation_message' => $validatonMessage]);
         return redirect()->route('listeLivresPapier');
     }
 

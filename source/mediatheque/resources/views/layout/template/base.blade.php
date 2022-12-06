@@ -22,6 +22,7 @@
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
     <!-- nav bar -->
     @include('layout.template.navigation')
+    @yield('slider')
     <div class="flex h-screen antialiased text-gray-900 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
         <div
@@ -36,7 +37,6 @@
                     @include('side_bar.side_bar')
                 @endif
             </div>
-            <img id="bg" src="{{asset('storage/images/bg3.jpg')}}" class="hidden">
             <main id="main" class="flex items-center justify-center flex-1 px-4 py-8 mt-16 ml-16">
                 <!-- Content -->
                 @yield('content')
@@ -89,6 +89,7 @@
 
 @yield("livewire_scripts_content")
 @yield("js")
+@yield("footer")
 
 </body>
 </html>
