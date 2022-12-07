@@ -7,7 +7,7 @@
     <title>ALERT RESTITUTION</title>
 </head>
 <body>
-    <h1>ALERT RESTITUTION</h1><br/>
+    <h1 class="bg-red-600">ALERT RESTITUTION</h1><br/>
     <p>
         Cher abonné l'emprunt des ouvrages ... dont vous benéficier est présque à son terme. Vous
         êtes prier de restituer ces ouvrages demain le ... à la médiathèque.

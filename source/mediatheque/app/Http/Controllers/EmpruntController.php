@@ -139,34 +139,9 @@ class EmpruntController extends Controller
             'duree_emprunt' => $duree_emprunt,
         );
 
-        $jobMailEmprunt = new MailEmpruntJob($emprunt->id_emprunt);
-        //dd($jobMailEmprunt);
-        $jobMailEmprunt->delay($emprunt->date_retour->subSeconds(12506400));
-        Mail::to($email)->queue(new AlertMessage($data));
-        //dd($jobMailEmprunt);
+        $jobMailEmprunt = new MailEmpruntJob($email, $data);
+        $jobMailEmprunt->delay(Carbon::now()->addSeconds(15));
         $this->dispatch($jobMailEmprunt);
-
-        
-
-        //dd($data);
-
-        //Mail::to($email)->queue(new AlertMessage($data));
-
-        //Mail::to($email)->send(new AlertMessage($data));
-        /*Mail::send('mails.alertMessage', $data, function($message) use ($email) {
-            $message->to($email, 'Alerte')->subject
-            ('Alerte de date de retour');
-            $message->from('alertMessage','Alerte');
-        });*/
-
-        /*
-        Mail::send('mails.mail', $data, function($message) use ($email) {
-            $message->to($email, 'To Abonne')->subject
-            ('Notification de date de retour');
-            $message->from('a', 'Bibliothèque');
-        });*/
-
-
 
         return redirect()->route("listeEmprunts");
     }

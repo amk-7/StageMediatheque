@@ -32,7 +32,9 @@
                         <th class="fieldset_border">ISBN</th>
                         <th class="fieldset_border">Consulter</th>
                         <th class="fieldset_border">Editer</th>
-                        <th class="fieldset_border">Supprimer</th>
+                        @if(Auth::user()->hasRole('responsable'))
+                            <th class="fieldset_border">Supprimer</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody class="all_data">
@@ -56,13 +58,15 @@
                                     <input type="submit" name="editer" value="Éditer" class="button button_primary">
                                 </form>
                             </td>
-                            <td class="fieldset_border">
-                                <form action="{{ route('suppressionLivreNumerique', $livresNumerique) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <input type="submit" name="supprimer" value="Supprimer" class="button button_delete">
-                                </form>
-                            </td>
+                            @if(Auth::user()->hasRole('responsable'))
+                                <td class="fieldset_border">
+                                    <form action="{{ route('suppressionLivreNumerique', $livresNumerique) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <input type="submit" name="supprimer" value="Supprimer" class="button button_delete">
+                                    </form>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                     </tbody>

@@ -45,7 +45,6 @@
             Alpine.data('slider', () => ({
                 currentIndex: 1,
                 images: [
-                    {!! asset('storage/images/logo.png') !!},
                     'https://source.unsplash.com/1600x900/?cat',
                     'https://source.unsplash.com/1600x900/?dog',
                     'https://source.unsplash.com/1600x900/?lego',
@@ -66,4 +65,4 @@
             }))
         })
     </script>
-<div>
+</div>

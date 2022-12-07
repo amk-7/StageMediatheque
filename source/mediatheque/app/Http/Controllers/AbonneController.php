@@ -88,7 +88,7 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
-        /*Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'numero_carte'=>['required',
                 function ($attribute, $value, $flail){
                     if (! GlobaleService::verifieCart($value)){
@@ -96,7 +96,7 @@ class AbonneController extends Controller
                     }
                 }
             ],
-        ])->validate();*/
+        ])->validate();
 
         Validator::make($request->all(), [
             'contact'=>['required',
@@ -122,7 +122,7 @@ class AbonneController extends Controller
             'nom' => 'required',
             'prenom' => 'required',
             'nom_utilisateur' => 'required',
-            'password' => 'required',
+            'password' => 'required | min:8',
             'confirmation_password' => 'required|same:password',
             'ville' => 'required',
             'quartier' => 'required',
@@ -159,12 +159,9 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-        //dd($utilisateur);
         $utilisateur->assignRole(Role::find(3));
 
-        //Mail
-        Mail::to($utilisateur->email)->queue(new MailInscription($utilisateur));
-
+        Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
 
         return redirect()->route('listeAbonnes');
     }
@@ -203,25 +200,14 @@ class AbonneController extends Controller
      */
     public function update(Request $request, Abonne $abonne)
     {
-        //
-
-        //dd($request);
-        /*$abonne->update(array([
-            'date_naissance' => $request["date_naissance"],
-            'niveau_etude' => $request["niveau_etude"],
-            'profession' => $request["profession"],
-            'contact_a_prevenir' => $request["contact_a_prevenir"],
-            'numero_carte' => $request["numero_carte"],
-            'type_de_carte' => $request["type_de_carte"]
-        ]));*/
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
 
-        $utilisateurs = UserService::modifierUtilisateur($request, $abonne->id_utilisateur);
-        $utilisateurs->save();
+        $utilisateur = UserService::modifierUtilisateur($request, $abonne->id_utilisateur);
+        $utilisateur->save();
         $abonne->date_naissance = $request["date_naissance"];
         $abonne->niveau_etude = $request["niveau_etude"];
         $abonne->profession = $request["profession"];
