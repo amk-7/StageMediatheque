@@ -344,6 +344,7 @@
         }
 
         function validate() {
+            button_scan.hidden = false;
             if (cote_ouvrage.value === "") {
                 cote_erreur.hidden = false;
                 return false;
@@ -430,7 +431,7 @@
         });
 
         function validateUser(){
-
+            button_scan.hidden = false;
             if (nom_abonnes.value === "Séléctionner nom" || nom_abonnes.value === "") {
                 nom_abonne_erreur.hidden = false;
                 return false;
