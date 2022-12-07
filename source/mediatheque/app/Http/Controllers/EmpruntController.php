@@ -38,6 +38,7 @@ class EmpruntController extends Controller
     public function index(Request $request)
     {
         $paginate = 10;
+
         if (! in_array($request->nom_abonne, ["Séléctionner nom", null])) {
             if ($request->prenom_abonne != "Séléctionner prénom" ?? null){
                 $abonnes = array($request->prenom_abonne);
@@ -48,6 +49,7 @@ class EmpruntController extends Controller
                     ->get();
                 $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
                 $abonnes = DB::table('abonnes')->select('id_abonne')->whereIn('id_utilisateur', $users)->get();
+
                 $abonnes = GlobaleService::getArrayKeyFromDBResult($abonnes, "id_abonne");
             }
             if(count($abonnes) != 0){
@@ -58,6 +60,7 @@ class EmpruntController extends Controller
                 $emprunts = new Collection();
             }
         } else {
+
             $emprunts = Emprunt::paginate($paginate);
         }
 
@@ -92,10 +95,7 @@ class EmpruntController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
-        //dd(Personnel::all()->where("id_utilisateur", Auth::user()->id_utilisateur)->first()->id_personnel);
-
+        
         $request->validate([
             'nom_abonne'=>'required',
             'prenom_abonne'=>'required',
@@ -113,23 +113,23 @@ class EmpruntController extends Controller
             'id_personnel' => Personnel::all()->where("id_utilisateur", Auth::user()->id_utilisateur)->first()->id_personnel,
         ]);
 
-        //dd($listesEmprunts->restitution);
+        
         LignesEmpruntService::enregistrerLignesEmprunt($request->data, $emprunt);
-        //dd($request);
+        
 
-        //Envoyer un mail à l'abonné lorsque la date de retour est proche
+        
         $abonne = Abonne::find($request->prenom_abonne);
-        //dd($abonne);
+        
         $utilisateur = User::find($abonne->id_utilisateur);
-        //dd($utilisateur);
+        
         $email = $utilisateur->email;
-        //dd($email);
+        
         $date_retour = $emprunt->date_retour;
-        //dd($date_retour);
+        
         $date_emprunt = $emprunt->date_emprunt;
-        //dd($date_emprunt);
+       
         $duree_emprunt = $request->duree_emprunt;
-        //dd($duree_emprunt);
+        
 
         $data = array(
             'nom' => $utilisateur->nom,
@@ -137,34 +137,21 @@ class EmpruntController extends Controller
             'date_retour' => $date_retour,
             'date_emprunt' => $date_emprunt,
             'duree_emprunt' => $duree_emprunt,
+            'Ouvrages' 
         );
 
-        $jobMailEmprunt = new MailEmpruntJob($emprunt->id_emprunt);
-        //dd($jobMailEmprunt);
-        $jobMailEmprunt->delay($emprunt->date_retour->subSeconds(12506400));
-        Mail::to($email)->queue(new AlertMessage($data));
-        //dd($jobMailEmprunt);
+        $jobMailEmprunt = new MailEmpruntJob($email, $data);
+        
+        $jobMailEmprunt->delay(Carbon::now()->addSeconds(10));
+        //Mail::to($email)->queue(new AlertMessage($data));
+        
         $this->dispatch($jobMailEmprunt);
+
+        Mail::to($email)->send(new AlertMessage($data));
 
         
 
-        //dd($data);
-
-        //Mail::to($email)->queue(new AlertMessage($data));
-
-        //Mail::to($email)->send(new AlertMessage($data));
-        /*Mail::send('mails.alertMessage', $data, function($message) use ($email) {
-            $message->to($email, 'Alerte')->subject
-            ('Alerte de date de retour');
-            $message->from('alertMessage','Alerte');
-        });*/
-
-        /*
-        Mail::send('mails.mail', $data, function($message) use ($email) {
-            $message->to($email, 'To Abonne')->subject
-            ('Notification de date de retour');
-            $message->from('a', 'Bibliothèque');
-        });*/
+        
 
 
 
@@ -200,8 +187,7 @@ class EmpruntController extends Controller
      */
     public function show(Emprunt $emprunt)
     {
-        //
-        //dd($emprunt);
+       
         return view('emprunt.show')->with([
             'emprunt'=>$emprunt,
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
@@ -219,8 +205,7 @@ class EmpruntController extends Controller
      */
     public function edit(Emprunt $emprunt)
     {
-        //
-        //dd(GlobaleService::afficherDate($emprunt->date_emprunt));
+        
         return view('emprunt.edit')->with([
             'emprunt'=>$emprunt,
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
@@ -237,23 +222,13 @@ class EmpruntController extends Controller
      */
     public function update(Request $request, Emprunt $emprunt)
     {
-        //
-        //dd($emprunt);
+        
         $date_retour = EmpruntService::determinerDateRetour($request->duree_emprunt);
-        //dd($date_retour);
+        
         $emprunt->date_retour = $date_retour;
         $emprunt->save();
 
-        /*$emprunt = Emprunt::find($id_emprunt);
-        $emprunt->date_retour = date('Y-m-d');
-        $emprunt->save();
-        dd($emprunt);*/
-
-        //$emprunt = Emprunt::find($id_emprunt);
-
-        /*$emprunt->date_retour = $request['date_retour'];
-        dd($emprunt->date_retour);
-        $emprunt->save();*/
+        
 
 
         return redirect()->route('listeEmprunts');
@@ -267,8 +242,7 @@ class EmpruntController extends Controller
      */
     public function destroy(Emprunt $emprunt)
     {
-        //
-        //dd($emprunt->lignesEmprunts);
+       
         foreach($emprunt->lignesEmprunts as $ligneEmprunt){
             $ligneEmprunt->ouvragesPhysique->augmenterNombreExemplaire(1);
             $ligneEmprunt->delete();

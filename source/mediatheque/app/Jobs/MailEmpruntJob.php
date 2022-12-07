@@ -15,19 +15,20 @@ use App\Models\Emprunt;
 class MailEmpruntJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    private $id_emprunt;
+    private $email;
+    private $data;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(int $id_emprunt)
+    public function __construct(String $email, Array $data)
     {
-        $this->id_emprunt = $id_emprunt;
-    
-        //
+        $this->email = $email;
+        $this->data = $data;
     }
+    
 
     /**
      * Execute the job.
@@ -37,7 +38,8 @@ class MailEmpruntJob implements ShouldQueue
     public function handle()
     {
         //
-        $emprunt = Emprunt::all()->where('id_emprunt', $this->id_emprunt)->first();
-        $emprunt->save();
+
+        Mail::to($this->email)->send(new MailEmprunt($this->data));
+        
     }
 }

@@ -201,6 +201,8 @@
             event.stopPropagation();
             event.preventDefault();
         }
+        //les mettres à true avec un hidden...............
+       
 
         function setLiteOptions(elt, liste) {
             let option = document.createElement('option');
@@ -216,21 +218,24 @@
 
         let number = 1;
 
+        
+
         btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
-            cleanErrorMessages(
-                nom_abonne_erreur,
-                prenom_abonne_erreur,
-                nom_erreur,
-                prenom_erreur,
-                cote_erreur,
-                cote_no_trouve,
-                etat_ouvragae_erreur,
-                emprunts_erreur,
-                non_eligble_erreur,
-                nombre_emprunt_erreur,
-                cote_ouvrage_exist,
-                abonne_pas_abonnement
-            );
+            /*cleanErrorMessages(
+                nom_abonne_erreur.hidden = true,
+                prenom_abonne_erreur.hidden = true,
+                nom_erreur.hidden = true,
+                prenom_erreur.hidden = true,
+                cote_erreur.hidden = true,
+                cote_no_trouve.hidden = true,
+                etat_ouvragae_erreur.hidden = true,
+                emprunts_erreur.hidden = true,
+                non_eligble_erreur.hidden = true,
+                nombre_emprunt_erreur.hidden = true,
+                cote_ouvrage_exist.hidden = true,
+                abonne_pas_abonnement.hidden = true
+
+            );*/
             stopPropagation();
             if(validateUser()){
                 let id_abonne = prenom_abonnes.value;
@@ -245,14 +250,7 @@
                 }
                 
             }
-<<<<<<< HEAD
-=======
-            /*if(verifierNombreMaxEmprunt(prenom_abonnes.value)){
-                    nombre_emprunt_erreur.hidden = false;
-                    stopPropagation();
-                    return;
-                }*/
->>>>>>> 15a55592647899358042f6cc594dc9ac15cc77f5
+
             abonne_pas_abonnement.hidden = true;
             non_eligble_erreur.hidden = true;
 
@@ -424,20 +422,21 @@
         }
 
         submit_btn.addEventListener('click', function (e){
-            cleanErrorMessages(
-                nom_abonne_erreur,
-                prenom_abonne_erreur,
-                nom_erreur,
-                prenom_erreur,
-                cote_erreur,
-                cote_no_trouve,
-                etat_ouvragae_erreur,
-                emprunts_erreur,
-                non_eligble_erreur,
-                nombre_emprunt_erreur,
-                cote_ouvrage_exist,
-                abonne_pas_abonnement
-            );
+            /*cleanErrorMessages(
+                nom_abonne_erreur.hidden = true,
+                prenom_abonne_erreur.hidden = true,
+                nom_erreur.hidden = true,
+                prenom_erreur.hidden = true,
+                cote_erreur.hidden = true,
+                cote_no_trouve.hidden = true,
+                etat_ouvragae_erreur.hidden = true,
+                emprunts_erreur.hidden = true,
+                non_eligble_erreur.hidden = true,
+                nombre_emprunt_erreur.hidden = true,
+                cote_ouvrage_exist.hidden = true,
+                abonne_pas_abonnement.hidden = true
+
+            );*/
             if (! validerFormulaire(e)){
                 stopPropagation();
 
@@ -558,17 +557,12 @@
             html5QrcodeScanner.render(onScanSuccess);
         }, 1000)*/
 
-        function onScanError(errorMessage) {
-            //handle scan error
-        }
 
-        var html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader", { fps: 10, qrbox: 250 });
-        html5QrcodeScanner.render(onScanSuccess, onScanError);
 
         cote_ouvrage.addEventListener('keyup', function (e) {
             rechercherTitreParCote();
         });
+
 
         function onScanSuccess(qrCodeMessage) {
             cote_ouvrage.value = qrCodeMessage;
