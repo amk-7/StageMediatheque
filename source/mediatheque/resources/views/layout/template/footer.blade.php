@@ -1,4 +1,4 @@
-<footer class="text-center lg:text-left bg-gray-100 text-gray-600 bg-yellow-300 mt-16">
+<footer class="text-center lg:text-left bg-gray-100 text-gray-600 bg-yellow-300 mt-16 w-full">
     <!--div class="flex justify-center items-center lg:justify-between p-6 border-b border-gray-300">
         <div class="mr-12 hidden lg:block">
             <span>Get connected with us on social networks:</span>
@@ -164,6 +164,6 @@
     </div>
     <div class="text-center p-6 bg-gray-200 bg-green-700 text-white">
         <span>© 2022 Copyright:</span>
-        <a class="text-white-600 font-semibold" href="https://tailwind-elements.com/">URBIS-TOGO</a>
+        <a class="text-white-600 font-semibold" href="https://tailwind-elements.com/">URBIS-FOUNDATION-TOGO</a>
     </div>
 </footer>
