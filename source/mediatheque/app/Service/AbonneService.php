@@ -3,6 +3,7 @@
 namespace App\Service;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use App\Models\registration;
 
 
 use App\Models\Abonne;
@@ -49,6 +50,7 @@ class AbonneService
                 'nombre_emprunts' => $p->getNombreEprunt() != 0 ? $p->getNombreEprunt(): '0',
                 'nombre_restitutions' => $p->getNombreRestitution() != 0 ? $p->getNombreRestitution() : '0',
                 'nombre_emprunt_non_restituer' => count($p->getEmpruntsEnCours()) != 0 ? count($p->getEmpruntsEnCours()) : '0',
+                'nombre_abonnement' => count($p->abonnements()) != 0 ? count($p->abonnements()) : '0',
             );
             array_push($abonnes, $personne);
         }
@@ -58,6 +60,7 @@ class AbonneService
     public static function formatAbonneList(Collection $abonnes){
         $result = Abonne::all();
         $abonnes = array();
+        
         foreach ($result as $p){
             //dump($p->utilisateur->nom, $p->getEmpruntsEnCours());
             $personne = array(
@@ -65,9 +68,17 @@ class AbonneService
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
                 'estEligible'=>count($p->getEmpruntsEnCours()) == 0 ? 'true' : 'false',
+                //Si l'abonné n'a pas fait d'abonnement, il n'est pas éligible à un emprunt
+                //'pas_abonnement'=>count($p->abonnements()) == 0 ? 'true' : 'false',
+                //dd($p->abonnementEnCours()),
+                'pas_abonnement' => $p->abonnementEnCours() == true ? 'true' : 'false',
+                //dd($p->abonnementEnCours()),
+
             );
+
             array_push($abonnes, $personne);
         }
+        //dd('aaaa');
         return $abonnes;
     }
 
