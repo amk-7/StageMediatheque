@@ -19,8 +19,8 @@ class PersonnelController extends Controller
     public function index()
     {
         //
-        $personnels = Personnel::all();
-        return view('personnels.index')->with('listePersonnels', $personnels);
+        $personnels = Personnel::paginate(10);
+        return view('personnels.index')->with('personnels', $personnels);
     }
 
     /**
@@ -75,7 +75,7 @@ class PersonnelController extends Controller
                 }
             ],
         ])->validate();
-        
+
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
@@ -113,7 +113,7 @@ class PersonnelController extends Controller
                 'statut' => $request->statut,
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
-        }        
+        }
         $utilisateur->assignRole([Role::find(2), Role::find(1)]);
         return redirect()->route('listePersonnels');
     }
@@ -128,7 +128,7 @@ class PersonnelController extends Controller
     {
         //
         return view('personnels.show')->with('personnel', $personnel);
-        
+
     }
 
     /**
@@ -154,7 +154,7 @@ class PersonnelController extends Controller
     {
         //
         //dd($request["statut"]);
-        
+
         /*$personnel->update(array([
             'statut' => $request["statut"]
         ]));*/
@@ -163,7 +163,7 @@ class PersonnelController extends Controller
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
-        
+
         $utilisateurs = UserService::modifierUtilisateur($request, $personnel->id_utilisateur);
         $utilisateurs->save();
         $personnel->statut = $request["statut"];

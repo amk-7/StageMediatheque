@@ -60,7 +60,7 @@ class AbonneService
     public static function formatAbonneList(Collection $abonnes){
         $result = Abonne::all();
         $abonnes = array();
-        
+
         foreach ($result as $p){
             //dump($p->utilisateur->nom, $p->getEmpruntsEnCours());
             $personne = array(
@@ -68,21 +68,11 @@ class AbonneService
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
                 'estEligible'=>count($p->getEmpruntsEnCours()) == 0 ? 'true' : 'false',
-<<<<<<< HEAD
-                'pas_abonnement' => "",
-=======
-                //Si l'abonné n'a pas fait d'abonnement, il n'est pas éligible à un emprunt
-                //'pas_abonnement'=>count($p->abonnements()) == 0 ? 'true' : 'false',
-                //dd($p->abonnementEnCours()),
                 'pas_abonnement' => $p->abonnementEnCours() == true ? 'true' : 'false',
-                //dd($p->abonnementEnCours()),
-
->>>>>>> 15a55592647899358042f6cc594dc9ac15cc77f5
             );
 
             array_push($abonnes, $personne);
         }
-        //dd('aaaa');
         return $abonnes;
     }
 
@@ -90,7 +80,6 @@ class AbonneService
     {
         $result = Abonne::all();
         $abonnes = AbonneService::formatAbonneList($result);
-        //dd('fin');
         return $abonnes;
     }
     /**
@@ -99,17 +88,8 @@ class AbonneService
     public static function recherche($etat, $nom){
         $abonnes = Abonne::all()->where('nom', 'like', '%'.$nom.'%');
         $abonnes = AbonneService::formatAbonneList($abonnes);
-
-        /*$abonnes_final = array();
-
-        str_contains($etat, $a["estEligible"]);*/
-
         return $abonnes;
-
-        //Fonction qui retourne la liste des id des abonnes et on la met dans Emprunt controller
     }
-
-    //Fonction qui retourne la liste des id des abonnes
 
     public static function getAbonnesId(){
         $abonnes = Abonne::all();

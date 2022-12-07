@@ -95,7 +95,7 @@ class EmpruntController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'nom_abonne'=>'required',
             'prenom_abonne'=>'required',
@@ -113,23 +113,23 @@ class EmpruntController extends Controller
             'id_personnel' => Personnel::all()->where("id_utilisateur", Auth::user()->id_utilisateur)->first()->id_personnel,
         ]);
 
-        
-        LignesEmpruntService::enregistrerLignesEmprunt($request->data, $emprunt);
-        
 
-        
+        LignesEmpruntService::enregistrerLignesEmprunt($request->data, $emprunt);
+
+
+
         $abonne = Abonne::find($request->prenom_abonne);
-        
+
         $utilisateur = User::find($abonne->id_utilisateur);
-        
+
         $email = $utilisateur->email;
-        
+
         $date_retour = $emprunt->date_retour;
-        
+
         $date_emprunt = $emprunt->date_emprunt;
-       
+
         $duree_emprunt = $request->duree_emprunt;
-        
+
 
         $data = array(
             'nom' => $utilisateur->nom,
@@ -137,24 +137,12 @@ class EmpruntController extends Controller
             'date_retour' => $date_retour,
             'date_emprunt' => $date_emprunt,
             'duree_emprunt' => $duree_emprunt,
-            'Ouvrages' 
+            'Ouvrages'
         );
 
         $jobMailEmprunt = new MailEmpruntJob($email, $data);
-        
-        $jobMailEmprunt->delay(Carbon::now()->addSeconds(10));
-        //Mail::to($email)->queue(new AlertMessage($data));
-        
+        $jobMailEmprunt->delay(Carbon::now()->addSeconds($date_retour->subDays(1)));
         $this->dispatch($jobMailEmprunt);
-
-        Mail::to($email)->send(new AlertMessage($data));
-
-        
-
-        
-
-
-
         return redirect()->route("listeEmprunts");
     }
 
@@ -175,7 +163,6 @@ class EmpruntController extends Controller
             'id_ouvrage_physique' => $reservation->ouvragePhysique->id_ouvrage_physique,
             'id_emprunt' => $emprunt->id_emprunt,
         ]);
-
         return redirect()->route("listeReservations");
     }
 
@@ -187,14 +174,12 @@ class EmpruntController extends Controller
      */
     public function show(Emprunt $emprunt)
     {
-       
         return view('emprunt.show')->with([
             'emprunt'=>$emprunt,
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
             "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
             "livre_papier" => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
         ]);
-
     }
 
     /**
@@ -205,7 +190,7 @@ class EmpruntController extends Controller
      */
     public function edit(Emprunt $emprunt)
     {
-        
+
         return view('emprunt.edit')->with([
             'emprunt'=>$emprunt,
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
@@ -222,13 +207,13 @@ class EmpruntController extends Controller
      */
     public function update(Request $request, Emprunt $emprunt)
     {
-        
+
         $date_retour = EmpruntService::determinerDateRetour($request->duree_emprunt);
-        
+
         $emprunt->date_retour = $date_retour;
         $emprunt->save();
 
-        
+
 
 
         return redirect()->route('listeEmprunts');
@@ -242,7 +227,6 @@ class EmpruntController extends Controller
      */
     public function destroy(Emprunt $emprunt)
     {
-       
         foreach($emprunt->lignesEmprunts as $ligneEmprunt){
             $ligneEmprunt->ouvragesPhysique->augmenterNombreExemplaire(1);
             $ligneEmprunt->delete();

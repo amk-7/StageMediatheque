@@ -51,11 +51,11 @@ class AbonneController extends Controller
             $abonnes = Abonne::whereIn("id_utilisateur", $users)
                         ->whereIn("profession", $professions)
                         ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
-            
+
         } else {
             $abonnes = Abonne::paginate($paginate);
         }
-        
+
         return view('abonnes.index')->with([
                 'abonnes' => $abonnes,
                 'paye' => $request->paye,
@@ -69,7 +69,7 @@ class AbonneController extends Controller
      */
     public function create()
     {
-        
+
 
         return view('abonnes.create');
     }
@@ -82,7 +82,15 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
-        
+        Validator::make($request->all(), [
+            'numero_carte'=>['required',
+                function ($attribute, $value, $flail){
+                    if (! GlobaleService::verifieCart($value)){
+                        $flail("Ce numéro de carte est invalide");
+                    }
+                }
+            ],
+        ])->validate();
 
         Validator::make($request->all(), [
             'contact'=>['required',
@@ -108,7 +116,7 @@ class AbonneController extends Controller
             'nom' => 'required',
             'prenom' => 'required',
             'nom_utilisateur' => 'required',
-            'password' => 'required | min:5',
+            'password' => 'required | min:8',
             'confirmation_password' => 'required|same:password',
             'ville' => 'required',
             'quartier' => 'required',
@@ -125,7 +133,7 @@ class AbonneController extends Controller
             'numero_maison' => $request->numero_maison,
         );
 
-        
+
         if ($request->password != $request->confirmation_password){
             return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
         }
@@ -144,15 +152,8 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-        
         $utilisateur->assignRole(Role::find(3));
-
-        
-        //Mail::to($utilisateur->email)->queue(new MailInscription($utilisateur));
-
         Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
-
-
         return redirect()->route('listeAbonnes');
     }
 
@@ -164,7 +165,7 @@ class AbonneController extends Controller
      */
     public function show(Abonne $abonne)
     {
-        
+
         return view('abonnes.show')->with('abonne', $abonne);
 
     }
@@ -177,7 +178,7 @@ class AbonneController extends Controller
      */
     public function edit(Abonne $abonne)
     {
-        
+
         return view('abonnes.edit')->with('abonne', $abonne);
     }
 
@@ -190,15 +191,14 @@ class AbonneController extends Controller
      */
     public function update(Request $request, Abonne $abonne)
     {
-        
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
 
-        $utilisateurs = UserService::modifierUtilisateur($request, $abonne->id_utilisateur);
-        $utilisateurs->save();
+        $utilisateur = UserService::modifierUtilisateur($request, $abonne->id_utilisateur);
+        $utilisateur->save();
         $abonne->date_naissance = $request["date_naissance"];
         $abonne->niveau_etude = $request["niveau_etude"];
         $abonne->profession = $request["profession"];
@@ -224,7 +224,7 @@ class AbonneController extends Controller
      */
     public function destroy(Abonne $abonne)
     {
-        
+
         $abonne->delete();
         return redirect()->route('listeAbonnes');
     }
@@ -245,5 +245,5 @@ class AbonneController extends Controller
     {
         return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
     }
-    
+
 }

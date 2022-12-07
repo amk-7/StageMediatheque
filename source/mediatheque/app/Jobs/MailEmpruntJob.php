@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\AlertMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -23,12 +24,12 @@ class MailEmpruntJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(String $email, Array $data)
+    public function __construct(String $email,Array $data)
     {
         $this->email = $email;
         $this->data = $data;
     }
-    
+
 
     /**
      * Execute the job.
@@ -37,9 +38,6 @@ class MailEmpruntJob implements ShouldQueue
      */
     public function handle()
     {
-        //
-
-        Mail::to($this->email)->send(new MailEmprunt($this->data));
-        
+        Mail::to($this->email)->send(new AlertMessage($this->data));
     }
 }

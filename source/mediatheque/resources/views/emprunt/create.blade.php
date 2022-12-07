@@ -111,27 +111,30 @@
                    <tbody class="fieldset_border" ></tbody>
                </table>
            </fieldset>
-            <!-- Overlay element -->
-            <div id="overlay" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
-            <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
-                <div class="flex flex-col items-center space-y-4">
-                    <div class="flex flex-col justify-center items-center m-auto">
-                        <div class="flex flex-col">
-                            <div class="w-full">
-                                <div id="reader"></div>
-                            </div>
-                            <button name="quit" id="quit" class="button button_primary w-2/5 p-2">Quitter</button>
-                        </div>
+            <input type="submit" id="action_emprunter" name="action_emprunt" value="Emprunter" class="button button_primary w-full mt-3">
+        </form>
+    </div>
+    <!-- Overlay element -->
+    <div id="overlay" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60" style="z-index:1000"></div>
+    <div style="z-index: 1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
+        <div class="flex flex-col items-center space-y-4">
+            <div class="flex flex-col justify-center items-center m-auto">
+                <div class="flex flex-col items-center space-y-3">
+                    <div class="w-full">
+                        <div id="reader"></div>
+                    </div>
+                    <button name="quit" id="quit" class="button button_primary w-2/5 p-2">Quitter</button>
+                    <div class="info">
+                        <p id="qrscan" hidden>QR code scanner.</p>
                     </div>
                 </div>
             </div>
-            <input type="submit" id="action_emprunter" name="action_emprunt" value="Emprunter" class="button button_primary w-full mt-3">
-        </form>
+        </div>
     </div>
 @stop
 @section("js")
     <script src="https://reeteshghimire.com.np/wp-content/uploads/2021/05/html5-qrcode.min_.js"></script>
-    <!--script src="{{ url('js/html5-qrcode/html5-qrcode.min.js') }}"></script-->
+    <!--script src="{ { url('js/html5-qrcode/html5-qrcode.min.js') }}"></script-->
     <script type="text/javascript" async>
         let abonnes = {!! $abonnes !!};
         let livres_papier = {!! $livre_papier !!};
@@ -152,6 +155,8 @@
         let button_scan_quit = document.getElementById("quit");
 
         let nombre_emprunt = 0;
+
+        let qrsacn = document.getElementById('qrscan');
 
         let nom_abonne_erreur = document.getElementById('nom_abonne_erreur');
         let prenom_abonne_erreur = document.getElementById('prenom_abonne_erreur');
@@ -201,8 +206,6 @@
             event.stopPropagation();
             event.preventDefault();
         }
-        //les mettres à true avec un hidden...............
-       
 
         function setLiteOptions(elt, liste) {
             let option = document.createElement('option');
@@ -218,29 +221,12 @@
 
         let number = 1;
 
-        
-
-        btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
-            /*cleanErrorMessages(
-                nom_abonne_erreur.hidden = true,
-                prenom_abonne_erreur.hidden = true,
-                nom_erreur.hidden = true,
-                prenom_erreur.hidden = true,
-                cote_erreur.hidden = true,
-                cote_no_trouve.hidden = true,
-                etat_ouvragae_erreur.hidden = true,
-                emprunts_erreur.hidden = true,
-                non_eligble_erreur.hidden = true,
-                nombre_emprunt_erreur.hidden = true,
-                cote_ouvrage_exist.hidden = true,
-                abonne_pas_abonnement.hidden = true
-
-            );*/
+        btn_ajouter.addEventListener('click', function addApprovisionnement() {
+            cleanErrorMessages();
             stopPropagation();
             if(validateUser()){
                 let id_abonne = prenom_abonnes.value;
                 if (verifierSiAbonnEstRegistre(id_abonne) == "false"){
-                    dd("abonne pas abonnement");
                     abonne_pas_abonnement.hidden = false;
                     return;
                 }
@@ -248,9 +234,8 @@
                     non_eligble_erreur.hidden = false;
                     return;
                 }
-                
-            }
 
+            }
             abonne_pas_abonnement.hidden = true;
             non_eligble_erreur.hidden = true;
 
@@ -400,7 +385,6 @@
             }
         }
 
-        // format table before send
         function formatTableDataBeforeSend() {
             let table_body = document.getElementById('liste_emprunt').children[1];
             let lines = table_body.children;
@@ -422,21 +406,7 @@
         }
 
         submit_btn.addEventListener('click', function (e){
-            /*cleanErrorMessages(
-                nom_abonne_erreur.hidden = true,
-                prenom_abonne_erreur.hidden = true,
-                nom_erreur.hidden = true,
-                prenom_erreur.hidden = true,
-                cote_erreur.hidden = true,
-                cote_no_trouve.hidden = true,
-                etat_ouvragae_erreur.hidden = true,
-                emprunts_erreur.hidden = true,
-                non_eligble_erreur.hidden = true,
-                nombre_emprunt_erreur.hidden = true,
-                cote_ouvrage_exist.hidden = true,
-                abonne_pas_abonnement.hidden = true
-
-            );*/
+            cleanErrorMessages();
             if (! validerFormulaire(e)){
                 stopPropagation();
 
@@ -477,16 +447,7 @@
             return true;
         }
 
-        /*function verifierEmpruntEnCours(id_abonne) {
-            let emprunts = [];
-            for (let i = 0; i < emprunts_en_cours.length; i++) {
-                if (emprunts_en_cours[i]['id_abonne'] === id_abonne) {
-                    emprunts.push(emprunts_en_cours[i]);
-                }
-            }
-            return emprunts;
-        }*/
-        //verfierSiAbonneEstEligible(2);
+
         function verfierSiAbonneEstEligible(id_abonne)
         {
             for(let i = 0; i < abonnes.length; i++)
@@ -497,11 +458,9 @@
                 }
             }
         }
-        //Verifier si l'abonné à un abonnement 
 
         function verifierSiAbonnEstRegistre(id_abonne)
         {
-            //dd('verifierSiAbonnEstRegistre');
             for(let i = 0; i < abonnes.length; i++)
             {
                 if(abonnes[i]['id'] == id_abonne)
@@ -549,16 +508,11 @@
             stopPropagation();
             div_modal.classList.add('hidden');
             overlay.classList.add('hidden');
+            qrsacn.hidden = true;
         });
-
-        /*setTimeout( () => {
-            let html5QrcodeScanner = new Html5QrcodeScanner(
-                "reader", { fps: 10, qrbox: 250 });
-            html5QrcodeScanner.render(onScanSuccess);
-        }, 1000)*/
-
-
-
+        function onScanError(errorMessage) {
+            //handle scan error
+        }
         cote_ouvrage.addEventListener('keyup', function (e) {
             rechercherTitreParCote();
         });
@@ -567,8 +521,23 @@
         function onScanSuccess(qrCodeMessage) {
             cote_ouvrage.value = qrCodeMessage;
             rechercherTitreParCote();
+            qrsacn.hidden = false;
         }
 
+        function cleanErrorMessages(){
+            nom_abonne_erreur.hidden = true,
+            prenom_abonne_erreur.hidden = true,
+            nom_erreur.hidden = true,
+            prenom_erreur.hidden = true,
+            cote_erreur.hidden = true,
+            cote_no_trouve.hidden = true,
+            etat_ouvragae_erreur.hidden = true,
+            emprunts_erreur.hidden = true,
+            non_eligble_erreur.hidden = true,
+            nombre_emprunt_erreur.hidden = true,
+            cote_ouvrage_exist.hidden = true,
+            abonne_pas_abonnement.hidden = true
+        }
 
     </script>
 @stop

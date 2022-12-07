@@ -31,7 +31,8 @@
                 <label class="label" for="photo_profil">Photo de profil : </label>
             </div>
             <div class="border border-gray-200 text-center">
-                <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}" width="200" height="200" size>
+                <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}" width="350" height="350"
+                     style="width: 350px; height: 350px">
             </div>
             <div class="flex flex-col-reverse p-2">
                 <input type="file" name="photo_profil" value="{{$utilisateur->photo_profil}}">

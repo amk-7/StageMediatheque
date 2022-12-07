@@ -9,14 +9,14 @@
             </form>
             @if(!empty($liquides ?? "") && $liquides->count() > 0)
                 <table class="fieldset_border bg-white">
-                    <thead>
-                    <tr class="fieldset_border">
-                        <th class="fieldset_border">Abonne</th>
-                        <th class="fieldset_border">Tarif</th>
-                        <th class="fieldset_border">Date debut</th>
-                        <th class="fieldset_border">Date fin</th>
-                        <th class="fieldset_border">Consulter</th>
-                    </tr>
+                    <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
+                        <tr class="fieldset_border">
+                            <th class="fieldset_border">Abonne</th>
+                            <th class="fieldset_border">Tarif</th>
+                            <th class="fieldset_border">Date debut</th>
+                            <th class="fieldset_border">Date fin</th>
+                            <th class="fieldset_border">Consulter</th>
+                        </tr>
                     </thead>
                     <tbody class="fieldset_border">
                     @foreach($liquides as $liquide)
@@ -38,6 +38,7 @@
                 <h4>Aucun abonnement</h4>
             @endif
         </div>
+        {{ $liquides->links() }}
     </div>
 
 @endsection

@@ -24,16 +24,16 @@
             </form>
             @if(! empty( $restitutions ?? "") && $restitutions->count() > 0)
                 <table class="fieldset_border bg-white">
-                    <thead class="fieldset_border">
-                    <tr>
-                        <th class="fieldset_border">Numer</th>
-                        <th class="fieldset_border">Nombre ouvrage</th>
-                        <th class="fieldset_border">Abonne</th>
-                        <th class="fieldset_border">Personnel</th>
-                        <th class="fieldset_border">Etat</th>
-                        <th class="fieldset_border">Date</th>
-                        <th class="fieldset_border">Editer</th>
-                    </tr>
+                    <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
+                        <tr>
+                            <th class="fieldset_border">Numer</th>
+                            <th class="fieldset_border">Nombre ouvrage</th>
+                            <th class="fieldset_border">Abonne</th>
+                            <th class="fieldset_border">Personnel</th>
+                            <th class="fieldset_border">Etat</th>
+                            <th class="fieldset_border">Date</th>
+                            <th class="fieldset_border">Editer</th>
+                        </tr>
                     </thead>
                     <tbody>
                     @php

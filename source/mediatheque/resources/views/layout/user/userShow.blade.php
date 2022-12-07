@@ -10,7 +10,8 @@
     <fieldset>
     <div class="flex flex-row m-auto p-3.5">
         <div class="">
-            <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}" width="350" height="300"></br>
+            <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}" width="350" height="350"
+            style="width: 350px; height: 350px"></br>
         </div>
         <div class="pl-6">
             <div class="flex flex-col">

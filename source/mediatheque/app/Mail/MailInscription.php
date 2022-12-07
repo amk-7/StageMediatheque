@@ -19,7 +19,6 @@ class MailInscription extends Mailable
     public $abonne;
     public function __construct($abonne)
     {
-        //
         $this->abonne = $abonne;
     }
 
@@ -30,9 +29,8 @@ class MailInscription extends Mailable
      */
     public function build()
     {
-        //return $this->view('view.name');
         $mailAbonne = $this->abonne; // Les données du mail à envoyer
         return $this->subject('Confirmation')
-                    ->view('emails.message_confirmation', compact('mailAbonne'));
+                    ->view('emails.message_confirmation_inscription', compact('mailAbonne'));
     }
 }

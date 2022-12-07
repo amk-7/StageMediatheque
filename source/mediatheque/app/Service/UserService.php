@@ -19,7 +19,7 @@ class UserService
             $image->storeAs('public/images/image_utilisateur', $chemin_image);
         }
         else{
-            $chemin_image = "personne.jpg";
+            $chemin_image = "profil.png";
         }
         $utilisateur = User::create([
             'nom' => strtoupper($request->nom),

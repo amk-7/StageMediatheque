@@ -59,32 +59,32 @@
                 </div>
             </fieldset>
         </form>
-        <!-- Overlay element -->
-        <div id="overlay" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
-        <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
-            <div class="flex flex-col items-center space-y-4">
-                <div>
-                    <label>Etat entree</label>
-                    <select name="" id="etat_entree_ouvrage_edite">
-                        <option selected>Séléctionner etat</option>
-                        @for($i=4; $i>0; $i--)
-                            <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
-                        @endfor
-                    </select>
-                </div>
-                <div class="alert">
-                    <p id="etat_ouvrage_modif_erreur" hidden>Vous devez renseigner l'état de l'ouvrage restituer .</p>
-                </div>
-                <button id="btn_modifier" class="button button_primary">modifier</button>
+    </div>
+    <!-- Overlay element -->
+    <div style="z-index: 1000" id="overlay" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
+    <div style="z-index: 1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
+        <div class="flex flex-col items-center space-y-4">
+            <div>
+                <label>Etat entree</label>
+                <select name="" id="etat_entree_ouvrage_edite">
+                    <option selected>Séléctionner etat</option>
+                    @for($i=4; $i>0; $i--)
+                        <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
+                    @endfor
+                </select>
             </div>
+            <div class="alert">
+                <p id="etat_ouvrage_modif_erreur" hidden>Vous devez renseigner l'état de l'ouvrage restituer .</p>
+            </div>
+            <button id="btn_modifier" class="button button_primary">modifier</button>
         </div>
-        <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="erreur_msg_box">
-            <div class="flex flex-col items-center space-y-4">
-                <div class="alert">
-                    <p id="erreur_msg_value"></p>
-                </div>
-                <button id="btn_erreur_msg" class="button button_primary">Compris</button>
+    </div>
+    <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="erreur_msg_box">
+        <div class="flex flex-col items-center space-y-4">
+            <div class="alert">
+                <p id="erreur_msg_value"></p>
             </div>
+            <button id="btn_erreur_msg" class="button button_primary">Compris</button>
         </div>
     </div>
 @stop

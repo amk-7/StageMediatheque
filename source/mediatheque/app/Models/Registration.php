@@ -5,7 +5,6 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Registration extends Model
 {
@@ -41,10 +40,6 @@ class Registration extends Model
 
     public function estValide()
     {
-<<<<<<< HEAD
-        return Carbon::now()->gt($this->date_fin);
-=======
         return ! Carbon::now()->gt($this->date_fin);
->>>>>>> 15a55592647899358042f6cc594dc9ac15cc77f5
     }
 }

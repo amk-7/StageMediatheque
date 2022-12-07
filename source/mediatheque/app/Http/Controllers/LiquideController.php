@@ -21,7 +21,7 @@ class LiquideController extends Controller
     public function index()
     {
         return view('liquide.index')->with([
-                "liquides" => Liquide::all(),
+                "liquides" => Liquide::paginate(10),
             ]);
     }
 
