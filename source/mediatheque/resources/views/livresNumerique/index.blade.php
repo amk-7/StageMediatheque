@@ -53,3 +53,5 @@
 @section("livewire_scripts_content")
     @livewireScripts
 @stop
+@section('js')
+@stop

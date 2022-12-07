@@ -51,7 +51,6 @@ class OuvrageService
             ->where('type', 'like', '%'.$type.'%')
             ->whereBetween('annee_apparution', [$annee_debut, $annee_fin])
             ->get();
-        //dd($id_ouvrages);
         return self::id_ouvrage_from_array($id_ouvrages);
     }
 

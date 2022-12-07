@@ -1,12 +1,13 @@
 @extends('layout.template.base')
 @section('content')
-        <x-auth-card>
-            <x-slot name="logo">
+    <div class="flex flex-col">
+        <div class="p-12 flex flex-col items-center mr-16" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 20px; background-color: white">
+            <div name="logo">
                 <a href="{{ route('listeLivresNumerique') }}" class="flex">
                     <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                     <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                 </a>
-            </x-slot>
+            </div>
 
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -54,5 +55,6 @@
                     </button>
                 </div>
             </form>
-        </x-auth-card>
+        </div>
+    </div>
 @stop

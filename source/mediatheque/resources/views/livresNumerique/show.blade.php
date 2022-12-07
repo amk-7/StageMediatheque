@@ -3,7 +3,7 @@
 @section("particularite")
     <label>
         <span class="label_title_sub_title">Domaine :</span>
-        <span class="label_show_value">{{ \App\Helpers\LivrePapierHelper::showArray($livreNumerique->categorie, "categorie") }}</span>
+        <span class="label_show_value">{{ \App\Helpers\LivrePapierHelper::showArray($livreNumerique->categorie) }}</span>
     </label>
     <label>
         <span class="label_title_sub_title">ISBN :</span>
