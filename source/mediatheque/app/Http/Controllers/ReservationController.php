@@ -113,7 +113,7 @@ class ReservationController extends Controller
         ));
 
         $jobCancelReservation = new CancelReservationJob($reservation->id_reservation);
-        $jobCancelReservation->delay(Carbon::now()->addHour(24));
+        $jobCancelReservation->delay(Carbon::now()->addHours(24));
         $this->dispatch($jobCancelReservation);
 
         $ouvragep->decrementerNombreExemplaire();

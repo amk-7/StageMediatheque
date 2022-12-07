@@ -160,8 +160,6 @@
 
         let nom_abonne_erreur = document.getElementById('nom_abonne_erreur');
         let prenom_abonne_erreur = document.getElementById('prenom_abonne_erreur');
-        let nom_erreur = document.getElementById('nom_erreur');
-        let prenom_erreur = document.getElementById('prenom_erreur');
         let cote_erreur = document.getElementById('cote_ouvrage_erreur');
         let cote_no_trouve = document.getElementById('cote_ouvrage_not_found');
         let etat_ouvragae_erreur = document.getElementById('etat_ouvrage_erreur');
@@ -170,6 +168,19 @@
         let nombre_emprunt_erreur = document.getElementById('nombre_emprunt');
         let cote_ouvrage_exist = document.getElementById('scan_qrcode');
         let abonne_pas_abonnement = document.getElementById('abonne_pas_abonnement');
+
+        function cleanErrorMessages(){
+            nom_abonne_erreur.hidden = true;
+            prenom_abonne_erreur.hidden = true;
+            cote_erreur.hidden = true;
+            cote_no_trouve.hidden = true;
+            etat_ouvragae_erreur.hidden = true;
+            emprunts_erreur.hidden = true;
+            non_eligble_erreur.hidden = true;
+            nombre_emprunt_erreur.hidden = true;
+            cote_ouvrage_exist.hidden = true;
+            abonne_pas_abonnement.hidden = true;
+        }
 
         setLiteOptions(nom_abonnes, abonnes);
         nom_abonnes.addEventListener('change', function (e) {
@@ -222,8 +233,8 @@
         let number = 1;
 
         btn_ajouter.addEventListener('click', function addApprovisionnement() {
-            cleanErrorMessages();
             stopPropagation();
+            cleanErrorMessages();
             if(validateUser()){
                 let id_abonne = prenom_abonnes.value;
                 if (verifierSiAbonnEstRegistre(id_abonne) == "false"){
@@ -524,20 +535,11 @@
             qrsacn.hidden = false;
         }
 
-        function cleanErrorMessages(){
-            nom_abonne_erreur.hidden = true,
-            prenom_abonne_erreur.hidden = true,
-            nom_erreur.hidden = true,
-            prenom_erreur.hidden = true,
-            cote_erreur.hidden = true,
-            cote_no_trouve.hidden = true,
-            etat_ouvragae_erreur.hidden = true,
-            emprunts_erreur.hidden = true,
-            non_eligble_erreur.hidden = true,
-            nombre_emprunt_erreur.hidden = true,
-            cote_ouvrage_exist.hidden = true,
-            abonne_pas_abonnement.hidden = true
-        }
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader",
+            { fps: 10, qrbox: {width: 250, height: 250} },
+            /* verbose= */ false);
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
 
     </script>
 @stop

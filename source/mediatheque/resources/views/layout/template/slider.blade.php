@@ -2,7 +2,6 @@
 <div class="flex flex-col justify-center items-center" style="">
     <!-- component -->
     <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
-
     <article x-data="slider" class="absolute w-full flex flex-shrink-0 overflow-hidden" >
         <div class="rounded-full bg-gray-600 text-white absolute text-sm px-2 text-center">
             <span x-text="currentIndex"></span>
@@ -45,10 +44,10 @@
             Alpine.data('slider', () => ({
                 currentIndex: 1,
                 images: [
-                    'https://source.unsplash.com/1600x900/?cat',
-                    'https://source.unsplash.com/1600x900/?dog',
-                    'https://source.unsplash.com/1600x900/?lego',
-                    'https://source.unsplash.com/1600x900/?textures&patterns'
+                    '{!! asset('storage/images/art.png') !!}',
+                    '{!! asset('storage/images/art.png') !!}',
+                    '{!! asset('storage/images/art.png') !!}',
+                    '{!! asset('storage/images/art.png') !!}',
                 ],
                 back() {
                     if (this.currentIndex > 1) {
