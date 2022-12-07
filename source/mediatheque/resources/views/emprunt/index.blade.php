@@ -5,11 +5,11 @@
         <h1 class="label_title"> Liste des Emprunts </h1>
         @include('reservation.share_search_bar')
         <div class="space-y-2 mt-8">
-            @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
                 <div class="flex space-x-3">
                     <form method="GET" action="{{route('createEmprunt')}}">
                         <button type="Submit" class="button button_primary">Ajouter</button>
                     </form>
+                    @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
                     <form method="GET" action="{{ route('downloadExcelListeEnprunt') }}">
                         {{ \App\Service\EmpruntService::setEmpruntLIstInSession(collect($emprunts)['data']) }}
                         <button type="Submit" class="button button_primary">Export</button>

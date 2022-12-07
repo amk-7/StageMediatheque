@@ -7,7 +7,6 @@
             <span x-text="currentIndex"></span>
             <span x-text="images.length"></span>
         </div>
-
         <template x-for="(image, index) in images">
             <figure class="" style="height: 600px" x-show="currentIndex == index + 1" x-transition:enter="transition transform duration-300"
                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -44,10 +43,10 @@
             Alpine.data('slider', () => ({
                 currentIndex: 1,
                 images: [
-                    '{!! asset('storage/images/art.png') !!}',
-                    '{!! asset('storage/images/art.png') !!}',
-                    '{!! asset('storage/images/art.png') !!}',
-                    '{!! asset('storage/images/art.png') !!}',
+                    '{!! asset('storage/images/1.jpg') !!}',
+                    '{!! asset('storage/images/2.jpg') !!}',
+                    '{!! asset('storage/images/3.jpg') !!}',
+                    '{!! asset('storage/images/4.jpg') !!}',
                 ],
                 back() {
                     if (this.currentIndex > 1) {

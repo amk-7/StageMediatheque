@@ -19,11 +19,6 @@
                             </form>
                         </td>
                     @endif
-                    <div class="flex flex-row">
-                        <!--select wire:model="par_page" id="par_page" class="select_btn">
-                        </select>
-                        <label for="par_page">par page</label-->
-                    </div>
                 </div>
                 <table class="fieldset_border bg-white">
                     <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
@@ -63,7 +58,7 @@
                                           {{ QrCode::generate($livresPapier->ouvragesPhysique->cote) }}
                                       </div>
                                        <div>
-                                           <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->color(224, 224, 224)->backgroundColor(0, 0, 0)->size(400)->generate($livresPapier->ouvragesPhysique->cote)) }}"
+                                           <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(200)->generate($livresPapier->ouvragesPhysique->cote)) }}"
                                               download="{{ 'cote'.str_replace(' ', '_', strtolower($livresPapier->ouvragesPhysique->ouvrage->titre)).'qrcode.png' }}"
                                               class="text-center text-white bg-green-600 p-1 hover:bg-green-700 mt-2"
                                            >Imprimer
@@ -100,7 +95,7 @@
                 </table>
             </div>
         @else
-           <div class="m-6 flex flex-row" style="flex-wrap: wrap; margin-right: 5rem ">
+           <div class="m-6 flex flex-row" style="flex-wrap: wrap;">
                @foreach($livresPapiers as $livresPapier)
                    <div class="flex flex-row space-x-3">
                        <div class="">
