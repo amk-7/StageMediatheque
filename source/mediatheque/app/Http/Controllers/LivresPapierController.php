@@ -71,9 +71,7 @@ class LivresPapierController extends Controller
      */
     public function store(Request $request)
     {
-        //Verifier si les champs par défaut d'un auteur sont remplie.
-
-        //dd($request);
+        
         Validator::make($request->all(), [
             'ISBN'=>['required',
                 function ($attribute, $value, $flail){
@@ -98,12 +96,12 @@ class LivresPapierController extends Controller
             'id_classification_dewey_dizaine'=>'required|not_in:Sélectionner étagère',
         ]);
 
-        // Creation d'un ou des auteurs .
+        
         $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
-        // Creation de l'ouvrage
+        
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
-        // Création d'un ouvrage physique
+        
         $ouvragePhysique = OuvragesPhysiqueService::enregisterOuvragePhysique($request, $ouvrage);
 
         $categories_data = GlobaleService::extractLineToData($request->data_categorie);
@@ -167,7 +165,7 @@ class LivresPapierController extends Controller
      */
     public function update(Request $request, LivresPapier $livresPapier)
     {
-        //dd($request);
+        
         $request->validate([
             'titre'=> 'required',
             'niveau'=>'required|not_in:Sélectionner niveau',
@@ -239,7 +237,7 @@ class LivresPapierController extends Controller
         }
 
         Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel);
-        //dd("OK");
+        
         return redirect()->route('listeLivresPapier');
     }
 

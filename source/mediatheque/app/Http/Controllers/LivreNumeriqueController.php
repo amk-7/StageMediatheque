@@ -95,26 +95,26 @@ class LivreNumeriqueController extends Controller
             'url'=>'required',
         ]);
 
-        // Creation d'un ou des auteurs .
+        
         $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
-        // Creation de l'ouvrage
+        
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
-        // Création d'un ouvrage electronique
+        
         $ouvrageElectronique = OuvragesElectroniqueService::enregistrerOuvrageElectronique($ouvrage, $request->url);
-        //dd($ouvrageElectronique);
+        
         $categories_data = GlobaleService::extractLineToData($request->data_categorie);
         $categories = [];
         foreach ($categories_data as $categorie_array){
             array_push($categories, $categorie_array[0]);
         }
-        //dd($request["ISBN"]);
+        
         LivresNumerique::create([
             'categorie'=>$categories,
             'ISBN'=>strtoupper($request["ISBN"]),
             'id_ouvrage_electronique'=>$ouvrageElectronique->id_ouvrage_electronique,
         ]);
-        //dd(LivresNumerique::find(1));
+        
         return redirect()->route('listeLivresNumerique');
     }
 
@@ -186,7 +186,7 @@ class LivreNumeriqueController extends Controller
      */
     public function destroy(LivresNumerique $livresNumerique)
     {
-        //dd($livresNumerique);
+        
         $id_ouvrage = OuvragesElectronique::all()->where('id_ouvrage_electronique', $livresNumerique->id_ouvrage_electronique)->first()->id_ouvrage;
         OuvrageService::supprimer_ouvrage($id_ouvrage);
         return redirect()->route('listeLivresNumerique');

@@ -51,12 +51,11 @@ class AbonneController extends Controller
             $abonnes = Abonne::whereIn("id_utilisateur", $users)
                         ->whereIn("profession", $professions)
                         ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
-            //dd($abonnes);
+
         } else {
             $abonnes = Abonne::paginate($paginate);
         }
-        //$abonnes = $abonnes->paginate(1);
-        //dd($abonnes);
+
         return view('abonnes.index')->with([
                 'abonnes' => $abonnes,
                 'paye' => $request->paye,
@@ -70,12 +69,7 @@ class AbonneController extends Controller
      */
     public function create()
     {
-        //
-        /*$msg = "---";
-        if (UtilisateurHelper::verifierSiUtilisateurExist(null, null)){
-            $msg = "hello";
-        }
-        return $msg;*/
+
 
         return view('abonnes.create');
     }
@@ -139,12 +133,11 @@ class AbonneController extends Controller
             'numero_maison' => $request->numero_maison,
         );
 
-        // Vérifier si le mot de passe est egale à la confirmation du mot de passe
+
         if ($request->password != $request->confirmation_password){
             return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
         }
 
-        // Vérification des contacts.
 
         $utilisateur = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom)->first();
         if(! $utilisateur){
@@ -160,9 +153,7 @@ class AbonneController extends Controller
             ]);
         }
         $utilisateur->assignRole(Role::find(3));
-
         Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
-
         return redirect()->route('listeAbonnes');
     }
 
@@ -174,7 +165,7 @@ class AbonneController extends Controller
      */
     public function show(Abonne $abonne)
     {
-        //
+
         return view('abonnes.show')->with('abonne', $abonne);
 
     }
@@ -187,7 +178,7 @@ class AbonneController extends Controller
      */
     public function edit(Abonne $abonne)
     {
-        //
+
         return view('abonnes.edit')->with('abonne', $abonne);
     }
 
@@ -233,7 +224,7 @@ class AbonneController extends Controller
      */
     public function destroy(Abonne $abonne)
     {
-        //
+
         $abonne->delete();
         return redirect()->route('listeAbonnes');
     }
@@ -250,14 +241,9 @@ class AbonneController extends Controller
         return view('abonnes.mes_emprunt_actuelle')->with('emprunts', $emprunts);
     }
 
-    /*public function mesAbonnements(Abonne $abonne)
-    {
-        $abonnements = $abonne->abonnements()->get();
-        return view('abonnes.mes_abonnements')->with('abonnements', $abonnements);
-    }*/
-
     public function exportExcel()
     {
         return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
     }
+
 }

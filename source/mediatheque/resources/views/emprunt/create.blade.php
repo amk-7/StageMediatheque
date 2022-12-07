@@ -134,7 +134,7 @@
 @stop
 @section("js")
     <script src="https://reeteshghimire.com.np/wp-content/uploads/2021/05/html5-qrcode.min_.js"></script>
-    <!--script src="{{ url('js/html5-qrcode/html5-qrcode.min.js') }}"></script-->
+    <!--script src="{ { url('js/html5-qrcode/html5-qrcode.min.js') }}"></script-->
     <script type="text/javascript" async>
         let abonnes = {!! $abonnes !!};
         let livres_papier = {!! $livre_papier !!};
@@ -222,20 +222,7 @@
         let number = 1;
 
         btn_ajouter.addEventListener('click', function addApprovisionnement() {
-            /*cleanErrorMessages(
-                nom_abonne_erreur,
-                prenom_abonne_erreur,
-                nom_erreur,
-                prenom_erreur,
-                cote_erreur,
-                cote_no_trouve,
-                etat_ouvragae_erreur,
-                emprunts_erreur,
-                non_eligble_erreur,
-                nombre_emprunt_erreur,
-                cote_ouvrage_exist,
-                abonne_pas_abonnement
-            );*/
+            cleanErrorMessages();
             stopPropagation();
             if(validateUser()){
                 let id_abonne = prenom_abonnes.value;
@@ -398,7 +385,6 @@
             }
         }
 
-        // format table before send
         function formatTableDataBeforeSend() {
             let table_body = document.getElementById('liste_emprunt').children[1];
             let lines = table_body.children;
@@ -420,20 +406,7 @@
         }
 
         submit_btn.addEventListener('click', function (e){
-            /*cleanErrorMessages(
-                nom_abonne_erreur,
-                prenom_abonne_erreur,
-                nom_erreur,
-                prenom_erreur,
-                cote_erreur,
-                cote_no_trouve,
-                etat_ouvragae_erreur,
-                emprunts_erreur,
-                non_eligble_erreur,
-                nombre_emprunt_erreur,
-                cote_ouvrage_exist,
-                abonne_pas_abonnement
-            );*/
+            cleanErrorMessages();
             if (! validerFormulaire(e)){
                 stopPropagation();
 
@@ -537,18 +510,13 @@
             overlay.classList.add('hidden');
             qrsacn.hidden = true;
         });
-
         function onScanError(errorMessage) {
             //handle scan error
         }
-
-        var html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader", { fps: 10, qrbox: 250 });
-        html5QrcodeScanner.render(onScanSuccess, onScanError);
-
         cote_ouvrage.addEventListener('keyup', function (e) {
             rechercherTitreParCote();
         });
+
 
         function onScanSuccess(qrCodeMessage) {
             cote_ouvrage.value = qrCodeMessage;
@@ -556,6 +524,20 @@
             qrsacn.hidden = false;
         }
 
+        function cleanErrorMessages(){
+            nom_abonne_erreur.hidden = true,
+            prenom_abonne_erreur.hidden = true,
+            nom_erreur.hidden = true,
+            prenom_erreur.hidden = true,
+            cote_erreur.hidden = true,
+            cote_no_trouve.hidden = true,
+            etat_ouvragae_erreur.hidden = true,
+            emprunts_erreur.hidden = true,
+            non_eligble_erreur.hidden = true,
+            nombre_emprunt_erreur.hidden = true,
+            cote_ouvrage_exist.hidden = true,
+            abonne_pas_abonnement.hidden = true
+        }
 
     </script>
 @stop

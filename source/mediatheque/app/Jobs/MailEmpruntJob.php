@@ -30,6 +30,7 @@ class MailEmpruntJob implements ShouldQueue
         $this->data = $data;
     }
 
+
     /**
      * Execute the job.
      *
