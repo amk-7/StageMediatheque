@@ -123,6 +123,7 @@ class AbonneController extends Controller
             'prenom' => 'required',
             'nom_utilisateur' => 'required',
             'password' => 'required',
+            'confirmation_password' => 'required|same:password',
             'ville' => 'required',
             'quartier' => 'required',
             'sexe' => 'required',
@@ -137,6 +138,11 @@ class AbonneController extends Controller
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
+
+        // Vérifier si le mot de passe est egale à la confirmation du mot de passe
+        if ($request->password != $request->confirmation_password){
+            return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
+        }
 
         // Vérification des contacts.
 
@@ -153,7 +159,7 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-        dd($utilisateur);
+        //dd($utilisateur);
         $utilisateur->assignRole(Role::find(3));
 
         //Mail
@@ -257,6 +263,12 @@ class AbonneController extends Controller
         $emprunts = $abonne->getEmpruntsEnCours();
         return view('abonnes.mes_emprunt_actuelle')->with('emprunts', $emprunts);
     }
+
+    /*public function mesAbonnements(Abonne $abonne)
+    {
+        $abonnements = $abonne->abonnements()->get();
+        return view('abonnes.mes_abonnements')->with('abonnements', $abonnements);
+    }*/
 
     public function exportExcel()
     {

@@ -9,7 +9,7 @@
 <body>
     <h1>ALERT RESTITUTION</h1><br/>
     <p>
-        Cher abonné l'emprunt des ouvrages ... que vous benéficier est présque à son terme. Vous
+        Cher abonné l'emprunt des ouvrages ... dont vous benéficier est présque à son terme. Vous
         êtes prier de restituer ces ouvrages demain le ... à la médiathèque.
     </p>
 </body>
