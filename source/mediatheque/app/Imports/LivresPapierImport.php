@@ -31,6 +31,7 @@ class LivresPapierImport implements ToModel
         $indice_type = 8;
         $indice_domaine = 9;
         $indice_niveau = 10;
+        $indice_image_path = 11;
 
         $size = 11;
 
@@ -48,10 +49,10 @@ class LivresPapierImport implements ToModel
             }
         } else {
             $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
-            $auteurs = AuteurService::enregistrerAuteur(array($data_auteurs));
+            $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
 
             // Creation de l'ouvrage
-            $chemin_image = "default_book_image.png";
+            $chemin_image = $row[$indice_image_path] ?? null == null ? "default_book_image.png" : $row[$indice_image_path];
 
             $ouvrage = Ouvrage::create([
                 'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
@@ -80,7 +81,7 @@ class LivresPapierImport implements ToModel
         ]);
 
         return LivresPapier::create([
-            'categorie'=>[strtolower($row[$indice_domaine]), ""],
+            'categorie'=>array(strtolower($row[$indice_domaine]), ""),
             'ISBN'=>$row[$indice_isbn],
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
         ]);

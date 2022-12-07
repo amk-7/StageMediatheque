@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white w-full border-b border-gray-100 fixed">
+<nav x-data="{ open: false }" class="bg-white w-full border-b border-gray-100 fixed" style="z-index: 999">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -57,13 +57,6 @@
                                                     this.closest('form').submit();">
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link
-                                                 onclick="
-                                                 dashbord = document.getElementById('dashbord')
-                                                 dashbord.className = 'flex flex-shrink-0 transition-all';
-                                                 ">
-                                    {{ __('Dashboard') }}
-                                </x-dropdown-link>
                             </form>
                         </x-slot>
                     </x-dropdown>
@@ -86,8 +79,23 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         @if(Auth::guest())
             <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
+                <!--button class="button button_show">
+                    <a href="/register">{ { __("Register") }}</a>
+                </button>
+                <button class="button button_primary">
+                    <a href="/login">{ { __("") }}</a>
+                </button-->
+                <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    {{ __('Register') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('Log In') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('listeLivresNumerique')" :active="request()->routeIs('listeLivresNumerique')">
+                    {{ __('Livres numerique') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('listeLivresPapier')" :active="request()->routeIs('listeLivresPapier')">
+                    {{ __('Livres papier') }}
                 </x-responsive-nav-link>
             </div>
         @endif
@@ -98,22 +106,20 @@
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->nom }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
-
+                <x-responsive-nav-link :href="route('listeLivresNumerique')" :active="request()->routeIs('listeLivresNumerique')">
+                    {{ __('Livres numerique') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('listeLivresPapier')" :active="request()->routeIs('listeLivresPapier')">
+                    {{ __('Livres papier') }}
+                </x-responsive-nav-link>
                 <div class="mt-3 space-y-1">
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-
                         <x-responsive-nav-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
                             {{ __('Log Out') }}
-                        </x-responsive-nav-link>
-                        <x-responsive-nav-link onclick="
-                                                 dashbord = document.getElementById('dashbord')
-                                                 dashbord.className = 'flex flex-shrink-0 transition-all';
-                                                 ">
-                            {{ __('Dashboard') }}
                         </x-responsive-nav-link>
                     </form>
                 </div>

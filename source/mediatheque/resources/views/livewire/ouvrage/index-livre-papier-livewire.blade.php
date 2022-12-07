@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-center items-center m-auto">
-    <h1 class="text-3xl"> Livres papier </h1>
+    <h1 class="text-3xl mb-3"> Livres papier </h1>
     <div>
         @include('livresPapier.shareSearchBarLivrePapier')
     </div>
@@ -94,44 +94,39 @@
                     </tbody>
                     <tbody id="result" class="result_data"></tbody>
                 </table>
-                {!! $livresPapiers->links() !!}
             </div>
         @else
-           <div class="m-6 flex flex-col">
-               @for($j=0; $j<count($livresPapiers); $j += 4)
+           <div class="m-6 flex flex-row" style="flex-wrap: wrap; margin-right: 5rem ">
+               @foreach($livresPapiers as $livresPapier)
                    <div class="flex flex-row space-x-3">
-                       @for($i=$j; $i<$j+4; $i++)
-                           @if($livresPapiers[$i])
-                               <div class="">
-                                   <a href="{{route('affichageLivrePapier', $livresPapiers[$i])}}" class="card">
-                                       <div class="image">
-                                           <img src="{{ asset('storage/ouvrage_electonique/'.$livresPapiers[$i]->ouvragesPhysique->ouvrage->image) }}"
-                                                alt="{{$livresPapiers[$i]->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>
-                                       </div>
-                                       @if(Auth::user() && Auth::user()->hasRole('abonne'))
-                                           <div class="flex flex-row space-x-10">
-                                               <form method="post" action="{{route('enregistrerReservation')}}">
-                                                   @csrf
-                                                   <input type="text" name="data" value="{{ $livresPapiers[$i]->ouvragesPhysique->id_ouvrage }}" hidden="true">
-                                                   <input type="submit" class="button button_primary" name="reservation" value="reserver">
-                                               </form>
-                                               <label class="button button_delete">{{ $livresPapiers[$i]->ouvragesPhysique->nombre_exemplaire }}</label>
-                                           </div>
-                                       @endif
-                                       <div class="label">
-                                           <label>
-                                               <span>{{ \App\Helpers\OuvrageHelper::formatString(strtolower($livresPapiers[$i]->ouvragesPhysique->ouvrage->titre)) }}</span>
-                                           </label>
-                                       </div>
-                                   </a>
+                       <div class="">
+                           <a href="{{route('affichageLivrePapier', $livresPapier)}}" class="card">
+                               <div class="image">
+                                   <img src="{{ asset('storage/ouvrage_electonique/'.$livresPapier->ouvragesPhysique->ouvrage->image) }}"
+                                        alt="{{$livresPapier->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>
                                </div>
-                           @endif
-                       @endfor
+                               @if(Auth::user() && Auth::user()->hasRole('abonne'))
+                                   <div class="flex flex-row space-x-10">
+                                       <form method="post" action="{{route('enregistrerReservation')}}">
+                                           @csrf
+                                           <input type="text" name="data" value="{{ $livresPapier->ouvragesPhysique->id_ouvrage }}" hidden="true">
+                                           <input type="submit" class="button button_primary" name="reservation" value="reserver">
+                                       </form>
+                                       <label class="button button_delete">{{ $livresPapier->ouvragesPhysique->nombre_exemplaire }}</label>
+                                   </div>
+                               @endif
+                               <div class="label">
+                                   <label>
+                                       <span>{{ \App\Helpers\OuvrageHelper::formatString(strtolower($livresPapier->ouvragesPhysique->ouvrage->titre)) }}</span>
+                                   </label>
+                               </div>
+                           </a>
+                       </div>
                    </div>
-               @endfor
+               @endforeach
            </div>
-            {!! $livresPapiers->links() !!}
         @endif
+            {!! $livresPapiers->links() !!}
     @else
         <h3>Il n'y a aucun ouvrage.</h3>
     @endif

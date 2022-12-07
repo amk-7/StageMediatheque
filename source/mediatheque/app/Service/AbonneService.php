@@ -40,7 +40,7 @@ class AbonneService
                 'contact' => $p->utilisateur->contact,
                 'ville' => $p->utilisateur->adresse['ville'],
                 'quartier' => $p->utilisateur->adresse['quartier'],
-                'numéro_maison' => '',
+                'numéro_maison' => $p->utilisateur->adresse['numero_maison'],
                 'profession' => $p->profession,
                 'cntact_a_prevenir' => $p->utilisateur->cntact_a_prevenir,
                 'type_carte' => $p->type_de_carte,
@@ -65,6 +65,7 @@ class AbonneService
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
                 'estEligible'=>count($p->getEmpruntsEnCours()) == 0 ? 'true' : 'false',
+                'pas_abonnement' => "",
             );
             array_push($abonnes, $personne);
         }

@@ -84,4 +84,12 @@ class Abonne extends Model
     {
         return Restitution::all()->where('id_abonne', $this->id_abonne)->count();
     }
+
+    public function abonnementEnCours(){
+        //liste des registrations de l'obonne courant
+        //Pour chaque registration virifier si la registration est valide.
+        // Si une registration est valide alors return true;
+        // si aucune registration n'est valide alors return false;
+        return "";
+    }
 }

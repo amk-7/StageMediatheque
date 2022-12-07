@@ -51,7 +51,8 @@ Route::group(['middleware' => ['role:abonne', 'auth']], function () {
 });
 
 Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function () {
-    Route::get('liste_des_reservations', [\App\Http\Controllers\ReservationController::class, 'index'])->name('listeReservations');
+    Route::get('liste_des_reservations', 'App\Http\Controllers\ReservationController@index')->name('listeReservations');
+    Route::delete('suppression_reservation/{reservation}', 'App\Http\Controllers\ReservationController@destroy')->name('destroyReservation');
     Route::get('affiche_abonne/{abonne}', 'App\Http\Controllers\AbonneController@show')->name('showAbonne');
     Route::get('formulaire_edition_des_abonnes/{abonne}/edit', 'App\Http\Controllers\AbonneController@edit')->name('editAbonne');
     Route::put('mise_a_jour_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
@@ -78,13 +79,11 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::post('enregistrement_emprunt', 'App\Http\Controllers\EmpruntController@store')->name('storeEmprunt');
 
 // Path: Reservation routes/web.php
-    Route::get('liste_des_reservations', 'App\Http\Controllers\ReservationController@index')->name('listeReservations');
-    Route::get('affiche_reservation', 'App\Http\Controllers\ReservationController@show')->name('showReservation');
+    /*Route::get('affiche_reservation', 'App\Http\Controllers\ReservationController@show')->name('showReservation');
     Route::get('formulaire_edition_des_reservations', 'App\Http\Controllers\ReservationController@edit')->name('editReservation');
     Route::put('mise_a_jour_des_reservations', 'App\Http\Controllers\ReservationController@update')->name('updateReservation');
-    Route::delete('suppression_des_reservations', 'App\Http\Controllers\ReservationController@destroy')->name('destroyReservation');
     Route::get('formulaire_Reservation', 'App\Http\Controllers\ReservationController@create')->name('createReservation');
-    Route::post('enregistrement_reservation', 'App\Http\Controllers\ReservationController@store')->name('storeReservation');
+    Route::post('enregistrement_reservation', 'App\Http\Controllers\ReservationController@store')->name('storeReservation');*/
 
 
 // Path: TarifAbonnement routes/web.php

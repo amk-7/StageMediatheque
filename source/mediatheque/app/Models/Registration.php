@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,5 +36,10 @@ class Registration extends Model
     public function tarifAbonnement()
     {
         return $this->hasOne('App\Models\TarifAbonnement', 'id_tarif_abonnement');
+    }
+
+    public function estValide()
+    {
+        return Carbon::now()->gt($this->date_fin);
     }
 }

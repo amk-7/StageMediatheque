@@ -22,8 +22,10 @@
                             <th class="fieldset_border" >Abonné</th>
                             <th class="fieldset_border" >ouvrage</th>
                             <th class="fieldset_border" >Etat</th>
-                            <th class="fieldset_border" >Etat sorti</th>
-                            <th class="fieldset_border" >Emprunter</th>
+                            @if(Auth::user()->hasRole('bibliothecaire'))
+                                <th class="fieldset_border" >Etat sorti</th>
+                                <th class="fieldset_border" >Emprunter</th>
+                            @endif
                             <th class="fieldset_border" >Supprimer</th>
                         </tr>
                     </thead>
@@ -61,17 +63,19 @@
                                             @endif>
                                     </td>
                                 </form>
-                                <td class="fieldset_border" >
-                                    <form action="" method="post">
-                                        <input type="submit" value="Supprimer" class=
-                                            @if($reservation->etat==0)
-                                                        "button button_delete_disabled disabled:opacity-25" disabled
-                                        @else
-                                            "button button_delete"
-                                        @endif>
-                                    </form>
-                                </td>
                             @endif
+                            <td class="fieldset_border" >
+                                <form action="{{ route('destroyReservation', $reservation) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="submit" value="Supprimer" class=
+                                        @if($reservation->etat==0)
+                                                    "button button_delete_disabled disabled:opacity-25" disabled
+                                    @else
+                                        "button button_delete"
+                                    @endif>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

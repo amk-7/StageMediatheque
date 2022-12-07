@@ -210,6 +210,25 @@ class LivresPapierController extends Controller
 
     public function uploadLivresPapierStore(Request $request)
     {
+        /*$destination_path = "public/images/images_livre";
+        $path = "";
+        if ($request->file("fileList"))
+        {
+            foreach ($request->file("fileList") as $file){
+                if ($file->isReadable()){
+                    if (! in_array($file->extension(), ["xlsx", "odt"])){
+                        $file->storeAs($destination_path, $file->getClientOriginalName());
+                    } else {
+                        $destination_path = "public/fichier_excel/";
+                        $path = $file->getClientOriginalName();
+                        $file->storeAs("$destination_path", $path);
+                    }
+                }
+            }
+        } else {
+            return redirect()->route('formulaireImportExcel');
+        }*/
+
         if (! $request->url == null)
         {
             $chemin_ouvrage_excel = strtolower('livres_papier').'.'.$request->url->extension();

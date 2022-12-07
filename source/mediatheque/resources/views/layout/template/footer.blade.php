@@ -1,5 +1,5 @@
-<footer class="text-center lg:text-left bg-gray-100 text-gray-600 bg-yellow-300">
-    <div class="flex justify-center items-center lg:justify-between p-6 border-b border-gray-300">
+<footer class="text-center lg:text-left bg-gray-100 text-gray-600 bg-yellow-300 mt-16">
+    <!--div class="flex justify-center items-center lg:justify-between p-6 border-b border-gray-300">
         <div class="mr-12 hidden lg:block">
             <span>Get connected with us on social networks:</span>
         </div>
@@ -55,7 +55,7 @@
                 </svg>
             </a>
         </div>
-    </div>
+    </div-->
     <div class="mx-6 py-10 text-center md:text-left">
         <div class="grid grid-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="">

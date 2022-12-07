@@ -81,7 +81,7 @@ class LivresNumeriqueImport implements ToModel
         $categories = GlobaleService::extractLineToData($row[$indice_domaine])[0];
 
         return LivresNumerique::create([
-            'categorie'=>$categories,
+            'categorie'=> array(strtolower($row[$indice_domaine]), ""),
             'ISBN'=>strtoupper($row[$indice_isbn]),
             'id_ouvrage_electronique'=>$ouvrageElectronique->id_ouvrage_electronique,
         ]);

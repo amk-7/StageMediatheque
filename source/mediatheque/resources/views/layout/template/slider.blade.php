@@ -3,21 +3,22 @@
     <!-- component -->
     <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
 
-    <article x-data="slider" class="absolute w-full flex flex-shrink-0 overflow-hidden shadow-2xl">
-        <div class="rounded-full bg-gray-600 text-white absolute top-0 right-5 text-sm px-2 text-center">
-            <span x-text="currentIndex"></span>/
+    <article x-data="slider" class="absolute w-full flex flex-shrink-0 overflow-hidden" >
+        <div class="rounded-full bg-gray-600 text-white absolute text-sm px-2 text-center">
+            <span x-text="currentIndex"></span>
             <span x-text="images.length"></span>
         </div>
 
         <template x-for="(image, index) in images">
-            <figure class="h-96" x-show="currentIndex == index + 1" x-transition:enter="transition transform duration-300"
+            <figure class="" style="height: 600px" x-show="currentIndex == index + 1" x-transition:enter="transition transform duration-300"
                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                     x-transition:leave="transition transform duration-300" x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0">
                 <img :src="image" alt="Image" class="absolute inset-0 z-10 h-full w-full object-cover opacity-70" />
-                <figcaption class="absolute inset-x-0 bottom-1 z-20 w-96 mx-auto p-4 font-light text-sm text-center tracking-widest leading-snug bg-gray-300 bg-opacity-25">
-                    Any kind of content here!
-                    Primum in nostrane potestate est, quid meminerimus? Nulla erit controversia. Vestri haec verecundius, illi fortasse constantius.
+                <figcaption class="absolute inset-x-0 bottom-1 z-20 mx-auto p-4 font-light text-sm text-center tracking-widest leading-snug bg-gray-300 bg-opacity-25">
+                     <!--Any kind of content here!
+                    Primum in nostrane potestate est, quid meminerimus? Nulla erit controversia. Vestri haec verecundius, illi fortasse constantius.-->
+
                 </figcaption>
             </figure>
         </template>
@@ -44,7 +45,7 @@
             Alpine.data('slider', () => ({
                 currentIndex: 1,
                 images: [
-                    'https://source.unsplash.com/1600x900/?beach',
+                    {!! asset('storage/images/logo.png') !!},
                     'https://source.unsplash.com/1600x900/?cat',
                     'https://source.unsplash.com/1600x900/?dog',
                     'https://source.unsplash.com/1600x900/?lego',

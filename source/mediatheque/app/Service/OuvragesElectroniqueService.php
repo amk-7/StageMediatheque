@@ -44,7 +44,6 @@ class OuvragesElectroniqueService
                                     ->select('id_ouvrage_electronique')
                                     ->whereIn('id_ouvrage', $id_ouvrages)
                                     ->get();
-
         return self::id_ouvrage_elevtronique_from_array($ouvrages_electonique);
     }
 

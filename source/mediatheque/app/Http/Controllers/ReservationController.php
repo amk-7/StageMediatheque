@@ -161,10 +161,12 @@ class ReservationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Reservation  $reservation
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Reservation $reservation)
     {
-        //
+        $reservation->ouvragePhysique->augmenterNombreExemplaire(1);
+        $reservation->delete();
+        return redirect()->route('listeReservations');
     }
 }

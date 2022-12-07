@@ -22,7 +22,6 @@
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
     <!-- nav bar -->
     @include('layout.template.navigation')
-    @yield('slider')
     <div class="flex h-screen antialiased text-gray-900 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
         <div
@@ -32,12 +31,13 @@
             Chargement.....
         </div>
         <!-- Sidebar -->
-            <div class="flex flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord">
+            <div class="flex flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" style="z-index: 1000">
                 @if(Auth::user())
                     @include('side_bar.side_bar')
                 @endif
             </div>
             <main id="main" class="flex items-center justify-center flex-1 px-4 py-8 mt-16 ml-16">
+                @yield('slider')
                 <!-- Content -->
                 @yield('content')
             </main>
@@ -90,6 +90,5 @@
 @yield("livewire_scripts_content")
 @yield("js")
 @yield("footer")
-
 </body>
 </html>

@@ -7,18 +7,17 @@
             </button>
         </div>
     </div>
-    <div class="" id="searchParametersField">
-        <p>Paramètres de recherche</p>
-        <div class="flex flex-row space-x-3">
+    <div class="flex flex-col" id="searchParametersField">
+        <p class="m-3 text-2xl">Paramètres de recherche</p>
+        <div class="flex flex-row space-x-3" >
             <div>
-                <select wire:model="annee_debut" name="annee_parution_debut" class="select_btn">
+                <select wire:model="annee_debut" name="annee_parution_debut" class="select_btn mb-3">
                     <option value="">Toute annees </option>
                     @for($a=date('Y'); $a >= $annees; $a--)
                         <option value="{{ $a }}"> {{ $a }} </option>
                     @endfor
                 </select>
-                <label>-</label>
-                <select wire:model="annee_fin" name="annee_parution_fin" class="select_btn">
+                <select wire:model="annee_fin" name="annee_parution_fin" class="select_btn mb-3">
                     <option value="">Toute annees</option>
                     @for($a=date('Y'); $a >= $annees; $a--)
                         <option value="{{ $a }}"> {{ $a }} </option>
@@ -26,13 +25,13 @@
                 </select>
             </div>
             <div>
-                <select wire:model="langue" name="langue" class="select_btn">
+                <select wire:model="langue" name="langue" class="select_btn mb-3">
                     <option value="">Toute langues</option>
                     @foreach($langues as $langue)
                         <option value="{{ $langue }}"> {{ $langue }} </option>
                     @endforeach
                 </select>
-                <select wire:model="type" name="type" class="select_btn">
+                <select wire:model="type" name="type" class="select_btn mb-3">
                     <option value="">Tous types</option>
                     @foreach($types as $type)
                         <option value="{{ $type }}"> {{ $type }} </option>
@@ -40,13 +39,13 @@
                 </select>
             </div>
             <div>
-                <select wire:model="categorie" name="domaine" class="select_btn">
+                <select wire:model="categorie" name="domaine" class="select_btn mb-3">
                     <option value="">Tous domaines</option>
                     @foreach($categories as $categorie)
                         <option value="{{ $categorie }}"> {{ $categorie }} </option>
                     @endforeach
                 </select>
-                <select wire:model="niveau" name="niveau" class="select_btn">
+                <select wire:model="niveau" name="niveau" class="select_btn mb-3">
                     <option value="">Tous niveaus</option>
                     @foreach($niveaus as $niveau)
                         <option value="{{ $niveau }}"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($niveau)}} </option>
