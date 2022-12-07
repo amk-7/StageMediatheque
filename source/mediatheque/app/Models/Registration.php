@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Registration extends Model
 {
@@ -20,7 +21,7 @@ class Registration extends Model
 
     public function tmoney()
     {
-        return $$this->hasOne('App\Models\Tmoney', 'id_tmoney');
+        return $this->hasOne('App\Models\Tmoney', 'id_tmoney');
     }
 
     public function liquide()
@@ -30,7 +31,7 @@ class Registration extends Model
 
     public function abonne()
     {
-        return $this->hasOne('App\Models\Abonne', 'id_abonne');
+        return $this->belongsTo('App\Models\Abonne', 'id_abonne');
     }
 
     public function tarifAbonnement()
@@ -40,6 +41,10 @@ class Registration extends Model
 
     public function estValide()
     {
+<<<<<<< HEAD
         return Carbon::now()->gt($this->date_fin);
+=======
+        return ! Carbon::now()->gt($this->date_fin);
+>>>>>>> 15a55592647899358042f6cc594dc9ac15cc77f5
     }
 }

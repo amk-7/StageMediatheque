@@ -49,20 +49,27 @@
                         <input type="text" id="email" value="{{old('email')}}" name="email" class="input">
                     </div>
                     <div>
-                        <label class="label" for="contact">Contact</label>
-                        <input type="tel" id="contact" value="{{old('contact')}}" name="contact" class="input @error('contact') is-invalid @enderror">
-                        @error('contact')
-                        <div class="alert">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div>
                         <label class="label" for="password">Mot de passe</label>
                         <input type="password" id="password" value="{{old('password')}}" name="password" class="input @error('password') is-invalid @enderror">
                         @error('password')
                         <div class="alert">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div>
+                        <label class="label" for="confirmation_password">Confirmation du mot de passe</label>
+                        <input type="password" id="confirmation_password" value="{{old('confirmation_password')}}" name="confirmation_password" class="input @error('confirmation_password') is-invalid @enderror">
+                        @error('confirmation_password')
+                        <div class="alert">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
+            </div>
+            <div>
+                <label class="label" for="contact">Contact</label>
+                <input type="tel" id="contact" value="{{old('contact')}}" name="contact" class="input @error('contact') is-invalid @enderror">
+                @error('contact')
+                <div class="alert">{{ $message }}</div>
+                @enderror
             </div>
             <div>
                 <label class="label" for="adresse">Adresse : </label>

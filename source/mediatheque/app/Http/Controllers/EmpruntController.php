@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AlertMessage;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Jobs\MailEmpruntJob;
+use Carbon\Carbon;
 
 class EmpruntController extends Controller
 {
@@ -137,11 +139,20 @@ class EmpruntController extends Controller
             'duree_emprunt' => $duree_emprunt,
         );
 
+        $jobMailEmprunt = new MailEmpruntJob($emprunt->id_emprunt);
+        //dd($jobMailEmprunt);
+        $jobMailEmprunt->delay($emprunt->date_retour->subSeconds(12506400));
+        Mail::to($email)->queue(new AlertMessage($data));
+        //dd($jobMailEmprunt);
+        $this->dispatch($jobMailEmprunt);
+
+        
+
         //dd($data);
 
         //Mail::to($email)->queue(new AlertMessage($data));
 
-        Mail::to($email)->send(new AlertMessage($data));
+        //Mail::to($email)->send(new AlertMessage($data));
         /*Mail::send('mails.alertMessage', $data, function($message) use ($email) {
             $message->to($email, 'Alerte')->subject
             ('Alerte de date de retour');
@@ -154,6 +165,8 @@ class EmpruntController extends Controller
             ('Notification de date de retour');
             $message->from('a', 'Bibliothèque');
         });*/
+
+
 
         return redirect()->route("listeEmprunts");
     }

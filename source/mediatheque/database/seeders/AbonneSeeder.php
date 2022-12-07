@@ -23,7 +23,8 @@ class AbonneSeeder extends Seeder
             'prenom' => strtolower('Midorima'),
             'nom_utilisateur' => 'Daiki5',
             'email' => 'Alhassan.blog@gmail.com',
-            'password' => Hash::make('moprte789654'),
+            'password' => Hash::make('daiki3354'),
+            'confirmation_password' => Hash::make('daiki3354'),
             'contact' => '91817907',
             'photo_profil' => 'profil.png',
             'adresse' => array(
@@ -49,6 +50,7 @@ class AbonneSeeder extends Seeder
             'nom_utilisateur' => 'Haf',
             'email' => 'hafiz@gmail.com',
             'password' => Hash::make('123456789'),
+            'confirmation_password' => Hash::make('123456789'),
             'contact' => '90229029',
             'photo_profil' => 'profil.png',
             'adresse' => array(
@@ -74,6 +76,7 @@ class AbonneSeeder extends Seeder
             'nom_utilisateur' => 'James',
             'email' => 'Daniel@gmail.com',
             'password' => Hash::make('123456789'),
+            'confirmation_password' => Hash::make('123456789'),
             'contact' => '91919191',
             'photo_profil' => 'profil.png',
             'adresse' => array(

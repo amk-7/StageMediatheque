@@ -30,6 +30,9 @@
                     <p id="abonne_pas_abonnement" hidden>L'abonné n'a pas payer un abonnement</p>
                 </div>
                 <div class="alert">
+                    <p id="abonne_pas_abonnement" hidden>L'abonné n'a pas d'abonnement en cours</p>
+                </div>
+                <div class="alert">
                     <p id="nombre_emprunt" hidden>Vous avez atteint le nombre maximum d'emprunt</p>
                 </div>
             </fieldset>
@@ -214,14 +217,42 @@
         let number = 1;
 
         btn_ajouter.addEventListener('click', function addApprovisionnement(e) {
+            cleanErrorMessages(
+                nom_abonne_erreur,
+                prenom_abonne_erreur,
+                nom_erreur,
+                prenom_erreur,
+                cote_erreur,
+                cote_no_trouve,
+                etat_ouvragae_erreur,
+                emprunts_erreur,
+                non_eligble_erreur,
+                nombre_emprunt_erreur,
+                cote_ouvrage_exist,
+                abonne_pas_abonnement
+            );
             stopPropagation();
             if(validateUser()){
                 let id_abonne = prenom_abonnes.value;
+                if (verifierSiAbonnEstRegistre(id_abonne) == "false"){
+                    dd("abonne pas abonnement");
+                    abonne_pas_abonnement.hidden = false;
+                    return;
+                }
                 if(verfierSiAbonneEstEligible(id_abonne)=="false"){
                     non_eligble_erreur.hidden = false;
                     return;
                 }
+                
             }
+<<<<<<< HEAD
+=======
+            /*if(verifierNombreMaxEmprunt(prenom_abonnes.value)){
+                    nombre_emprunt_erreur.hidden = false;
+                    stopPropagation();
+                    return;
+                }*/
+>>>>>>> 15a55592647899358042f6cc594dc9ac15cc77f5
             abonne_pas_abonnement.hidden = true;
             non_eligble_erreur.hidden = true;
 
@@ -393,6 +424,20 @@
         }
 
         submit_btn.addEventListener('click', function (e){
+            cleanErrorMessages(
+                nom_abonne_erreur,
+                prenom_abonne_erreur,
+                nom_erreur,
+                prenom_erreur,
+                cote_erreur,
+                cote_no_trouve,
+                etat_ouvragae_erreur,
+                emprunts_erreur,
+                non_eligble_erreur,
+                nombre_emprunt_erreur,
+                cote_ouvrage_exist,
+                abonne_pas_abonnement
+            );
             if (! validerFormulaire(e)){
                 stopPropagation();
 
@@ -450,6 +495,19 @@
                 if(abonnes[i]['id'] == id_abonne)
                 {
                     return abonnes[i]['estEligible'];
+                }
+            }
+        }
+        //Verifier si l'abonné à un abonnement 
+
+        function verifierSiAbonnEstRegistre(id_abonne)
+        {
+            //dd('verifierSiAbonnEstRegistre');
+            for(let i = 0; i < abonnes.length; i++)
+            {
+                if(abonnes[i]['id'] == id_abonne)
+                {
+                    return abonnes[i]['pas_abonnement'];
                 }
             }
         }
