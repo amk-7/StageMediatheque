@@ -48,7 +48,7 @@ class ApprovisionnementsController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        
         $request->validate([
             'data'=>'required',
         ]);
@@ -92,7 +92,7 @@ class ApprovisionnementsController extends Controller
      */
     public function update(Request $request, Approvisionnement $approvisionnement)
     {
-        //
+        
         $approvisionnement->update(array([
             'nombre_exemplaire' => $request['nombre_exemplaire'],
             'date_approvisionnement' => $request['date_approvisionnement']
@@ -109,7 +109,7 @@ class ApprovisionnementsController extends Controller
      */
     public function destroy(Approvisionnement $approvisionnement)
     {
-        //
+        
         $approvisionnement->delete();
         return redirect()->route('approvisionnements.index');
 

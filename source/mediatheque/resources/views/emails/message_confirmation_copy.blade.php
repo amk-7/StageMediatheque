@@ -140,7 +140,8 @@
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
               <center><h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Mail de confirmation d'adresse  </h1></center>
-               
+               {{ dd($abonne->nom) }}
+
             </td>
           </tr>
         </table>
@@ -166,9 +167,7 @@
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <center><p style="margin: 5;"><br/>
-              <h2>Cher abonne {{ $abonne->nom}} {{ $abonne->prenom }}<h2>
-              <h2>Votre compte a bien été créé avec succès </h2></p></center>
+              <center><p style="margin: 5;"><br/><h2>Votre compte a bien été créé avec succès </h2></p></center>
             </td>
           </tr>
           <!-- end copy -->

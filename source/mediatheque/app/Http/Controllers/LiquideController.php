@@ -46,7 +46,7 @@ class LiquideController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        
         $request->validate([
             "nom_abonnes" => "required",
             "prenom_abonnes" => "required",
@@ -103,7 +103,7 @@ class LiquideController extends Controller
      */
     public function update(Request $request, Liquide $liquide)
     {
-        //dd($request);
+        
         $request->validate([
             "nom_personnes" => "required",
             "prenom_personnes" => "required",

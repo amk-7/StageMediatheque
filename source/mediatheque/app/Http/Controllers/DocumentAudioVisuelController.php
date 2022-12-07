@@ -79,24 +79,24 @@ class DocumentAudioVisuelController extends Controller
 
         ]);
 
-        // Creation d'un ou des auteurs .
+        
         $auteurs = AuteurHelpers::enregistrerAuteur($request);
-        // Creation de l'ouvrage
+        
         $ouvrage = OuvrageHelper::enregisterOuvrage($request, $auteurs);
-        // Création d'un ouvrage physique
+        
         $ouvragePhysique = OuvragesPhysiqueHelper::enregisterOuvragePhysique($request, $ouvrage);
-        //dd($ouvragePhysique);
+        
         $list_genre = OuvrageHelper::convertDataToArray($request, "genre");
-        //dd($list_genre);
+       
         $genres = OuvrageHelper::convertObjetToArray($list_genre, "genre");
-        //dd($genres);
+        
 
         $documentAudioVisuel = DocumentsAudioVisuel::create([
             'genre' => $genres,
             'ISAN' => $request->ISAN
         ]);
 
-        //-- verifier si l'objet n'exist pas --
+        
 
         return redirect()->route("documentAudioVisuel.index");
     }
@@ -120,7 +120,7 @@ class DocumentAudioVisuelController extends Controller
      */
     public function edit(DocumentsAudioVisuel $documentAudioVisuel)
     {
-        //
+        
         return view('documentAudioVisuel.edit')->with('documentAudioVisuel', $documentAudioVisuel);
 
         return view("documentAudioVisuel.edite", compact("documentAudioVisuel"));
@@ -137,7 +137,7 @@ class DocumentAudioVisuelController extends Controller
     public function update(Request $request, DocumentsAudioVisuel $documentAudioVisuel)
     {
 
-        //
+        
         $documentAudioVisuel->update(array([
             'genre' => $request['genre'],
             'ISAN' => $request['ISAN']

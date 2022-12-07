@@ -51,12 +51,11 @@ class AbonneController extends Controller
             $abonnes = Abonne::whereIn("id_utilisateur", $users)
                         ->whereIn("profession", $professions)
                         ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
-            //dd($abonnes);
+            
         } else {
             $abonnes = Abonne::paginate($paginate);
         }
-        //$abonnes = $abonnes->paginate(1);
-        //dd($abonnes);
+        
         return view('abonnes.index')->with([
                 'abonnes' => $abonnes,
                 'paye' => $request->paye,
@@ -70,12 +69,7 @@ class AbonneController extends Controller
      */
     public function create()
     {
-        //
-        /*$msg = "---";
-        if (UtilisateurHelper::verifierSiUtilisateurExist(null, null)){
-            $msg = "hello";
-        }
-        return $msg;*/
+        
 
         return view('abonnes.create');
     }
@@ -88,15 +82,7 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
-        /*Validator::make($request->all(), [
-            'numero_carte'=>['required',
-                function ($attribute, $value, $flail){
-                    if (! GlobaleService::verifieCart($value)){
-                        $flail("Ce numéro de carte est invalide");
-                    }
-                }
-            ],
-        ])->validate();*/
+        
 
         Validator::make($request->all(), [
             'contact'=>['required',
@@ -122,7 +108,7 @@ class AbonneController extends Controller
             'nom' => 'required',
             'prenom' => 'required',
             'nom_utilisateur' => 'required',
-            'password' => 'required',
+            'password' => 'required | min:5',
             'confirmation_password' => 'required|same:password',
             'ville' => 'required',
             'quartier' => 'required',
@@ -139,12 +125,11 @@ class AbonneController extends Controller
             'numero_maison' => $request->numero_maison,
         );
 
-        // Vérifier si le mot de passe est egale à la confirmation du mot de passe
+        
         if ($request->password != $request->confirmation_password){
             return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
         }
 
-        // Vérification des contacts.
 
         $utilisateur = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom)->first();
         if(! $utilisateur){
@@ -159,11 +144,13 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-        //dd($utilisateur);
+        
         $utilisateur->assignRole(Role::find(3));
 
-        //Mail
-        Mail::to($utilisateur->email)->queue(new MailInscription($utilisateur));
+        
+        //Mail::to($utilisateur->email)->queue(new MailInscription($utilisateur));
+
+        Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
 
 
         return redirect()->route('listeAbonnes');
@@ -177,7 +164,7 @@ class AbonneController extends Controller
      */
     public function show(Abonne $abonne)
     {
-        //
+        
         return view('abonnes.show')->with('abonne', $abonne);
 
     }
@@ -190,7 +177,7 @@ class AbonneController extends Controller
      */
     public function edit(Abonne $abonne)
     {
-        //
+        
         return view('abonnes.edit')->with('abonne', $abonne);
     }
 
@@ -203,17 +190,7 @@ class AbonneController extends Controller
      */
     public function update(Request $request, Abonne $abonne)
     {
-        //
-
-        //dd($request);
-        /*$abonne->update(array([
-            'date_naissance' => $request["date_naissance"],
-            'niveau_etude' => $request["niveau_etude"],
-            'profession' => $request["profession"],
-            'contact_a_prevenir' => $request["contact_a_prevenir"],
-            'numero_carte' => $request["numero_carte"],
-            'type_de_carte' => $request["type_de_carte"]
-        ]));*/
+        
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
@@ -247,7 +224,7 @@ class AbonneController extends Controller
      */
     public function destroy(Abonne $abonne)
     {
-        //
+        
         $abonne->delete();
         return redirect()->route('listeAbonnes');
     }
@@ -264,14 +241,9 @@ class AbonneController extends Controller
         return view('abonnes.mes_emprunt_actuelle')->with('emprunts', $emprunts);
     }
 
-    /*public function mesAbonnements(Abonne $abonne)
-    {
-        $abonnements = $abonne->abonnements()->get();
-        return view('abonnes.mes_abonnements')->with('abonnements', $abonnements);
-    }*/
-
     public function exportExcel()
     {
         return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
     }
+    
 }
