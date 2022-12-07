@@ -46,6 +46,7 @@ class IndexLivreNumeriqueLivewire extends Component
     public function searchByAll()
     {
         if (! empty($this->search)){
+            dd("------");
             $this->id_livre_numerique = LivresNumeriqueService::searchByTitreMotCleISBN($this->search);
         }else{
             $this->searchByParameters();

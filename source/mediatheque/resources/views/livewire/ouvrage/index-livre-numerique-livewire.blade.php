@@ -71,28 +71,22 @@
                 {!! $livresNumeriques->links() !!}
             </div>
         @else
-            <div class="m-6 flex flex-col">
-                @for($j=0; $j<count($livresNumeriques); $j += 4)
-                    <div class="flex flex-row space-x-3">
-                        @for($i=$j; $i<$j+4; $i++)
-                            @if($livresNumeriques[$i])
-                                <div class="card">
-                                    <a href="{{route('affichageLivreNumerique', $livresNumeriques[$i])}}" class="">
-                                        <div class="image">
-                                            <img src="{{ asset('storage/ouvrage_electonique/'.$livresNumeriques[$i]->ouvragesElectronique->ouvrage->image) }}"
-                                                 alt="{{$livresNumeriques[$i]->ouvragesElectronique->ouvrage->image}}" class="border border-solid"/>
-                                        </div>
-                                        <div class="label">
-                                            <label>
-                                                <span>{{ \App\Helpers\OuvrageHelper::formatString(strtolower($livresNumeriques[$i]->ouvragesElectronique->ouvrage->titre)) }}</span>
-                                            </label>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endif
-                        @endfor
+            <div id="id_table_liste" class="m-6 flex flex-row" style="flex-wrap: wrap; margin-right: 5rem ">
+                @foreach($livresNumeriques as $livresNumerique)
+                    <div class="card">
+                        <a href="{{route('affichageLivreNumerique', $livresNumerique)}}" class="">
+                            <div class="image">
+                                <img src="{{ asset('storage/ouvrage_electonique/'.$livresNumerique->ouvragesElectronique->ouvrage->image) }}"
+                                     alt="{{$livresNumerique->ouvragesElectronique->ouvrage->image}}" class="border border-solid"/>
+                            </div>
+                            <div class="label">
+                                <label>
+                                    <span>{{ \App\Helpers\OuvrageHelper::formatString(strtolower($livresNumerique->ouvragesElectronique->ouvrage->titre)) }}</span>
+                                </label>
+                            </div>
+                        </a>
                     </div>
-                @endfor
+                @endforeach
             </div>
             {!! $livresNumeriques->links() !!}
         @endif

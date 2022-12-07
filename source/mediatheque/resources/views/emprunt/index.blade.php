@@ -3,18 +3,8 @@
 @section('content')
     <div class="flex flex-col justify-center items-center">
         <h1 class="label_title"> Liste des Emprunts </h1>
-        <form>
-            <nav class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <!--select name="search">
-                    <option>Selectionner</option>
-                    <option value="">Terminé</option>
-
-                </select-->
-                <input type="text" name="element" placeholder="Nom">
-                <button class="button button_primary" type="submit">Rechercher</button>
-            </nav>
-        </form>
-        <div class="space-y-2">
+        @include('reservation.share_search_bar')
+        <div class="space-y-2 mt-8">
             @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
                 <div class="flex space-x-3">
                     <form method="GET" action="{{route('createEmprunt')}}">
@@ -97,8 +87,49 @@
             @endif
         </div>
     </div>
-    <!--script type='text/js' async>
-
-    </script-->
 @endsection
+@section('js')
+    <script type="text/javascript">
+        let abonnes = {!! $abonnes !!};
+
+        let nom_abonnes = document.getElementById('nom_abonnes');
+        let prenom_abonnes = document.getElementById('prenom_abonnes');
+
+        setLiteOptions(nom_abonnes, abonnes);
+        nom_abonnes.addEventListener('change', function (e) {
+            mettreListePrenomParNom(prenom_abonnes, nom_abonnes.value, abonnes);
+        });
+
+        function stopPropagation() {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        function setLiteOptions(elt, liste) {
+            for (let i = 0; i < liste.length; i++) {
+                let option = document.createElement('option');
+                option.value = liste[i]['nom'];
+                option.innerText = option.value;
+                elt.appendChild(option);
+            }
+        }
+
+        function mettreListePrenomParNom(balise, elt, liste) {
+            while (balise.firstChild) {
+                balise.removeChild(balise.firstChild);
+            }
+            let option = document.createElement('option');
+            option.innerText = "Séléctionner prénom";
+            balise.appendChild(option);
+            for (let i = 0; i < liste.length; i++) {
+                if (elt === liste[i]['nom']) {
+                    let option = document.createElement('option');
+                    option.value = liste[i]['id'];
+                    option.innerText = liste[i]['prenom'];
+                    balise.appendChild(option);
+                }
+            }
+        }
+    </script>
+@stop
 

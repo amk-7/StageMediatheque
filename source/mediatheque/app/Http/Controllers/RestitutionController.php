@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Emprunt;
 use App\Models\Restitution;
+use App\Service\AbonneService;
 use App\Service\GlobaleService;
 use App\Service\LignesEmprunt;
 use App\Service\LignesEmpruntService;
@@ -26,6 +27,7 @@ class RestitutionController extends Controller
             'restitutions' => $restitution,
             'etat' => $request->etat,
             'search_by' => $request->search_by,
+            'abonnes' => json_encode(AbonneService::getAbonnesWithAllAttribut()),
         ]);
     }
 

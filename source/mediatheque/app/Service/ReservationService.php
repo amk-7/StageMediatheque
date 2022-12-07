@@ -9,8 +9,12 @@ class ReservationService
 {
     public static function reservationExpirer(Reservation $reservation)
     {
+        if ($reservation->etat == 0){
+            return 0;
+        }
         $dateExpiration = $reservation->date_reservation->addHour(24);
-        $durreRestante = $dateExpiration->diffInHours(Carbon::now());
+        //dump($reservation->date_reservation);
+        $durreRestante = $dateExpiration->diffInMinutes(Carbon::now());
         return $durreRestante;
     }
 

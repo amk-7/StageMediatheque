@@ -27,6 +27,7 @@
                 </div>
                 <div class="alert">
                     <p id="abonne_non_eligible" hidden>L'abonné a déjà des emprunts en cours</p>
+                    <p id="abonne_pas_abonnement" hidden>L'abonné n'a pas payer un abonnement</p>
                 </div>
                 <div class="alert">
                     <p id="abonne_pas_abonnement" hidden>L'abonné n'a pas d'abonnement en cours</p>
@@ -132,7 +133,6 @@
     <script src="https://reeteshghimire.com.np/wp-content/uploads/2021/05/html5-qrcode.min_.js"></script>
     <!--script src="{{ url('js/html5-qrcode/html5-qrcode.min.js') }}"></script-->
     <script type="text/javascript" async>
-
         let abonnes = {!! $abonnes !!};
         let livres_papier = {!! $livre_papier !!};
         let doc_av = {!! $document_audio_visuel !!};
@@ -245,11 +245,14 @@
                 }
                 
             }
+<<<<<<< HEAD
+=======
             /*if(verifierNombreMaxEmprunt(prenom_abonnes.value)){
                     nombre_emprunt_erreur.hidden = false;
                     stopPropagation();
                     return;
                 }*/
+>>>>>>> 15a55592647899358042f6cc594dc9ac15cc77f5
             abonne_pas_abonnement.hidden = true;
             non_eligble_erreur.hidden = true;
 
@@ -549,28 +552,29 @@
             overlay.classList.add('hidden');
         });
 
-        function onScanSuccess(qrCodeMessage) {
-            cote_ouvrage.value = qrCodeMessage;
-            rechercherTitreParCote();
-        }
-
-        setTimeout( () => {
+        /*setTimeout( () => {
             let html5QrcodeScanner = new Html5QrcodeScanner(
                 "reader", { fps: 10, qrbox: 250 });
             html5QrcodeScanner.render(onScanSuccess);
-        }, 1000)
+        }, 1000)*/
 
-        /*function onScanError(errorMessage) {
+        function onScanError(errorMessage) {
             //handle scan error
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "reader", { fps: 10, qrbox: 250 });
-        html5QrcodeScanner.render(onScanSuccess, onScanError);*/
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
 
         cote_ouvrage.addEventListener('keyup', function (e) {
             rechercherTitreParCote();
         });
+
+        function onScanSuccess(qrCodeMessage) {
+            cote_ouvrage.value = qrCodeMessage;
+            rechercherTitreParCote();
+        }
+
 
     </script>
 @stop

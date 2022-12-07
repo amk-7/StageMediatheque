@@ -10,7 +10,7 @@
                 <input type="file" name="url" />
             </div-->
             <div>
-                <label>Fichier </label>
+                <label>Fichiers </label>
                 <input type="file" id="filepicker" name="fileList[]" webkitdirectory = "true" multiple />
                 <ul id="listing"></ul>
             </div>
