@@ -21,7 +21,7 @@ class CreateOuvragesTable extends Migration
             $table->integer('annee_apparution');
             $table->string('lieu_edition');
             $table->enum('niveau', ['1', '2', '3', 'université']);
-            $table->enum('type', ['roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle']);
+            $table->enum('type', ['droit', 'comptabilité', 'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle']);
             $table->string('image')->nullable();
             $table->string('langue')->nullable();
             $table->timestamps();

@@ -60,10 +60,10 @@
                             </td>
                             @if(Auth::user()->hasRole('responsable'))
                                 <td class="fieldset_border">
-                                    <form action="{{ route('suppressionLivreNumerique', $livresNumerique) }}" method="post">
+                                    <form action="" method="">
                                         @csrf
                                         @method('delete')
-                                        <input type="submit" name="supprimer" value="Supprimer" class="button button_delete">
+                                        <input type="submit" onclick="activeModal({{$livresNumerique->id_livre_numerique}})" name="supprimer" value="Supprimer" class="button button_delete">
                                     </form>
                                 </td>
                             @endif

@@ -31,10 +31,10 @@
 
         <!-- Logo -->
         <a href="#">
-            <a href="/liste_livres_papier">
+            <a href="/">
                 <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
             </a>
-            <a href="/liste_livres_papier">
+            <a href="/">
                 <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
             </a>
         </a>
@@ -48,7 +48,7 @@
         <!-- Logo -->
         <div class="flex-shrink-0 py-4">
             <a href="#">
-                <a href="/liste_livres_papier">
+                <a href="/">
                     <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                 </a>
             </a>
@@ -88,10 +88,10 @@
         <nav x-show="currentSidebarTab == 'linksTab'" aria-label="Main" class="flex flex-col h-full">
             <!-- Logo -->
             <div class="flex items-center justify-center flex-shrink-0 py-10">
-                <a href="/liste_livres_papier">
+                <a href="/">
                     <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                 </a>
-                <a href="/liste_livres_papier">
+                <a href="/">
                     <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                 </a>
             </div>
@@ -99,7 +99,7 @@
             <div class="flex-1 px-4 space-y-2 overflow-hidden hover:overflow-auto">
                <ul>
                    <li>
-                       <a href="/liste_livres_papier" class="flex items-center w-full space-x-2 text-white bg-green-600 rounded-lg">
+                       <a href="/" class="flex items-center w-full space-x-2 text-white bg-green-600 rounded-lg">
                   <span aria-hidden="true" class="p-2 bg-green-700 rounded-lg">
                     <svg
                         class="w-6 h-6"

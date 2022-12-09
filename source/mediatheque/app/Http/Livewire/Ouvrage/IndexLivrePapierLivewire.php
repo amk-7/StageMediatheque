@@ -27,7 +27,7 @@ class IndexLivrePapierLivewire extends Component
     public $type ;
     public $categorie ;
     public $niveau ;
-    public $par_page=20;
+    public $par_page=27;
 
     public function searchByParameters()
     {
@@ -43,7 +43,6 @@ class IndexLivrePapierLivewire extends Component
             $this->categorie
         );
     }
-
     public function searchByAll()
     {
         //dd("search...");

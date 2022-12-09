@@ -42,7 +42,6 @@ class LivresPapierImport implements ToModel
         $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee])) ;
         if ($ouvrage)
         {
-            $ouvrageElec = OuvrageService::ouvrageNumeriqeExist($ouvrage);
             $ouvragePhys = OuvrageService::ouvragePhysiqueExist($ouvrage);
             if ($ouvragePhys != null){
                 return ;

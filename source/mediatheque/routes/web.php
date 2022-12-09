@@ -22,15 +22,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    /*$reservations = \App\Models\Reservation::all();
-    if ($reservations->count() > 0){
-        foreach ($reservations as $reservation){
-            $dateExpiration = $reservation->date_reservation->addDay(1);
-            if ($dateExpiration->gt(\Carbon\Carbon::now())){
-
-            }
-        }
-    }*/
     return view('welcome');
 });
 
