@@ -71,7 +71,7 @@ class LivresPapierController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         Validator::make($request->all(), [
             'ISBN'=>['required',
                 function ($attribute, $value, $flail){
@@ -96,12 +96,12 @@ class LivresPapierController extends Controller
             'id_classification_dewey_dizaine'=>'required|not_in:Sélectionner étagère',
         ]);
 
-        
+
         $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
-        
+
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
-        
+
         $ouvragePhysique = OuvragesPhysiqueService::enregisterOuvragePhysique($request, $ouvrage);
 
         $categories_data = GlobaleService::extractLineToData($request->data_categorie);
@@ -165,7 +165,7 @@ class LivresPapierController extends Controller
      */
     public function update(Request $request, LivresPapier $livresPapier)
     {
-        
+
         $request->validate([
             'titre'=> 'required',
             'niveau'=>'required|not_in:Sélectionner niveau',
@@ -226,18 +226,24 @@ class LivresPapierController extends Controller
         } else {
             return redirect()->route('formulaireImportExcel');
         }*/
-
         if (! $request->url == null)
         {
             $chemin_ouvrage_excel = strtolower('livres_papier').'.'.$request->url->extension();
             $request->url->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
         } else
         {
-            return redirect()->route('formulaireImportExcel');
+            return redirect()->back()->withErrors(['url' => "Vous n'avez pas séléctionner de fichier excele"]);
         }
 
+        \Session(["error_id" => 0]);
+        \Session(["compteur" => 0]);
+
         Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel);
-        
+
+        if (session('error_id') > 0){
+            return redirect()->back()->withInput()->withErrors(['url' => "Le fichier excel n'est pas intégre. Une erreur est survenue à la ligne ".session('error_id')]);
+        }
+
         return redirect()->route('listeLivresPapier');
     }
 

@@ -7,11 +7,11 @@
             <legend>Fichier excel</legend>
             <div>
                 <label>Fichier</label>
-                <input type="file" name="url" accept="*" value="">
-            </div>
-            @error('url')
+                <input type="file" name="url" accept="*" value="" class="input @error('url') is-invalid @enderror">
+                @error('url')
                 <div class="alert">{{ $message }}</div>
-            @enderror
+                @enderror
+            </div>
         </fieldset>
         <input type="submit" class="button button_primary" value="Importer">
     </form>

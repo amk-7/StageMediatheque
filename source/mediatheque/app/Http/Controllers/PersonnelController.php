@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Service\UserService;
 use App\Service\GlobaleService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 class PersonnelController extends Controller
@@ -180,8 +181,9 @@ class PersonnelController extends Controller
      */
     public function destroy(Personnel $personnel)
     {
-        //
-        $personnel->delete();
+        if (! (Auth::user()->id_utilisateur == $personnel->utilisateur->id_utilisateur)){
+            $personnel->delete();
+        }
         return redirect()->route('listePersonnels');
     }
 }

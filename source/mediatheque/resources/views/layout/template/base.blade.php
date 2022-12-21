@@ -90,7 +90,7 @@
 
 @yield("livewire_scripts_content")
 @yield("js")
-<div id="main" class=@if(Auth::user())"ml-16"@else "" @endif>
+<div id="main" style="width: 100%" class=@if(Auth::user())"ml-16"@else "" @endif>
     @yield("footer")
 </div>
 </body>

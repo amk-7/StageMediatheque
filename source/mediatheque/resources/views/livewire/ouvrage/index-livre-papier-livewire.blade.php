@@ -81,10 +81,10 @@
                             </td>
                             @if(Auth::user()->hasRole('responsable'))
                                 <td class="fieldset_border">
-                                    <form action="{{route('suppressionLivrePapier', $livresPapier)}}" method="post">
+                                    <form id="" onclick="activeModal({{$livresPapier->id_livre_papier}})" action="{{route('suppressionLivrePapier', $livresPapier)}}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <input type="submit" name="supprimer" value="Supprimer" class="button button_delete">
+                                        <input type="submit" id="" name="supprimer" value="Supprimer" class="button button_delete">
                                     </form>
                                 </td>
                             @endif
@@ -95,7 +95,7 @@
                 </table>
             </div>
         @else
-           <div class="m-6 flex flex-row" style="flex-wrap: wrap;">
+           <div class="flex flex-row ml-16" style="flex-wrap: wrap;">
                @foreach($livresPapiers as $livresPapier)
                    <div class="flex flex-row space-x-3">
                        <div class="">

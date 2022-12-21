@@ -5,10 +5,10 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('listeLivresNumerique') }}">
+                    <a href="/">
                         <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                     </a>
-                    <a href="{{ route('listeLivresNumerique') }}">
+                    <a href="/">
                         <img src="{{ asset('storage/images/logo2.png') }}" class="block h-10 w-auto fill-current text-gray-600">
                     </a>
                 </div>
@@ -38,8 +38,8 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                <div class="mr-3" style="width: 50px; height: 50px;">
-                                    <img class="rounded-full" style="width: 100%; height: 100%;" src="{{ asset("storage/images/image_utilisateur")."/".Auth::user()->photo_profil }}">
+                                <div class="rounded-full mr-3" style="width: 50px; height: 50px; background: #00ff00">
+                                    <img class="rounded-full" style="width: 100%; height: 100%; padding: 3px" src="{{ asset("storage/images/image_utilisateur")."/".Auth::user()->photo_profil }}">
                                 </div>
                                 <div>{{ Auth::user()->nom }}</div>
                                 <div class="ml-1">
@@ -49,7 +49,6 @@
                                 </div>
                             </button>
                         </x-slot>
-
                         <x-slot name="content">
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
