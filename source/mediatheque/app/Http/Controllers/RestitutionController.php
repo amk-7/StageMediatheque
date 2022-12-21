@@ -53,8 +53,6 @@ class RestitutionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-        //return $request;
         $request->validate([
             'data'=>'required',
         ]);
@@ -96,6 +94,7 @@ class RestitutionController extends Controller
      */
     public function edit(Restitution $restitution)
     {
+        dd(LignesEmpruntService::getAllLignesEmpruntByEmprunt($restitution->emprunt));
         return view('restitution.edite')->with([
             'restitution' => $restitution,
             'lignes_emprunt' => json_encode(LignesEmpruntService::getAllLignesEmpruntByEmprunt($restitution->emprunt)),

@@ -83,6 +83,16 @@ class AbonneController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), [
+            'nom_utilisateur'=>['required',
+                function ($attribute, $value, $flail){
+                    if (User::all()->where('nom_utilisateur', $value)->first()){
+                        $flail("Ce nom est déjà utilisé.");
+                    }
+                }
+            ],
+        ])->validate();
+
+        Validator::make($request->all(), [
             'numero_carte'=>['required',
                 function ($attribute, $value, $flail){
                     if (! GlobaleService::verifieCart($value)){
@@ -115,7 +125,6 @@ class AbonneController extends Controller
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
-            'nom_utilisateur' => 'required',
             'password' => 'required | min:8',
             'confirmation_password' => 'required|same:password',
             'ville' => 'required',

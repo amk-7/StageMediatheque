@@ -36,23 +36,23 @@ class LignesEmpruntService
 
     public static function ligneEnrpruntCreate()
     {
-        
+
     }
 
     public static function getAllLignesEmpruntByEmprunt(Emprunt $emprunt)
     {
-        //dd("Re");
         $lignes_emprunt = [];
         $lignes_emprunt_by_emprunt = LignesEmprunt::all()->where('id_emprunt', $emprunt->id_emprunt)->sortBy('id_emprunt');
         $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
 
         foreach ($lignes_emprunt_by_emprunt as $ligne){
+
            if ($ligne->disponibilite){
                $etat_entree = LignesRestitution::all()->where('id_restitution', $restitution->id_restitution)
                                                 ->first()->etat_entree;
                $etat_entree =  OuvragesPhysiqueHelper::afficherEtat($etat_entree);
            }
-           //dd($ligne->ouvragesPhysique);
+
             $fullLine = [
                 'numero_ligne' => $ligne->id_ligne_emprunt,
                 'numero_emprunt' => $ligne->id_emprunt,
@@ -65,15 +65,8 @@ class LignesEmpruntService
             ];
             array_push($lignes_emprunt, $fullLine);
         }
-       // dd("======================================");
         return $lignes_emprunt;
     }
-
-   /* public static function incrementerNombreExemplaire($id_ouvrage_physique)
-    {
-        $ouvrage_physique = OuvragesPhysique::find($id_ouvrage_physique);
-        $ouvrage_physique->incrementerNombreExemplaire();
-    }*/
 
 }
 

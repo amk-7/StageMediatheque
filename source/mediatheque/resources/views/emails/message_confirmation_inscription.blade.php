@@ -9,8 +9,7 @@
 <body>
     <h1>CONFIRMATION INSCRIPTION</h1><br/>
     <p>
-        Cher abonné {{$abonne->nom}} l'emprunt des ouvrages ... que vous benéficier est présque à son terme. Vous
-        êtes prier de restituer ces ouvrages demain le ... à la médiathèque.
+        Cher abonné {{$abonne->nom}}, nous vous remercions d'avoir fait confiance à la médiathéque.
     </p>
 </body>
 </html>

@@ -47,6 +47,7 @@ Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function 
     Route::get('affiche_abonne/{abonne}', 'App\Http\Controllers\AbonneController@show')->name('showAbonne');
     Route::get('formulaire_edition_des_abonnes/{abonne}/edit', 'App\Http\Controllers\AbonneController@edit')->name('editAbonne');
     Route::put('mise_a_jour_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@update')->name('updateAbonne');
+    Route::get('affiche_emprunt/{emprunt}', 'App\Http\Controllers\EmpruntController@show')->name('showEmprunt');
     Route::get('lire_pdf/{ouvragesElectronique}/lecture', [LivreNumeriqueController::class, 'readPdf'])->name('lirePDF');
 });
 
@@ -62,7 +63,6 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
 
     // Path: Emprunt routes/web.php
     Route::get('liste_des_emprunts', 'App\Http\Controllers\EmpruntController@index')->name('listeEmprunts');
-    Route::get('affiche_emprunt/{emprunt}', 'App\Http\Controllers\EmpruntController@show')->name('showEmprunt');
     Route::get('formulaire_edition_emprunts/{emprunt}/edition', 'App\Http\Controllers\EmpruntController@edit')->name('editEmprunt');
     Route::put('mise_a_jour_des_emprunts/{emprunt}', 'App\Http\Controllers\EmpruntController@update')->name('updateEmprunt');
     Route::delete('suppression_des_emprunts/{emprunt}', 'App\Http\Controllers\EmpruntController@destroy')->name('destroyEmprunt');

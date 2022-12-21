@@ -21,38 +21,38 @@
         <div class="w-1/2">
             <label class="label" for="niveau_etude">Niveau d'étude : </label>
             <div  class="label">
-                <input type="radio" name="niveau_etude" value="Primaire">
+                <input type="radio" name="niveau_etude" value="Primaire" {{ old('niveau_etude') == "Primaire" ? 'checked' : '' }}>
                 <label>Primaire</label>
             </div>
             <div class="label">
-                <input type="radio" name="niveau_etude" value="Collège">
+                <input type="radio" name="niveau_etude" value="Collège" {{ old('niveau_etude') == "Collège" ? 'checked' : '' }}>
                 <label>Collège</label>
             </div>
             <div class="label">
-                <input type="radio" name="niveau_etude" value="Lycée">
+                <input type="radio" name="niveau_etude" value="Lycée" {{ old('niveau_etude') == "Lycée" ? 'checked' : '' }}>
                 <label>Lycée</label>
             </div>
             <div class="label">
-                <input type="radio" name="niveau_etude" value="Université">
+                <input type="radio" name="niveau_etude" value="Université" {{ old('niveau_etude') == "Université" ? 'checked' : '' }}>
                 <label>Université</label>
             </div>
         </div>
         <div class="w-1/2">
             <label class="label" for="profession">Profession : </label>
             <div class="label">
-                <input type="radio" name="profession" value="Elève">
+                <input type="radio" name="profession" value="Elève" {{ old('profession') == "Elève" ? 'checked' : '' }}>
                 <label>Elève</label>
             </div>
             <div class="label">
-                <input type="radio" name="profession" value="Etudiant">
+                <input type="radio" name="profession" value="Etudiant" {{ old('profession') == "Etudiant" ? 'checked' : '' }}>
                 <label>Etudiant</label>
             </div>
             <div class="label">
-                <input type="radio" name="profession" value="Fonctionnaire">
+                <input type="radio" name="profession" value="Fonctionnaire" {{ old('profession') == "Fonctionnaire" ? 'checked' : '' }}>
                 <label>Fonctionnaire</label>
             </div>
             <div class="label">
-                <input type="radio" name="profession" value="Retraité">
+                <input type="radio" name="profession" value="Retraité" {{ old('profession') == "Retraité" ? 'checked' : '' }}>
                 <label>Retraité</label>
             </div>
         </div>
@@ -60,9 +60,9 @@
     <div>
         <label class="label" for="type_de_carte">Type de carte</label>
         <div class="label">
-            <input type="radio" name="type_de_carte" value="Identité">
+            <input type="radio" name="type_de_carte" value="Identité" {{ old('type_de_carte') == "Identité" ? 'checked' : '' }}>
             <label> Identité</label>
-            <input type="radio" name="type_de_carte" value="Scolaire">
+            <input type="radio" name="type_de_carte" value="Scolaire" {{ old('type_de_carte') == "Scolaire" ? 'checked' : '' }}>
             <label> Scolaire</label>
         </div>
     </div>

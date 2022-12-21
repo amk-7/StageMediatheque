@@ -43,20 +43,6 @@ class PersonnelController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
-        //dd($request);
-
-        Validator::make($request->all(), [
-            'numero_carte'=>['required',
-                function ($attribute, $value, $flail){
-                    if (! GlobaleService::verifieCart($value)){
-                        $flail("Ce numéro de carte est invalide");
-                    }
-                }
-            ],
-        ])->validate();
-
         Validator::make($request->all(), [
             'contact'=>['required',
                 function ($attribute, $value, $flail){
@@ -68,10 +54,10 @@ class PersonnelController extends Controller
         ])->validate();
 
         Validator::make($request->all(), [
-            'contact_a_prevenir'=>['required',
+            'nom_utilisateur'=>['required',
                 function ($attribute, $value, $flail){
-                    if (! GlobaleService::verifieContact($value)){
-                        $flail("Ce ".$attribute." est invalide");
+                    if (User::all()->where('nom_utilisateur', $value)->first()){
+                        $flail("Ce nom est déjà utilisé.");
                     }
                 }
             ],
@@ -80,7 +66,6 @@ class PersonnelController extends Controller
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
-            'nom_utilisateur' => 'required',
             'email' => 'required',
             'password' => 'required',
             'contact' => 'required',
@@ -95,17 +80,6 @@ class PersonnelController extends Controller
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
-        /*$utilisateur = User::create([
-            'nom' => $request->nom,
-            'prenom' => $request->prenom,
-            'nom_utilisateur' => $request->nom_utilisateur,
-            'email' => $request->email,
-            'password' => $request->password,
-            'contact' => $request->contact,
-            'photo_profil' => $request->photo_profil,
-            'adresse' => $request->adresse,
-            'sexe' => $request->sexe
-        ]);*/
 
         $utilisateur = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom)->first();
         if(! $utilisateur){
@@ -115,7 +89,7 @@ class PersonnelController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-        $utilisateur->assignRole([Role::find(2), Role::find(1)]);
+        $utilisateur->assignRole(Role::where('name', $request->statut));
         return redirect()->route('listePersonnels');
     }
 
@@ -153,23 +127,18 @@ class PersonnelController extends Controller
      */
     public function update(Request $request, Personnel $personnel)
     {
-        //
-        //dd($request["statut"]);
 
-        /*$personnel->update(array([
-            'statut' => $request["statut"]
-        ]));*/
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
 
-        $utilisateurs = UserService::modifierUtilisateur($request, $personnel->id_utilisateur);
-        $utilisateurs->save();
+        $utilisateur = UserService::modifierUtilisateur($request, $personnel->id_utilisateur);
+        $utilisateur->assignRole(Role::where('name', $request["statut"]));
+        $utilisateur->save();
         $personnel->statut = $request["statut"];
         $personnel->save();
-        //dd($personnel);
         return redirect()->route('listePersonnels');
     }
 

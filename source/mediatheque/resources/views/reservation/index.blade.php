@@ -49,7 +49,7 @@
                                                 "disabled:opacity-25" disabled
                                         @endif>
                                             <option selected>Séléctionner etat</option>
-                                            @for($i=4; $i>0; $i--)
+                                            @for($i=4; $i>3; $i--)
                                                 <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
                                             @endfor
                                         </select>
@@ -87,8 +87,8 @@
         </div>
     </div>
     <!-- Overlay element -->
-    <div id="overlay" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
-    <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
+    <div id="overlay" style="z-index: 1000;" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
+    <div style="z-index: 1001;" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
         <div class="flex flex-col items-center space-y-4">
             <div class="alert">
                 <p id="etat_ouvrage_modif_erreur">Vous devez renseigner l'état de l'ouvrage emprunté .</p>

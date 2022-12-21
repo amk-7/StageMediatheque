@@ -88,7 +88,8 @@ class ReservationController extends Controller
 
         $abonne = Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first();
         $ouvragep = OuvragesPhysique::all()->where('id_ouvrage_physique', $request->data)->first();
-        $ouvrageDejaReserver = Reservation::all()->where('id_abonne', $abonne->id_abonne)->where('id_ouvrage_physique', $ouvragep->id_ouvrage_physique)->first();
+        $ouvrageDejaReserver = Reservation::all()->where('id_abonne', $abonne->id_abonne)->where('id_ouvrage_physique', $ouvragep->id_ouvrage_physique)
+                                                ->where('etat', 1)->first();
 
         if ( ! $ouvragep->estDisponible()){
             $message = "L'ouvrage n'est plus disponible.";

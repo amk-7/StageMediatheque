@@ -99,11 +99,11 @@
                 <label class="label" for="sexe">Sexe : </label>
                 <div class="flex flex-row space-x-8 text-center">
                     <div class="label">
-                        <input type="radio" name="sexe" value="Masculin"/>
+                        <input type="radio" name="sexe" value="Masculin" {{ old('sexe') == "Masculin" ? 'checked' : '' }}/>
                         <label>Masculin</label>
                     </div>
                     <div class="label">
-                        <input type="radio" name="sexe" value="Feminin"/>
+                        <input type="radio" name="sexe" value="Feminin" {{ old('sexe') == "Feminin" ? 'checked' : '' }}/>
                         <label>Feminin</label>
                     </div>
                 </div>
