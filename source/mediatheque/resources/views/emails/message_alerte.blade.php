@@ -9,8 +9,14 @@
 <body>
     <h1 class="bg-red-600">ALERT RESTITUTION</h1><br/>
     <p>
-        Cher abonné l'emprunt des ouvrages ... dont vous benéficier est présque à son terme. Vous
-        êtes prier de restituer ces ouvrages demain le ... à la médiathèque.
+        Bonjour Mr {{ $datas['nom']." ".$datas['prenom'] }} l'emprunt des ouvrages dont vous benéficier est présque à son terme. Vous
+        êtes prier de restituer ces ouvrages demain le {{ $datas['date_retour'] }} à la médiathèque. <br/>
+        Ouvrages emprunté :
+        <ul>
+            @foreach($datas['ouvrages'] as $o)
+                <li>{{ $o }}</li>
+            @endforeach
+        </ul>
     </p>
 </body>
 </html>

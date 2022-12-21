@@ -18,6 +18,15 @@ class Emprunt extends Model
         return $this->lignesEmprunts()->count();
     }
 
+    public function getOuvrageEmprunteAttribute()
+    {
+        $ouvrages = array();
+        foreach ($this->lignesEmprunts as $l){
+            array_push($ouvrages, $l->ouvragesPhysique->ouvrage->titre);
+        }
+        return $ouvrages;
+    }
+
     public  function  empruntExpierAttribute(){
         return Carbon::now()->gt($this->date_retour);
     }

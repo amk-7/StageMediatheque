@@ -16,11 +16,11 @@ class AlertMessage extends Mailable
      *
      * @return void
      */
-    public $emprunt;
-    public function __construct($emprunt)
+    public $data;
+    public function __construct($_data)
     {
         //
-        $this->emprunt = $emprunt;
+        $this->data = $_data;
     }
 
     /**
@@ -30,8 +30,8 @@ class AlertMessage extends Mailable
      */
     public function build()
     {
-        $mailEmprunt = $this->emprunt;
+        $datas = $this->data;
         return $this->subject('Alerte')
-                    ->view('emails.message_alerte', compact('mailEmprunt'));
+                    ->view('emails.message_alerte', compact('datas'));
     }
 }

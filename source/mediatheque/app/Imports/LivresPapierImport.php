@@ -6,10 +6,10 @@ use App\Models\LivresPapier;
 use App\Models\Ouvrage;
 use App\Models\OuvragesPhysique;
 use App\Service\AuteurService;
-use App\Service\GlobaleService;
 use App\Service\ImportExcelService;
 use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
+use Illuminate\Database\QueryException;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class LivresPapierImport implements ToModel
@@ -34,17 +34,25 @@ class LivresPapierImport implements ToModel
         $indice_image_path = 11;
 
         $size = 11;
+        \session(
+            ["compteur" => ((int) session("compteur")+1)]
+        );
 
         if (ImportExcelService::controlleValidite($row, $indice_titre, $indice_annee) == null){
             return null;
         };
-
-        $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee])) ;
+        $ouvrage = null;
+        try {
+            $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee])) ;
+        } catch (QueryException $e){
+            \Session(["error_id" => session("compteur")]);
+            return ;
+        }
         if ($ouvrage)
         {
             $ouvragePhys = OuvrageService::ouvragePhysiqueExist($ouvrage);
             if ($ouvragePhys != null){
-                return ;
+                return null;
             }
         } else {
             $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
@@ -53,17 +61,22 @@ class LivresPapierImport implements ToModel
             // Creation de l'ouvrage
             $chemin_image = $row[$indice_image_path] ?? null == null ? "default_book_image.png" : $row[$indice_image_path];
 
-            $ouvrage = Ouvrage::create([
-                'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
-                'lieu_edition'=>$row[$indice_lieu],
-                'annee_apparution'=>str_replace(' ', '', $row[$indice_annee]),
-                'type'=>ImportExcelService::formatString($row[$indice_type]),
-                'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau]),
-                'image' => $chemin_image,
-                'langue'=>strtolower('français'),
-                'resume'=>strtolower("pas de resumé"),
-                'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle]),
-            ]);
+            try {
+                $ouvrage = Ouvrage::create([
+                    'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
+                    'lieu_edition'=>$row[$indice_lieu],
+                    'annee_apparution'=>str_replace(' ', '', $row[$indice_annee]),
+                    'type'=>ImportExcelService::formatString($row[$indice_type]),
+                    'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau]),
+                    'image' => $chemin_image,
+                    'langue'=>strtolower('français'),
+                    'resume'=>strtolower("pas de resumé"),
+                    'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle]),
+                ]);
+            } catch (QueryException $e){
+                \Session(["error_id" => session("compteur")]);
+                return null;
+            }
             // Definire les auteurs de l'ouvrage
             OuvrageService::definireAuteur($ouvrage, $auteurs);
         }

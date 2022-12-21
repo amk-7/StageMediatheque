@@ -130,18 +130,18 @@ class EmpruntController extends Controller
 
         $duree_emprunt = $request->duree_emprunt;
 
-
         $data = array(
             'nom' => $utilisateur->nom,
             'prenom' => $utilisateur->prenom,
             'date_retour' => $date_retour,
             'date_emprunt' => $date_emprunt,
             'duree_emprunt' => $duree_emprunt,
-            'Ouvrages'
+            'ouvrages' => $emprunt->ouvrageEmprunte,
         );
 
         $jobMailEmprunt = new MailEmpruntJob($email, $data);
-        $jobMailEmprunt->delay(Carbon::now()->addSeconds($date_retour->subDays(1)));
+        //$jobMailEmprunt->delay(Carbon::now()->addSeconds($date_retour->subDays(1)));
+        $jobMailEmprunt->delay(Carbon::now()->addSeconds(1));
         $this->dispatch($jobMailEmprunt);
         return redirect()->route("listeEmprunts");
     }
