@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Registration extends Model
 {
     use HasFactory;
-    protected $fillable = ['date_debut', 'date_fin', 'id_abonne', 'id_tarif_abonnement'];
+    protected $fillable = ['date_debut', 'date_fin', 'id_abonne', 'id_tarif_abonnement', 'etat'];
     protected $primaryKey = 'id_registration';
     protected $dates = ['date_debut', 'date_fin'];
 
@@ -35,11 +35,11 @@ class Registration extends Model
 
     public function tarifAbonnement()
     {
-        return $this->hasOne('App\Models\TarifAbonnement', 'id_tarif_abonnement');
+        return $this->belongsTo('App\Models\TarifAbonnement', 'id_tarif_abonnement');
     }
 
     public function estValide()
     {
-        return ! Carbon::now()->gt($this->date_fin);
+        return $this->etat == 1;
     }
 }

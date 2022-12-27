@@ -95,26 +95,26 @@ class LivreNumeriqueController extends Controller
             'url'=>'required',
         ]);
 
-        
+
         $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
-        
+
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
-        
+
         $ouvrageElectronique = OuvragesElectroniqueService::enregistrerOuvrageElectronique($ouvrage, $request->url);
-        
+
         $categories_data = GlobaleService::extractLineToData($request->data_categorie);
         $categories = [];
         foreach ($categories_data as $categorie_array){
             array_push($categories, $categorie_array[0]);
         }
-        
+
         LivresNumerique::create([
             'categorie'=>$categories,
             'ISBN'=>strtoupper($request["ISBN"]),
             'id_ouvrage_electronique'=>$ouvrageElectronique->id_ouvrage_electronique,
         ]);
-        
+
         return redirect()->route('listeLivresNumerique');
     }
 
@@ -186,7 +186,7 @@ class LivreNumeriqueController extends Controller
      */
     public function destroy(LivresNumerique $livresNumerique)
     {
-        
+
         $id_ouvrage = OuvragesElectronique::all()->where('id_ouvrage_electronique', $livresNumerique->id_ouvrage_electronique)->first()->id_ouvrage;
         OuvrageService::supprimer_ouvrage($id_ouvrage);
         return redirect()->route('listeLivresNumerique');
@@ -207,24 +207,20 @@ class LivreNumeriqueController extends Controller
     {
         $destination_path = "public/ouvrage_electonique/";
         $path = "";
-        if ($request->file("fileList"))
+
+        if ($request->file("fileList") || $request->excel != null)
         {
-           foreach ($request->file("fileList") as $file){
-               if ($file->isReadable()){
-                   if (! in_array($file->extension(), ["xlsx", "odt"])){
-                       $file->storeAs($destination_path, $file->getClientOriginalName());
-                   } else {
-                       $destination_path = "public/fichier_excel/";
-                       $path = $file->getClientOriginalName();
-                       $file->storeAs("$destination_path", $path);
-                   }
-               }
-           }
+            $chemin_ouvrage_excel = strtolower('livres_numerique').'.'.$request->excel->extension();
+            $request->excel->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
+
+            foreach ($request->file("fileList") as $file){
+                $file->storeAs($destination_path, $file->getClientOriginalName());
+            }
         } else {
-            return redirect()->route('formulaireImportExcel');
+            return redirect()->route('export');
         }
 
-        Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$path);
+        Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$chemin_ouvrage_excel);
         return redirect()->route('listeLivresNumerique');
     }
 }

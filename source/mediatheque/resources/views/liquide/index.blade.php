@@ -15,6 +15,7 @@
                             <th class="fieldset_border">Tarif</th>
                             <th class="fieldset_border">Date debut</th>
                             <th class="fieldset_border">Date fin</th>
+                            <th class="fieldset_border">Etat</th>
                             <th class="fieldset_border">Consulter</th>
                         </tr>
                     </thead>
@@ -25,6 +26,7 @@
                             <td class="fieldset_border"> {{ $liquide->registration->tarifAbonnement->designation }} </td>
                             <td class="fieldset_border"> {{ $liquide->registration->date_debut->format('Y-m-d') }} </td>
                             <td class="fieldset_border"> {{ $liquide->registration->date_fin->format('Y-m-d') }} </td>
+                            {!! \App\Helpers\UtilisateurHelper::showRegistrationState($liquide->registration) !!}
                             <td class="fieldset_border">
                                 <form action="" method="">
                                     <input type="submit" value="Consulter" class="button button_show">

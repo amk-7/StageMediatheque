@@ -67,6 +67,4 @@ class LignesEmpruntService
         }
         return $lignes_emprunt;
     }
-
 }
-

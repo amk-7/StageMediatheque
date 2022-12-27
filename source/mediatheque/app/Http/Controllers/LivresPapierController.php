@@ -208,24 +208,6 @@ class LivresPapierController extends Controller
 
     public function uploadLivresPapierStore(Request $request)
     {
-        /*$destination_path = "public/images/images_livre";
-        $path = "";
-        if ($request->file("fileList"))
-        {
-            foreach ($request->file("fileList") as $file){
-                if ($file->isReadable()){
-                    if (! in_array($file->extension(), ["xlsx", "odt"])){
-                        $file->storeAs($destination_path, $file->getClientOriginalName());
-                    } else {
-                        $destination_path = "public/fichier_excel/";
-                        $path = $file->getClientOriginalName();
-                        $file->storeAs("$destination_path", $path);
-                    }
-                }
-            }
-        } else {
-            return redirect()->route('formulaireImportExcel');
-        }*/
         if (! $request->url == null)
         {
             $chemin_ouvrage_excel = strtolower('livres_papier').'.'.$request->url->extension();
@@ -235,6 +217,37 @@ class LivresPapierController extends Controller
             return redirect()->back()->withErrors(['url' => "Vous n'avez pas séléctionner de fichier excele"]);
         }
 
+        \Session(["error_id" => 0]);
+        \Session(["compteur" => 0]);
+
+        Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel);
+
+        if (session('error_id') > 0){
+            return redirect()->back()->withInput()->withErrors(['url' => "Le fichier excel n'est pas intégre. Une erreur est survenue à la ligne ".session('error_id')]);
+        }
+
+        return redirect()->route('listeLivresPapier');
+    }
+
+    public function uploadLivresPapierView()
+    {
+        return view('livresPapier.excel_import_new');
+    }
+
+    public function uploadLivresPapier(Request $request)
+    {
+        $destination_path = "public/images/images_livre/";
+        if ($request->file("fileList") || $request->excel != null)
+        {
+            $chemin_ouvrage_excel = strtolower('livres_papier').'.'.$request->excel->extension();
+            $request->excel->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
+
+            foreach ($request->file("fileList") as $file){
+                $file->storeAs($destination_path, $file->getClientOriginalName());
+            }
+        } else {
+            return redirect()->route('export');
+        }
         \Session(["error_id" => 0]);
         \Session(["compteur" => 0]);
 

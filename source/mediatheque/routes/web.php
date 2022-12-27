@@ -25,10 +25,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/scanQr', function () {
-    return view('emprunt/create2');
-});
-
 Route::group(['middleware' => ['role:responsable|bibliothecaire|abonne', 'auth']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -155,6 +151,9 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
 });
 
 Route::group(['middleware' => ['role:responsable', 'auth']], function () {
+    Route::get('formulaire_import_excel_new', [LivresPapierController::class, 'uploadLivresPapierView'])->name('formulaireImportExcelNew');
+    Route::put('enregistrement_import_excel_new', [LivresPapierController::class, 'uploadLivresPapier'])->name('enregistrementImportExcelNew');
+
     // Path: Personnel routes/web.php
     Route::get('liste_des_personnels', 'App\Http\Controllers\PersonnelController@index')->name('listePersonnels');
     Route::get('affiche_personnel/{personnel}', 'App\Http\Controllers\PersonnelController@show')->name('showPersonnel');

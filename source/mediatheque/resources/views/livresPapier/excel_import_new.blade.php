@@ -1,6 +1,6 @@
 @extends('layout.template.base')
 @section('content')
-    <form action="{{ route('enregistrementImportExcelLivresNumerique') }}" method="post" enctype="multipart/form-data" class="m-auto flex flex-col space-y-3">
+    <form action="{{ route('enregistrementImportExcelNew') }}" method="post" enctype="multipart/form-data" class="m-auto flex flex-col space-y-3">
         @method('put')
         @csrf
         <fieldset class="fieldset_border space-y-3">
@@ -10,9 +10,8 @@
                 <input type="file" id="execl" name="excel" required/>
             </div>
             <div>
-                <label>Fichiers </label>
-                <input type="file" id="filepicker" name="fileList[]" webkitdirectory = "true" multiple required/>
-                <ul id="listing"></ul>
+                <label>Images : </label>
+                <input type="file" id="fileListe" name="fileList[]" webkitdirectory = "true" multiple required/>
             </div>
             @error('fileList[]')
                 <div class="alert">{{ $message }}</div>

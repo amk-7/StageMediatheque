@@ -35,7 +35,7 @@ class LignesRestitutionService
             'id_restitution' => $id_restitution,
             'etat_entree' => array_search($etat_entree, OuvragesPhysiqueHelper::demanderEtat()),
         ]);
-        $ligne_emprunt = LignesEmprunt::all()->where('id_emprunt', $id_emprunt)->first();
+        $ligne_emprunt = LignesEmprunt::all()->where('id_emprunt', $id_emprunt)->where('id_ouvrage_physique', $id_ouvrage)->first();
         $ligne_emprunt->updateDisponibilite();
     }
 }

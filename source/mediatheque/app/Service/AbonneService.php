@@ -62,15 +62,14 @@ class AbonneService
         $abonnes = array();
 
         foreach ($result as $p){
-            //dump($p->utilisateur->nom, $p->getEmpruntsEnCours());
             $personne = array(
                 'id'=>$p->id_abonne,
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
                 'estEligible'=>count($p->getEmpruntsEnCours()) == 0 ? 'true' : 'false',
                 'pas_abonnement' => $p->abonnementEnCours() == true ? 'true' : 'false',
+                'niveau' => $p->profession == "Éleve" ? '1' : '0',
             );
-
             array_push($abonnes, $personne);
         }
         return $abonnes;
@@ -80,6 +79,17 @@ class AbonneService
     {
         $result = Abonne::all();
         $abonnes = AbonneService::formatAbonneList($result);
+        return $abonnes;
+    }
+    public static function getAbonnesRegistrateWithAllAttribut()
+    {
+        $result = AbonneService::getAbonnesWithAllAttribut();
+        $abonnes = [];
+        foreach ($result as $r){
+            if (strtolower($r['pas_abonnement']) == "false"){
+                array_push($abonnes, $r);
+            }
+        }
         return $abonnes;
     }
     /**

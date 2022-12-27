@@ -67,8 +67,8 @@ class RestitutionController extends Controller
             'id_abonne' => $datas[0][2],
             'id_emprunt' => $id_emprunt,
         ]);
-        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
 
+        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
         return redirect()->route('listeRestitutions');
     }
 
@@ -94,7 +94,6 @@ class RestitutionController extends Controller
      */
     public function edit(Restitution $restitution)
     {
-        dd(LignesEmpruntService::getAllLignesEmpruntByEmprunt($restitution->emprunt));
         return view('restitution.edite')->with([
             'restitution' => $restitution,
             'lignes_emprunt' => json_encode(LignesEmpruntService::getAllLignesEmpruntByEmprunt($restitution->emprunt)),
