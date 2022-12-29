@@ -61,11 +61,9 @@ class OuvrageService
         foreach ($mots_cle_data as $mot_cle_array){
             array_push($mots_cle, $mot_cle_array[0]);
         }
-        // Récupérer l'image.
         $image = $request->file('image_livre');
 
         if (! $image==null){
-            // Stocker l'image
             $chemin_image = $image->storeAs('public/images/images_livre', $request->titre.'.'.$image->extension());
         } else {
             $image = "default_book_image.png";
@@ -109,11 +107,9 @@ class OuvrageService
         foreach ($mots_cle_data as $mot_cle_array){
             array_push($mots_cle, $mot_cle_array[0]);
         }
-        // Récupérer l'image.
         $image = $request->file('image_livre');
 
         if (! $image==null){
-            // Stocker l'image
             $chemin_image = strtolower($request->titre).'.'.$image->extension();
             $image->storeAs('public/images/images_livre', $chemin_image);
         } else {

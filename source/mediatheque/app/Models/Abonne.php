@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class Abonne extends Model
 {
     use HasFactory;
-    protected $fillable = ['date_naissance', 'niveau_etude', 'profession', 'contact_a_prevenir', 'numero_carte', 'type_de_carte', 'id_utilisateur'];
+    protected $fillable = ['date_naissance', 'profil_valider','niveau_etude', 'profession', 'contact_a_prevenir', 'numero_carte', 'type_de_carte', 'id_utilisateur'];
     protected $primaryKey = 'id_abonne';
     protected $dates = ['date_naissance'];
 
@@ -86,20 +86,15 @@ class Abonne extends Model
     }
     public function abonnementEnCours()
     {
-        //Liste des registrations de l'abonne courant
-        //$liste = registration::all();
         $registrations = $this->registrations;
         //Pour chaque registration vérifier si la registration est valide
         foreach ($registrations as $r)
         {
-
             if ($r->estValide())
             {
                 return true;
             }
-
         }
-
         return false;
     }
 }

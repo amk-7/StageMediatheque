@@ -27,7 +27,6 @@ class UserService
             'nom_utilisateur' => $request->nom_utilisateur,
             'email' => $request->email,
             'password' => \Hash::make($request->password),
-            'confirmation_password' => \Hash::make($request->confirmation_password),
             'contact' => $request->contact,
             'photo_profil' => $chemin_image,
             'adresse' => $request->adresse,
@@ -41,15 +40,11 @@ class UserService
         $utilisateur = User::find($id_utilisateur);
         $utilisateur->nom = strtoupper($request->nom);
         $utilisateur->prenom = strtolower($request->prenom);
-        $utilisateur->nom_utilisateur = $request->nom_utilisateur;
         $utilisateur->email = $request->email;
-        //$utilisateur->password = $request->password;
-        //$utilisateur->confirmation_password = $request->confirmation_password;
         $utilisateur->contact = $request->contact;
         $utilisateur->adresse = $request->adresse;
         $utilisateur->sexe = $request->sexe;
 
-        //récuperation de l'image
         $image = $request->file('photo_profil');
 
         if ($image != null){
@@ -59,6 +54,9 @@ class UserService
             $utilisateur->photo_profil = $chemin_image;
         }
 
+        if ($request->password){
+            $utilisateur->password = \Hash::make($request->password);
+        }
         $utilisateur->save();
         return $utilisateur;
     }

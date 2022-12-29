@@ -17,6 +17,7 @@ class CreateRegistrationsTable extends Migration
             $table->bigIncrements('id_registration');
             $table->date('date_debut');
             $table->date('date_fin');
+            $table->enum('etat', [0, 1])->default(1);
             $table->bigInteger('id_abonne');
             $table->bigInteger('id_tarif_abonnement');
             $table->foreign('id_abonne')->references('id_abonne')->on('abonnes');

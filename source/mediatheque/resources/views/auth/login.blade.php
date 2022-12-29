@@ -10,7 +10,7 @@
             </div>
 
             <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
+            <!--x-auth-session-status class="mb-4" :status="session('status')" /-->
 
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
@@ -20,9 +20,9 @@
 
                 <!-- Email Address -->
                 <div>
-                    <x-label for="email" :value="__('Email')" />
+                    <x-label for="nom_utilisateur" :value="__('Nom utilisateur')" />
 
-                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                    <x-input id="nom_utilisateur" class="block mt-1 w-full" type="text" name="nom_utilisateur" :value="old('nom_utilisateur')" required autofocus />
                 </div>
 
                 <!-- Password -->

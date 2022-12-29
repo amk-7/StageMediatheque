@@ -50,27 +50,24 @@ class AbonneService
                 'nombre_emprunts' => $p->getNombreEprunt() != 0 ? $p->getNombreEprunt(): '0',
                 'nombre_restitutions' => $p->getNombreRestitution() != 0 ? $p->getNombreRestitution() : '0',
                 'nombre_emprunt_non_restituer' => count($p->getEmpruntsEnCours()) != 0 ? count($p->getEmpruntsEnCours()) : '0',
-                'nombre_abonnement' => count($p->abonnements()) != 0 ? count($p->abonnements()) : '0',
             );
             array_push($abonnes, $personne);
         }
         return array($abonnes, $nombre_abonnne_masculin, $nombre_abonnne_feminin, $nombre_de_non_paye);
     }
 
-    public static function formatAbonneList(Collection $abonnes){
-        $result = Abonne::all();
+    public static function formatAbonneList(Collection $result){
         $abonnes = array();
 
         foreach ($result as $p){
-            //dump($p->utilisateur->nom, $p->getEmpruntsEnCours());
             $personne = array(
                 'id'=>$p->id_abonne,
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
                 'estEligible'=>count($p->getEmpruntsEnCours()) == 0 ? 'true' : 'false',
                 'pas_abonnement' => $p->abonnementEnCours() == true ? 'true' : 'false',
+                'niveau' => $p->profession == "Éleve" ? '1' : '0',
             );
-
             array_push($abonnes, $personne);
         }
         return $abonnes;
@@ -80,6 +77,24 @@ class AbonneService
     {
         $result = Abonne::all();
         $abonnes = AbonneService::formatAbonneList($result);
+        return $abonnes;
+    }
+
+    public static function getAbonnesValidateWithAllAttribut()
+    {
+        $result = Abonne::all()->where('profil_valider', 1);
+        $abonnes = AbonneService::formatAbonneList($result);
+        return $abonnes;
+    }
+    public static function getAbonnesRegistrateWithAllAttribut()
+    {
+        $result = AbonneService::getAbonnesWithAllAttribut();
+        $abonnes = [];
+        foreach ($result as $r){
+            if (strtolower($r['pas_abonnement']) == "false"){
+                array_push($abonnes, $r);
+            }
+        }
         return $abonnes;
     }
     /**

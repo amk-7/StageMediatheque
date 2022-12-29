@@ -166,7 +166,7 @@
                            </label>
                            <ul id="dropdown-example" class="ml-12">
                                <li>
-                                   <a href="/formulaire_import_excel" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres papier</a>
+                                   <a href="/formulaire_import_excel_new" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres papier</a>
                                </li>
                            </ul>
                            <ul id="dropdown-example" class="ml-12">

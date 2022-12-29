@@ -79,7 +79,7 @@
             <button id="btn_modifier" class="button button_primary">modifier</button>
         </div>
     </div>
-    <div class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="erreur_msg_box">
+    <div style="z-index: 1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="erreur_msg_box">
         <div class="flex flex-col items-center space-y-4">
             <div class="alert">
                 <p id="erreur_msg_value"></p>

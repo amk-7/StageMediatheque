@@ -54,7 +54,6 @@
                             <th class="fieldset_border" >Profil</th>
                             <th class="fieldset_border" >Nom</th>
                             <th class="fieldset_border" >Prenom</th>
-                            <th class="fieldset_border" >Nom d'utilisateur</th>
                             <th class="fieldset_border" >Email</th>
                             <th class="fieldset_border" >Contact</th>
                             <th class="fieldset_border" >Ville</th>
@@ -63,7 +62,8 @@
                             <th class="fieldset_border" >Numero de Carte</th>
                             <th class="fieldset_border" >Type de Carte</th>
                             <th class="fieldset_border" >A payé</th>
-                            <th class="fieldset_border" >Mofier</th>
+                            <th class="fieldset_border" >Profil valider</th>
+                            <th class="fieldset_border" >Modifier</th>
                             <th class="fieldset_border" >Afficher</th>
                             @if(Auth::user()->hasRole('responsable'))
                                 <th class="fieldset_border" >Supprimer</th>
@@ -81,7 +81,6 @@
                                     <td class="fieldset_border" ><img src="{{asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil}}" width="80" height="80"></td>
                                     <td class="fieldset_border" >{{$abonne->utilisateur->nom}}</td>
                                     <td class="fieldset_border" >{{$abonne->utilisateur->prenom}}</td>
-                                    <td class="fieldset_border" >{{$abonne->utilisateur->nom_utilisateur}}</td>
                                     <td class="fieldset_border" >{{$abonne->utilisateur->email}}</td>
                                     <td class="fieldset_border" >{{$abonne->utilisateur->contact}}</td>
                                     <td class="fieldset_border" >{{$abonne->utilisateur->adresse["ville"]}}</td>
@@ -89,7 +88,8 @@
                                     <td class="fieldset_border" >{{$abonne->contact_a_prevenir}}</td>
                                     <td class="fieldset_border" >{{$abonne->numero_carte}}</td>
                                     <td class="fieldset_border" >{{$abonne->type_de_carte}}</td>
-                                    <td class="fieldset_border" >{{$abonne->isRegistrate() ? 'Oui' : 'Non'}}</td>
+                                    {!! \App\Helpers\UtilisateurHelper::showAonneRegistrate($abonne) !!}
+                                    {!! \App\Helpers\UtilisateurHelper::showConfrirmProfil($abonne) !!}
                                     <td class="fieldset_border" >
                                         <form method="GET" action="{{route('editAbonne', $abonne->id_abonne)}}">
                                             <button class="button button_primary" type="Submit">Editer</button>

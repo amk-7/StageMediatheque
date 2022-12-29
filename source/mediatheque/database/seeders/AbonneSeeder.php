@@ -24,7 +24,6 @@ class AbonneSeeder extends Seeder
             'nom_utilisateur' => 'Daiki5',
             'email' => 'Alhassan.blog@gmail.com',
             'password' => Hash::make('daiki3354'),
-            'confirmation_password' => Hash::make('daiki3354'),
             'contact' => '91817907',
             'photo_profil' => 'profil.png',
             'adresse' => array(
@@ -40,7 +39,7 @@ class AbonneSeeder extends Seeder
             'profession' => 'Etudiant',
             'contact_a_prevenir' => '92817907',
             'numero_carte' => '123456789',
-            'type_de_carte' => 'Identité',
+            'type_de_carte' => 1,
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
 
@@ -50,7 +49,6 @@ class AbonneSeeder extends Seeder
             'nom_utilisateur' => 'Haf',
             'email' => 'hafiz@gmail.com',
             'password' => Hash::make('123456789'),
-            'confirmation_password' => Hash::make('123456789'),
             'contact' => '90229029',
             'photo_profil' => 'profil.png',
             'adresse' => array(
@@ -66,7 +64,7 @@ class AbonneSeeder extends Seeder
             'profession' => 'Etudiant',
             'contact_a_prevenir' => '90303030',
             'numero_carte' => '912345678',
-            'type_de_carte' => 'Identité',
+            'type_de_carte' => 1,
             'id_utilisateur' => $utilisateur2->id_utilisateur
         ]);
 
@@ -76,7 +74,6 @@ class AbonneSeeder extends Seeder
             'nom_utilisateur' => 'James',
             'email' => 'Daniel@gmail.com',
             'password' => Hash::make('123456789'),
-            'confirmation_password' => Hash::make('123456789'),
             'contact' => '91919191',
             'photo_profil' => 'profil.png',
             'adresse' => array(
@@ -92,7 +89,7 @@ class AbonneSeeder extends Seeder
             'profession' => 'Etudiant',
             'contact_a_prevenir' => '92353698',
             'numero_carte' => '932345678',
-            'type_de_carte' => 'Identité',
+            'type_de_carte' => 1,
             'id_utilisateur' => $utilisateur3->id_utilisateur
         ]);
 

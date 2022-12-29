@@ -7,10 +7,12 @@ use App\Helpers\UtilisateurHelper;
 
 use App\Models\Abonne;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use App\Service\GlobaleService;
 use App\Service\UserService;
 use DB;
 use Auth;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -82,16 +84,40 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nom' => 'required',
+            'prenom' => 'required',
+            'password' => 'required | min:8',
+            'confirmation_password' => 'required|same:password',
+            'ville' => 'required',
+            'quartier' => 'required',
+            'sexe' => 'required',
+            'date_naissance' => 'required',
+            'niveau_etude' => 'required',
+            'profession' => 'required',
+            'type_de_carte' => 'required'
+        ]);
+
         Validator::make($request->all(), [
-            'numero_carte'=>['required',
+            'nom_utilisateur'=>['required',
                 function ($attribute, $value, $flail){
-                    if (! GlobaleService::verifieCart($value)){
-                        $flail("Ce numéro de carte est invalide");
+                    if (User::all()->where('nom_utilisateur', $value)->first()){
+                        $flail("Le nom '$value' est déjà utilisé.");
                     }
                 }
             ],
         ])->validate();
-
+        if ($request->type_de_carte == "1"){
+            Validator::make($request->all(), [
+                'numero_carte'=>['required',
+                    function ($attribute, $value, $flail){
+                        if (! GlobaleService::verifieCart($value)){
+                            $flail("Ce numéro de carte est invalide");
+                        }
+                    }
+                ],
+            ])->validate();
+        }
         Validator::make($request->all(), [
             'contact'=>['required',
                 function ($attribute, $value, $flail){
@@ -112,20 +138,9 @@ class AbonneController extends Controller
             ],
         ])->validate();
 
-        $request->validate([
-            'nom' => 'required',
-            'prenom' => 'required',
-            'nom_utilisateur' => 'required',
-            'password' => 'required | min:8',
-            'confirmation_password' => 'required|same:password',
-            'ville' => 'required',
-            'quartier' => 'required',
-            'sexe' => 'required',
-            'date_naissance' => 'required',
-            'niveau_etude' => 'required',
-            'profession' => 'required',
-            'type_de_carte' => 'required'
-        ]);
+        if (Auth::user()){
+            $request->validate(['profil_valide' => 'required']);
+        }
 
         $request['adresse'] = array(
             'ville' => $request->ville,
@@ -133,13 +148,15 @@ class AbonneController extends Controller
             'numero_maison' => $request->numero_maison,
         );
 
-
         if ($request->password != $request->confirmation_password){
             return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
         }
 
 
-        $utilisateur = User::all()->where('nom', '=', $request->nom)->where('prenom', '=', $request->prenom)->first();
+        $utilisateur = User::all()->where('nom', '=', $request->nom)
+                                    ->where('prenom', '=', $request->prenom)
+                                    ->where('nom_utilisateur', '=', $request->nom_utilisateur)
+                                    ->first();
         if(! $utilisateur){
             $utilisateur = UserService::enregistrerUtilisateur($request);
             Abonne::create([
@@ -149,11 +166,28 @@ class AbonneController extends Controller
                 'contact_a_prevenir' => $request->contact_a_prevenir,
                 'numero_carte' => $request->numero_carte,
                 'type_de_carte' => $request->type_de_carte,
-                'id_utilisateur' => $utilisateur->id_utilisateur
+                'id_utilisateur' => $utilisateur->id_utilisateur,
+                'profil_valider' => $request->profil_valide,
             ]);
+            if (Auth::guest()){
+                $utilisateur->assignRole(Role::find(3));
+
+                event(new Registered($utilisateur));
+
+                Auth::login($utilisateur);
+
+                Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+
+                return redirect(RouteServiceProvider::HOME);
+            }
+        } else {
+            if (Auth::guest()){
+                return redirect()->route('login');
+            } else {
+                return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
+            }
         }
-        $utilisateur->assignRole(Role::find(3));
-        Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+
         return redirect()->route('listeAbonnes');
     }
 
@@ -205,6 +239,10 @@ class AbonneController extends Controller
         $abonne->contact_a_prevenir = $request["contact_a_prevenir"];
         $abonne->numero_carte = $request["numero_carte"];
         $abonne->type_de_carte = $request["type_de_carte"];
+        if ( ! Auth::user()->hasRole('abonne')){
+            $abonne->profil_valider = $request->profil_valide;
+        }
+
         $abonne->save();
         if (Auth::user()->hasRole("abonne")){
             return redirect()->route('showAbonne', $abonne);

@@ -20,7 +20,8 @@ class CreateAbonnesTable extends Migration
             $table->string('profession');
             $table->string('contact_a_prevenir');
             $table->string('numero_carte');
-            $table->string('type_de_carte');
+            $table->enum('type_de_carte', [0, 1]);
+            $table->enum('profil_valider', [0, 1])->default(0);
             $table->bigInteger('id_utilisateur');
             $table->timestamps();
             $table->foreign('id_utilisateur')->references('id_utilisateur')->on('users');

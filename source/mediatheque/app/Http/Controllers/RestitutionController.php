@@ -53,8 +53,6 @@ class RestitutionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-        //return $request;
         $request->validate([
             'data'=>'required',
         ]);
@@ -69,8 +67,8 @@ class RestitutionController extends Controller
             'id_abonne' => $datas[0][2],
             'id_emprunt' => $id_emprunt,
         ]);
-        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
 
+        LignesRestitutionService::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
         return redirect()->route('listeRestitutions');
     }
 

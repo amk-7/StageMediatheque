@@ -751,9 +751,6 @@ select {
 .ml-16 {
   margin-left: 4rem;
 }
-.ml-32 {
-  margin-left: 8rem;
-}
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -766,11 +763,11 @@ select {
 .mb-4 {
   margin-bottom: 1rem;
 }
-.mr-3 {
-  margin-right: 0.75rem;
-}
 .mr-4 {
   margin-right: 1rem;
+}
+.mr-3 {
+  margin-right: 0.75rem;
 }
 .ml-1 {
   margin-left: 0.25rem;
@@ -780,6 +777,9 @@ select {
 }
 .mt-8 {
   margin-top: 2rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
 }
 .mr-16 {
   margin-right: 4rem;
@@ -795,9 +795,6 @@ select {
 }
 .mb-3 {
   margin-bottom: 0.75rem;
-}
-.mt-6 {
-  margin-top: 1.5rem;
 }
 .mt-12 {
   margin-top: 3rem;
@@ -943,11 +940,11 @@ select {
 .w-16 {
   width: 4rem;
 }
-.w-11 {
-  width: 2.75rem;
-}
 .w-3\/5 {
   width: 60%;
+}
+.w-11 {
+  width: 2.75rem;
 }
 .max-w-7xl {
   max-width: 80rem;
@@ -1670,6 +1667,10 @@ select {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
+.optionnel {
+  --tw-text-opacity: 1;
+  color: rgb(21 128 61 / var(--tw-text-opacity));
+}
 .thead {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-bg-opacity: 1;
@@ -1679,7 +1680,6 @@ select {
   line-height: 1rem;
   text-transform: uppercase;
 }
-
 @media (prefers-color-scheme: dark) {
 
   .thead {
@@ -1859,8 +1859,8 @@ select {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   --tw-text-opacity: 1;

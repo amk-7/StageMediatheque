@@ -9,19 +9,14 @@
     {{ method_field('PUT') }}
 
     <div class="flex flex-row space-x-3 justify-center items-center">
-        <div class="w-2/6" >
+        <div class="w-1/2" >
             <label class="label" for="nom">Nom</label>
             <input type="text" name="nom" value="{{$utilisateur->nom}}" class="input" >
         </div>
 
-        <div class="w-2/6">
+        <div class="w-1/2">
             <label class="label" for="prenom">Prenom</label>
             <input type="text" name="prenom" value="{{$utilisateur->prenom}}" class="input">
-        </div>
-
-        <div class="w-2/6">
-            <label class="label" for="nom_utilisateur">Nom d'utilisateur</label>
-            <input type="text" name="nom_utilisateur" value="{{$utilisateur->nom_utilisateur}}" class="input">
         </div>
     </div>
 
@@ -41,18 +36,36 @@
         </div>
         <div class="flex flex-col w-2/3 mt-6">
             <div>
-                <label class="label" for="email">Email</label>
+                <label class="label" for="email">Email <span class="optionnel">(optionnel)</span></label>
                 <input type="text" name="email" value="{{$utilisateur->email}}" class="input">
             </div>
-
+            <div class="flex space-x-3 mt-4 mb-1">
+                <label class="label">Changer le mot de passe : </label>
+                <input type="checkbox" value="change_password" id="change_password">
+            </div>
+            <span class="optionnel">Cocher pour pouvoir modifier le mot de passe.</span>
             <div>
-                <label class="label" for="contact">Contact</label>
-                <input type="tel" name="contact" value="{{$utilisateur->contact}}" class="input">
+                <label class="label" for="password">Mot de passe</label>
+                <input type="password" id="password" placeholder="Au moins 8 carractères...." value="{{old('password')}}" name="password" class="input @error('password') is-invalid @enderror" disabled>
+                @error('password')
+                <div class="alert">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label class="label" for="confirmation_password">Confirmation du mot de passe</label>
+                <input type="password" id="confirmation_password" placeholder="Resaisisez le mot de passe..." value="{{old('confirmation_password')}}" name="confirmation_password" class="input @error('confirmation_password') is-invalid @enderror" disabled>
+                @error('confirmation_password')
+                <div class="alert">{{ $message }}</div>
+                @enderror
             </div>
         </div>
     </div>
 
     <div>
+        <div>
+            <label class="label" for="contact">Contact</label>
+            <input type="tel" name="contact" value="{{$utilisateur->contact}}" class="input">
+        </div>
         <label class="label" for="adresss">Adresss</label>
         <div class="flex flex-row space-x-2 justify-center items-center">
             <div class="w-2/6">
@@ -66,7 +79,7 @@
             </div>
 
             <div class="w-2/6">
-                <label class="label" for="numero_maison">Numero de maison</label>
+                <label class="label" for="numero_maison">Numero de maison <span class="optionnel">(optionnel)</span> </label>
                 <input type="text" name="numero_maison" value="{{$utilisateur->adresse['numero_maison']}}" class="input">
             </div>
         </div>
@@ -93,4 +106,18 @@
 </fieldset>
 </form>
 @include("layout.ouvrageZJS.ouvrageLoadFile")
+<script type="text/javascript">
+    let change_password = document.getElementById('change_password');
+    let password = document.getElementById('password');
+    let password_confirm = document.getElementById('confirmation_password');
+    change_password.addEventListener('change', function (e){
+        if (password.disabled == true){
+            password.disabled = false;
+            password_confirm.disabled = false;
+        } else {
+            password.disabled = true;
+            password_confirm.disabled = true;
+        }
+    });
+</script>
 @stop

@@ -25,7 +25,6 @@ class User extends Authenticatable
         'numero_maison',
         'email',
         'password',
-        'confirmation_password',
         'contact',
         'photo_profil',
         'adresse',
@@ -40,12 +39,12 @@ class User extends Authenticatable
 
     public function abonne()
     {
-        return $this->hasOne('App\Models\Abonne', 'id_abonne');
+        return $this->hasOne('App\Models\Abonne', 'id_utilisateur');
     }
 
     public function personnel()
     {
-        return $$this->hasOne('App\Models\Personnel', 'id_personnel');
+        return $$this->hasOne('App\Models\Personnel', 'id_utilisateur');
     }
 
     /**

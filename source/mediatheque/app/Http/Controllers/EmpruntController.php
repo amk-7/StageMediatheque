@@ -83,7 +83,7 @@ class EmpruntController extends Controller
             "livre_papier" => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
             "document_audio_visuel" => json_encode(OuvragesPhysiqueService::getDocAVWithAllAttribute()),
             "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
-            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
+            "abonnes" => json_encode(AbonneService::getAbonnesValidateWithAllAttribut()),
         ]);
     }
 

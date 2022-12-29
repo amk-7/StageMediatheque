@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CancelRegistrationJob;
 use App\Models\Liquide;
 use App\Models\Registration;
 use App\Models\TarifAbonnement;
@@ -9,6 +10,7 @@ use App\Service\AbonneService;
 use App\Service\EmpruntService;
 use App\Service\GlobaleService;
 use App\Service\PersonnelService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LiquideController extends Controller
@@ -33,7 +35,7 @@ class LiquideController extends Controller
     public function create()
     {
         return view('liquide.create')->with([
-            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
+            "abonnes" => json_encode(AbonneService::getAbonnesRegistrateWithAllAttribut()),
             "tarifs" => TarifAbonnement::all()->toJson(),
         ]);
     }
@@ -46,21 +48,22 @@ class LiquideController extends Controller
      */
     public function store(Request $request)
     {
-        
         $request->validate([
             "nom_abonnes" => "required",
             "prenom_abonnes" => "required",
             "tarifs" => "required",
         ]);
 
-        $tarifs = TarifAbonnement::all()->where("id_tarif_abonnement", $request->tarifs)->first();
+        $tarifs = TarifAbonnement::all()->where("tarif", $request->tarifs)->first();
         $registration = Registration::create([
             "id_tarif_abonnement" => $tarifs->id_tarif_abonnement,
             'id_abonne'=>$request->prenom_abonnes,
             "date_debut" => date("Y-m-d"),
             "date_fin" => GlobaleService::determinerDateFinAbonnement($tarifs->duree_validite),
         ]);
-
+        $concelRegistrationJob = new CancelRegistrationJob($registration->id_registration);
+        $concelRegistrationJob->delay(Carbon::now()->addDay($tarifs->duree_validite));
+        $this->dispatch($concelRegistrationJob);
         Liquide::create([
             "id_registration" => $registration->id_registration,
         ]);
@@ -103,7 +106,7 @@ class LiquideController extends Controller
      */
     public function update(Request $request, Liquide $liquide)
     {
-        
+
         $request->validate([
             "nom_personnes" => "required",
             "prenom_personnes" => "required",
@@ -135,6 +138,10 @@ class LiquideController extends Controller
      */
     public function destroy(Liquide $liquide)
     {
-        //
+        foreach (Registration::all() as $registration){
+            $registration->etat = 0;
+            $registration->save();
+        }
+        return redirect()->route("listeLiquides");
     }
 }

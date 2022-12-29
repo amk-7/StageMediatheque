@@ -24,7 +24,6 @@ class PersonnelSeeder extends Seeder
             'nom_utilisateur' => 'Shin06',
             'email' => 'Alhassan.tuto@gmail.com',
             'password' => Hash::make('123456789'),
-            'confirmation_password' => Hash::make('123456789'),
             'contact' => '91767676',
             'photo_profil' => 'profil.png',
             'adresse' => array(
@@ -47,7 +46,6 @@ class PersonnelSeeder extends Seeder
             'nom_utilisateur' => '@amk',
             'email' => 'abdoulmalikkondi8@gmail.com',
             'password' => Hash::make('amk2048'),
-            'confirmation_password' => Hash::make('amk2048'),
             'contact' => '93561240',
             'photo_profil' => 'profil.png',
             'adresse' => array(
@@ -63,6 +61,5 @@ class PersonnelSeeder extends Seeder
         ]);
 
         $utilisateur->assignRole([Role::find(2), Role::find(1)]);
-
     }
 }

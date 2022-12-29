@@ -13,7 +13,6 @@ class ReservationService
             return 0;
         }
         $dateExpiration = $reservation->date_reservation->addHour(24);
-        //dump($reservation->date_reservation);
         $durreRestante = $dateExpiration->diffInMinutes(Carbon::now());
         return $durreRestante;
     }

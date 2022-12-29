@@ -119,7 +119,7 @@
             event.preventDefault();
             event.stopPropagation();
         }
-
+        console.log(lignes_emprunt);
         function mettreLignesEmprunt() {
             for (let i = 0; i < lignes_emprunt.length; i++) {
                 mettreUneLigneEmprunt(lignes_emprunt[i]['cote'], lignes_emprunt[i]['titre_ouvrage'], lignes_emprunt[i]['etat_sortie'], lignes_emprunt[i]['disponibilite'], lignes_emprunt[i]['etat_entree']);

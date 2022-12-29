@@ -33,7 +33,6 @@ class LivresPapierImport implements ToModel
         $indice_niveau = 10;
         $indice_image_path = 11;
 
-        $size = 11;
         \session(
             ["compteur" => ((int) session("compteur")+1)]
         );
@@ -59,7 +58,7 @@ class LivresPapierImport implements ToModel
             $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
 
             // Creation de l'ouvrage
-            $chemin_image = $row[$indice_image_path] ?? null == null ? "default_book_image.png" : $row[$indice_image_path];
+            $chemin_image = ($row[$indice_image_path] ?? null) == null ? "default_book_image.png" : $row[$indice_image_path];
 
             try {
                 $ouvrage = Ouvrage::create([

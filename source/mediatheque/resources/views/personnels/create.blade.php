@@ -7,11 +7,11 @@
         <label class="label" for="statut">Statut : </label>
         <div class="flex space-x-3">
             <div class="flex space-x-1">
-                <input type="radio" name="statut" value="Bibliothècaire"/>
+                <input type="radio" name="statut" value="Bibliothècaire" {{ old('statut') == "Bibliothècaire" ? 'checked' : '' }} />
                 <label class="label">Bibliothècaire</label>
             </div>
             <div class="flex space-x-1">
-                <input type="radio" name="statut" value="Responsable"/>
+                <input type="radio" name="statut" value="Responsable" {{ old('statut') == "Responsable" ? 'checked' : '' }}/>
                 <label class="label">Responsable</label>
             </div>
         </div>

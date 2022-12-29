@@ -12,7 +12,6 @@ class LignesRestitutionService
 {
     public static function enregistrerLignesRestitution($datas, $id_restitution, $id_emprunt)
     {
-        //dd($id_restitution, $id_emprunt, $datas);
         for ($i=1; $i < count($datas)-1; $i++){
             self::enregistrerUneLigneRestitution($datas[$i][0], $datas[$i][1], $id_restitution, $id_emprunt);
         }
@@ -22,25 +21,21 @@ class LignesRestitutionService
     {
         $etat_entree = trim($etat_entree) ;
         if ($etat_entree == '-'){
-            //dd($etat_entree);
             return;
         }
-        //dd("What...");
         $ouvrage = Ouvrage::find($id_ouvrage);
         $ouvrage_physique = OuvragesPhysique::all()->where('id_ouvrage', $ouvrage->id_ouvrage)->first();
-        //dd($etat_entree);
         if($etat_entree=="Perdus"){
             $ouvrage_physique->augmenterNombreExemplaire(-1);
         }else {
             $ouvrage_physique->augmenterNombreExemplaire(1);
         }
-        //dd($ouvrage_physique->id_ouvrage_physique);
         LignesRestitution::create([
             'id_ouvrage_physique' => $ouvrage_physique->id_ouvrage_physique,
             'id_restitution' => $id_restitution,
             'etat_entree' => array_search($etat_entree, OuvragesPhysiqueHelper::demanderEtat()),
         ]);
-        $ligne_emprunt = LignesEmprunt::all()->where('id_emprunt', $id_emprunt)->first();
+        $ligne_emprunt = LignesEmprunt::all()->where('id_emprunt', $id_emprunt)->where('id_ouvrage_physique', $id_ouvrage)->first();
         $ligne_emprunt->updateDisponibilite();
     }
 }
