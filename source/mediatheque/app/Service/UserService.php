@@ -27,7 +27,6 @@ class UserService
             'nom_utilisateur' => $request->nom_utilisateur,
             'email' => $request->email,
             'password' => \Hash::make($request->password),
-            'confirmation_password' => \Hash::make($request->confirmation_password),
             'contact' => $request->contact,
             'photo_profil' => $chemin_image,
             'adresse' => $request->adresse,
@@ -43,8 +42,6 @@ class UserService
         $utilisateur->prenom = strtolower($request->prenom);
         $utilisateur->nom_utilisateur = $request->nom_utilisateur;
         $utilisateur->email = $request->email;
-        //$utilisateur->password = $request->password;
-        //$utilisateur->confirmation_password = $request->confirmation_password;
         $utilisateur->contact = $request->contact;
         $utilisateur->adresse = $request->adresse;
         $utilisateur->sexe = $request->sexe;

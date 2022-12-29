@@ -57,8 +57,7 @@ class AbonneService
         return array($abonnes, $nombre_abonnne_masculin, $nombre_abonnne_feminin, $nombre_de_non_paye);
     }
 
-    public static function formatAbonneList(Collection $abonnes){
-        $result = Abonne::all();
+    public static function formatAbonneList(Collection $result){
         $abonnes = array();
 
         foreach ($result as $p){
@@ -78,6 +77,13 @@ class AbonneService
     public static function getAbonnesWithAllAttribut()
     {
         $result = Abonne::all();
+        $abonnes = AbonneService::formatAbonneList($result);
+        return $abonnes;
+    }
+
+    public static function getAbonnesValidateWithAllAttribut()
+    {
+        $result = Abonne::all()->where('profil_valider', 1);
         $abonnes = AbonneService::formatAbonneList($result);
         return $abonnes;
     }

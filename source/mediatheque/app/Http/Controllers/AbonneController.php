@@ -138,12 +138,15 @@ class AbonneController extends Controller
             ],
         ])->validate();
 
+        if (Auth::user()){
+            $request->validate(['profil_valide' => 'required']);
+        }
+
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
-
 
         if ($request->password != $request->confirmation_password){
             return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
@@ -163,7 +166,8 @@ class AbonneController extends Controller
                 'contact_a_prevenir' => $request->contact_a_prevenir,
                 'numero_carte' => $request->numero_carte,
                 'type_de_carte' => $request->type_de_carte,
-                'id_utilisateur' => $utilisateur->id_utilisateur
+                'id_utilisateur' => $utilisateur->id_utilisateur,
+                'profil_valider' => $request->profil_valide,
             ]);
             if (Auth::guest()){
                 $utilisateur->assignRole(Role::find(3));
@@ -235,6 +239,10 @@ class AbonneController extends Controller
         $abonne->contact_a_prevenir = $request["contact_a_prevenir"];
         $abonne->numero_carte = $request["numero_carte"];
         $abonne->type_de_carte = $request["type_de_carte"];
+        if ( ! Auth::user()->hasRole('abonne')){
+            $abonne->profil_valider = $request->profil_valide;
+        }
+
         $abonne->save();
         if (Auth::user()->hasRole("abonne")){
             return redirect()->route('showAbonne', $abonne);

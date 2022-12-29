@@ -48,7 +48,7 @@
                </div>
                 <div class="flex flex-col w-2/3 mt-6">
                     <div>
-                        <label class="label" for="email">Email <span class="optionnel">*</span> </label>
+                        <label class="label" for="email">Email <span class="optionnel">(optionnel)</span> </label>
                         <input type="text" id="email" placeholder="Ex: jhoneDoe@gmail.com" value="{{old('email')}}" name="email" class="input">
                     </div>
                     <div>
@@ -60,7 +60,7 @@
                     </div>
                     <div>
                         <label class="label" for="confirmation_password">Confirmation du mot de passe</label>
-                        <input type="password" id="confirmation_password" value="{{old('confirmation_password')}}" name="confirmation_password" class="input @error('confirmation_password') is-invalid @enderror">
+                        <input type="password" id="confirmation_password" placeholder="Resaisisez le mot de passe..." value="{{old('confirmation_password')}}" name="confirmation_password" class="input @error('confirmation_password') is-invalid @enderror">
                         @error('confirmation_password')
                         <div class="alert">{{ $message }}</div>
                         @enderror
@@ -69,7 +69,7 @@
             </div>
             <div>
                 <label class="label" for="contact">Contact</label>
-                <input type="tel" id="contact" value="{{old('contact')}}" name="contact" class="input @error('contact') is-invalid @enderror">
+                <input type="tel" id="contact" value="{{old('contact')}}" placeholder="Ex: 93561240" name="contact" class="input @error('contact') is-invalid @enderror">
                 @error('contact')
                 <div class="alert">{{ $message }}</div>
                 @enderror
@@ -92,7 +92,7 @@
                         @enderror
                     </div>
                     <div class="w-2/6">
-                        <label class="label" for="numero_maison">Numero de maison <span class="optionnel">*</span></label>
+                        <label class="label" for="numero_maison">Numero de maison <span class="optionnel">(optionnel)</span></label>
                         <input type="text" id="numero_maison" value="{{old('numero_maison')}}" name="numero_maison" class="input">
                     </div>
                 </div>

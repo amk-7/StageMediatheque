@@ -73,4 +73,15 @@
         <div class="alert">{{ $message }}</div>
         @enderror
     </div>
+    @if(! Auth::guest())
+        <div class="flex space-x-3 mt-6">
+            <label class="label" for="type_de_carte">Profil valide ?</label>
+            <div class="flex space-x-3">
+                <input type="radio" name="profil_valide" value="1" {{ old('profil_valide') == "1" ? 'checked' : '' }}>
+                <label>Oui</label>
+                <input type="radio" name="profil_valide" value="0" {{ old('profil_valide') == "0" ? 'checked' : '' }}>
+                <label>Non</label>
+            </div>
+        </div>
+    @endif
 @stop
