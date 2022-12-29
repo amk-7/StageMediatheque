@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class Abonne extends Model
 {
     use HasFactory;
-    protected $fillable = ['date_naissance', 'niveau_etude', 'profession', 'contact_a_prevenir', 'numero_carte', 'type_de_carte', 'id_utilisateur'];
+    protected $fillable = ['date_naissance', 'profil_valider','niveau_etude', 'profession', 'contact_a_prevenir', 'numero_carte', 'type_de_carte', 'id_utilisateur'];
     protected $primaryKey = 'id_abonne';
     protected $dates = ['date_naissance'];
 

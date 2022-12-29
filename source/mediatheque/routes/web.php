@@ -25,6 +25,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
+
 Route::group(['middleware' => ['role:responsable|bibliothecaire|abonne', 'auth']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -55,7 +57,6 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('liste_des_abonnes', 'App\Http\Controllers\AbonneController@index')->name('listeAbonnes');
     Route::delete('suppression_des_abonnes/{abonne}', 'App\Http\Controllers\AbonneController@destroy')->name('destroyAbonne');
     Route::get('formulaire_Abonne', 'App\Http\Controllers\AbonneController@create')->name('createAbonne');
-    Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
 
     // Path: Emprunt routes/web.php
     Route::get('liste_des_emprunts', 'App\Http\Controllers\EmpruntController@index')->name('listeEmprunts');

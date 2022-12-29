@@ -25,7 +25,12 @@ class ReservationController extends Controller
     {
         $paginate = 10;
         $reservation = array();
-        //dd($request);
+        if (Auth::user()->hasRole('abonne')){
+            $request->nom_abonne = "-1";
+            $request->prenom_abonne = Auth::user()->abonne->id_abonne;
+            $request->etat = 0;
+            $abonnes = array($request->prenom_abonne);
+        }
         if (! in_array($request->nom_abonne, ["Séléctionner nom", null])) {
             if ($request->prenom_abonne != "Séléctionner prénom" ?? null){
                 $abonnes = array($request->prenom_abonne);
@@ -44,8 +49,7 @@ class ReservationController extends Controller
                     $reservation = Reservation::whereIn('id_abonne', $abonnes)->paginate($paginate);
                 } else {
                     $etat = (int) $request->etat;
-                    $reservation = Reservation::whereIn('id_abonne', $abonnes)
-                                                ->where('etat', $etat)->paginate($paginate);
+                    $reservation = Reservation::whereIn('id_abonne', $abonnes)->paginate($paginate);
                 }
             }else{
                 $reservation = new Collection();

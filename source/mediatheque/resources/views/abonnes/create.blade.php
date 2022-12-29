@@ -6,7 +6,7 @@
             <label class="label" for="date_naissance">Date de naissance</label>
             <input type="date" name="date_naissance" id="date_naissance" value="{{old('date_naissance')}}" class="input @error('date_naissance') is-invalid @enderror">
             @error('date_naissance')
-            <div class="alert">{{ $message }}</div>}
+            <div class="alert">{{ $message }}</div>
             @enderror
         </div>
         <div class="w-1/2">
@@ -60,9 +60,9 @@
     <div>
         <label class="label" for="type_de_carte">Type de carte</label>
         <div class="label">
-            <input type="radio" name="type_de_carte" value="Identité" {{ old('type_de_carte') == "Identité" ? 'checked' : '' }}>
+            <input type="radio" name="type_de_carte" value="1" {{ old('type_de_carte') == "1" ? 'checked' : '' }}>
             <label> Identité</label>
-            <input type="radio" name="type_de_carte" value="Scolaire" {{ old('type_de_carte') == "Scolaire" ? 'checked' : '' }}>
+            <input type="radio" name="type_de_carte" value="0" {{ old('type_de_carte') == "0" ? 'checked' : '' }}>
             <label> Scolaire</label>
         </div>
     </div>

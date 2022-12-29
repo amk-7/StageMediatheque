@@ -89,7 +89,7 @@ class PersonnelController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-        $utilisateur->assignRole(Role::where('name', $request->statut));
+        $utilisateur->assignRole(Role::where('name', $request->statut)->first());
         return redirect()->route('listePersonnels');
     }
 
