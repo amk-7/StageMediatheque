@@ -32,7 +32,9 @@ class CancelRegistrationJob implements ShouldQueue
     public function handle()
     {
         $registration = Registration::all()->where('id_registration', $this->id_registration)->first();
-        $registration->etat = 0;
-        $registration->save();
+        if ($registration->etat == 1){
+            $registration->etat = 0;
+            $registration->save();
+        }
     }
 }

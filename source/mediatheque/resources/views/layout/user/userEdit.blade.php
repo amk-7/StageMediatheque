@@ -9,19 +9,14 @@
     {{ method_field('PUT') }}
 
     <div class="flex flex-row space-x-3 justify-center items-center">
-        <div class="w-2/6" >
+        <div class="w-1/2" >
             <label class="label" for="nom">Nom</label>
             <input type="text" name="nom" value="{{$utilisateur->nom}}" class="input" >
         </div>
 
-        <div class="w-2/6">
+        <div class="w-1/2">
             <label class="label" for="prenom">Prenom</label>
             <input type="text" name="prenom" value="{{$utilisateur->prenom}}" class="input">
-        </div>
-
-        <div class="w-2/6">
-            <label class="label" for="nom_utilisateur">Nom d'utilisateur</label>
-            <input type="text" name="nom_utilisateur" value="{{$utilisateur->nom_utilisateur}}" class="input">
         </div>
     </div>
 
@@ -63,14 +58,14 @@
                 <div class="alert">{{ $message }}</div>
                 @enderror
             </div>
-            <div>
-                <label class="label" for="contact">Contact</label>
-                <input type="tel" name="contact" value="{{$utilisateur->contact}}" class="input">
-            </div>
         </div>
     </div>
 
     <div>
+        <div>
+            <label class="label" for="contact">Contact</label>
+            <input type="tel" name="contact" value="{{$utilisateur->contact}}" class="input">
+        </div>
         <label class="label" for="adresss">Adresss</label>
         <div class="flex flex-row space-x-2 justify-center items-center">
             <div class="w-2/6">

@@ -138,6 +138,10 @@ class LiquideController extends Controller
      */
     public function destroy(Liquide $liquide)
     {
-        //
+        foreach (Registration::all() as $registration){
+            $registration->etat = 0;
+            $registration->save();
+        }
+        return redirect()->route("listeLiquides");
     }
 }

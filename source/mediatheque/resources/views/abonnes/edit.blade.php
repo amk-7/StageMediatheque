@@ -2,11 +2,11 @@
 
 @section('abonne')
     <div class="flex flex-row space-x-3">
-        <div>
+        <div  class="w-1/2">
             <label class="label" for="date_naissance">Date de naissance</label>
             <input type="date" name="date_naissance" value="{{\App\Service\GlobaleService::afficherDate($abonne->date_naissance)}}" class="input">
         </div>
-        <div>
+        <div  class="w-1/2">
             <label class="label" for="contact_a_prevenir">Contact à prévenir</label>
             <input type="text" name="contact_a_prevenir" value="{{ $abonne->contact_a_prevenir }}" class="input">
         </div>
