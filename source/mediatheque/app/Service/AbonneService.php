@@ -50,7 +50,6 @@ class AbonneService
                 'nombre_emprunts' => $p->getNombreEprunt() != 0 ? $p->getNombreEprunt(): '0',
                 'nombre_restitutions' => $p->getNombreRestitution() != 0 ? $p->getNombreRestitution() : '0',
                 'nombre_emprunt_non_restituer' => count($p->getEmpruntsEnCours()) != 0 ? count($p->getEmpruntsEnCours()) : '0',
-                'nombre_abonnement' => count($p->abonnements()) != 0 ? count($p->abonnements()) : '0',
             );
             array_push($abonnes, $personne);
         }
