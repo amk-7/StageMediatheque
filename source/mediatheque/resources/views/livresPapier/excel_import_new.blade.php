@@ -3,6 +3,7 @@
     <form action="{{ route('enregistrementImportExcelNew') }}" method="post" enctype="multipart/form-data" class="m-auto flex flex-col space-y-3">
         @method('put')
         @csrf
+        <h1 class="label_title">Import des livres Papier</h1>
         <fieldset class="fieldset_border space-y-3">
             <legend>Fichier excel</legend>
             <div>

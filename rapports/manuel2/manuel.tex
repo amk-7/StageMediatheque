@@ -14,7 +14,7 @@
 \newpage
 
 \section{Préambule}
-Ce manuel d'utilisation ci explique comment utilisé le site web de la médiathèque afin
+Ce manuel d'utilisation ci explique comment utiliser le site web de la médiathèque afin
 de permettre aux personnels de la médiathèque de ce familiariser avec ce dernier.
 
 \newpage
@@ -387,7 +387,6 @@ Ce sous menu permet de garder les traces des payements des abonnés pour leur
 abonnement. Après avoir finis d'enregistrer un abonne, vous pouvez enregistrer le 
 payement qu'il a effectuer pour l'abonnement (200 FCFA ou 500 FCFA). Pour le faire :
 Cliquer sur le menu \textbf{Abonnement}. 
-::::::::::::image requise::::::::::::\\
 Vous verrez deux boutons : \textbf{Abonnement \& Annuler abonnement} et la liste des abonnement.\\
 \begin{center}
 \includegraphics[scale=0.56]{img/abonnements.png}
@@ -395,7 +394,6 @@ Vous verrez deux boutons : \textbf{Abonnement \& Annuler abonnement} et la liste
 \textit{NB :} La colonne état permet de déterminer si l'abonnement est actif ou non.
 \begin{itemize}
 \item[•]  Cliquer sur \textbf{Abonnement}.
-::::::::::::image requise::::::::::::\\
 Sélectionner le nom et prénom de l'abonné. Le montant se calculera automatiquement.
 \begin{center}
 \includegraphics[scale=0.56]{img/abonnement_create.png}
@@ -420,27 +418,93 @@ confirmé en appuyant sur supprimer.Voici le résultat.
 
 
 \section{Import excel}
-Pour enregistrer plusieurs livre papier ou numérique via une feuille excel, rendez vous sur le
+Pour enregistrer plusieurs livres papier ou numérique via une feuille excel, rendez-vous sur le
 tableau de bord puis sur le menu \textbf{Import excel}. Vous y verrez deux sous menu.
 \textbf{Livre Papier et Livre numérique}.
+\begin{center}
+\includegraphics[scale=0.3]{img/import_menu.png}
+\end{center}
 \begin{itemize}
 \item[•] Pour commencer choisissez le sous menu \textbf{Livre papier}. 
-::::::::::::image requise::::::::::::\\
+\begin{center}
+\includegraphics[scale=0.3]{img/import_lp.png}
+\end{center}
 Une page s'ouvre. 
-::::::::::::image requise::::::::::::\\
+\begin{center}
+\includegraphics[scale=0.5]{img/import_view_p.png}
+\end{center}
 cliquer sur le bouton choisir un fichier.
-::::::::::::image requise::::::::::::\\
-Une onglet s'ouvre choisissez votre fichier excel.
-::::::::::::image requise::::::::::::\\
-Ensuit cliquer sur le bouton sélect.fichiers.
-Une onglet s'ouvre la aussi choisissez le dossier contenant les images des livres inscrit dans le fichier
+Un onglet s'ouvre choisissez votre fichier excel.
+\begin{center}
+\includegraphics[scale=0.2]{img/open_folder.png}
+\end{center}
+En suite, cliquer sur le bouton \textbf{sélect.fichiers}.
+Un onglet s'ouvre la aussi choisissez le dossier contenant les images des livres inscrit dans le fichier
 excel.
-::::::::::::image requise::::::::::::\\
+\begin{center}
+\includegraphics[scale=0.2]{img/open_file2.png}
+\end{center}
+C'est normale que vous ne voyez pas vos fichiers mais je vous rassure qu'ils sont bien là.
+Lorsque vous cliquez sur le bouton \textbf{importer}, la fenêtre se ferme et vous avez ceci qui apparaît.
+\begin{center}
+\includegraphics[scale=0.4]{img/confirm_import.png}
+\end{center}
+\begin{center}
+\includegraphics[scale=0.5]{img/import_lp_save.png}
+\end{center}
+Cliquer sur Import ((en orange).
 Puis appuyez sur le bouton importer. Après l'importation, vous serai redirigé vers la liste des ouvrages.
 
-\textbf{NB:} Le fichier excel ne doit contenir qu'une seul feuille de calcul répondant
+\textbf{NB:} Le fichier excel ne doit contenir qu'une seule feuille de calcul répondant
 aux format çi dessous.\\
-::::::::::Insérer format::::::::::
+NUMERO,AUTEUR,TITRE (ŒUVRE),MOTS CLES, ISBN,LIEU D'EDITON ,DATE PARUTION, NOMBRE, TYPE, DOMAINE,	NIVEAU, IMAGES.
+
+\begin{itemize}
+\item NUMERO : Numéro de la ligne.
+\item AUTEUR : Auteur du livre sous forme \textbf{nom,prénom} si il à plusieurs auteurs il
+sont séparé par un \textbf{";"}.
+\item TITRE (ŒUVRE) : Titre de l'ouvrage.
+\item MOTS CLES : Deux mot clé sont séparé par une \textbf{","}.
+\item ISBN : L'IBSN de l'ouvrage.
+\item LIEU D'EDITON : Le lieu d'édition de l'ouvrage.
+\item DATE PARUTION : La date de parution de l'ouvrage.
+\item NOMBRE : Le nombre d'exemplaire de l'ouvrage.
+\item TYPE : Le Type de l'ouvrage.
+\item DOMAINE : Le Domaine de l'ouvrage.
+\item NIVEAU : Le niveau de l'ouvrage.
+\item IMAGES : Le nom de l'ouvrage (images.png).
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.3]{img/excel_format.png}
+\end{center}
+\item[•] Au niveau des livre numérique le procédé est le même que pour l'import des ouvrages papier. La seul différence se trouve au niveau du format du fichier excel.\\
+Voici le format que doit respecter le fichier excel.\\
+
+NUMERO, AUTEUR, TITRE (ŒUVRE),MOTS CLES, ISBN,LIEU D'EDITON ,DATE PARUTION, TYPE, DOMAINE, NIVEAU, IMAGES, PDF
+
+\begin{itemize}
+\item NUMERO : Numéro de la ligne.
+\item AUTEUR : Auteur du livre sous forme \textbf{nom,prénom} si il à plusieurs auteurs il
+sont séparé par un \textbf{";"}.
+\item TITRE (ŒUVRE) : Titre de l'ouvrage.
+\item MOTS CLES : Deux mot clé sont séparé par une \textbf{","}.
+\item ISBN : L'IBSN de l'ouvrage.
+\item LIEU D'EDITON : Le lieu d'édition de l'ouvrage.
+\item DATE PARUTION : La date de parution de l'ouvrage.
+\item TYPE : Le Type de l'ouvrage.
+\item DOMAINE : Le Domaine de l'ouvrage.
+\item NIVEAU : Le niveau de l'ouvrage.
+\item IMAGES : Le nom de l'image (images.png).
+\item PDF : Le nom du fichier pdf.
+\end{itemize}
+
+\begin{center}
+\includegraphics[scale=0.25]{img/fromat_excel_num.png}
+\end{center}
+
+\textbf{NB:} Il se peut que cella ne marche pas. Donc pour éviter tous soucis, charger le fichier
+\textit{excel} et un répertoire vide. Les développeurs se chargeront de charger les fichiers pdf concerné.
+
 \end{itemize} 
 
 \end{document}

@@ -16,7 +16,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('listeLivresNumerique')" :active="request()->routeIs('listeLivresNumerique')">
-                        {{ __('Livres numerique') }}
+                        {{ __('Livres pdf') }}
                     </x-nav-link>
                     <x-nav-link :href="route('listeLivresPapier')" :active="request()->routeIs('listeLivresPapier')">
                         {{ __('Livres papier') }}
@@ -27,12 +27,14 @@
             <!-- Settings Dropdown -->
             <div class="hidden space-x-6 sm:flex sm:items-center sm:ml-6">
                 @if(Auth::guest())
-                    <button class="button button_show">
-                        <a href="/register">{{ __("Register") }}</a>
-                    </button>
-                    <button class="button button_primary">
-                        <a href="/login">{{ __("Log In") }}</a>
-                    </button>
+                    <div class="flex space-x-1">
+                        <button class="button button_show">
+                            <a href="/register">{{ __("Register") }}</a>
+                        </button>
+                        <button class="button button_primary">
+                            <a href="/login">{{ __("Log In") }}</a>
+                        </button>
+                    </div>
                 @endif
                 @if(Auth::user())
                     <x-dropdown align="right" width="48">
@@ -93,7 +95,7 @@
                     {{ __('Log In') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('listeLivresNumerique')" :active="request()->routeIs('listeLivresNumerique')">
-                    {{ __('Livres numerique') }}
+                    {{ __('Livres pdf') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('listeLivresPapier')" :active="request()->routeIs('listeLivresPapier')">
                     {{ __('Livres papier') }}
@@ -108,7 +110,7 @@
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
                 <x-responsive-nav-link :href="route('listeLivresNumerique')" :active="request()->routeIs('listeLivresNumerique')">
-                    {{ __('Livres numerique') }}
+                    {{ __('Livres pdf') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('listeLivresPapier')" :active="request()->routeIs('listeLivresPapier')">
                     {{ __('Livres papier') }}
