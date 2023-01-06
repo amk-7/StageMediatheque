@@ -66,7 +66,6 @@ class PersonnelController extends Controller
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
-            'email' => 'required',
             'password' => 'required',
             'contact' => 'required',
             'ville' => 'required',
