@@ -21,7 +21,7 @@
                         <label for="par_page">par page</label-->
                     </div>
                 </div>
-                <table class="fieldset_border bg-white">
+                <table class=" bg-white">
                     <thead class="text-xs bg-white uppercase bg-gray-70 dark:bg-gray-300 dark:text-gray-500 text-center">
                     <tr>
                         <th class="fieldset_border">Numéro</th>

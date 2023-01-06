@@ -25,10 +25,7 @@
                             <div class="flex flex-col-reverse p-2">
                                 <input type="file" onchange="previewPicture(this)" name="image_livre" id="" value="{{$ouvrage->image}}"
                                        accept="image/jpg, image/jpeg, image/png, image/jpeg"><br>
-
                             </div>
-
-
                         </div>
                         <div class="flex flex-col">
                             <div class="flex flex-row">
@@ -123,7 +120,7 @@
                             <div class="flex flex-row space-x-3">
                                 <input name="prenom" id="prenom" placeholder="saisire le prenom de l'auteur"
                                        value="{{ old('prenom') }}"
-                                       class="input" autocomplete="off">
+                                       class="input" autocomplete="off" style="flex-wrap: wrap">
                                 <button id="ajouter_auteur" class="button button_primary">+</button>
                             </div>
                         </div>
@@ -152,7 +149,7 @@
                                placeholder="Entrez un mot clé"/>
                         <button id="ajouter_mot_cle" class="button button_primary">+</button>
                     </div>
-                    <div id="liste_mots_cle" class="flex flex-row space-x-3">
+                    <div id="liste_mots_cle" class="flex flex-row space-x-3" style="flex-wrap: wrap">
                         @foreach($ouvrage->mot_cle as $mot_cle)
                             @if(! empty($mot_cle))
                                 <input type="text" id="mot_cle_{{$loop->index}}" name="mot_cle_{{$loop->index}}" class="input_elt"

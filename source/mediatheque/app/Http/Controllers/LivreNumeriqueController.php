@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\LivresNumeriqueImport;
 use App\Imports\LivresPapierImport;
+use App\Jobs\UploadFileJob;
 use App\Models\LivresNumerique;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
@@ -213,14 +214,15 @@ class LivreNumeriqueController extends Controller
             $chemin_ouvrage_excel = strtolower('livres_numerique').'.'.$request->excel->extension();
             $request->excel->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
 
+            Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$chemin_ouvrage_excel);
+
             foreach ($request->file("fileList") as $file){
                 $file->storeAs($destination_path, $file->getClientOriginalName());
             }
+            //$this->dispatch(new UploadFileJob($request->file('fileList'), $destination_path));
         } else {
             return redirect()->route('export');
         }
-
-        Excel::import(new LivresNumeriqueImport(),'public/fichier_excel/'.$chemin_ouvrage_excel);
         return redirect()->route('listeLivresNumerique');
     }
 }
