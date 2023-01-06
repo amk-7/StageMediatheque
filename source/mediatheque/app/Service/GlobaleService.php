@@ -10,7 +10,7 @@ class GlobaleService
     public static function verifieCart(String $carte) : bool
     {
         $carte = str_replace(" ", "", trim($carte));
-        $pattern1 = "/([1-9]{4})(-)([1-9]{3})(-)([1-9]{4})/";
+        $pattern1 = "/([0-9]{4})(-)([0-9]{3})(-)([0-9]{4})/";
         return preg_match($pattern1, $carte)==1;
     }
 
