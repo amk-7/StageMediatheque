@@ -9,6 +9,8 @@ use App\Models\LivresPapier;
 use App\Models\Ouvrage;
 use App\Models\OuvragesPhysique;
 use App\Service\OuvragesPhysiqueService;
+use App\Service\OuvragesService;
+use App\Models\ArchiveOuvrages;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -66,7 +68,7 @@ class LivrePapierSeeder extends Seeder
                 "français",
                 ""
             ),
-            'ISBN'=>'12225555',
+            'isbn'=>'12225555',
             'id_ouvrage_physique'=>$ouvragePhysique5->id_ouvrage_physique
         ]);
 
@@ -108,7 +110,7 @@ class LivrePapierSeeder extends Seeder
                 "anglais",
                 ""
             ),
-            'ISBN'=>'1',
+            'isbn'=>'1',
             'id_ouvrage_physique'=>$ouvragePhysique1->id_ouvrage_physique
 
         ]);
@@ -147,7 +149,7 @@ class LivrePapierSeeder extends Seeder
                 "anglais",
                 ""
             ),
-            'ISBN'=>'13',
+            'isbn'=>'13',
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
         ]);
     }

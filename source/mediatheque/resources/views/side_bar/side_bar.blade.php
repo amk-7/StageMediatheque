@@ -175,6 +175,22 @@
                                </li>
                            </ul>
                        </li>
+                       <li>
+                           <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
+                               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Archives</span>
+                           </label>
+                           <ul id="dropdown-example" class="ml-12">
+                               <li>
+                                   <a href="/liste_des_archive_abonnes" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Archive des abonnes</a>
+                               </li>
+                           </ul>
+
+                           <ul id="dropdown-example" class="ml-12">
+                               <li>
+                                   <a href="/liste_des_archive_ouvrages" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Archive des ouvrages</a>
+                               </li>
+                           </ul>
+                       </li>
                       @endif
                    @endif
                    <!-- Menu abonnee -->

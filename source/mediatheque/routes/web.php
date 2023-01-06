@@ -181,6 +181,14 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::get('download_excel_liste_abonnes', [\App\Http\Controllers\AbonneController::class, 'exportExcel'])->name('downloadExcelListeAbonnes');
     Route::get('download_excel_liste_emprunts', [\App\Http\Controllers\EmpruntController::class, 'exportExcel'])->name('downloadExcelListeEnprunt');
 
+    // Path: ArchiveAbonne routes/web.php
+    Route::get('liste_des_archive_abonnes', 'App\Http\Controllers\ArchiveAbonneController@index')->name('listeArchiveAbonnes');
+
+    // Path: ArchiveLivresPapiers routes/web.php
+    Route::get('liste_des_archive_livres_papiers', 'App\Http\Controllers\ArchiveLivresPapiersController@index')->name('listeArchiveLivresPapiers');
+
+    // Path: ArchiveOuvrage routes/web.php
+    Route::get('liste_des_archive_ouvrages', 'App\Http\Controllers\ArchiveOuvrageController@index')->name('listeArchiveOuvrages');
 });
 
 
@@ -204,3 +212,5 @@ require __DIR__.'/auth.php';
 Route::fallback(function (){
     return view('404');
 });
+
+

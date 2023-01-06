@@ -16,7 +16,7 @@ class CreateLivresPapiersTable extends Migration
         Schema::create('livres_papiers', function (Blueprint $table) {
             $table->bigIncrements('id_livre_papier');
             $table->json('categorie');
-            $table->string('ISBN')->nullable();
+            $table->string('isbn')->nullable();
             $table->bigInteger('id_ouvrage_physique');
             $table->timestamps();
             $table->foreign('id_ouvrage_physique')->references('id_ouvrage_physique')->on('ouvrages_physiques')->cascadeOnDelete();
