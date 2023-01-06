@@ -169,8 +169,9 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur,
                 'profil_valider' => $request->profil_valide,
             ]);
+            $utilisateur->assignRole([Role::find(3)]);
+
             if (Auth::guest()){
-                $utilisateur->assignRole(Role::find(3));
 
                 event(new Registered($utilisateur));
 

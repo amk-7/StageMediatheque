@@ -19,7 +19,6 @@ class PersonnelController extends Controller
      */
     public function index()
     {
-        //
         $personnels = Personnel::paginate(10);
         return view('personnels.index')->with('personnels', $personnels);
     }
@@ -88,7 +87,12 @@ class PersonnelController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur
             ]);
         }
-        $utilisateur->assignRole(Role::where('name', $request->statut)->first());
+
+        if ( strtolower($request->statut) == "responsable"){
+            $utilisateur->assignRole([Role::find(1), Role::find(2)]);
+        } else {
+            $utilisateur->assignRole([Role::find(2)]);
+        }
         return redirect()->route('listePersonnels');
     }
 
