@@ -171,13 +171,13 @@ class AbonneController extends Controller
             ]);
             $utilisateur->assignRole([Role::find(3)]);
 
+            Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+
             if (Auth::guest()){
 
                 event(new Registered($utilisateur));
 
                 Auth::login($utilisateur);
-
-                Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
 
                 return redirect(RouteServiceProvider::HOME);
             }

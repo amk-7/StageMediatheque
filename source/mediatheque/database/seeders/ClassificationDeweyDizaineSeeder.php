@@ -16,7 +16,7 @@ class ClassificationDeweyDizaineSeeder extends Seeder
     public function run()
     {
         // Section 0
-       $classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 0)->first();
+       /*$classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 0)->first();
         ClassificationDeweyDizaine::create([
             'classe'=>10,
             'matiere'=>"bibliographie",
@@ -253,6 +253,55 @@ class ClassificationDeweyDizaineSeeder extends Seeder
         ClassificationDeweyDizaine::create([
             'classe'=>490,
             'matiere'=>"autre langues",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);*/
+
+
+        // Section 500
+        $classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 500)->first();
+        ClassificationDeweyDizaine::create([
+            'classe'=>510,
+            'matiere'=>"mathématiques",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+        ClassificationDeweyDizaine::create([
+            'classe'=>520,
+            'matiere'=>"astronomie et sciences connexes",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+        ClassificationDeweyDizaine::create([
+            'classe'=>530,
+            'matiere'=>"physique",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+        ClassificationDeweyDizaine::create([
+            'classe'=>540,
+            'matiere'=>"chimie et sciences connexes",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+        ClassificationDeweyDizaine::create([
+            'classe'=>550,
+            'matiere'=>"sciences de la terre",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+        ClassificationDeweyDizaine::create([
+            'classe'=>560,
+            'matiere'=>"paléontologie plaléozoologie",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+        ClassificationDeweyDizaine::create([
+            'classe'=>570,
+            'matiere'=>"science de la vie biologie",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+        ClassificationDeweyDizaine::create([
+            'classe'=>580,
+            'matiere'=>"plantes",
+            'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+        ClassificationDeweyDizaine::create([
+            'classe'=>590,
+            'matiere'=>"animaux",
             'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
         ]);
 

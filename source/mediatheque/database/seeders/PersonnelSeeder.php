@@ -18,7 +18,7 @@ class PersonnelSeeder extends Seeder
     public function run()
     {
         //
-        $utilisateur = User::create([
+        /*$utilisateur = User::create([
             'nom' => 'Daiki',
             'prenom' => 'Alhasan',
             'nom_utilisateur' => 'Shin06',
@@ -38,14 +38,14 @@ class PersonnelSeeder extends Seeder
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
 
-        $utilisateur->assignRole(Role::find(2));
+        $utilisateur->assignRole(Role::find(2));*/
 
         $utilisateur = User::create([
-            'nom' => 'KONDI ',
-            'prenom' => 'Abdoul malik',
-            'nom_utilisateur' => '@amk',
+            'nom' => 'SUP ADMIN',
+            'prenom' => 'SUP ADMIN',
+            'nom_utilisateur' => '_admin',
             'email' => 'abdoulmalikkondi8@gmail.com',
-            'password' => Hash::make('amk2048'),
+            'password' => Hash::make('IFNTI2023!'),
             'contact' => '93561240',
             'photo_profil' => 'profil.png',
             'adresse' => array(
