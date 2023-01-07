@@ -127,19 +127,19 @@
                            </label>
                            <ul id="dropdown-example" class="ml-12">
                                <li>
-                                   <a href="/liste_livres_papier" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600" >ouvrage physique</a>
+                                   <a href="/liste_livres_papier" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600" >Livres Papier</a>
                                </li>
                                <li>
-                                   <a href="/liste_livres_numerique" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">ouvrage Electronique</a>
+                                   <a href="/liste_livres_numerique" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres PDF</a>
                                </li>
                                <li>
-                                   <a href="/liste_des_emprunts" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunt</a>
+                                   <a href="/liste_des_emprunts" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunts</a>
                                </li>
                                <li>
-                                   <a href="/liste_des_restitutions" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réstitution</a>
+                                   <a href="/liste_des_restitutions" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réstitutions</a>
                                </li>
                                <li>
-                                   <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réservation</a>
+                                   <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réservations</a>
                                </li>
                            </ul>
                        </li>
@@ -162,7 +162,7 @@
                        </li>
                        <li>
                            <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
-                               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Import excel</span>
+                               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Imports excel</span>
                            </label>
                            <ul id="dropdown-example" class="ml-12">
                                <li>
@@ -213,7 +213,7 @@
                            </ul>
                            <ul id="dropdown-example" class="">
                                <li>
-                                   <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes réservation</a>
+                                   <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes réservations</a>
                                </li>
                            </ul>
                        </li>

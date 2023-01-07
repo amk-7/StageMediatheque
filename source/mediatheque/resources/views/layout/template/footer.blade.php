@@ -102,19 +102,13 @@
             </div>
             <div class="">
                 <h6 class="uppercase font-semibold mb-4 flex justify-center md:justify-start">
-                    MEDIATHEQUE
+                    NOS SERVICES
                 </h6>
                 <p class="mb-4">
-                    <a href="#!" class="text-gray-600">Angular</a>
+                    <a href="#!" class="text-gray-600">Formation Bureautique</a>
                 </p>
                 <p class="mb-4">
-                    <a href="#!" class="text-gray-600">React</a>
-                </p>
-                <p class="mb-4">
-                    <a href="#!" class="text-gray-600">Vue</a>
-                </p>
-                <p>
-                    <a href="#!" class="text-gray-600">Laravel</a>
+                    <a href="#!" class="text-gray-600">Bibliothèque</a>
                 </p>
             </div>
             <div class="">
@@ -122,16 +116,16 @@
                     NOS PARTENAIRES
                 </h6>
                 <p class="mb-4">
-                    <a href="#!" class="text-gray-600">Pricing</a>
+                    <a href="#!" class="text-gray-600">IFNTI</a>
                 </p>
                 <p class="mb-4">
-                    <a href="#!" class="text-gray-600">Settings</a>
+                    <a href="#!" class="text-gray-600"></a>
                 </p>
                 <p class="mb-4">
-                    <a href="#!" class="text-gray-600">Orders</a>
+                    <a href="#!" class="text-gray-600"></a>
                 </p>
                 <p>
-                    <a href="#!" class="text-gray-600">Help</a>
+                    <a href="#!" class="text-gray-600"></a>
                 </p>
             </div>
             <div class="">
