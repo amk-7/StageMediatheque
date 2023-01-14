@@ -131,17 +131,23 @@ class PersonnelController extends Controller
     public function update(Request $request, Personnel $personnel)
     {
 
-        $request['adresse'] = array(
+       $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
             'numero_maison' => $request->numero_maison,
         );
 
         $utilisateur = UserService::modifierUtilisateur($request, $personnel->id_utilisateur);
-        $utilisateur->assignRole(Role::where('name', $request["statut"]));
+
+        if (strtolower($request["statut"]) == "responsable"){
+            $utilisateur->assignRole([Role::find(1), Role::find(2)]);
+        } else {
+            $utilisateur->assignRole([Role::find(2)]);
+        }
         $utilisateur->save();
         $personnel->statut = $request["statut"];
         $personnel->save();
+
         return redirect()->route('listePersonnels');
     }
 

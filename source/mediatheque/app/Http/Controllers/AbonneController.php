@@ -250,9 +250,6 @@ class AbonneController extends Controller
         } else{
             return redirect()->route('listeAbonnes');
         }
-
-
-
     }
 
     /**

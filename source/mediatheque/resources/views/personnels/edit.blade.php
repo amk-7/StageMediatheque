@@ -1,3 +1,5 @@
+
+
 @extends('layout.user.userEdit', ['action'=>"updatePersonnel", 'title'=>"Modifier un personnel", 'utilisateur'=>$personnel->utilisateur, 'model'=>$personnel])
 
 @section('personnel')
