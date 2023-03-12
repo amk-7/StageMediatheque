@@ -41,6 +41,10 @@
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-3 focus:outline-none focus:border-green-500;
 }
 
+input_elt_prime {
+}
+
+
 .button_remove_elt {
     @apply text-white cursor-pointer rounded px-2 mr-2 uppercase;
 }

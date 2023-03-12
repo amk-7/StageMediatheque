@@ -3,23 +3,29 @@
     <div>
         @include('livresPapier.shareSearchBarLivrePapier')
     </div>
+
+    <div class="flex flex-row content-center space-x-3">
+        @if(Auth::user()->hasRole('responsable'))
+            <td class="flex flex-row mb-3">
+                <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
+                    @csrf
+                    <input type="submit" class="button button_primary" name="ajouter" value="ajouter">
+                </form>
+                <form action="{{route('formulaireEnregistrementApprovisionnements')}}" method="get">
+                    @csrf
+                    <input type="submit" class="button button_primary" name="approvisionement" value="approvisionner">
+                </form>
+                <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
+                    @csrf
+                    <input type="submit" class="button button_primary" name="eport" value="Exporter">
+                </form>
+            </td>
+        @endif
+    </div>
+
     @if(!empty($livresPapiers ?? "") && $livresPapiers->count())
         @if(Auth::user() && Auth::user()->hasRole('bibliothecaire'))
             <div class="m-3">
-                <div class="flex flex-row content-center space-x-3">
-                    @if(Auth::user()->hasRole('responsable'))
-                        <td class="flex flex-row mb-3">
-                            <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
-                                @csrf
-                                <input type="submit" class="button button_primary" name="ajouter" value="ajouter">
-                            </form>
-                            <form action="{{route('formulaireEnregistrementApprovisionnements')}}" method="get">
-                                @csrf
-                                <input type="submit" class="button button_primary" name="approvisionement" value="approvisionner">
-                            </form>
-                        </td>
-                    @endif
-                </div>
                 <table class="fieldset_border bg-white">
                     <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
                         <tr>
@@ -42,7 +48,7 @@
                     <tbody class="all_data">
                     @foreach($livresPapiers as $livresPapier)
                         <tr class="dark:text-gray-500 text-center">
-                            <td class="fieldset_border" >{{ $loop->index+1 }}</td>
+                            <td class="fieldset_border" >{{ $livresPapier->id_livre_papier }}</td>
                             <td class="fieldset_border"> {{ $livresPapier->ouvragesPhysique->ouvrage->titre }} </td>
                             <td class="fieldset_border"> {{ $livresPapier->ouvragesPhysique->ouvrage->annee_apparution }} </td>
                             <td class="fieldset_border"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($livresPapier->ouvragesPhysique->ouvrage->niveau) }} </td>

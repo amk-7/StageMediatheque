@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\LivresPapierImport;
+use App\Models\ClassificationDeweyDizaine;
 use App\Models\LivresPapier;
 use App\Service\AuteurService;
 use App\Service\GlobaleService;
@@ -11,6 +12,7 @@ use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
 use App\Models\OuvragesPhysique;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -71,17 +73,6 @@ class LivresPapierController extends Controller
      */
     public function store(Request $request)
     {
-
-        Validator::make($request->all(), [
-            'ISBN'=>['required',
-                function ($attribute, $value, $flail){
-                    if (LivresPapierService::exist($value)!=null){
-                        $flail("L' ".$attribute." existe déjà");
-                    }
-                }
-            ],
-        ])->validate();
-
         $request->validate([
             'titre'=> 'required',
             'niveau'=>'required|not_in:Sélectionner niveau',
@@ -96,8 +87,30 @@ class LivresPapierController extends Controller
             'id_classification_dewey_dizaine'=>'required|not_in:Sélectionner étagère',
         ]);
 
+        if ($request["ISBN"]){
+            Validator::make($request->all(), [
+                'ISBN'=>['required',
+                    function ($attribute, $value, $flail){
+                        if (LivresPapierService::exist($value)!=null){
+                            $flail("L' ".$attribute." existe déjà");
+                        }
+                    }
+                ],
+            ])->validate();
+        }
+
+        if ($request['titre']){
+            Validator::make($request->all(), [
+                'titre' => ['required', function ($attribute, $value, $fail) {
+                    if (OuvrageService::ouvrageExist($value, Session::get('annee'),Session::get('lieu'))) {
+                        $fail("Le livre $value existe déjà.");
+                    }
+                }],
+            ])->validate();
+        }
 
         $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
+
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
 
         $ouvrage = OuvrageService::enregisterOuvrage($request, $auteurs);
@@ -106,6 +119,7 @@ class LivresPapierController extends Controller
 
         $categories_data = GlobaleService::extractLineToData($request->data_categorie);
         $categories = [];
+
         foreach ($categories_data as $categorie_array){
             array_push($categories, $categorie_array[0]);
         }
@@ -206,6 +220,7 @@ class LivresPapierController extends Controller
        return view('livresPapier.excel_import');
     }
 
+    //A supprimer
     public function uploadLivresPapierStore(Request $request)
     {
         if (! $request->url == null)
@@ -236,15 +251,16 @@ class LivresPapierController extends Controller
 
     public function uploadLivresPapier(Request $request)
     {
+        //dd("Okay");
         $destination_path = "public/images/images_livre/";
         if ($request->file("fileList") || $request->excel != null)
         {
             $chemin_ouvrage_excel = strtolower('livres_papier').'.'.$request->excel->extension();
             $request->excel->storeAs('public/fichier_excel/', $chemin_ouvrage_excel);
 
-            foreach ($request->file("fileList") as $file){
+            /*foreach ($request->file("fileList") as $file){
                 $file->storeAs($destination_path, $file->getClientOriginalName());
-            }
+            }*/
         } else {
             return redirect()->route('export');
         }
@@ -254,6 +270,7 @@ class LivresPapierController extends Controller
         Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel);
 
         if (session('error_id') > 0){
+            dd(session('error_id'));
             return redirect()->back()->withInput()->withErrors(['url' => "Le fichier excel n'est pas intégre. Une erreur est survenue à la ligne ".session('error_id')]);
         }
 

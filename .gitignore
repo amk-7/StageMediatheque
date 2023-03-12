@@ -6,6 +6,6 @@
 *.toc
 
 *.env
-
+source/postgres_data/*
 design/*
 rapports/*

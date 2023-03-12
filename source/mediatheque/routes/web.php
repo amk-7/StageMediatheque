@@ -50,6 +50,8 @@ Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function 
 });
 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
+    Route::get('enregistrement_activite/{abonne}', 'App\Http\Controllers\AbonneController@storeAndIndexActivity')->name('enregistrementActivite');
+    Route::post('enregistrement_activite/{abonne}', 'App\Http\Controllers\AbonneController@storeAndIndexActivity')->name('enregistrementActivite');
     Route::get('searchByTitleAndKeyWord', [LivresPapierController::class, 'searchByTitleAndKeyWord']);
     Route::post('enregistrer_une_reservation/{reservation}', [\App\Http\Controllers\EmpruntController::class, 'storeReservationEmprunt'])->name('enregistrerReservationEmprunt');
 

@@ -102,6 +102,7 @@ class OuvrageService
 
     public static function enregisterOuvrage(Request $request, Array $auteurs)
     {
+
         $mots_cle_data = GlobaleService::extractLineToData($request->data_mots_cle);
         $mots_cle = [];
         foreach ($mots_cle_data as $mot_cle_array){
@@ -191,9 +192,20 @@ class OuvrageService
         return array($debut, $fin);
     }
 
-    public static function ouvrageExist($titre, $annee)
+    public static function ouvrageExist($titre, $annee, $lieu_edition)
     {
-        return Ouvrage::all()->where('titre', $titre)->where('annee_apparution', $annee)->first();
+        dump($titre, $annee, $lieu_edition);
+        if ($annee > 1900) {
+            $ouvrage = Ouvrage::whereRaw("LOWER(REPLACE(titre, ' ', '')) = LOWER(REPLACE('{$titre}', ' ', ''))")
+                ->whereRaw("LOWER(REPLACE(lieu_edition, ' ', '')) = LOWER(REPLACE('{$lieu_edition}', ' ', ''))")
+                ->where('annee_apparution', $annee)
+                ->first();
+        } else {
+            $ouvrage = Ouvrage::whereRaw("LOWER(REPLACE(titre, ' ', '')) = LOWER(REPLACE('{$titre}', ' ', ''))")
+                ->whereRaw("LOWER(REPLACE(lieu_edition, ' ', '')) = LOWER(REPLACE('{$lieu_edition}', ' ', ''))")
+                ->first();
+        }
+        return $ouvrage;
     }
 
     public static function ouvragePhysiqueExist($ouvrage)

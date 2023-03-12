@@ -35,7 +35,7 @@ class AbonneService
                 'id'=>$p->id_abonne,
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
-                'prenom'=>$p->utilisateur->sexe,
+                'sexe'=>$p->utilisateur->sexe,
                 'nomUtilisateur' => $p->utilisateur->nom_utilisateur,
                 'email' => $p->utilisateur->email,
                 'contact' => $p->utilisateur->contact,

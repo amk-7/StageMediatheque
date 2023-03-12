@@ -19,6 +19,11 @@ class Abonne extends Model
         return $this->belongsTo('App\Models\User', 'id_utilisateur');
     }
 
+    public function activitys(){
+        return $this->hasMany('App\Models\Activite', 'id_abonne');
+    }
+
+
     public function restitutions(){
         return $this->hasMany(Restitution::class, 'id_abonne');
     }
@@ -50,11 +55,13 @@ class Abonne extends Model
         $liste = $this->registrations;
         foreach ($liste as $l)
         {
-            $date1 = $l->date_fin;
-            $date2 = Carbon::now();
-            if ($date1->gte($date2))
-            {
-               return true;
+            if ($l->etat == 1){
+                $date1 = $l->date_fin;
+                $date2 = Carbon::now();
+                if ($date1->gte($date2))
+                {
+                    return true;
+                }
             }
         }
         return false;

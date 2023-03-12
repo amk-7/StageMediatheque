@@ -12,6 +12,11 @@ class UtilisateurHelper
         return true;
     }
 
+    public static function showCartType(Abonne $abonne)
+    {
+        return $abonne->type_de_carte == 0 ? "Scolaire" : "Identité" ;
+    }
+
     public static function showRegistrationState(Registration $registration)
     {
         if ($registration->etat == 0){

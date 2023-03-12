@@ -18,7 +18,7 @@ class PersonnelSeeder extends Seeder
     public function run()
     {
         //
-        /*$utilisateur = User::create([
+        $utilisateur = User::create([
             'nom' => 'Daiki',
             'prenom' => 'Alhasan',
             'nom_utilisateur' => 'Shin06',
@@ -38,7 +38,7 @@ class PersonnelSeeder extends Seeder
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
 
-        $utilisateur->assignRole(Role::find(2));*/
+        $utilisateur->assignRole(Role::find(2));
 
         $utilisateur = User::create([
             'nom' => 'SUP ADMIN',

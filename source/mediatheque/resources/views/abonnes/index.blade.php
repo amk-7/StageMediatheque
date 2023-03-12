@@ -65,6 +65,7 @@
                             <th class="fieldset_border" >Profil valider</th>
                             <th class="fieldset_border" >Modifier</th>
                             <th class="fieldset_border" >Afficher</th>
+                            <th class="fieldset_border">Activité</th>
                             @if(Auth::user()->hasRole('responsable'))
                                 <th class="fieldset_border" >Supprimer</th>
                             @endif
@@ -87,7 +88,7 @@
                                     <td class="fieldset_border" >{{$abonne->profession}}</td>
                                     <td class="fieldset_border" >{{$abonne->contact_a_prevenir}}</td>
                                     <td class="fieldset_border" >{{$abonne->numero_carte}}</td>
-                                    <td class="fieldset_border" >{{$abonne->type_de_carte}}</td>
+                                    <td class="fieldset_border" >{{  \App\Helpers\UtilisateurHelper::showCartType($abonne)  }}</td>
                                     {!! \App\Helpers\UtilisateurHelper::showAonneRegistrate($abonne) !!}
                                     {!! \App\Helpers\UtilisateurHelper::showConfrirmProfil($abonne) !!}
                                     <td class="fieldset_border" >
@@ -98,6 +99,11 @@
                                     <td class="fieldset_border">
                                         <form methode="GET" action="{{route('showAbonne', $abonne->id_abonne)}}">
                                             <button class="button button_show" type="Submit">Consulter</button>
+                                        </form>
+                                    </td>
+                                    <td class="fieldset_border" >
+                                        <form methode="GET" action="{{route('enregistrementActivite', $abonne->id_abonne)}}">
+                                            <button class="button button_show" type="Submit">Activité</button>
                                         </form>
                                     </td>
                                     @if(Auth::user()->hasRole('responsable'))

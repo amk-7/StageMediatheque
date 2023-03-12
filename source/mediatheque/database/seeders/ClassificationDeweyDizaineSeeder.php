@@ -16,7 +16,7 @@ class ClassificationDeweyDizaineSeeder extends Seeder
     public function run()
     {
         // Section 0
-       /*$classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 0)->first();
+        $classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 0)->first();
         ClassificationDeweyDizaine::create([
             'classe'=>10,
             'matiere'=>"bibliographie",
@@ -254,7 +254,7 @@ class ClassificationDeweyDizaineSeeder extends Seeder
             'classe'=>490,
             'matiere'=>"autre langues",
             'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
-        ]);*/
+        ]);
 
 
         // Section 500
@@ -303,6 +303,230 @@ class ClassificationDeweyDizaineSeeder extends Seeder
             'classe'=>590,
             'matiere'=>"animaux",
             'id_classification_dewey_centaine'=>$classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        $classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 600)->first();
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 610,
+            'matiere' => 'médecine',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 620,
+            'matiere' => 'ingénierie',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 630,
+            'matiere' => 'agriculture',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 640,
+            'matiere' => 'économie domestique',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 650,
+            'matiere' => 'gestion',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 660,
+            'matiere' => 'chimie',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 670,
+            'matiere' => 'fabrication',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 680,
+            'matiere' => 'fabrication de produits',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 690,
+            'matiere' => 'construction',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        $classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 700)->first();
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 710,
+            'matiere' => 'urbanisme',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 720,
+            'matiere' => 'architecture',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 730,
+            'matiere' => 'sculpture, céramique, et autres arts décoratifs',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 740,
+            'matiere' => 'arts graphiques et arts décoratifs',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 750,
+            'matiere' => 'peinture et arts de la peinture',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 760,
+            'matiere' => 'gravure et impression',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 770,
+            'matiere' => 'photographie et photographies',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 780,
+            'matiere' => 'musique',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 790,
+            'matiere' => 'loisirs et divertissements',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        $classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 800)->first();
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 810,
+            'matiere' => 'littérature',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 820,
+            'matiere' => 'langue anglaise et littératures',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 830,
+            'matiere' => 'littératures des littératures germaniques',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 840,
+            'matiere' => 'littératures des littératures romanes',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 850,
+            'matiere' => 'littératures italiques, littératures néo-latines',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 860,
+            'matiere' => 'littératures espagnole et portugaise',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 870,
+            'matiere' => 'littératures des littératures italiques',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 880,
+            'matiere' => 'littératures helléniques',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 890,
+            'matiere' => 'littératures des autres littératures',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        $classificationDeweyCentaine = ClassificationDeweyCentaine::all()->where('section', 900)->first();
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 910,
+            'matiere' => 'géographie et voyages',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 920,
+            'matiere' => 'biographies et généalogie',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 930,
+            'matiere' => 'histoire ancienne',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 940,
+            'matiere' => 'histoire de l\'Europe',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 950,
+            'matiere' => 'histoire de l\'Asie',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 960,
+            'matiere' => 'histoire de l\'Afrique',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 970,
+            'matiere' => 'histoire de l\'Amérique du Nord',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 980,
+            'matiere' => 'histoire de l\'Amérique du Sud',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
+        ]);
+
+        ClassificationDeweyDizaine::create([
+            'classe' => 990,
+            'matiere' => 'histoire des autres parties du monde',
+            'id_classification_dewey_centaine' => $classificationDeweyCentaine->id_classification_dewey_centaine
         ]);
 
     }
