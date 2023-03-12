@@ -6,9 +6,11 @@ use App\Exports\AbonnesExport;
 use App\Helpers\UtilisateurHelper;
 
 use App\Models\Abonne;
+use App\Models\Activite;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Service\GlobaleService;
+use App\Service\OuvragesPhysiqueService;
 use App\Service\UserService;
 use DB;
 use Auth;
@@ -16,6 +18,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use PharIo\Version\Exception;
 use Spatie\Permission\Models\Role;
 use App\Mail\MailInscription;
 use Illuminate\Support\Facades\Mail;
@@ -100,13 +103,14 @@ class AbonneController extends Controller
 
         Validator::make($request->all(), [
             'nom_utilisateur'=>['required',
-                function ($attribute, $value, $flail){
+                function ($attribute, $value, $fail){
                     if (User::all()->where('nom_utilisateur', $value)->first()){
-                        $flail("Le nom '$value' est déjà utilisé.");
+                        $fail("Le nom '$value' est déjà utilisé.");
                     }
                 }
             ],
         ])->validate();
+
         if ($request->type_de_carte == "1"){
             Validator::make($request->all(), [
                 'numero_carte'=>['required',
@@ -159,16 +163,21 @@ class AbonneController extends Controller
                                     ->first();
         if(! $utilisateur){
             $utilisateur = UserService::enregistrerUtilisateur($request);
-            Abonne::create([
-                'date_naissance' => $request->date_naissance,
-                'niveau_etude' => $request->niveau_etude,
-                'profession' => $request->profession,
-                'contact_a_prevenir' => $request->contact_a_prevenir,
-                'numero_carte' => $request->numero_carte,
-                'type_de_carte' => $request->type_de_carte,
-                'id_utilisateur' => $utilisateur->id_utilisateur,
-                'profil_valider' => $request->profil_valide,
-            ]);
+            try {
+                Abonne::create([
+                    'date_naissance' => $request->date_naissance,
+                    'niveau_etude' => $request->niveau_etude,
+                    'profession' => $request->profession,
+                    'contact_a_prevenir' => $request->contact_a_prevenir,
+                    'numero_carte' => $request->numero_carte ?? "Aucun",
+                    'type_de_carte' => $request->type_de_carte,
+                    'id_utilisateur' => $utilisateur->id_utilisateur,
+                    'profil_valider' => $request->profil_valide,
+                ]);
+            } catch (Exception $e){
+                $utilisateur->delete();
+                return redirect()->route("storeAbonne");
+            }
             $utilisateur->assignRole([Role::find(3)]);
 
             Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
@@ -280,6 +289,19 @@ class AbonneController extends Controller
     public function exportExcel()
     {
         return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
+    }
+
+    public function storeAndIndexActivity(Request $request, Abonne $abonne)
+    {
+        if ($request->method()=="POST"){
+            return redirect('listeAbonnes');
+        } else {
+            return view('abonnes.set_activity')->with([
+                'abonne' => $abonne,
+                'activitys' => $abonne->activitys,
+                'livre_papier' => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
+            ]);
+        }
     }
 
 }

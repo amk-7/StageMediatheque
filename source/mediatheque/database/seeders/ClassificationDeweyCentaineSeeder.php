@@ -16,21 +16,21 @@ class ClassificationDeweyCentaineSeeder extends Seeder
     {
         ClassificationDeweyCentaine::create([
             'section'=> 0,
-            'theme'=>"generalites"
+            'theme'=>"Informatique, information générale et œuvres de référence"
         ]);
 
         ClassificationDeweyCentaine::create([
             'section'=> 100,
-            'theme'=>"phylosophie et pyschologie"
+            'theme'=>"Phylosophie et pyschologie"
         ]);
 
         ClassificationDeweyCentaine::create([
             'section'=> 200,
-            'theme'=>'religion'
+            'theme'=>'Religion'
         ]);
         ClassificationDeweyCentaine::create([
             'section'=> 300,
-            'theme'=>'sciences sociales'
+            'theme'=>'Sciences sociales'
         ]);
         ClassificationDeweyCentaine::create([
             'section'=> 400,
@@ -38,19 +38,23 @@ class ClassificationDeweyCentaineSeeder extends Seeder
         ]);
         ClassificationDeweyCentaine::create([
             'section'=> 500,
-            'theme'=>'science naturelles et mathématiques'
+            'theme'=>'Science naturelles et mathématiques'
         ]);
         ClassificationDeweyCentaine::create([
             'section'=> 600,
-            'theme'=>'technologie'
+            'theme'=>'Technologie (sciences appliquées)'
+        ]);
+        ClassificationDeweyCentaine::create([
+            'section'=> 700,
+            'theme'=>'Arts et loisirs'
         ]);
         ClassificationDeweyCentaine::create([
             'section'=> 800,
-            'theme'=>'art beaux-arts et arts décoratifs'
+            'theme'=>'Littérature (belles-lettres) et rhétorique'
         ]);
         ClassificationDeweyCentaine::create([
             'section'=> 900,
-            'theme'=>'georaphie et histoire'
+            'theme'=>'Histoire, géographie et biographies'
         ]);
     }
 }

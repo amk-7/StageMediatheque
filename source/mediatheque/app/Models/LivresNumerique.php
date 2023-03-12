@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LivresNumerique extends Model
 {
     use HasFactory;
-    protected $fillable = ['categorie', 'ISBN', 'id_ouvrage_electronique'];
+    protected $fillable = ['categorie', 'isbn', 'id_ouvrage_electronique'];
     protected $primaryKey = 'id_livre_numerique';
     protected $casts = ['categorie' => 'array'];
 

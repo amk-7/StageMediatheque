@@ -12,7 +12,7 @@
             </div>
             <div>
                 <label>Images : </label>
-                <input type="file" id="fileListe" name="fileList[]" webkitdirectory = "true" multiple required/>
+                <input type="file" id="fileListe" name="fileList[]" webkitdirectory = "true" multiple/>
             </div>
             @error('fileList[]')
                 <div class="alert">{{ $message }}</div>
