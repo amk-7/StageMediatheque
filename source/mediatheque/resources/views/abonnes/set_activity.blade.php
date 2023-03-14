@@ -35,14 +35,16 @@
                 <div>
                     <div class="flex flex-col">
                         <label for="titre_ouvrage">Sugestions</label>
-                        <textarea id="id_sugestion" type="text" name="sugestion" class="input">
+                        <textarea id="id_sugestion" type="text" name="sugestion" class="input" id="sugestions">
                         </textarea>
                     </div>
                 </div>
             </fieldset>
             <div>
                 <div class="flex justify-between">
-                    <input type="submit" id="action_emprunter" name="action_emprunt" value="Enregistrer" class="button button_primary mt-3">
+                    <input type="submit" id="action_emprunter" name="action_emprunt" value="Enregistrer" class="button button_primary mt-3" onclick="(function(){
+                        document.getElementById('editer').value = '';
+                    })();">
                     <input type="submit" id="action_quitter" name="action_emprunt" value="Quitter" class="button button_delete mt-3">
                 </div>
                 <div class="alert">
@@ -55,7 +57,6 @@
                     <thead class="fieldset_border" >
                     <tr class="fieldset_border" >
                         <th class="fieldset_border" >N°</th>
-                        <th class="fieldset_border" >Cote</th>
                         <th class="fieldset_border" >Titres ouvrages</th>
                         <th class="fieldset_border" >Sugestions</th>
                         <th class="fieldset_border" >Editer</th>
@@ -65,15 +66,24 @@
                     <tbody class="fieldset_border" >
                         @foreach($activitys as $activity)
                             <tr>
-                                <td>{{ $loop->index }}</td>
-                                <td>{{ $activity->ouvrage }}</td>
-                                <td>{{ $activity->sugestions }}</td>
-                                <td>
-
+                                <td class="fieldset_border">{{ $activity->id_activite }}</td>
+                                <td class="fieldset_border">{{ $activity->ouvrages }}</td>
+                                <td class="fieldset_border">{{ $activity->sugestions }}</td>
+                                <td class="fieldset_border">
+                                    <form method="GET" action="{{ route('enregistrementActivite', $abonne->id_abonne) }}">
+                                        <input type="text" id="id_activite" name="activite" value="12" hidden=""/>
+                                        <button class="button button_primary" type="Submit" name="editer" value="{{ $activity->id_activite }}">Editer</button>
+                                    </form>
                                 </td>
-                                <td>
-
-                                </td>
+                                @if(Auth::user()->hasRole('responsable'))
+                                    <td class="fieldset_border" >
+                                        <form method="POST" action="">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button onclick="activeModal({{$abonne->id_abonne}})" class="button button_delete" type="Submit">Supprimer</button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -107,6 +117,7 @@
 
         let titre = document.getElementById('titres_ouvrages');
         titre.value = "";
+        let sugestions = document.getElementById('sugestions');
         let cote_ouvrage = document.getElementById('ouvrage_cote');
 
         let overlay = document.getElementById('overlay');
@@ -118,6 +129,9 @@
         cote_ouvrage.addEventListener('keyup', function (e) {
             rechercherTitreParCote();
         });
+
+        titre.value = '{!! $activity->ouvrages !!}';
+        sugestions.value = '{!! $activity->ouvrages !!}';
 
         function rechercherTitreParCote() {
             let cote = cote_ouvrage.value;
