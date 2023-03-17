@@ -15,15 +15,19 @@ class EmpruntExport implements FromCollection
     public function collection()
     {
         $id_emprunts = array();
+        //dd(session('emprunts_key'));
         foreach (session('emprunts_key') as $emprunt){
             array_push($id_emprunts, $emprunt['id_emprunt']);
         }
         $emprunts = Emprunt::all()->whereIn('id_emprunt', $id_emprunts);
+        //dd($emprunts);
         $lise_emprunt = [array(
             'Numéro', 'Date Emprunt', 'Date Restitution', 'Remise',
             'Nombre ouvrage', 'abonne', 'personnel',
         )];
+        //dd($lise_emprunt);
         foreach ($emprunts as $emprunt){
+            //dd($emprunt);
             array_push($lise_emprunt, array([
                 'Numéro' => $emprunt->id_emprunt,
                 'Date Emprunt' => GlobaleService::afficherDate($emprunt->date_emprunt),

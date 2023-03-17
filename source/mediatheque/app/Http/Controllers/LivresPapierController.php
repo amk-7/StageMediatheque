@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OuvragesExport;
+use App\Helpers\OuvrageHelper;
+
 use App\Imports\LivresPapierImport;
 use App\Models\ClassificationDeweyDizaine;
 use App\Models\LivresPapier;
@@ -29,6 +32,7 @@ class LivresPapierController extends Controller
         $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
         $categories = LivresPapierService::getCategories();
         $livresPapiers = LivresPapier::all();
+        //dd($livresPapiers);
 
         return view('livresPapier.index')->with([
             'niveaus'=> $niveausTypesLanguesAuteursAnnee[0],
@@ -282,6 +286,12 @@ class LivresPapierController extends Controller
         $cote_qrcode = base64_encode(QrCode::format('png')->generate($livresPapier->ouvragesPhysique->cote));
 
         return "<image src='data:image/png;base64, $cote_qrcode'/>";
+    }
+
+    public function exportExcel()
+    {
+        //dd("Okay");
+        return Excel::download(new OuvragesExport(), 'livres_papier.xlsx');
     }
 }
 

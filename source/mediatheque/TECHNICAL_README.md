@@ -66,6 +66,7 @@
     composer require maatwebsite/excel --ignore-platform-req=ext-mysql_xdevapi
     php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
     php artisan make:import UsersImport --model=User
+    php artisan make:export OuvragesExport --model=Ouvrage
 
 ## Installation du module de qr-code
 
