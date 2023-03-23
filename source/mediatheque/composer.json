@@ -22,7 +22,7 @@
         "laravel/scout": "^9.4",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "*",
-        "maatwebsite/excel": "*",
+        "maatwebsite/excel": "^3.1",
         "mercuryseries/laravel-helpers": "^1.0",
         "pragmarx/google2fa-laravel": "*",
         "predis/predis": "*",

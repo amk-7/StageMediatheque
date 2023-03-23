@@ -116,4 +116,8 @@ class LivresPapierService
         return $id_op;
     }
 
+    public static function setOuvragesLIstInSession($liste){
+        \session(['ouvrages_key' => $liste]);
+    }
+
 }
