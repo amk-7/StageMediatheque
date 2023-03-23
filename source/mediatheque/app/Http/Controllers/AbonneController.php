@@ -33,6 +33,7 @@ class AbonneController extends Controller
      */
     public function index(Request $request)
     {
+        //dd(Abonne::all());
         $abonnes = "";
         $paginate = 10;
         if (isset($request->search_by) || isset($request->profession) || isset($request->niveau_etude)){
