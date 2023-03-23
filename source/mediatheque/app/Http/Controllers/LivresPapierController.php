@@ -283,15 +283,6 @@ class LivresPapierController extends Controller
         return redirect()->route('listeLivresPapier');
     }
 
-    public function exportExcel()
-    {
-        $livresPapiers = LivresPapier::all();
-        $ouvrages = LivresPapierService::getAllIDLivrePapier($livresPapiers);
-        //dd($ouvrages);
-
-        return Excel::download(new OuvrageExport(), "liste_des_ouvrages.xlsx");
-    }
-
     public function downloadCoteQrcode(LivresPapier $livresPapier)
     {
         $cote_qrcode = base64_encode(QrCode::format('png')->generate($livresPapier->ouvragesPhysique->cote));
@@ -304,7 +295,6 @@ class LivresPapierController extends Controller
         //dd("Okay");
         return Excel::download(new OuvragesExport(), 'livres_papier.xlsx');
     }
-}
 
     public function downloadAllCoteQrcode(LivresPapier $livresPapier)
     {
