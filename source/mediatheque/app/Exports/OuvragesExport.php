@@ -23,7 +23,7 @@ class OuvragesExport implements FromCollection
         $id_ouvrages = array();
         
         $ouvrages = Ouvrage::all();
-        dd($ouvrages);
+        //dd($ouvrages);
         $liste_ouvrages = [array(
             'Numéro',
             'titre',
