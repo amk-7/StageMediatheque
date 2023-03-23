@@ -50,6 +50,8 @@ Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function 
 });
 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
+    Route::get('modifier_activite/{abonne}/{activite}', [\App\Http\Controllers\AbonneController::class, 'editeAndUpdateActivite'])->name('updateActivite');
+
     Route::get('enregistrement_activite/{abonne}', 'App\Http\Controllers\AbonneController@storeAndIndexActivity')->name('enregistrementActivite');
     Route::post('enregistrement_activite/{abonne}', 'App\Http\Controllers\AbonneController@storeAndIndexActivity')->name('enregistrementActivite');
     Route::get('searchByTitleAndKeyWord', [LivresPapierController::class, 'searchByTitleAndKeyWord']);
@@ -126,6 +128,7 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('data_class_dizaine', [LivresPapierController::class, 'echoclassification_dewey_dizaines'])->name('dataClassDizain');
 
     Route::get('imprimer_ouvrages_physique_code/{livres_papier}', [LivresPapierController::class, 'downloadCoteQrcode'])->name('imprimerOuvragesPhysiqueCode');
+    Route::get('imprimer_ouvrages_physique_codes', [LivresPapierController::class, 'downloadAllCoteQrcode'])->name('imprimerOuvragesPhysiqueCodes');
 
     Route::get('liste_documents_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'index'])->name('listeDocumentsAudioVisuelsElectroniques');
     Route::get('formulaire_enregistrement_document_audio_visuels_electroniques', [DocumentAudioVisuelElectroniqueController::class, 'create'])->name('formulaireEnregistrementDocumentAudioVisuelsElectroniques');

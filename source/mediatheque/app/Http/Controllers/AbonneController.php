@@ -296,31 +296,49 @@ class AbonneController extends Controller
     public function storeAndIndexActivity(Request $request, Abonne $abonne)
     {
         if ($request->method()=="POST"){
-            if (! empty($request->editer)){
-                return view('abonnes.set_activity')->with([
-                    'abonne' => $abonne,
-                    'activity' => Activite::all()->where('id', $request->editer)->first(),
-                    'activitys' => $abonne->activitys,
-                    'livre_papier' => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
-                ]);
+            if ($request->supprimer){
+                Activite::all()->where('id_activite', $request->id_activite)->first()->delete();
+                return redirect()->route('enregistrementActivite', $abonne);
             }
             $request->validate([
                 'titres' => 'required',
                 'sugestion' => 'required',
             ]);
+            if ($request->activite){
+                $activite = Activite::all()->where('id_activite', $request->activite)->first();
+                $activite->ouvrages = $request->titres;
+                $activite->sugestions = $request->sugestion;
+                $activite->save();
+                return redirect()->route('abonnes.set_activity');
+            }
             Activite::create([
                 'ouvrages' => $request->titres,
                 'sugestions' => $request->sugestion,
                 'id_abonne' => $abonne->id_abonne,
             ]);
-            return redirect()->route('listeAbonnes');
+            return redirect()->route('abonnes.set_activity');
+
         } else {
-            return view('abonnes.set_activity')->with([
+            $data = [
                 'abonne' => $abonne,
                 'activitys' => $abonne->activitys,
                 'livre_papier' => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
-            ]);
+            ];
+            if ($request->editer){
+                $data['editer'] = 'oui';
+                $data['activite_edit'] = Activite::all()->where('id_activite', $request->id_activite)->first();
+            }
+            return view('abonnes.set_activity')->with($data);
         }
     }
 
+    public function editeAndUpdateActivite(Abonne $abonne,Activite $activite)
+    {
+        return view('abonnes.set_activity')->with([
+            'abonne' => $abonne,
+            'activity' => Activite::all()->where('id', $activite->id_activite)->first(),
+            'activitys' => $abonne->activitys,
+            'livre_papier' => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
+        ]);
+    }
 }

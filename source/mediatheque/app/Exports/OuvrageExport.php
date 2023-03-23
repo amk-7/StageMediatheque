@@ -14,6 +14,6 @@ class OuvrageExport implements FromCollection
     public function collection()
     {
         $ouvrages = LivresPapierService::getAllIDLivrePapier(Ouvrage::all());
-        return null ;
+        return $ouvrages ;
     }
 }

@@ -72,6 +72,8 @@
     composer require simplesoftwareio/simple-qrcode "~4" --ignore-platform-req=ext-mysql_xdevapi
     
     composer require barryvdh/laravel-dompdf
+
+
     
 ## Authentification.
 composer require laravel/breeze --dev

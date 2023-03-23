@@ -58,6 +58,7 @@ class AbonnesExport implements FromCollection
             'nombre_emprunts',
             'nombre_restitutions',
             'nombre_emprunt_non_restituer',
+            'ouvrages_lue',
         ));
 
         array_push($abonnes, $liste);

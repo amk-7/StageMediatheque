@@ -19,6 +19,10 @@
                     @csrf
                     <input type="submit" class="button button_primary" name="export" value="Exporter">
                 </form>
+                <form action="{{route('imprimerOuvragesPhysiqueCodes')}}" method="get">
+                    @csrf
+                    <input type="submit" class="button button_show" name="export" value="Cotes QR codes">
+                </form>
             </td>
         @endif
     </div>
