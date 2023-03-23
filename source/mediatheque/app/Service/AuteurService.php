@@ -10,10 +10,19 @@ class AuteurService
 {
     public static function enregistrerAuteur(Array $data_auteurs)
     {
+        //dump($data_auteurs);
         $auteurs = [];
         foreach ($data_auteurs as $info_auteur){
-            if (!empty($info_auteur[0])){
-                //dd($info_auteur);
+            if (! is_array($info_auteur)){
+                $auteur = self::auteur(strtoupper($info_auteur), strtolower(""));
+                if (! $auteur){
+                    $auteur = Auteur::Create([
+                        "nom"=>trim(strtoupper($info_auteur)),
+                        "prenom"=>trim(strtolower("")),
+                    ]);
+                }
+                array_push($auteurs, $auteur);
+            } else if (!empty($info_auteur[0])){
                 $auteur = self::auteur(strtoupper($info_auteur[0]), strtolower($info_auteur[1] ?? ""));
                 if (! $auteur){
                     $auteur = Auteur::Create([
@@ -24,6 +33,8 @@ class AuteurService
                 array_push($auteurs, $auteur);
             }
         }
+        //dd($auteurs);
+        //dd("Auteur error");
         return $auteurs;
     }
 

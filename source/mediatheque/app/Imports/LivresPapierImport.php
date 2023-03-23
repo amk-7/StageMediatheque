@@ -33,6 +33,8 @@ class LivresPapierImport implements ToModel
         $indice_niveau = 10;
         $indice_image_path = 11;
 
+        $row[$indice_titre] = str_replace("'", "-", $row[$indice_titre]);
+
         \session(
             ["compteur" => ((int) session("compteur")+1)]
         );
@@ -44,7 +46,8 @@ class LivresPapierImport implements ToModel
         try {
             $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee]), str_replace(' ', '', $row[$indice_lieu])) ;
         } catch (QueryException $e){
-            //dd($e);
+            dd($row[$indice_titre]);
+            dd($e);
             \Session(["error_id" => $row[0]]);
             return ;
         }
@@ -56,8 +59,8 @@ class LivresPapierImport implements ToModel
                 return null;
             }
         } else {
-            $data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);
-            /*$auteurs = AuteurService::enregistrerAuteur($data_auteurs);
+            $data_auteurs = ImportExcelService::exctratUserInfo("Collèction K2");//$row[$indice_auteur]
+            $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
 
             // Creation de l'ouvrage
             $chemin_image = ($row[$indice_image_path] ?? null) == null ? "default_book_image.png" : $row[$indice_image_path];
@@ -67,26 +70,27 @@ class LivresPapierImport implements ToModel
                     'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
                     'lieu_edition'=>$row[$indice_lieu],
                     'annee_apparution'=>str_replace(' ', '', $row[$indice_annee])== '' ? 0 : str_replace(' ', '', $row[$indice_annee]) ,
-                    'type'=>ImportExcelService::formatString($row[$indice_type]),
-                    'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau]),
+                    'type'=>ImportExcelService::formatString($row[$indice_type] ?? ""),
+                    'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau] ?? "1"),
                     'image' => $chemin_image,
                     'langue'=>strtolower('français'),
                     'resume'=>strtolower("pas de resumé"),
                     'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle] ?? ""),
                 ]);
             } catch (QueryException $e){
+                dd($e);
                 \Session(["error_id" => session("compteur")]);
                 return null;
             }
             // Definire les auteurs de l'ouvrage
-            OuvrageService::definireAuteur($ouvrage, $auteurs);*/
+            OuvrageService::definireAuteur($ouvrage, $auteurs);
         }
 
 
         // Création d'un ouvrage physique
-        //$cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", "COT", [$ouvrage->auteurs()->first()], $ouvrage);
+        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", "COT", [$ouvrage->auteurs()->first()], $ouvrage);
 
-        /*$ouvragePhysique = OuvragesPhysique::Create([
+        $ouvragePhysique = OuvragesPhysique::Create([
             'nombre_exemplaire' => $row[$indice_nombre_exemplaire],
             'id_ouvrage'=>$ouvrage->id_ouvrage,
             'cote' => $cote,
@@ -97,7 +101,7 @@ class LivresPapierImport implements ToModel
             'categorie'=>array(strtolower($row[$indice_domaine]), ""),
             'isbn'=>$row[$indice_isbn],
             'id_ouvrage_physique'=>$ouvragePhysique->id_ouvrage_physique
-        ]);*/
+        ]);
     }
 
 }

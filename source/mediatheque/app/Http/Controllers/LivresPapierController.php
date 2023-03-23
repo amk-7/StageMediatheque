@@ -8,6 +8,7 @@ use App\Helpers\OuvrageHelper;
 use App\Imports\LivresPapierImport;
 use App\Models\ClassificationDeweyDizaine;
 use App\Models\LivresPapier;
+use App\Models\Ouvrage;
 use App\Service\AuteurService;
 use App\Service\GlobaleService;
 use App\Service\LivresPapierService;
@@ -279,6 +280,15 @@ class LivresPapierController extends Controller
         }
 
         return redirect()->route('listeLivresPapier');
+    }
+
+    public function exportExcel()
+    {
+        $livresPapiers = LivresPapier::all();
+        $ouvrages = LivresPapierService::getAllIDLivrePapier($livresPapiers);
+        dd($ouvrages);
+
+        return Excel::download(new OuvrageExport(), "liste_des_ouvrages.xlsx");
     }
 
     public function downloadCoteQrcode(LivresPapier $livresPapier)

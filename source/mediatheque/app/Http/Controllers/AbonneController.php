@@ -99,7 +99,6 @@ class AbonneController extends Controller
             'date_naissance' => 'required',
             'niveau_etude' => 'required',
             'profession' => 'required',
-            'type_de_carte' => 'required'
         ]);
 
         Validator::make($request->all(), [
@@ -112,7 +111,7 @@ class AbonneController extends Controller
             ],
         ])->validate();
 
-        if ($request->type_de_carte == "1"){
+        if (! empty($request->type_de_carte) && $request->type_de_carte == "1"){
             Validator::make($request->all(), [
                 'numero_carte'=>['required',
                     function ($attribute, $value, $flail){
@@ -123,25 +122,29 @@ class AbonneController extends Controller
                 ],
             ])->validate();
         }
-        Validator::make($request->all(), [
-            'contact'=>['required',
-                function ($attribute, $value, $flail){
-                    if (! GlobaleService::verifieContact($value)){
-                        $flail("Ce ".$attribute." est invalide");
+        if (! empty($request->contact)){
+            Validator::make($request->all(), [
+                'contact'=>['required',
+                    function ($attribute, $value, $flail){
+                        if (! GlobaleService::verifieContact($value)){
+                            $flail("Ce ".$attribute." est invalide");
+                        }
                     }
-                }
-            ],
-        ])->validate();
+                ],
+            ])->validate();
+        }
 
-        Validator::make($request->all(), [
-            'contact_a_prevenir'=>['required',
-                function ($attribute, $value, $flail){
-                    if (! GlobaleService::verifieContact($value)){
-                        $flail("Ce ".$attribute." est invalide");
+        if (! empty($request->contact_a_prevenir)){
+            Validator::make($request->all(), [
+                'contact_a_prevenir'=>['required',
+                    function ($attribute, $value, $flail){
+                        if (! GlobaleService::verifieContact($value)){
+                            $flail("Ce ".$attribute." est invalide");
+                        }
                     }
-                }
-            ],
-        ])->validate();
+                ],
+            ])->validate();
+        }
 
         if (Auth::user()){
             $request->validate(['profil_valide' => 'required']);
@@ -261,7 +264,6 @@ class AbonneController extends Controller
             return redirect()->route('listeAbonnes');
         }
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -295,7 +297,24 @@ class AbonneController extends Controller
     public function storeAndIndexActivity(Request $request, Abonne $abonne)
     {
         if ($request->method()=="POST"){
-            return redirect('listeAbonnes');
+            if (! empty($request->editer)){
+                return view('abonnes.set_activity')->with([
+                    'abonne' => $abonne,
+                    'activity' => Activite::all()->where('id', $request->editer)->first(),
+                    'activitys' => $abonne->activitys,
+                    'livre_papier' => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
+                ]);
+            }
+            $request->validate([
+                'titres' => 'required',
+                'sugestion' => 'required',
+            ]);
+            Activite::create([
+                'ouvrages' => $request->titres,
+                'sugestions' => $request->sugestion,
+                'id_abonne' => $abonne->id_abonne,
+            ]);
+            return redirect()->route('listeAbonnes');
         } else {
             return view('abonnes.set_activity')->with([
                 'abonne' => $abonne,

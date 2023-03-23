@@ -15,11 +15,11 @@ class CreateAbonnesTable extends Migration
     {
         Schema::create('abonnes', function (Blueprint $table) {
             $table->bigIncrements('id_abonne');
-            $table->date('date_naissance');
+            $table->date('date_naissance')->nullable();
             $table->string('niveau_etude');
             $table->string('profession');
-            $table->string('contact_a_prevenir');
-            $table->string('numero_carte');
+            $table->string('contact_a_prevenir')->nullable();
+            $table->string('numero_carte')->nullable();
             $table->enum('type_de_carte', [0, 1]);
             $table->enum('profil_valider', [0, 1])->default(0);
             $table->bigInteger('id_utilisateur');

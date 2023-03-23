@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activite extends Model
 {
     use HasFactory;
-    protected $fillable = ['ouvrages', 'sugestions', 'abonne'];
+    protected $fillable = ['ouvrages', 'sugestions', 'id_abonne'];
     protected $primaryKey = 'id_activite';
 
     public function abonne(){

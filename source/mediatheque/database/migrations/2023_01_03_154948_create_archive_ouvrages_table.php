@@ -18,10 +18,11 @@ class CreateArchiveOuvragesTable extends Migration
             $table->string('titre');
             $table->json("mot_cle")->nullable();
             $table->string('resume')->nullable();
-            $table->integer('annee_apparution');
-            $table->string('lieu_edition');
+            $table->integer('annee_apparution')->nullable();
+            $table->string('lieu_edition')->nullable();
             $table->enum('niveau', ['1', '2', '3', 'université']);
-            $table->enum('type', ['droit', 'comptabilité', 'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle']);
+            //$table->enum('type', ['droit', 'comptabilité', 'roman', 'manuel scolaire', 'document technique', 'document pédagogique', 'bande dessinée', 'journeaux', 'nouvelle']);
+            $table->string('type');
             $table->string('image')->nullable();
             $table->string('langue')->nullable();
             $table->timestamps();
@@ -34,7 +35,7 @@ class CreateArchiveOuvragesTable extends Migration
                 VALUES (new.id_ouvrage, new.titre, new.mot_cle, new.resume, new.annee_apparution, new.lieu_edition, new.niveau, new.type, new.image, new.langue, new.created_at, new.updated_at);
                 RETURN new;
             END;
-            $$ 
+            $$
             LANGUAGE plpgsql;
 
             CREATE TRIGGER archive_ouvrages

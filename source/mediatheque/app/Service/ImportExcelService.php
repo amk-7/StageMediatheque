@@ -20,6 +20,9 @@ class ImportExcelService
     public static function exctratUserInfo(String $auteur)
     {
         $auteurs = explode(";", trim($auteur));
+        if (count($auteurs)==1){
+            return $auteurs;
+        }
         for ($i=0; $i<count($auteurs); $i++){
             $auteurs[$i] = explode(',', $auteurs[$i]);
         }
@@ -42,10 +45,20 @@ class ImportExcelService
 
     public static function extractLevelInfo(String $niveau)
     {
+        //dd($niveau);
         $niveau = strtolower(str_replace(' ', '', $niveau));
         if ($niveau=="université")
         {
             return $niveau;
+        }
+        if ($niveau=='lycée'){
+            return '3';
+        }
+        if ($niveau == 'collège'){
+            return '2';
+        }
+        if ($niveau == 'primaire'){
+            return '1';
         }
         return $niveau[0];
     }

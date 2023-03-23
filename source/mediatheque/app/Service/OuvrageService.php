@@ -194,8 +194,10 @@ class OuvrageService
 
     public static function ouvrageExist($titre, $annee, $lieu_edition)
     {
-        dump($titre, $annee, $lieu_edition);
-        if ($annee > 1900) {
+        //dump($titre, $annee, $lieu_edition);
+        $ouvrage = Ouvrage::whereRaw("LOWER(REPLACE(titre, ' ', '')) = LOWER(REPLACE('{$titre}', ' ', ''))")->first();
+        return $ouvrage;
+        /*if ($annee > 1900) {
             $ouvrage = Ouvrage::whereRaw("LOWER(REPLACE(titre, ' ', '')) = LOWER(REPLACE('{$titre}', ' ', ''))")
                 ->whereRaw("LOWER(REPLACE(lieu_edition, ' ', '')) = LOWER(REPLACE('{$lieu_edition}', ' ', ''))")
                 ->where('annee_apparution', $annee)
@@ -205,7 +207,7 @@ class OuvrageService
                 ->whereRaw("LOWER(REPLACE(lieu_edition, ' ', '')) = LOWER(REPLACE('{$lieu_edition}', ' ', ''))")
                 ->first();
         }
-        return $ouvrage;
+        return $ouvrage;*/
     }
 
     public static function ouvragePhysiqueExist($ouvrage)
@@ -216,5 +218,10 @@ class OuvrageService
     public static function ouvrageNumeriqeExist($ouvrage)
     {
         return OuvragesElectronique::all()->where("id_ouvrage", $ouvrage->id_ouvrage)->first();
+    }
+
+    public function getAllOuvrageWithAllAttribute()
+    {
+
     }
 }
