@@ -15,7 +15,7 @@
                     @csrf
                     <input type="submit" class="button button_primary" name="approvisionement" value="approvisionner">
                 </form>
-                <form action="{{route('downloadExcelListeOuvrage')}}" method="get">
+                <form action="{{route('downloadExcelListeLivresPapier')}}" method="get">
                     @csrf
                     <input type="submit" class="button button_primary" name="export" value="Exporter">
                 </form>
