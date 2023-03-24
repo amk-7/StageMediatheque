@@ -51,12 +51,14 @@ class LivresPapierImport implements ToModel
             \Session(["error_id" => $row[0]]);
             return ;
         }
-        dump($ouvrage);
+        //dump($ouvrage);
         if ($ouvrage)
         {
             $ouvragePhys = OuvrageService::ouvragePhysiqueExist($ouvrage);
             if ($ouvragePhys != null){
-                return null;
+                $ouvragePhys->nombre_exemplaire += $row[$indice_nombre_exemplaire];
+                $ouvragePhys->save();
+                return LivresPapier::all()->where('id_ouvrage_physique', $ouvragePhys->id_ouvrage_physique)->first();
             }
         } else {
             $data_auteurs = ImportExcelService::exctratUserInfo("Collèction K2");//$row[$indice_auteur]
@@ -78,7 +80,7 @@ class LivresPapierImport implements ToModel
                     'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle] ?? ""),
                 ]);
             } catch (QueryException $e){
-                dd($e);
+                //dd($e);
                 \Session(["error_id" => session("compteur")]);
                 return null;
             }

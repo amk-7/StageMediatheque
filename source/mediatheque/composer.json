@@ -11,7 +11,7 @@
         "ext-mysqli": "*",
         "algolia/algoliasearch-client-php": "*",
         "bacon/bacon-qr-code": "*",
-        "barryvdh/laravel-dompdf": "*",
+        "barryvdh/laravel-dompdf": "^2.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jantinnerezo/livewire-alert": "^2.2",

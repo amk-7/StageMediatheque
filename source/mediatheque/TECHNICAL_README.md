@@ -72,7 +72,7 @@
 
     composer require simplesoftwareio/simple-qrcode "~4" --ignore-platform-req=ext-mysql_xdevapi
     
-    composer require barryvdh/laravel-dompdf
+    composer require barryvdh/laravel-dompdf --ignore-platform-req=ext-mysql_xdevapi --ignore-platform-req=ext-mysqli
 
 
     
