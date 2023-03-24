@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Models\Auteur;
+use App\Models\LivresPapier;
 use App\Models\Ouvrage;
 use App\Models\OuvragesElectronique;
 use App\Models\OuvragesPhysique;
@@ -223,5 +224,17 @@ class OuvrageService
     public function getAllOuvrageWithAllAttribute()
     {
 
+    }
+
+    public static function getNombreExamplaireAndOuvrage()
+    {
+        $nombre_ouvrage = LivresPapier::all()->count();
+        $ouvrage = LivresPapier::all();
+        $nombre_examplaire = 0;
+        foreach ($ouvrage as $lp){
+            $nombre_examplaire += $lp->ouvragesPhysique->nombre_exemplaire;
+        }
+
+        return array($nombre_ouvrage, $nombre_examplaire);
     }
 }

@@ -7,7 +7,7 @@
     </label>
     <label>
         <span class="label_title_sub_title">ISBN :</span>
-        <span class="label_show_value">{{ $livrePapier->ISBN }}</span>
+        <span class="label_show_value">{{ $livrePapier->ISBN=="" ? "Aucun" : $livrePapier->ISBN }}</span>
     </label>
 @stop
 

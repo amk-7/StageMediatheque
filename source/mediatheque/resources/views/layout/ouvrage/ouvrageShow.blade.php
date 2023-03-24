@@ -1,8 +1,19 @@
-@extends("layout.template.base", ['body_style'=> "bg-gray-200 flex content-center justify-center h-full items-center", 'hfull'=>'h-full'])
+@extends("layout.template.base", ['body_style'=> "bg-gray-200 flex content-center justify-center items-center", 'hfull'=>'h-full'])
 @section("content")
-    <main class=" bg-white flex flex-col items-center p-12">
-        <h1 class="text-2xl">{{$ouvrage->titre }}</h1>
-        <div class="flex flex-row m-auto p-3.5">
+    <style>
+        .show-card {
+            display: flex;
+        }
+
+        @media screen and (max-width: 700px) {
+            .show-card {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <div class="bg-white flex flex-col items-center p-12 justify-center">
+        <h1 class="text-2xl text-center">{{$ouvrage->titre }}</h1>
+        <div class="show-card m-auto items-center p-3.5">
             <div class="">
                 <img src="{{ asset('storage/ouvrage_electonique/'.$ouvrage->image) }}"
                      alt="{{$ouvrage->image}}" class="border border-solid" style="width: 198px;height: 300px;"/>
@@ -38,6 +49,10 @@
                         <span class="label_title_sub_title">Langue :</span>
                         <span class="label_show_value">{{$ouvrage->langue }}</span>
                     </label>
+                    <label>
+                        <span class="label_title_sub_title">Résumer :</span>
+                        <p class="label_show_value">{{ $ouvrage->resume=="pas de resumé" ? "Aucun" : $ouvrage->resume }}</p>
+                    </label>
                     @yield('stock')
                 </div>
             </div>
@@ -50,5 +65,5 @@
                 <input class="button button_edite" type="submit" name="suivant" value="suivant">
             </form>
         </div-->
-    </main>
+    </div>
 @stop

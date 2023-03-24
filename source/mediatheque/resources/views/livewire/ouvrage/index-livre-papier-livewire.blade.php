@@ -3,7 +3,6 @@
     <div>
         @include('livresPapier.shareSearchBarLivrePapier')
     </div>
-
     <div class="flex flex-row content-center space-x-3">
         @if(Auth::user()->hasRole('responsable'))
             <td class="flex flex-row mb-3">
@@ -19,12 +18,25 @@
                     @csrf
                     <input type="submit" class="button button_primary" name="export" value="Exporter">
                 </form>
+                <form action="{{route('imprimerOuvragesPhysiqueCodes')}}" method="get">
+                    @csrf
+                    <input type="submit" class="button button_show" name="export" value="Cotes QR codes">
+                </form>
             </td>
         @endif
     </div>
 
     @if(!empty($livresPapiers ?? "") && $livresPapiers->count())
         @if(Auth::user() && Auth::user()->hasRole('bibliothecaire'))
+            @php
+                $result = \App\Service\OuvrageService::getNombreExamplaireAndOuvrage();
+                $nb_ouvrage = $result[0];
+                $nbr_examplaire = $result[1];
+            @endphp
+            <div class="flex">
+                <h3>Nombre d'ouvrages : {{ $nb_ouvrage }}</h3>
+                <h3 class="ml-3">Nombre d'examplaire : {{ $nbr_examplaire }}</h3>
+            </div>
             <div class="m-3">
                 <table class="fieldset_border bg-white">
                     <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">

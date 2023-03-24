@@ -8,8 +8,10 @@
         "php": "^7.3|^8.0",
         "ext-json": "*",
         "ext-mysql_xdevapi": "*",
+        "ext-mysqli": "*",
         "algolia/algoliasearch-client-php": "*",
         "bacon/bacon-qr-code": "*",
+        "barryvdh/laravel-dompdf": "^2.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jantinnerezo/livewire-alert": "^2.2",
@@ -25,8 +27,7 @@
         "pragmarx/google2fa-laravel": "*",
         "predis/predis": "*",
         "simplesoftwareio/simple-qrcode": "~4",
-        "spatie/laravel-permission": "^5.5",
-      "ext-mysqli": "*"
+        "spatie/laravel-permission": "^5.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "*",

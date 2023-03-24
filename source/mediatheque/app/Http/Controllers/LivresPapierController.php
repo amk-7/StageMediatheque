@@ -15,6 +15,7 @@ use App\Service\LivresPapierService;
 use App\Service\OuvrageService;
 use App\Service\OuvragesPhysiqueService;
 use App\Models\OuvragesPhysique;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -282,15 +283,6 @@ class LivresPapierController extends Controller
         return redirect()->route('listeLivresPapier');
     }
 
-    public function exportExcel()
-    {
-        $livresPapiers = LivresPapier::all();
-        $ouvrages = LivresPapierService::getAllIDLivrePapier($livresPapiers);
-        dd($ouvrages);
-
-        return Excel::download(new OuvrageExport(), "liste_des_ouvrages.xlsx");
-    }
-
     public function downloadCoteQrcode(LivresPapier $livresPapier)
     {
         $cote_qrcode = base64_encode(QrCode::format('png')->generate($livresPapier->ouvragesPhysique->cote));
@@ -303,5 +295,14 @@ class LivresPapierController extends Controller
         //dd("Okay");
         return Excel::download(new OuvragesExport(), 'livres_papier.xlsx');
     }
-}
 
+    public function downloadAllCoteQrcode(LivresPapier $livresPapier)
+    {
+        $data = array(
+            'livresPapiers' => LivresPapier::all(),
+        );
+        $pdf = Pdf::loadView('livresPapier/allQrCodes', $data)->setOptions(['defaultFont' => 'sans-serif']);
+        return $pdf->download('cotes.pdf');
+        return view('livresPapier/allQrCodes')->with($data);
+    }
+}
