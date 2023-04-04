@@ -38,8 +38,8 @@
                     @include('side_bar.side_bar')
                 @endif
             </div>
-            <main id="main" class=@if(Auth::user())
-                "flex items-center justify-center flex-1 px-4 py-8 mt-16 ml-16"@else"flex items-center justify-center flex-1 px-4 py-8"@endif>
+            <main style="margin-left: 0px" id="main" class=@if(Auth::user())
+                "flex items-center justify-center flex-1 px-4 py-8 mt-16"@else"flex items-center justify-center flex-1 px-4 py-8"@endif>
                 @yield('slider')
                 <!-- Content -->
                 @yield('content')

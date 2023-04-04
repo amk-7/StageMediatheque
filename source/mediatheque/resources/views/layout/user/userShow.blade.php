@@ -1,14 +1,34 @@
 @extends('layout.template.base')
 
 @section('content')
+<style>
+    .show-card {
+        display: flex;
+    }
 
-<form method="GET" action="{{route($action, $model)}}">
+    .margin {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    @media screen and (max-width: 700px) {
+        .show-card {
+            flex-direction: column;
+        }
+
+        .margin {
+            margin-top: 450px;
+            margin-bottom: 100px;
+        }
+    }
+</style>
+<form method="GET" action="{{route($action, $model)}}" class="">
     {{--dd($utilisateur->adresse)--}}
     @csrf
-    <h1 class="label_title text-center pb-12">{{$title}}</h1>
-    <main class=" bg-white flex flex-col items-center p-12">
+    <main class=" bg-white flex flex-col items-center p-12 margin">
+        <h1 class="label_title text-center pb-12">{{$title}}</h1>
     <fieldset>
-    <div class="flex flex-row m-auto p-3.5">
+    <div class="show-card m-auto p-3.5">
         <div class="">
             <img src="{{asset('storage/images/image_utilisateur').'/'.$model->utilisateur->photo_profil}}" width="350" height="350"
             style="width: 350px; height: 350px"></br>

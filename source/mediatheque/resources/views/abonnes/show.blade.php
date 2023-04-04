@@ -1,4 +1,4 @@
-@extends('layout.user.userShow', ['action'=>"editAbonne", 'title'=>"Afficher un abonne", 'utilisateur'=>$abonne->utilisateur, 'model'=>$abonne])
+@extends('layout.user.userShow', ['action'=>"editAbonne", 'title'=>"Détails abonné", 'utilisateur'=>$abonne->utilisateur, 'model'=>$abonne])
 
 @section('abonne')
 
