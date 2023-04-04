@@ -1,7 +1,7 @@
 @extends('layout.template.base')
 @section('content')
     <div class="flex flex-col">
-        <div class="p-12 flex flex-col items-center mr-16" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 20px; background-color: white">
+        <div class="p-12 flex flex-col items-center" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 20px; background-color: white">
             <div name="logo">
                 <a href="{{ route('listeLivresNumerique') }}" class="flex">
                     <img src="{{ asset('storage/images/logo.png') }}" class="block h-10 w-auto fill-current text-gray-600">
@@ -43,14 +43,8 @@
                     </label>
                 </div>
 
-                <div class="flex items-center justify-end mt-4">
-                    @if (Route::has('password.request'))
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                            {{ __('Forgot password') }}
-                        </a>
-                    @endif
-
-                    <button class="ml-3 button button_primary">
+                <div class="flex items-center mt-4">
+                    <button class="ml-3 button button_primary w-full">
                         {{ __('Log In') }}
                     </button>
                 </div>

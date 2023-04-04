@@ -113,7 +113,7 @@
                 </table>
             </div>
         @else
-           <div class="flex flex-row ml-16" style="flex-wrap: wrap;">
+           <div class="flex flex-row" style="flex-wrap: wrap; margin-left: 95px; margin-bottom: 100px">
                @foreach($livresPapiers as $livresPapier)
                    <div class="flex flex-row space-x-3">
                        <div class="">
@@ -141,9 +141,9 @@
                        </div>
                    </div>
                @endforeach
+               {!! $livresPapiers->links() !!}
            </div>
         @endif
-            {!! $livresPapiers->links() !!}
     @else
         <h3>Il n'y a aucun ouvrage.</h3>
     @endif

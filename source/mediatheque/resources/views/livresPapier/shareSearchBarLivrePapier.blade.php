@@ -1,3 +1,14 @@
+<style>
+    .search-bar {
+        display: flex;
+        flex-direction: row;
+    }
+    @media (max-width: 600px) {
+        .search-bar {
+            flex-direction: column;
+        }
+    }
+</style>
 <form wire:submit.prevent="searchByAll" class="flex flex-col items-center">
     <div class="">
         <div class="flex flex-row w-96">
@@ -7,9 +18,9 @@
             </button>
         </div>
     </div>
-    <div class="flex flex-col" id="searchParametersField">
+    <div class="flex flex-col space-x-3" id="searchParametersField">
         <p class="m-3 text-2xl">Paramètres de recherche</p>
-        <div class="flex flex-row space-x-3" >
+        <div class="search-bar" >
             <div>
                 <select wire:model="annee_debut" name="annee_parution_debut" class="select_btn mb-3">
                     <option value="">Toute annees </option>

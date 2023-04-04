@@ -5,15 +5,25 @@
             display: flex;
         }
 
+        .margin {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
         @media screen and (max-width: 700px) {
             .show-card {
                 flex-direction: column;
             }
+
+            .margin {
+                margin-top: 450px;
+                margin-bottom: 100px;
+            }
         }
     </style>
-    <div class="bg-white flex flex-col items-center p-12 justify-center">
-        <h1 class="text-2xl text-center">{{$ouvrage->titre }}</h1>
-        <div class="show-card m-auto items-center p-3.5">
+    <div class="flex flex-col items-center justify-center">
+        <div class="bg-white show-card m-auto items-center p-12 margin">
+            <h1 class="text-2xl text-center">{{$ouvrage->titre }}</h1>
             <div class="">
                 <img src="{{ asset('storage/ouvrage_electonique/'.$ouvrage->image) }}"
                      alt="{{$ouvrage->image}}" class="border border-solid" style="width: 198px;height: 300px;"/>

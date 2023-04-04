@@ -27,7 +27,8 @@ class ReservationHelper
         $durre = explode('.', $durres) ;
         $heur = $durre[0];
         $minute = explode('.', (($durres-$durre[0])*60))[0]."";
-        return $heur." H ".$minute[0].$minute[1]." min ";
+        //return $heur." H ".$minute[0].$minute[1]." min ";
+        return $heur." H ";
     }
 }
 ?>
