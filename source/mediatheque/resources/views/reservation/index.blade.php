@@ -7,12 +7,24 @@
     </select>
 @stop
 @section('content')
+    <style>
+        .container {
+            height: 300px;
+            width: 300px;
+            overflow-x: scroll;
+        }
+        .data, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 4px;
+        }
+    </style>
     <div class="flex flex-col justify-center items-center">
-        <h1 class="label_title"> Liste des Réservations </h1>
+        <h1 class="label_title"> Liste des Réservations</h1>
         @include('reservation.share_search_bar')
-        <div class="space-y-2 mt-8">
+        <div class="space-y-2 mt-8 container">
             @if(!empty($reservations ?? "") && $reservations->count() > 0)
-                <table class="fieldset_border bg-white">
+                <table class="fieldset_border bg-white data">
                     <thead class="thead">
                         <tr class="fieldset_border">
                             <th class="fieldset_border" >Numéro</th>
