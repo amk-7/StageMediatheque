@@ -4,23 +4,19 @@
     <div>
         @include('livresPapier.shareSearchBarLivrePapier')
     </div>
+    <div class="flex flex-row content-center space-x-3">
+        @if(Auth::user() && Auth::user()->hasRole('responsable'))
+            <td class="flex flex-row mb-3">
+                <form action="{{route('formulaireEnregistrementLivreNumerique')}}" method="get">
+                    @csrf
+                    <input type="submit" class="button button_primary" name="ajouter" value="ajouter">
+                </form>
+            </td>
+        @endif
+    </div>
     @if(!empty($livresNumeriques ?? "") && $livresNumeriques->count())
         @if(Auth::user() && Auth::user()->hasRole('bibliothecaire'))
             <div class="m-3">
-                <div class="flex flex-row content-center space-x-3">
-                    <td>
-                        <form action="{{route('formulaireEnregistrementLivreNumerique')}}" method="get">
-                            @csrf
-                            <input type="submit" class="button button_primary" name="ajouter" value="ajouter">
-                        </form>
-                    </td>
-                    <div class="flex flex-row">
-                        <!--select wire:model="par_page" id="par_page" class="select_btn">
-
-                        </select>
-                        <label for="par_page">par page</label-->
-                    </div>
-                </div>
                 <table class=" bg-white">
                     <thead class="text-xs bg-white uppercase bg-gray-70 dark:bg-gray-300 dark:text-gray-500 text-center">
                     <tr>

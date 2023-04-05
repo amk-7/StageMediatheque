@@ -4,7 +4,7 @@
         @include('livresPapier.shareSearchBarLivrePapier')
     </div>
     <div class="flex flex-row content-center space-x-3">
-        @if(Auth::user()->hasRole('responsable'))
+        @if(Auth::user() && Auth::user()->hasRole('responsable'))
             <td class="flex flex-row mb-3">
                 <form action="{{route('formulaireEnregistrementLivrePapier')}}" method="get">
                     @csrf
