@@ -1,4 +1,4 @@
-
+version: '3'
 services:
 
   #PHP Service
@@ -27,15 +27,13 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "81:80"
+      - "80:80"
       - "443:443"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
-    depends_on: 
-      - db
 
   #POSTRES Service
   db:
@@ -44,7 +42,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - /home/amk/IFNTI/STAGE/stageL2/StageMediatheque/source/postgres_data:/var/lib/postgresql/data/
+      - /home/projet/StageMediatheque/source/postgres_data:/var/lib/postgresql/data/
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
@@ -54,7 +52,6 @@ services:
     networks:
       - app-network
 
-
 #Docker Networks
 networks:
   app-network:
@@ -63,4 +60,3 @@ networks:
 volumes:
   dbdata:
     driver: local
-    
