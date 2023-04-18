@@ -124,7 +124,7 @@ class AbonneController extends Controller
         }
         if (! empty($request->contact)){
             Validator::make($request->all(), [
-                'contact'=>['required',
+                'contact'=>[
                     function ($attribute, $value, $flail){
                         if (! GlobaleService::verifieContact($value)){
                             $flail("Ce ".$attribute." est invalide");
@@ -136,7 +136,7 @@ class AbonneController extends Controller
 
         if (! empty($request->contact_a_prevenir)){
             Validator::make($request->all(), [
-                'contact_a_prevenir'=>['required',
+                'contact_a_prevenir'=>[
                     function ($attribute, $value, $flail){
                         if (! GlobaleService::verifieContact($value)){
                             $flail("Ce ".$attribute." est invalide");
