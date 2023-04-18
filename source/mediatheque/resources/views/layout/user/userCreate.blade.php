@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div>
-                <label class="label" for="contact">Contact</label>
+                <label class="label" for="contact">Contact <span class="optionnel">(optionnel)</span> </label>
                 <input type="tel" id="contact" value="{{old('contact')}}" placeholder="Ex: 93561240" name="contact" class="input">
             </div>
             <div>

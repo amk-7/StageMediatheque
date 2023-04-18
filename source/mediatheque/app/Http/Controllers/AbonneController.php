@@ -122,25 +122,32 @@ class AbonneController extends Controller
                 ],
             ])->validate();
         }
-        Validator::make($request->all(), [
-            'contact'=>['required',
-                function ($attribute, $value, $flail){
-                    if (! GlobaleService::verifieContact($value)){
-                        $flail("Ce ".$attribute." est invalide");
-                    }
-                }
-            ],
-        ])->validate();
 
-        Validator::make($request->all(), [
-            'contact_a_prevenir'=>['required',
-                function ($attribute, $value, $flail){
-                    if (! GlobaleService::verifieContact($value)){
-                        $flail("Ce ".$attribute." est invalide");
+        if (! empty($request->contact)){
+            Validator::make($request->all(), [
+                'contact'=>['required',
+                    function ($attribute, $value, $flail){
+                        if (! GlobaleService::verifieContact($value)){
+                            $flail("Ce ".$attribute." est invalide");
+                        }
                     }
-                }
-            ],
-        ])->validate();
+                ],
+            ])->validate();
+        }
+
+
+        if (! empty($request->contact_a_prevenir)){
+            Validator::make($request->all(), [
+                'contact_a_prevenir'=>['required',
+                    function ($attribute, $value, $flail){
+                        if (! GlobaleService::verifieContact($value)){
+                            $flail("Ce ".$attribute." est invalide");
+                        }
+                    }
+                ],
+            ])->validate();
+        }
+        
 
         if (Auth::user()){
             $request->validate(['profil_valide' => 'required']);
@@ -167,7 +174,7 @@ class AbonneController extends Controller
                 'date_naissance' => $request->date_naissance,
                 'niveau_etude' => $request->niveau_etude,
                 'profession' => $request->profession,
-                'contact_a_prevenir' => $request->contact_a_prevenir,
+                'contact_a_prevenir' => $request->contact_a_prevenir??'',
                 'numero_carte' => $request->numero_carte,
                 'type_de_carte' => $request->type_de_carte,
                 'id_utilisateur' => $utilisateur->id_utilisateur,
