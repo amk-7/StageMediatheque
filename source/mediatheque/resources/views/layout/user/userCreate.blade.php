@@ -69,10 +69,7 @@
             </div>
             <div>
                 <label class="label" for="contact">Contact</label>
-                <input type="tel" id="contact" value="{{old('contact')}}" placeholder="Ex: 93561240" name="contact" class="input @error('contact') is-invalid @enderror">
-                @error('contact')
-                <div class="alert">{{ $message }}</div>
-                @enderror
+                <input type="tel" id="contact" value="{{old('contact')}}" placeholder="Ex: 93561240" name="contact" class="input">
             </div>
             <div>
                 <label class="label" for="adresse">Adresse : </label>
