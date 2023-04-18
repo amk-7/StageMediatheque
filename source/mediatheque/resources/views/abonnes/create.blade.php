@@ -10,7 +10,7 @@
             @enderror
         </div>
         <div class="w-1/2">
-            <label class="label" for="contact_a_prevenir">Contact à prévenir</label>
+            <label class="label" for="contact_a_prevenir">Contact à prévenir <span class="optionnel">(optionnel)</span> </label>
             <input type="text" name="contact_a_prevenir" id="contact_a_prevenir" value="{{old('contact_a_prevenir')}}" class="input">
         </div>
     </div>
