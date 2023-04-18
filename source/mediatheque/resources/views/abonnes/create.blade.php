@@ -11,10 +11,7 @@
         </div>
         <div class="w-1/2">
             <label class="label" for="contact_a_prevenir">Contact à prévenir</label>
-            <input type="text" name="contact_a_prevenir" id="contact_a_prevenir" value="{{old('contact_a_prevenir')}}" class="input @error('contact_a_prevenir') is-invalid @enderror">
-            @error('contact_a_prevenir')
-            <div class="alert">{{ $message }}</div>
-            @enderror
+            <input type="text" name="contact_a_prevenir" id="contact_a_prevenir" value="{{old('contact_a_prevenir')}}" class="input">
         </div>
     </div>
     <div class="flex flex-row">
