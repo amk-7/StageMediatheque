@@ -113,7 +113,7 @@
                 </table>
             </div>
         @else
-           <div class="flex flex-row" style="flex-wrap: wrap; margin-left: 95px; margin-bottom: 100px">
+           <div class="flex flex-row mb-12" style="flex-wrap: wrap; margin-left: 95px;">
                @foreach($livresPapiers as $livresPapier)
                    <div class="flex flex-row space-x-3">
                        <div class="">
@@ -141,6 +141,8 @@
                        </div>
                    </div>
                @endforeach
+           </div>
+           <div style="margin-bottom: 100px">
                {!! $livresPapiers->links() !!}
            </div>
         @endif

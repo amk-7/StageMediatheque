@@ -43,12 +43,11 @@ class AbonneController extends Controller
                 ->orWhere("prenom", "like", "%".strtolower($request->search_by)."%")
                 ->get();
             $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
-
-            $professions = ["Retraite", "Etudiant", "Fonctionnaire", "Eleve"];
+            $professions = ["Retraite", "Etudiant", "Fonctionnaire", "Elève"];
             if (! empty($request->profession)){
                 $professions = [$request->profession];
             }
-
+            //dump($users);
             $niveau_etudes = ["Université", "Lycée", "Collège", "Primaire"];
             if (! empty($request->niveau_etude)){
                 $niveau_etudes = [$request->niveau_etude];
@@ -57,6 +56,7 @@ class AbonneController extends Controller
             $abonnes = Abonne::whereIn("id_utilisateur", $users)
                         ->whereIn("profession", $professions)
                         ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
+            //dd($abonnes);
 
         } else {
             $abonnes = Abonne::paginate($paginate);
