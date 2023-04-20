@@ -99,19 +99,19 @@ class AbonneController extends Controller
             'date_naissance' => 'required',
             'niveau_etude' => 'required',
             'profession' => 'required',
+            'type_de_carte' => 'required'
         ]);
 
         Validator::make($request->all(), [
             'nom_utilisateur'=>['required',
-                function ($attribute, $value, $fail){
+                function ($attribute, $value, $flail){
                     if (User::all()->where('nom_utilisateur', $value)->first()){
-                        $fail("Le nom '$value' est déjà utilisé.");
+                        $flail("Le nom '$value' est déjà utilisé.");
                     }
                 }
             ],
         ])->validate();
-
-        if (! empty($request->type_de_carte) && $request->type_de_carte == "1"){
+        if ($request->type_de_carte == "1"){
             Validator::make($request->all(), [
                 'numero_carte'=>['required',
                     function ($attribute, $value, $flail){
@@ -122,9 +122,10 @@ class AbonneController extends Controller
                 ],
             ])->validate();
         }
+
         if (! empty($request->contact)){
             Validator::make($request->all(), [
-                'contact'=>[
+                'contact'=>['required',
                     function ($attribute, $value, $flail){
                         if (! GlobaleService::verifieContact($value)){
                             $flail("Ce ".$attribute." est invalide");
@@ -134,9 +135,10 @@ class AbonneController extends Controller
             ])->validate();
         }
 
+
         if (! empty($request->contact_a_prevenir)){
             Validator::make($request->all(), [
-                'contact_a_prevenir'=>[
+                'contact_a_prevenir'=>['required',
                     function ($attribute, $value, $flail){
                         if (! GlobaleService::verifieContact($value)){
                             $flail("Ce ".$attribute." est invalide");
@@ -145,6 +147,7 @@ class AbonneController extends Controller
                 ],
             ])->validate();
         }
+        
 
         if (Auth::user()){
             $request->validate(['profil_valide' => 'required']);
@@ -167,30 +170,24 @@ class AbonneController extends Controller
                                     ->first();
         if(! $utilisateur){
             $utilisateur = UserService::enregistrerUtilisateur($request);
-            try {
-                Abonne::create([
-                    'date_naissance' => $request->date_naissance,
-                    'niveau_etude' => $request->niveau_etude,
-                    'profession' => $request->profession,
-                    'contact_a_prevenir' => $request->contact_a_prevenir,
-                    'numero_carte' => $request->numero_carte ?? "Aucun",
-                    'type_de_carte' => $request->type_de_carte,
-                    'id_utilisateur' => $utilisateur->id_utilisateur,
-                    'profil_valider' => $request->profil_valide,
-                ]);
-            } catch (Exception $e){
-                $utilisateur->delete();
-                return redirect()->route("storeAbonne");
-            }
-            $utilisateur->assignRole([Role::find(3)]);
-
-            Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
-
+            Abonne::create([
+                'date_naissance' => $request->date_naissance,
+                'niveau_etude' => $request->niveau_etude,
+                'profession' => $request->profession,
+                'contact_a_prevenir' => $request->contact_a_prevenir??'',
+                'numero_carte' => $request->numero_carte,
+                'type_de_carte' => $request->type_de_carte,
+                'id_utilisateur' => $utilisateur->id_utilisateur,
+                'profil_valider' => $request->profil_valide,
+            ]);
             if (Auth::guest()){
+                $utilisateur->assignRole(Role::find(3));
 
                 event(new Registered($utilisateur));
 
                 Auth::login($utilisateur);
+
+                Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
 
                 return redirect(RouteServiceProvider::HOME);
             }
