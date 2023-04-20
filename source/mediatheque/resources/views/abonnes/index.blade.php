@@ -1,6 +1,6 @@
 @extends('layout.template.base')
 @section('content')
-    <div class="flex flex-col justify-center items-center">
+    <div class="flex flex-col justify-center items-center m-auto">
         <h1 class="label_title">Liste des Abonnes</h1>
         <form class="flex flex-col items-center" method="get" action="{{route("listeAbonnes")}}">
             <div class="">
@@ -47,7 +47,7 @@
                 </form>
             </div>
             @if(!empty($abonnes ?? "") && $abonnes->count() > 0)
-                <table class="fieldset_border">
+                <table class="fieldset_border" style="margin-bottom: 100px;">
                     <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
                         <tr class="fieldset_border">
                             <th class="fieldset_border" >N°</th>
