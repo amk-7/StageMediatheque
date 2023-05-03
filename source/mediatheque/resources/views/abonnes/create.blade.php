@@ -62,6 +62,9 @@
             <input type="radio" name="type_de_carte" value="0" {{ old('type_de_carte') == "0" ? 'checked' : '' }}>
             <label> Scolaire</label>
         </div>
+        @error('type_de_carte')
+        <div class="alert">{{ $message }}</div>
+        @enderror
     </div>
     <div>
         <label class="label" for="numero_carte">Numéro de carte</label>
