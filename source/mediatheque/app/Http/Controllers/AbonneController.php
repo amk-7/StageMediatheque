@@ -189,7 +189,10 @@ class AbonneController extends Controller
                 return redirect(RouteServiceProvider::HOME);
             }
         } else {
+<<<<<<< HEAD
             $utilisateur->delete();
+=======
+>>>>>>> fcd4959342529e55fe72d95b9d2361f4639e0768
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
 

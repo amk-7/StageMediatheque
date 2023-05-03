@@ -1,6 +1,6 @@
 @extends('layout.template.base')
 @section('content')
-    <div class="flex flex-col justify-center items-center m-auto">
+    <div class="flex flex-col justify-center items-center m-auto" style="margin-top: 100px;">
         <h1 class="label_title">Liste des Abonnes</h1>
         <form class="flex flex-col items-center" method="get" action="{{route("listeAbonnes")}}">
             <div class="">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </form>
-        <div class="ml-16">
+        <div class="ml-16" style="margin-bottom: 100px;">
             <div class="flex flex-row space-x-3 mb-3">
                 <form method="GET" action="{{route('createAbonne')}}">
                     <button class="button button_primary" type="Submit">Ajouter</button>

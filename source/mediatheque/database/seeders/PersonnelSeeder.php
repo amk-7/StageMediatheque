@@ -17,29 +17,6 @@ class PersonnelSeeder extends Seeder
      */
     public function run()
     {
-        //
-        $utilisateur = User::create([
-            'nom' => 'Daiki',
-            'prenom' => 'Alhasan',
-            'nom_utilisateur' => 'Shin06',
-            'email' => 'Alhassan.tuto@gmail.com',
-            'password' => Hash::make('123456789'),
-            'contact' => '91767676',
-            'photo_profil' => 'profil.png',
-            'adresse' => array(
-                'ville' => 'Dakar',
-                'quartier' => 'Sédhiou',
-                'numero_maison' => 'N108'),
-            'sexe' => 'Masculin'
-        ]);
-
-        Personnel::create([
-            'statut' => 'Bibliothécaire',
-            'id_utilisateur' => $utilisateur->id_utilisateur
-        ]);
-
-        $utilisateur->assignRole(Role::find(2));
-
         $utilisateur = User::create([
             'nom' => 'SUP ADMIN',
             'prenom' => 'SUP ADMIN',
