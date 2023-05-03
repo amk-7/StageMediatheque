@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
+        /*$this->call([
             RoleSeeder::class,
             PermissionSeeder::class,
             RoleHasPermissionSeeder::class,
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EmpruntSeeder::class);
         $this->call(TarifAbonnementSeeder::class);
         $this->call(RestitutionSeeder::class);
-        $this->call(LivreNumeriqueSeeder::class);
+        $this->call(LivreNumeriqueSeeder::class);*/
 
     }
 }
