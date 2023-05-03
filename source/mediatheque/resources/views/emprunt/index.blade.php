@@ -6,13 +6,13 @@
         @include('reservation.share_search_bar')
         <div class="space-y-2 mt-8">
                 <div class="flex space-x-3">
-                    @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
-                    <form method="GET" action="{{route('createEmprunt')}}">
-                        <button type="Submit" class="button button_primary">Ajouter</button>
-                    </form>
                     <form method="GET" action="{{ route('downloadExcelListeEnprunt') }}">
                         {{ \App\Service\EmpruntService::setEmpruntLIstInSession(collect($emprunts)['data']) }}
                         <button type="Submit" class="button button_primary">Export</button>
+                    </form>
+                    @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
+                    <form method="GET" action="{{route('createEmprunt')}}">
+                        <button type="Submit" class="button button_primary">Ajouter</button>
                     </form>
                 </div>
                 <table class="fieldset_border bg-white">

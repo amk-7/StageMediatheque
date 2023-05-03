@@ -163,7 +163,6 @@ class AbonneController extends Controller
             return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
         }
 
-
         $utilisateur = User::all()->where('nom', '=', $request->nom)
                                     ->where('prenom', '=', $request->prenom)
                                     ->where('nom_utilisateur', '=', $request->nom_utilisateur)
@@ -174,8 +173,8 @@ class AbonneController extends Controller
                 'date_naissance' => $request->date_naissance,
                 'niveau_etude' => $request->niveau_etude,
                 'profession' => $request->profession,
-                'contact_a_prevenir' => $request->contact_a_prevenir??'',
-                'numero_carte' => $request->numero_carte,
+                'contact_a_prevenir' => $request->contact_a_prevenir?? '',
+                'numero_carte' => $request->numero_carte ?? '',
                 'type_de_carte' => $request->type_de_carte,
                 'id_utilisateur' => $utilisateur->id_utilisateur,
                 'profil_valider' => $request->profil_valide,
@@ -192,11 +191,7 @@ class AbonneController extends Controller
                 return redirect(RouteServiceProvider::HOME);
             }
         } else {
-            if (Auth::guest()){
-                return redirect()->route('login');
-            } else {
-                return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
-            }
+            return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
 
         return redirect()->route('listeAbonnes');

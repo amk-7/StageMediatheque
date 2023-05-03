@@ -1,7 +1,7 @@
 FROM php:8.1-fpm
 
 # Copy composer.lock and composer.json
-#COPY composer.lock composer.json /var/www/
+COPY composer.lock composer.json /var/www/
 
 # Set working directory
 WORKDIR /var/www
@@ -53,19 +53,17 @@ COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 
 # Add user for laravel application
-RUN groupadd -g 1000 www
+RUN groupadd -g 1000 www 
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Copy existing application directory contents
-COPY . /var/www
+#COPY . /var/www
 
 # Copy existing application directory permissions
-COPY --chown=www:www . /var/www
-
-RUN echo "memory_limit=256M" > /usr/local/etc/php/conf.d/memory-limit.ini
+#COPY --chown=www:www . /var/www
 
 # Change current user to www
-USER www
+#USER www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
