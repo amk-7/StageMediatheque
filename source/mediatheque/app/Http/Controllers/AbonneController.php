@@ -43,12 +43,11 @@ class AbonneController extends Controller
                 ->orWhere("prenom", "like", "%".strtolower($request->search_by)."%")
                 ->get();
             $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
-
-            $professions = ["Retraite", "Etudiant", "Fonctionnaire", "Eleve"];
+            $professions = ["Retraite", "Etudiant", "Fonctionnaire", "Elève"];
             if (! empty($request->profession)){
                 $professions = [$request->profession];
             }
-
+            //dump($users);
             $niveau_etudes = ["Université", "Lycée", "Collège", "Primaire"];
             if (! empty($request->niveau_etude)){
                 $niveau_etudes = [$request->niveau_etude];
@@ -57,6 +56,7 @@ class AbonneController extends Controller
             $abonnes = Abonne::whereIn("id_utilisateur", $users)
                         ->whereIn("profession", $professions)
                         ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
+            //dd($abonnes);
 
         } else {
             $abonnes = Abonne::paginate($paginate);
@@ -99,19 +99,19 @@ class AbonneController extends Controller
             'date_naissance' => 'required',
             'niveau_etude' => 'required',
             'profession' => 'required',
+            'type_de_carte' => 'required'
         ]);
 
         Validator::make($request->all(), [
             'nom_utilisateur'=>['required',
-                function ($attribute, $value, $fail){
+                function ($attribute, $value, $flail){
                     if (User::all()->where('nom_utilisateur', $value)->first()){
-                        $fail("Le nom '$value' est déjà utilisé.");
+                        $flail("Le nom '$value' est déjà utilisé.");
                     }
                 }
             ],
         ])->validate();
-
-        if (! empty($request->type_de_carte) && $request->type_de_carte == "1"){
+        if ($request->type_de_carte == "1"){
             Validator::make($request->all(), [
                 'numero_carte'=>['required',
                     function ($attribute, $value, $flail){
@@ -145,6 +145,7 @@ class AbonneController extends Controller
                 ],
             ])->validate();
         }
+        
 
         if (Auth::user()){
             $request->validate(['profil_valide' => 'required']);
@@ -160,46 +161,35 @@ class AbonneController extends Controller
             return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
         }
 
-
         $utilisateur = User::all()->where('nom', '=', $request->nom)
                                     ->where('prenom', '=', $request->prenom)
                                     ->where('nom_utilisateur', '=', $request->nom_utilisateur)
                                     ->first();
         if(! $utilisateur){
             $utilisateur = UserService::enregistrerUtilisateur($request);
-            try {
-                Abonne::create([
-                    'date_naissance' => $request->date_naissance,
-                    'niveau_etude' => $request->niveau_etude,
-                    'profession' => $request->profession,
-                    'contact_a_prevenir' => $request->contact_a_prevenir,
-                    'numero_carte' => $request->numero_carte ?? "Aucun",
-                    'type_de_carte' => $request->type_de_carte,
-                    'id_utilisateur' => $utilisateur->id_utilisateur,
-                    'profil_valider' => $request->profil_valide,
-                ]);
-            } catch (Exception $e){
-                $utilisateur->delete();
-                return redirect()->route("storeAbonne");
-            }
-            $utilisateur->assignRole([Role::find(3)]);
-
-            Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
-
+            Abonne::create([
+                'date_naissance' => $request->date_naissance,
+                'niveau_etude' => $request->niveau_etude,
+                'profession' => $request->profession,
+                'contact_a_prevenir' => $request->contact_a_prevenir?? '',
+                'numero_carte' => $request->numero_carte ?? '',
+                'type_de_carte' => $request->type_de_carte,
+                'id_utilisateur' => $utilisateur->id_utilisateur,
+                'profil_valider' => $request->profil_valide,
+            ]);
             if (Auth::guest()){
+                $utilisateur->assignRole(Role::find(3));
 
                 event(new Registered($utilisateur));
 
                 Auth::login($utilisateur);
 
+                Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+
                 return redirect(RouteServiceProvider::HOME);
             }
         } else {
-            if (Auth::guest()){
-                return redirect()->route('login');
-            } else {
-                return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
-            }
+            return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
 
         return redirect()->route('listeAbonnes');

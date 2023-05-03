@@ -27,7 +27,7 @@ class UserService
             'nom_utilisateur' => $request->nom_utilisateur,
             'email' => $request->email,
             'password' => \Hash::make($request->password),
-            'contact' => $request->contact,
+            'contact' => $request->contact ?? '',
             'photo_profil' => $chemin_image,
             'adresse' => $request->adresse,
             'sexe' => $request->sexe

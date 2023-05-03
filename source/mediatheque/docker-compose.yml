@@ -42,7 +42,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - /home/projet/StageMediatheque/source/postgres_data:/var/lib/postgresql/data/
+      - dbdata:/var/lib/postgresql/data/
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin

@@ -12,7 +12,7 @@ class LivresPapierService
 {
     public static function exist(String $ISBN)
     {
-        return LivresPapier::all()->where("ISBN", $ISBN)->first();
+        return LivresPapier::all()->where("isbn", $ISBN)->first();
     }
 
     public static function searchByParamaters($annee_debut, $annee_fin, $langue, $niveau, $type, $dommaine)
@@ -35,7 +35,7 @@ class LivresPapierService
                             ->get();
 
         $id_livre_papier = DB::table('livres_papiers')
-                            ->where('ISBN', 'like', $value)
+                            ->where('isbn', 'like', $value)
                             ->orWhereIn('id_ouvrage_physique', self::id_ouvrage_physique_from_array($id_ouvrage_phyiques))
                             ->get();
 
@@ -48,7 +48,7 @@ class LivresPapierService
         $livre_papier = DB::table('livres_papiers')
             ->select('id_livre_papier')
             ->whereJsonContains('categorie', ["'".$categorie."'"])
-            ->orWhere('ISBN', $ISBN)
+            ->orWhere('isbn', $ISBN)
             ->orWhereIn('id_livre_papier', $id_auteurs)
             ->get();
         $id_livre_papier = array();
