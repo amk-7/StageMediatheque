@@ -35,8 +35,8 @@ class AbonneService
                 'id'=>$p->id_abonne,
                 'nom'=>$p->utilisateur->nom,
                 'prenom'=>$p->utilisateur->prenom,
-                'sexe'=>$p->utilisateur->sexe,
                 'nomUtilisateur' => $p->utilisateur->nom_utilisateur,
+                'sexe'=>$p->utilisateur->sexe,
                 'email' => $p->utilisateur->email,
                 'contact' => $p->utilisateur->contact,
                 'ville' => $p->utilisateur->adresse['ville'],
@@ -44,7 +44,7 @@ class AbonneService
                 'numéro_maison' => $p->utilisateur->adresse['numero_maison'],
                 'profession' => $p->profession,
                 'cntact_a_prevenir' => $p->utilisateur->cntact_a_prevenir,
-                'type_carte' => $p->type_de_carte,
+                'type_carte' => $p->type_de_carte == "1" ? "Identité" : "Scolaire",
                 'numero_carte' => $p->numero_carte,
                 'a_payer' => $p->isRegistrate() ? 'Oui' : 'Non',
                 'nombre_emprunts' => $p->getNombreEprunt() != 0 ? $p->getNombreEprunt(): '0',
@@ -66,8 +66,10 @@ class AbonneService
                 'prenom'=>$p->utilisateur->prenom,
                 'estEligible'=>count($p->getEmpruntsEnCours()) == 0 ? 'true' : 'false',
                 'pas_abonnement' => $p->abonnementEnCours() == true ? 'true' : 'false',
-                'niveau' => $p->profession == "Éleve" ? '1' : '0',
+                'niveau' => $p->profession == "Elève" ? '1' : '0',
             );
+            /*dump($p->profession);
+            dump($personne['niveau']);*/
             array_push($abonnes, $personne);
         }
         return $abonnes;

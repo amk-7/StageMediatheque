@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Abonne;
 use App\Models\Personnel;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -38,5 +39,26 @@ class PersonnelSeeder extends Seeder
         ]);
 
         $utilisateur->assignRole([Role::find(2), Role::find(1)]);
+
+        $utilisateur = User::create([
+            'nom' => strtoupper('Shintaro'),
+            'prenom' => strtolower('Midorima'),
+            'nom_utilisateur' => 'daiki5',
+            'email' => 'alhassan@gmail.com',
+            'password' => Hash::make('123456789'),
+            'contact' => '91817907',
+            'photo_profil' => 'profil.png',
+            'adresse' => array(
+                'ville' => 'Sokode',
+                'quartier' => 'Lome',
+                'numero_maison' => 'N102'),
+            'sexe' => 'Masculin'
+        ]);
+
+        Personnel::create([
+            'statut' => 'Bibliothècaire',
+            'id_utilisateur' => $utilisateur->id_utilisateur
+        ]);
+        $utilisateur->assignRole([Role::find(2)]);
     }
 }

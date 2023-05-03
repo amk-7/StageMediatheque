@@ -22,7 +22,7 @@ class AbonneSeeder extends Seeder
             'nom' => strtoupper('Shintaro'),
             'prenom' => strtolower('Midorima'),
             'nom_utilisateur' => 'Daiki5',
-            'email' => 'Alhassan.blog@gmail.com',
+            'email' => 'alhassan.blog@gmail.com',
             'password' => Hash::make('daiki3354'),
             'contact' => '91817907',
             'photo_profil' => 'profil.png',

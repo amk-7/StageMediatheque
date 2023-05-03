@@ -75,8 +75,6 @@ class AbonneController extends Controller
      */
     public function create()
     {
-
-
         return view('abonnes.create');
     }
 
@@ -145,7 +143,7 @@ class AbonneController extends Controller
                 ],
             ])->validate();
         }
-        
+
 
         if (Auth::user()){
             $request->validate(['profil_valide' => 'required']);
@@ -177,9 +175,8 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur,
                 'profil_valider' => $request->profil_valide,
             ]);
+            $utilisateur->assignRole(Role::find(3));
             if (Auth::guest()){
-                $utilisateur->assignRole(Role::find(3));
-
                 event(new Registered($utilisateur));
 
                 Auth::login($utilisateur);
@@ -189,10 +186,6 @@ class AbonneController extends Controller
                 return redirect(RouteServiceProvider::HOME);
             }
         } else {
-<<<<<<< HEAD
-            $utilisateur->delete();
-=======
->>>>>>> fcd4959342529e55fe72d95b9d2361f4639e0768
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
 
@@ -233,6 +226,7 @@ class AbonneController extends Controller
      */
     public function update(Request $request, Abonne $abonne)
     {
+        //dd($request["niveau_etude"]);
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
@@ -252,6 +246,7 @@ class AbonneController extends Controller
         }
 
         $abonne->save();
+        $utilisateur->assignRole(Role::find(3));
         if (Auth::user()->hasRole("abonne")){
             return redirect()->route('showAbonne', $abonne);
         } else{
