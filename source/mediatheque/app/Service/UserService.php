@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UserService
 {
     public static function enregistrerUtilisateur(Request $request){
-
+        
         //récuperation de l'image
         $image = $request->file('photo_profil');
 
@@ -21,6 +21,7 @@ class UserService
         else{
             $chemin_image = "profil.png";
         }
+        
         $utilisateur = User::create([
             'nom' => strtoupper($request->nom),
             'prenom' => strtolower($request->prenom),
@@ -30,7 +31,8 @@ class UserService
             'contact' => $request->contact ?? '',
             'photo_profil' => $chemin_image,
             'adresse' => $request->adresse,
-            'sexe' => $request->sexe
+            'sexe' => $request->sexe,
+            
         ]);
 
         return $utilisateur;

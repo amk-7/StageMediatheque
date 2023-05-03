@@ -122,6 +122,7 @@ class AbonneController extends Controller
                 ],
             ])->validate();
         }
+
         if (! empty($request->contact)){
             Validator::make($request->all(), [
                 'contact'=>['required',
@@ -133,6 +134,7 @@ class AbonneController extends Controller
                 ],
             ])->validate();
         }
+
 
         if (! empty($request->contact_a_prevenir)){
             Validator::make($request->all(), [

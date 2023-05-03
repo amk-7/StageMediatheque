@@ -40,6 +40,8 @@
 
 ## Installation du package helper
 
+`composer require --dev barryvdh/laravel-ide-helper`
+
 `composer require mercuryseries/laravel-helpers --ignore-platform-req=ext-mysql_xdevapi`
 
     Ajout d'un provider
@@ -80,6 +82,8 @@
 composer require laravel/breeze --dev
 
 --ignore-platform-req=ext-mysql_xdevapi
+
+php artisan breeze:install
 
 ## Regler le problème de imagick
     composer require bacon/bacon-qr-code
