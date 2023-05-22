@@ -102,7 +102,7 @@
                                         </form>
                                     </td>
                                     <!--td class="fieldset_border" >
-                                        <form methode="GET" action="{{route('enregistrementActivite', $abonne->id_abonne)}}">
+                                        <form methode="GET" action="{ {route('enregistrementActivite', $abonne->id_abonne)} }">
                                             <button class="button button_show" type="Submit">Activité</button>
                                         </form>
                                     </td-->

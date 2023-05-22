@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Auteur;
 use App\Models\LivresPapier;
 use App\Models\Ouvrage;
 use App\Models\OuvragesPhysique;
@@ -46,7 +47,8 @@ class LivresPapierImport implements ToModel
         try {
             $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee]), str_replace(' ', '', $row[$indice_lieu])) ;
         } catch (QueryException $e){
-            dd($row[$indice_titre]);
+            dump( $row[0]);
+            dump($row[$indice_titre]);
             dd($e);
             \Session(["error_id" => $row[0]]);
             return ;
@@ -61,17 +63,19 @@ class LivresPapierImport implements ToModel
                 return LivresPapier::all()->where('id_ouvrage_physique', $ouvragePhys->id_ouvrage_physique)->first();
             }
         } else {
-            $data_auteurs = ImportExcelService::exctratUserInfo("Collèction K2");//$row[$indice_auteur]
-            $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
-
-            // Creation de l'ouvrage
-            $chemin_image = ($row[$indice_image_path] ?? null) == null ? "default_book_image.png" : $row[$indice_image_path];
 
             try {
+                //$data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);//
+                $auteurs = AuteurService::enregistrerAuteur($row[$indice_auteur]);
+                // Creation de l'ouvrage
+                $chemin_image = ($row[$indice_image_path] ?? null) == null ? "default_book_image.png" : $row[$indice_image_path];
+
+                $annee = str_replace(' ', '', $row[$indice_annee])== '' ? 0 : str_replace(' ', '', $row[$indice_annee]);
+                $annee = str_contains(strtolower($annee), 'pas') ? 0 : $annee ;
                 $ouvrage = Ouvrage::create([
                     'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
                     'lieu_edition'=>$row[$indice_lieu],
-                    'annee_apparution'=>str_replace(' ', '', $row[$indice_annee])== '' ? 0 : str_replace(' ', '', $row[$indice_annee]) ,
+                    'annee_apparution'=> $annee ,
                     'type'=>ImportExcelService::formatString($row[$indice_type] ?? ""),
                     'niveau' => ImportExcelService::extractLevelInfo($row[$indice_niveau] ?? "1"),
                     'image' => $chemin_image,
@@ -79,25 +83,27 @@ class LivresPapierImport implements ToModel
                     'resume'=>strtolower("pas de resumé"),
                     'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle] ?? ""),
                 ]);
+
+                // Definire les auteurs de l'ouvrage
+                OuvrageService::definireAuteur($ouvrage, $auteurs);
+
+                // Création d'un ouvrage physique
+                $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", "COT", [$ouvrage->auteurs()->first()], $ouvrage);
+
+                $ouvragePhysique = OuvragesPhysique::Create([
+                    'nombre_exemplaire' => $row[$indice_nombre_exemplaire]+0,
+                    'id_ouvrage'=>$ouvrage->id_ouvrage,
+                    'cote' => $cote,
+                    'id_classification_dewey_dizaine'=>null,
+                ]);
             } catch (QueryException $e){
-                //dd($e);
+                dd($e);
+                dump(session("compteur"));
                 \Session(["error_id" => session("compteur")]);
                 return null;
             }
-            // Definire les auteurs de l'ouvrage
-            OuvrageService::definireAuteur($ouvrage, $auteurs);
         }
 
-
-        // Création d'un ouvrage physique
-        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", "COT", [$ouvrage->auteurs()->first()], $ouvrage);
-
-        $ouvragePhysique = OuvragesPhysique::Create([
-            'nombre_exemplaire' => $row[$indice_nombre_exemplaire],
-            'id_ouvrage'=>$ouvrage->id_ouvrage,
-            'cote' => $cote,
-            'id_classification_dewey_dizaine'=>null,
-        ]);
 
         return LivresPapier::create([
             'categorie'=>array(strtolower($row[$indice_domaine]), ""),
