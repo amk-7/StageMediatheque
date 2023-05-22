@@ -27,7 +27,7 @@ class AbonnesExport implements FromCollection
         //dd($liste);
         $liste_surcharger = AbonneService::formatAbonneListForExport($liste);
         //dd($liste);
-        
+
         $liste = $liste_surcharger[0];
         //dd($liste);
 
@@ -49,13 +49,14 @@ class AbonnesExport implements FromCollection
             "nombre_de_non_paye" => str($liste_surcharger[3]),
         ]));
 
-        
+
 
         array_push($abonnes, array(
             'id',
             'nom',
             'prenom',
             'nomUtilisateur',
+            'sexe',
             'email' ,
             'contact' ,
             'ville' ,
@@ -69,11 +70,10 @@ class AbonnesExport implements FromCollection
             'nombre_emprunts',
             'nombre_restitutions',
             'nombre_emprunt_non_restituer',
-            'ouvrages_lue',
         ));
 
         array_push($abonnes, $liste);
-        
+
         return collect($abonnes);
     }
 }

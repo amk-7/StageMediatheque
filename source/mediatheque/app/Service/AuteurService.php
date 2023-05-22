@@ -8,10 +8,14 @@ use Illuminate\Http\Request;
 
 class AuteurService
 {
-    public static function enregistrerAuteur(Array $data_auteurs)
+    public static function enregistrerAuteur($data_auteurs)
     {
         //dump($data_auteurs);
-        $auteurs = [];
+        $auteur = Auteur::Create([
+            "nom"=>trim(strtolower($data_auteurs)),
+            "prenom"=>trim(strtolower("N/A")),
+        ]);
+        /*$auteurs = [];
         foreach ($data_auteurs as $info_auteur){
             if (! is_array($info_auteur)){
                 $auteur = self::auteur(strtoupper($info_auteur), strtolower(""));
@@ -34,8 +38,8 @@ class AuteurService
             }
         }
         //dd($auteurs);
-        //dd("Auteur error");
-        return $auteurs;
+        //dd("Auteur error");*/
+        return [$auteur];
     }
 
     public static function auteur(String $nom, string $prenom)

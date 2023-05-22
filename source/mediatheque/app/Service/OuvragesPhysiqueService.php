@@ -114,8 +114,8 @@ class OuvragesPhysiqueService
 
         $cote = $type_livre;
         $cote .= GlobaleService::formatString($indice_dewey, 3);
-        $cote .= strtoupper(substr($auteurs[0]->nom, 0, 3));
-        $cote .= strtolower(substr($ouvrage->titre, 0, 1)).GlobaleService::formatString($ouvrage->id_ouvrage, 6);
+        $cote .= strtoupper(substr("CCC", 0, 3)); //utf8_encode($auteurs[0]->nom)
+        $cote .= strtolower(substr("O", 0, 1)).GlobaleService::formatString($ouvrage->id_ouvrage, 6); //$ouvrage->titre
         return $cote;
     }
 

@@ -196,8 +196,10 @@ class OuvrageService
     public static function ouvrageExist($titre, $annee, $lieu_edition)
     {
         //dump($titre, $annee, $lieu_edition);
-        $ouvrage = Ouvrage::whereRaw("LOWER(REPLACE(titre, ' ', '')) = LOWER(REPLACE('{$titre}', ' ', ''))")->first();
-        return $ouvrage;
+        /*$titre = strtoupper($titre ?? "");
+        $ouvrage = Ouvrage::where('titre', $titre)->first();*/
+        //dump($ouvrage);
+        return null;
         /*if ($annee > 1900) {
             $ouvrage = Ouvrage::whereRaw("LOWER(REPLACE(titre, ' ', '')) = LOWER(REPLACE('{$titre}', ' ', ''))")
                 ->whereRaw("LOWER(REPLACE(lieu_edition, ' ', '')) = LOWER(REPLACE('{$lieu_edition}', ' ', ''))")

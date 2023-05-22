@@ -29,19 +29,6 @@ class ImportExcelService
         return $auteurs;
     }
 
-    public static function exctratUserInfo1(String $auteur)
-    {
-        $auteur = str_replace(' ', '', $auteur);
-        $auteur = str_replace('(', ',', $auteur);
-        $auteur = str_replace(')', '', $auteur);
-        $auteur = str_replace('-', '', $auteur);
-        $auteurs = explode(',', $auteur);
-        if (count($auteurs)==1)
-        {
-            array_push($auteurs, "");
-        }
-        return $auteurs;
-    }
 
     public static function extractLevelInfo(String $niveau)
     {
@@ -51,16 +38,16 @@ class ImportExcelService
         {
             return $niveau;
         }
-        if ($niveau=='lycée'){
+        if (str_contains(strtolower($niveau), 'lycée') || str_contains(strtolower($niveau), 'l')){
             return '3';
         }
-        if ($niveau == 'collège'){
+        if (str_contains(strtolower($niveau), 'collège')){
             return '2';
         }
-        if ($niveau == 'primaire'){
+        if (str_contains(strtolower($niveau), 'primaire')){
             return '1';
         }
-        return $niveau[0];
+        return '3';
     }
 
     public static function formatKeyWord(String $mot_cle)

@@ -50,6 +50,10 @@ Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function 
 });
 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
+    Route::get('download_excel_liste_live_papier', [\App\Http\Controllers\LivresPapierController::class, 'exportExcel'])->name('downloadExcelListeLivresPapier');
+
+    Route::get('formulaire_enregistrement_approvisionnements', [ApprovisionnementsController::class, 'create'])->name('formulaireEnregistrementApprovisionnements');
+
     Route::get('modifier_activite/{abonne}/{activite}', [\App\Http\Controllers\AbonneController::class, 'editeAndUpdateActivite'])->name('updateActivite');
 
     Route::get('enregistrement_activite/{abonne}', 'App\Http\Controllers\AbonneController@storeAndIndexActivity')->name('enregistrementActivite');
@@ -69,6 +73,9 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::delete('suppression_des_emprunts/{emprunt}', 'App\Http\Controllers\EmpruntController@destroy')->name('destroyEmprunt');
     Route::get('formulaire_Emprunt', 'App\Http\Controllers\EmpruntController@create')->name('createEmprunt');
     Route::post('enregistrement_emprunt', 'App\Http\Controllers\EmpruntController@store')->name('storeEmprunt');
+
+    Route::get('download_excel_liste_abonnes', [\App\Http\Controllers\AbonneController::class, 'exportExcel'])->name('downloadExcelListeAbonnes');
+    Route::get('download_excel_liste_emprunts', [\App\Http\Controllers\EmpruntController::class, 'exportExcel'])->name('downloadExcelListeEnprunt');
 
 // Path: Reservation routes/web.php
     /*Route::get('affiche_reservation', 'App\Http\Controllers\ReservationController@show')->name('showReservation');
@@ -170,7 +177,6 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelController@store')->name('storePersonnel');
 
     Route::get('liste_approvisionnements', [ApprovisionnementsController::class, 'index'])->name('listeApprovisionnements');
-    Route::get('formulaire_enregistrement_approvisionnements', [ApprovisionnementsController::class, 'create'])->name('formulaireEnregistrementApprovisionnements');
     Route::post('enregistrement_approvisionnements', [ApprovisionnementsController::class, 'store'])->name('enregistementApprovisionnements');
     Route::get('affichage_approvisionnements', [ApprovisionnementsController::class, 'show'])->name('affichageApprovisionnements');
     Route::get('formulaire_modification_approvisionnements/{approvisionnements}/modification', [ApprovisionnementsController::class, 'edit'])->name('formulaireModificationApprovisionnements');
@@ -182,11 +188,6 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
 
     Route::get('formulaire_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueCreate'])->name('formulaireImportExcelLivresNumerique');
     Route::put('enregistrement_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueStore'])->name('enregistrementImportExcelLivresNumerique');
-
-    Route::get('download_excel_liste_abonnes', [\App\Http\Controllers\AbonneController::class, 'exportExcel'])->name('downloadExcelListeAbonnes');
-    Route::get('download_excel_liste_emprunts', [\App\Http\Controllers\EmpruntController::class, 'exportExcel'])->name('downloadExcelListeEnprunt');
-
-    Route::get('download_excel_liste_live_papier', [\App\Http\Controllers\LivresPapierController::class, 'exportExcel'])->name('downloadExcelListeLivresPapier');
 
     // Path: ArchiveAbonne routes/web.php
     Route::get('liste_des_archive_abonnes', 'App\Http\Controllers\ArchiveAbonneController@index')->name('listeArchiveAbonnes');

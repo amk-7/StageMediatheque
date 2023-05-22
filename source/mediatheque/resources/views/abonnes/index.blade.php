@@ -65,7 +65,7 @@
                             <th class="fieldset_border" >Profil valider</th>
                             <th class="fieldset_border" >Modifier</th>
                             <th class="fieldset_border" >Afficher</th>
-                            <th class="fieldset_border">Activité</th>
+                            <!--th class="fieldset_border">Activité</th-->
                             @if(Auth::user()->hasRole('responsable'))
                                 <th class="fieldset_border" >Supprimer</th>
                             @endif
@@ -101,11 +101,11 @@
                                             <button class="button button_show" type="Submit">Consulter</button>
                                         </form>
                                     </td>
-                                    <td class="fieldset_border" >
-                                        <form methode="GET" action="{{route('enregistrementActivite', $abonne->id_abonne)}}">
+                                    <!--td class="fieldset_border" >
+                                        <form methode="GET" action="{ {route('enregistrementActivite', $abonne->id_abonne)} }">
                                             <button class="button button_show" type="Submit">Activité</button>
                                         </form>
-                                    </td>
+                                    </td-->
                                     @if(Auth::user()->hasRole('responsable'))
                                         <td class="fieldset_border" >
                                             <form method="POST" action="">
