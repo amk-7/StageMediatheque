@@ -180,12 +180,12 @@ class AbonneController extends Controller
 
                 event(new Registered($utilisateur));
 
-                Auth::login($utilisateur);
+            //     Auth::login($utilisateur);
 
-                Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+            //     Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
 
-                return redirect(RouteServiceProvider::HOME);
-            }
+            //     return redirect(RouteServiceProvider::HOME);
+            // }
         } else {
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
