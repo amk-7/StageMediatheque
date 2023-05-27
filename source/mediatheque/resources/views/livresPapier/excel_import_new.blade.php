@@ -8,7 +8,7 @@
             <legend>Fichier excel</legend>
             <div>
                 <label>Excel </label>
-                <input type="file" id="execl" name="excel" required/>
+                <input type="file" id="execl" name="excel"/>
             </div>
             <div>
                 <label>Images : </label>

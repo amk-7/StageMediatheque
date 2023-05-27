@@ -142,11 +142,12 @@
                    </div>
                @endforeach
            </div>
-           <div style="margin-bottom: 100px">
-               {!! $livresPapiers->links() !!}
-           </div>
         @endif
+        <div style="margin-bottom: 100px">
+            {!! $livresPapiers->links() !!}
+        </div>
     @else
         <h3>Il n'y a aucun ouvrage.</h3>
     @endif
 </div>
+

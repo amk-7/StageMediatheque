@@ -11,7 +11,8 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+    //Route::get('formulaire_Abonne', 'App\Http\Controllers\AbonneController@create')->name('createAbonne');
+    Route::get('register', ['App\Http\Controllers\AbonneController', 'create'])
                 ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
