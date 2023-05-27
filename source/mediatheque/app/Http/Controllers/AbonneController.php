@@ -173,18 +173,29 @@ class AbonneController extends Controller
                 'numero_carte' => $request->numero_carte ?? '',
                 'type_de_carte' => $request->type_de_carte,
                 'id_utilisateur' => $utilisateur->id_utilisateur,
-                'profil_valider' => $request->profil_valide,
+                'profil_valider' => $request->profil_valide ?? '0',
             ]);
             $utilisateur->assignRole(Role::find(3));
-            if (Auth::guest()){
-                event(new Registered($utilisateur));
-
-                Auth::login($utilisateur);
-
-                Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
-
-                return redirect(RouteServiceProvider::HOME);
+            if(!empty($request->email)){
+                if (Auth::guest()){
+                    event(new Registered($utilisateur));
+            
+                    Auth::login($utilisateur);
+            
+                    Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+            
+                    return redirect(RouteServiceProvider::HOME);
+                }
             }
+            // if (Auth::guest()){
+            //     event(new Registered($utilisateur));
+
+            //     Auth::login($utilisateur);
+
+            //     Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+
+            //     return redirect(RouteServiceProvider::HOME);
+            // }
         } else {
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
