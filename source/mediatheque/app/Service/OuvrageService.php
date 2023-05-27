@@ -195,22 +195,14 @@ class OuvrageService
 
     public static function ouvrageExist($titre, $annee, $lieu_edition)
     {
-        //dump($titre, $annee, $lieu_edition);
-        /*$titre = strtoupper($titre ?? "");
-        $ouvrage = Ouvrage::where('titre', $titre)->first();*/
-        //dump($ouvrage);
-        return null;
-        /*if ($annee > 1900) {
-            $ouvrage = Ouvrage::whereRaw("LOWER(REPLACE(titre, ' ', '')) = LOWER(REPLACE('{$titre}', ' ', ''))")
-                ->whereRaw("LOWER(REPLACE(lieu_edition, ' ', '')) = LOWER(REPLACE('{$lieu_edition}', ' ', ''))")
-                ->where('annee_apparution', $annee)
-                ->first();
-        } else {
-            $ouvrage = Ouvrage::whereRaw("LOWER(REPLACE(titre, ' ', '')) = LOWER(REPLACE('{$titre}', ' ', ''))")
-                ->whereRaw("LOWER(REPLACE(lieu_edition, ' ', '')) = LOWER(REPLACE('{$lieu_edition}', ' ', ''))")
-                ->first();
+        $titre = str_replace(" ", "", trim(strtolower($titre) ?? ""));
+        $ouvrages = session('ouvrages');
+        foreach($ouvrages as $ouvrage){
+            if (str_replace(" ", "", trim(strtolower($ouvrage['titre']) ?? ""))==$titre && $ouvrage['annee']== $annee){
+                return Ouvrage::all()->where('id_ouvrage', $ouvrage['id'])->first();
+            }
         }
-        return $ouvrage;*/
+        return null;
     }
 
     public static function ouvragePhysiqueExist($ouvrage)
@@ -223,10 +215,6 @@ class OuvrageService
         return OuvragesElectronique::all()->where("id_ouvrage", $ouvrage->id_ouvrage)->first();
     }
 
-    public function getAllOuvrageWithAllAttribute()
-    {
-
-    }
 
     public static function getNombreExamplaireAndOuvrage()
     {

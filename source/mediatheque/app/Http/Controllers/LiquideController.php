@@ -22,6 +22,7 @@ class LiquideController extends Controller
      */
     public function index()
     {
+        //dd(Liquide::all());
         return view('liquide.index')->with([
                 "liquides" => Liquide::paginate(10),
             ]);
@@ -61,9 +62,9 @@ class LiquideController extends Controller
             "date_debut" => date("Y-m-d"),
             "date_fin" => GlobaleService::determinerDateFinAbonnement($tarifs->duree_validite),
         ]);
-        $concelRegistrationJob = new CancelRegistrationJob($registration->id_registration);
+        /*$concelRegistrationJob = new CancelRegistrationJob($registration->id_registration);
         $concelRegistrationJob->delay(Carbon::now()->addDay($tarifs->duree_validite));
-        $this->dispatch($concelRegistrationJob);
+        $this->dispatch($concelRegistrationJob);*/
         Liquide::create([
             "id_registration" => $registration->id_registration,
         ]);

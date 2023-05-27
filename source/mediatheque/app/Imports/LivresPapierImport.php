@@ -44,16 +44,13 @@ class LivresPapierImport implements ToModel
             return null;
         };
         $ouvrage = null;
-        try {
-            $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $row[$indice_annee]), str_replace(' ', '', $row[$indice_lieu])) ;
-        } catch (QueryException $e){
-            dump( $row[0]);
-            dump($row[$indice_titre]);
-            dd($e);
-            \Session(["error_id" => $row[0]]);
-            return ;
+        $annee = str_replace(' ', '', $row[$indice_annee])== '' ? 0 : str_replace(' ', '', $row[$indice_annee]);
+        $annee = str_contains(strtolower($annee), 'pas') ? 0 : $annee ;
+        if (! is_numeric($annee)) {
+            $annee = 0;
         }
-        //dump($ouvrage);
+        $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $annee), str_replace(' ', '', $row[$indice_lieu]));
+
         if ($ouvrage)
         {
             $ouvragePhys = OuvrageService::ouvragePhysiqueExist($ouvrage);
@@ -62,16 +59,14 @@ class LivresPapierImport implements ToModel
                 $ouvragePhys->save();
                 return LivresPapier::all()->where('id_ouvrage_physique', $ouvragePhys->id_ouvrage_physique)->first();
             }
+            dump("Ouvrage physique non trouvé");
+            dd($ouvrage);
         } else {
-
+            //dd($ouvrage);
             try {
                 //$data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);//
                 $auteurs = AuteurService::enregistrerAuteur($row[$indice_auteur]);
-                // Creation de l'ouvrage
                 $chemin_image = ($row[$indice_image_path] ?? null) == null ? "default_book_image.png" : $row[$indice_image_path];
-
-                $annee = str_replace(' ', '', $row[$indice_annee])== '' ? 0 : str_replace(' ', '', $row[$indice_annee]);
-                $annee = str_contains(strtolower($annee), 'pas') ? 0 : $annee ;
                 $ouvrage = Ouvrage::create([
                     'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
                     'lieu_edition'=>$row[$indice_lieu],
@@ -83,7 +78,6 @@ class LivresPapierImport implements ToModel
                     'resume'=>strtolower("pas de resumé"),
                     'mot_cle'=>ImportExcelService::formatKeyWord($row[$indice_mot_cle] ?? ""),
                 ]);
-
                 // Definire les auteurs de l'ouvrage
                 OuvrageService::definireAuteur($ouvrage, $auteurs);
 

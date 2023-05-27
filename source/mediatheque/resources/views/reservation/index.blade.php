@@ -10,7 +10,7 @@
     <style>
         .container {
             height: 300px;
-            width: 300px;
+            width: 100%;
             overflow-x: scroll;
         }
         .data, th, td {
@@ -18,13 +18,38 @@
             border-collapse: collapse;
             padding: 4px;
         }
+        @media (width < 1200px){
+            .container {
+                height: 300px;
+                width: 600px;
+                overflow-x: scroll;
+            }
+            .data, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 4px;
+            }
+        }
+
+        @media (width < 600px){
+            .container {
+                height: 300px;
+                width: 300px;
+                overflow-x: scroll;
+            }
+            .data, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 4px;
+            }
+        }
     </style>
     <div class="flex flex-col justify-center items-center">
         <h1 class="label_title"> Liste des Réservations</h1>
         @include('reservation.share_search_bar')
         <div class="space-y-2 mt-8 container">
             @if(!empty($reservations ?? "") && $reservations->count() > 0)
-                <table class="fieldset_border bg-white data">
+                <table class="fieldset_border data">
                     <thead class="thead">
                         <tr class="fieldset_border">
                             <th class="fieldset_border" >Numéro</th>

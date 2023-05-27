@@ -67,7 +67,7 @@
     <label class="label" for="numero_carte">Numéro de carte</label>
         <input type="text" name="numero_carte" value="{{ $abonne->numero_carte }}" class="input">
     </div>
-    @if(! Auth::guest())
+    @if(Auth::user() && Auth::user()->hasRole('bibliothecaire'))
         <div class="flex space-x-3 mt-6">
             <label class="label" for="type_de_carte">Profil valide ?</label>
             <div class="flex space-x-3">

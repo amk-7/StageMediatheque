@@ -66,8 +66,10 @@ class OuvragesPhysiqueService
         {
             if ($lpc->ouvragesPhysique->nombre_exemplaire > 0){
                 $livre = array(
+                    'id'=>$lpc->ouvragesPhysique->ouvrage->id_ouvrage,
                     'id_livre'=>$lpc->id_livre_papier,
                     'titre'=>$lpc->ouvragesPhysique->ouvrage->titre,
+                    'annee'=>$lpc->ouvragesPhysique->ouvrage->annee_apparution,
                     'ISBN'=>$lpc->ISBN,
                     'cote'=>$lpc->ouvragesPhysique->cote,
                     'nombre_exemplaire'=>$lpc->ouvragesPhysique->nombre_exemplaire,

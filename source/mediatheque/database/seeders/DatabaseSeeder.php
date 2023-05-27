@@ -31,6 +31,5 @@ class DatabaseSeeder extends Seeder
         $this->call(TarifAbonnementSeeder::class);
         $this->call(RestitutionSeeder::class);
         $this->call(LivreNumeriqueSeeder::class);
-
     }
 }

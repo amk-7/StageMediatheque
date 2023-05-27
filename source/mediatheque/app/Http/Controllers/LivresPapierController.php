@@ -162,7 +162,6 @@ class LivresPapierController extends Controller
         $categories = LivresPapierService::getCategories();
         $classifications_dewey = OuvragesPhysiqueService::getClassificationsDewey();
 
-
         return view('livresPapier.edite')->with([
             "livresPapier" => $livresPapier,
             'niveaus'=> $niveausTypesLanguesAuteursAnnee[0],
@@ -257,7 +256,8 @@ class LivresPapierController extends Controller
 
     public function uploadLivresPapier(Request $request)
     {
-        //dd("Okay");
+        \Session(["ouvrages" => OuvragesPhysiqueService::getLivrePapierWithAllAttribute()]);
+
         $destination_path = "public/images/images_livre/";
         if ($request->file("fileList") || $request->excel != null)
         {
@@ -268,7 +268,7 @@ class LivresPapierController extends Controller
                 $file->storeAs($destination_path, $file->getClientOriginalName());
             }*/
         } else {
-            return redirect()->route('export');
+            return redirect()->route('formulaireImportExcelNew');
         }
         \Session(["error_id" => 0]);
         \Session(["compteur" => 0]);
@@ -279,7 +279,6 @@ class LivresPapierController extends Controller
             dd(session('error_id'));
             return redirect()->back()->withInput()->withErrors(['url' => "Le fichier excel n'est pas intégre. Une erreur est survenue à la ligne ".session('error_id')]);
         }
-
         return redirect()->route('listeLivresPapier');
     }
 
