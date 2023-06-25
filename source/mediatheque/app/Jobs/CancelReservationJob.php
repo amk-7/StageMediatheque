@@ -37,11 +37,10 @@ class CancelReservationJob implements ShouldQueue
     {
         $reservation = Reservation::all()->where('id_reservation', $this->id_reservation)->first();
         if ($reservation->etat == 1){
-            $reservation->etat = 0;
-            $reservation->save();
             $ouvragep = OuvragesPhysique::all()->where('id_ouvrage_physique', $this->data)->first();
             $ouvragep->augmenterNombreExemplaire(1);
-            $ouvragep->save();
+            $reservation->etat = 0;
+            $reservation->save();
         }
     }
 }

@@ -34,8 +34,13 @@
 
         @media (max-width: 400px) {
             .my_content {
-                width: 390px;
-                margin-bottom: 50px;
+                width: 380px;
+                margin-bottom: 100px;
+            }
+
+            .my_content2 {
+                width: 342px;
+                height: 550px;
             }
         }
     </style>
@@ -63,10 +68,17 @@
                 @endif
             </div>
             {{--
-            class=@if(Auth::user())
-                "flex items-center justify-center flex-1 px-4 py-8 mt-16"@else"my_content flex items-center justify-center flex-1 px-4 py-8"@endif
+            class=@if(Auth::user())"flex items-center justify-center flex-1 px-4 py-8 mt-16"@else"my_content flex items-center justify-center flex-1 px-4 py-8"@endif
             --}}
-            <main style="" id="main" class="my_content flex items-center justify-center flex-1 px-4 py-8 mt-16">
+            @php
+                $classe = "my_content ";
+                if (Auth::user()){
+                    $classe = $classe."flex items-center justify-center flex-1 px-4 py-8 mt-16";
+                } else {
+                    $classe = $classe."flex items-center justify-center flex-1 px-4 py-8";
+                }
+            @endphp
+            <main style="" id="main" class="{{ $classe }}">
                 @yield('slider')
                 <!-- Content -->
                 @yield('content')

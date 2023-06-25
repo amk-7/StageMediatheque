@@ -179,18 +179,16 @@ class AbonneController extends Controller
                 'profil_valider' => $request->profil_valide ?? 0,
             ]);
             $utilisateur->assignRole(Role::find(3));
-            if (Auth::guest()){
-                dd("Okay");
+            if (Auth::guest() || Auth::user()->nom_utilisateur==$utilisateur->nom_utilisateur){
                 event(new Registered($utilisateur));
 
                 Auth::login($utilisateur);
 
                 //Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
 
-                //return redirect(RouteServiceProvider::HOME);
-                return redirect()->route('/');
+                return redirect(RouteServiceProvider::HOME);
+                //return redirect()->route('/');
             } else {
-                //dd("Okay2223");
                 return redirect()->route('listeAbonnes');
             }
         } else {
@@ -279,8 +277,8 @@ class AbonneController extends Controller
 
     public function mesEmpruntsEnCours(Abonne $abonne)
     {
-        $emprunts = $abonne->getEmpruntsEnCours();
-        return view('abonnes.mes_emprunt_actuelle')->with('emprunts', $emprunts);
+        $emprunts = Collect($abonne->getEmpruntsEnCours());
+        return view('abonnes.mes_emprunt')->with('emprunts', $emprunts);
     }
 
     public function exportExcel()

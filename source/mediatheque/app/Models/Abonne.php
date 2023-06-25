@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Service\EmpruntService;
 use Carbon\Carbon;
 use Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -80,7 +81,7 @@ class Abonne extends Model
         $listesEmprunts = Emprunt::all()->where('id_abonne', $this->id_abonne);
 
         foreach ($listesEmprunts as $emprunt) {
-            if (Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first() == null) {
+            if (! EmpruntService::etatEmprunt($emprunt)) {
                 array_push($empuntNonRestitue, $emprunt);
             }
         }

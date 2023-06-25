@@ -6,26 +6,17 @@
         display: flex;
     }
 
-    .margin {
-        margin-top: 0px;
-        margin-bottom: 0px;
-    }
-
     @media screen and (max-width: 700px) {
         .show-card {
             flex-direction: column;
         }
-
-        .margin {
-            margin-top: 450px;
-            margin-bottom: 100px;
-        }
     }
 </style>
-<form method="GET" action="{{route($action, $model)}}" class="my_content">
+<div class="flex flex-col justify-center items-center m-auto">
+    <form method="GET" action="{{route($action, $model)}}" class="my_content">
     {{--dd($utilisateur->adresse)--}}
     @csrf
-    <main class=" bg-white flex flex-col items-center p-12 margin">
+    <main class=" bg-white flex flex-col items-center p-12">
         <h1 class="label_title text-center pb-12">{{$title}}</h1>
     <fieldset>
     <div class="show-card m-auto p-3.5">
@@ -91,4 +82,5 @@
     @endif
     </main>
 </form>
+</div>
 @stop

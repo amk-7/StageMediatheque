@@ -118,11 +118,11 @@ class ReservationController extends Controller
             'id_ouvrage_physique' => $ouvragep->id_ouvrage_physique,
         ));
 
-        $jobCancelReservation = new CancelReservationJob($reservation->id_reservation, $request->data);
-        $jobCancelReservation->delay(Carbon::now()->addHours(24));
+        /*$jobCancelReservation = new CancelReservationJob($reservation->id_reservation, $request->data);
+        $jobCancelReservation->delay(Carbon::now()->addSeconds(24));
         $this->dispatch($jobCancelReservation);
 
-        $ouvragep->decrementerNombreExemplaire();
+        $ouvragep->decrementerNombreExemplaire();*/
 
         $validatonMessage = "Vous avez reservé l'ouvrage : ".$ouvragep->ouvrage->titre;
         \session(['my_valiation_message' => $validatonMessage]);
