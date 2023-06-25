@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center items-center m-auto">
+<div class="flex flex-col justify-center items-center m-auto my_content">
     <h1 class="text-3xl mb-3"> Livres papier </h1>
     <div>
         @include('livresPapier.shareSearchBarLivrePapier')
@@ -61,7 +61,7 @@
                     @foreach($livresPapiers as $livresPapier)
                         <tr class="dark:text-gray-500 text-center">
                             <td class="fieldset_border" >{{ $livresPapier->id_livre_papier }}</td>
-                            <td class="fieldset_border"> {{ $livresPapier->ouvragesPhysique->ouvrage->titre }} </td>
+                            <td class="fieldset_border uppercase"> {{ $livresPapier->ouvragesPhysique->ouvrage->titre }} </td>
                             <td class="fieldset_border"> {{ $livresPapier->ouvragesPhysique->ouvrage->annee_apparution }} </td>
                             <td class="fieldset_border"> {{ \App\Helpers\OuvrageHelper::afficherNiveau($livresPapier->ouvragesPhysique->ouvrage->niveau) }} </td>
                             <td class="fieldset_border"> {{ $livresPapier->ouvragesPhysique->ouvrage->type }} </td>
@@ -149,5 +149,6 @@
     @else
         <h3>Il n'y a aucun ouvrage.</h3>
     @endif
+
 </div>
 

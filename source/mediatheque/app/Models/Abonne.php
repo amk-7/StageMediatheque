@@ -7,10 +7,11 @@ use Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Abonne extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = ['date_naissance', 'profil_valider','niveau_etude', 'profession', 'contact_a_prevenir', 'numero_carte', 'type_de_carte', 'id_utilisateur'];
     protected $primaryKey = 'id_abonne';
     protected $dates = ['date_naissance'];
@@ -44,10 +45,16 @@ class Abonne extends Model
         return $this->hasMany('App\Models\Telechargement', 'id_telechargement');
     }
 
-    public function reservationValide()
+    public function reservationsValide()
     {
-        $reservation = $this->reservations;
-        return $reservation;
+        $reservations_valide = [];
+        $reservations = $this->reservations;
+        foreach($reservations as $reservation){
+            if ($reservation->isEnable()){
+                array_push($reservations_valide, $reservation);
+            }
+        }
+        return Collect($reservations_valide);
     }
 
     public function isRegistrate()

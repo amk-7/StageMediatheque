@@ -9,7 +9,7 @@
 @section('content')
     <style>
         .container {
-            height: 300px;
+            height: 800px;
             width: 100%;
             overflow-x: scroll;
         }

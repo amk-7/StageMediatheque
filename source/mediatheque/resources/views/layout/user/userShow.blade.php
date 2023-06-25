@@ -22,7 +22,7 @@
         }
     }
 </style>
-<form method="GET" action="{{route($action, $model)}}" class="">
+<form method="GET" action="{{route($action, $model)}}" class="my_content">
     {{--dd($utilisateur->adresse)--}}
     @csrf
     <main class=" bg-white flex flex-col items-center p-12 margin">

@@ -119,7 +119,7 @@ class OuvrageService
         }
 
         $ouvrage = Ouvrage::create([
-            'titre'=>strtoupper($request["titre"]),
+            'titre'=>strtolower($request["titre"]),
             'niveau' => strtolower($request["niveau"]),
             'type'=>strtolower($request["type"]),
             'image' => $chemin_image,

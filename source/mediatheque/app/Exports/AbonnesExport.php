@@ -15,21 +15,33 @@ class AbonnesExport implements FromCollection
     */
     public function collection()
     {
-        //dd('test');
         $id_abonnes = array();
-        //dd(session('abonnes_key'));
         foreach (session('abonnes_key') as $abonne){
             array_push($id_abonnes, $abonne['id_abonne']);
         }
-        //dd(Abonne::all());
 
         $liste = Abonne::all()->whereIn('id_abonne', $id_abonnes);
-        //dd($liste);
-        $liste_surcharger = AbonneService::formatAbonneListForExport($liste);
-        //dd($liste);
+        $abonnes = [];
+        if (session('paye') === "oui"){
+            foreach($liste as $abonne){
+                if ($abonne->isRegistrate()){
+                    array_push($abonnes, $abonne);
+                }
+            }
+        } else  if (session('paye') === "non"){
+            foreach($liste as $abonne){
+                if (! $abonne->isRegistrate()){
+                    array_push($abonnes, $abonne);
+                }
+            }
+        } else {
+            $abonnes = $liste;
+        }
+
+        //dd($abonnes);
+        $liste_surcharger = AbonneService::formatAbonneListForExport($abonnes);
 
         $liste = $liste_surcharger[0];
-        //dd($liste);
 
         $abonnes = array(
             [
@@ -39,8 +51,6 @@ class AbonnesExport implements FromCollection
                 "nombre_de_non_paye" ,
             ]
         );
-
-        //dd($abonnes);
 
         array_push($abonnes, array([
             "nombre_abonnne" => count($liste),

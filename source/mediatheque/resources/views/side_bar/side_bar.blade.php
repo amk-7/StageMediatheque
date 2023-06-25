@@ -195,28 +195,35 @@
                    @endif
                    <!-- Menu abonnee -->
                    @if (Auth::user()->roles()->first()->name == "abonne")
-                       <li>
-                           <ul id="dropdown-example" class="">
-                               <li>
-                                   <a href="/affiche_abonne/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mon compte</a>
-                               </li>
-                           </ul>
-                           <ul id="dropdown-example" class="">
-                               <li>
-                                   <a href="/liste_mes_emprunts/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes emprunts</a>
-                               </li>
-                           </ul>
-                           <ul id="dropdown-example" class="">
-                               <li>
-                                   <a href="/liste_mes_emprunts_actuelle/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunts en cours</a>
-                               </li>
-                           </ul>
-                           <ul id="dropdown-example" class="">
-                               <li>
-                                   <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes réservations</a>
-                               </li>
-                           </ul>
-                       </li>
+                       <ul>
+                           <li>
+                               <a href="/liste_livres_papier" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600" >Livres Papier</a>
+                           </li>
+                           <li>
+                               <a href="/liste_livres_numerique" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres PDF</a>
+                           </li>
+                           <li>
+                               <a href="/affiche_abonne/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mon compte</a>
+                           </li>
+                           <li>
+                               <a href="/liste_mes_emprunts/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes emprunts</a>
+                           </li>
+                           <li>
+                               <a href="/liste_mes_emprunts_actuelle/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunts en cours</a>
+                           </li>
+                           <li>
+                               <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes réservations</a>
+                           </li>
+                           <li>
+                               <a class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">
+                                   <form method="POST" action="{{ route('logout') }}">
+                                       @csrf
+                                       <button type="submit">{{ __('Log Out') }}</button>
+                                   </form>
+                               </a>
+                           </li>
+                       </ul>
+
                    @endif
                </ul>
             </div>

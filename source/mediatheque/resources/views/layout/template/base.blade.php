@@ -15,6 +15,30 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield("livewire_styles_content")
+    <style>
+        @media only screen and (min-width: 768px) {
+            /* For desktop: */
+            .col-1 {width: 8.33%;}
+            .col-2 {width: 16.66%;}
+            .col-3 {width: 25%;}
+            .col-4 {width: 33.33%;}
+            .col-5 {width: 41.66%;}
+            .col-6 {width: 50%;}
+            .col-7 {width: 58.33%;}
+            .col-8 {width: 66.66%;}
+            .col-9 {width: 75%;}
+            .col-10 {width: 83.33%;}
+            .col-11 {width: 91.66%;}
+            .col-12 {width: 100%;}
+        }
+
+        @media (max-width: 400px) {
+            .my_content {
+                width: 390px;
+                margin-bottom: 50px;
+            }
+        }
+    </style>
     @yield("styles")
 
     <!-- Scripts -->
@@ -38,8 +62,11 @@
                     @include('side_bar.side_bar')
                 @endif
             </div>
-            <main style="margin-left: 0px" id="main" class=@if(Auth::user())
-                "flex items-center justify-center flex-1 px-4 py-8 mt-16"@else"flex items-center justify-center flex-1 px-4 py-8"@endif>
+            {{--
+            class=@if(Auth::user())
+                "flex items-center justify-center flex-1 px-4 py-8 mt-16"@else"my_content flex items-center justify-center flex-1 px-4 py-8"@endif
+            --}}
+            <main style="" id="main" class="my_content flex items-center justify-center flex-1 px-4 py-8 mt-16">
                 @yield('slider')
                 <!-- Content -->
                 @yield('content')

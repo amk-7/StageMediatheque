@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Reservation;
+use App\Models\OuvragesPhysique;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,15 +15,17 @@ class CancelReservationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $id_reservation;
+    private $data;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(int $id_reservation)
+    public function __construct(int $id_reservation, $data)
     {
         $this->id_reservation = $id_reservation;
+        $this->data = $data;
     }
 
     /**
@@ -36,6 +39,9 @@ class CancelReservationJob implements ShouldQueue
         if ($reservation->etat == 1){
             $reservation->etat = 0;
             $reservation->save();
+            $ouvragep = OuvragesPhysique::all()->where('id_ouvrage_physique', $this->data)->first();
+            $ouvragep->augmenterNombreExemplaire(1);
+            $ouvragep->save();
         }
     }
 }

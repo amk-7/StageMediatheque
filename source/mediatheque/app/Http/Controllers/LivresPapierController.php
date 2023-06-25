@@ -300,8 +300,18 @@ class LivresPapierController extends Controller
         $data = array(
             'livresPapiers' => LivresPapier::all(),
         );
-        $pdf = Pdf::loadView('livresPapier/allQrCodes', $data)->setOptions(['defaultFont' => 'sans-serif']);
-        return $pdf->download('cotes.pdf');
+        $pdf = app('dompdf.wrapper');
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => FALSE,
+                'verify_peer_name' => FALSE,
+                'allow_self_signed' => TRUE,
+            ]
+        ]);
+        $pdf = \PDF::setOptions(['isHTML5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+        $pdf->getDomPDF()->setHttpContext($context);
+        $pdf->loadView('livresPapier/allQrCodes', $data)->setOptions(['defaultFont' => 'sans-serif']);
+        //return $pdf->download('cotes.pdf');
         return view('livresPapier/allQrCodes')->with($data);
     }
 }

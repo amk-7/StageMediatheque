@@ -49,7 +49,7 @@ class LivresPapierImport implements ToModel
         if (! is_numeric($annee)) {
             $annee = 0;
         }
-        $ouvrage = OuvrageService::ouvrageExist(strtoupper(trim($row[$indice_titre], ' ')), str_replace(' ', '', $annee), str_replace(' ', '', $row[$indice_lieu]));
+        $ouvrage = OuvrageService::ouvrageExist(strtolower(trim($row[$indice_titre], ' ')), str_replace(' ', '', $annee), str_replace(' ', '', $row[$indice_lieu]));
 
         if ($ouvrage)
         {
@@ -68,7 +68,7 @@ class LivresPapierImport implements ToModel
                 $auteurs = AuteurService::enregistrerAuteur($row[$indice_auteur]);
                 $chemin_image = ($row[$indice_image_path] ?? null) == null ? "default_book_image.png" : $row[$indice_image_path];
                 $ouvrage = Ouvrage::create([
-                    'titre'=>strtoupper(trim($row[$indice_titre], ' ')),
+                    'titre'=>strtolower(trim($row[$indice_titre], ' ')),
                     'lieu_edition'=>$row[$indice_lieu],
                     'annee_apparution'=> $annee ,
                     'type'=>ImportExcelService::formatString($row[$indice_type] ?? ""),

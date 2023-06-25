@@ -95,6 +95,7 @@ class ReservationController extends Controller
         $ouvrageDejaReserver = Reservation::all()->where('id_abonne', $abonne->id_abonne)->where('id_ouvrage_physique', $ouvragep->id_ouvrage_physique)
                                                 ->where('etat', 1)->first();
 
+        //dd($ouvrageDejaReserver);
         if ( ! $ouvragep->estDisponible()){
             $message = "L'ouvrage n'est plus disponible.";
             \session(['my_message' => $message]);
@@ -105,7 +106,7 @@ class ReservationController extends Controller
             \session(['my_message' => $message]);
             return redirect()->route('listeLivresPapier');
         }
-        if ($abonne->reservationValide()->count() > 4){
+        if ($abonne->reservationsValide()->count() > 4){
             $message = "Vous avez atteind le nombre de réservation";
             \session(['my_message' => $message]);
             return redirect()->route('listeLivresPapier');
@@ -117,7 +118,7 @@ class ReservationController extends Controller
             'id_ouvrage_physique' => $ouvragep->id_ouvrage_physique,
         ));
 
-        $jobCancelReservation = new CancelReservationJob($reservation->id_reservation);
+        $jobCancelReservation = new CancelReservationJob($reservation->id_reservation, $request->data);
         $jobCancelReservation->delay(Carbon::now()->addHours(24));
         $this->dispatch($jobCancelReservation);
 
