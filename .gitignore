@@ -7,5 +7,6 @@
 
 *.env
 source/postgres_data/*
+source/vendor/*
 design/*
 rapports/*
