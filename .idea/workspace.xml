@@ -6,17 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="83395f1e-c14e-4a20-9063-807c53dad8b9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/AbonneController.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/AbonneController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/EmpruntController.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/EmpruntController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/ReservationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/app/Jobs/CancelReservationJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/app/Jobs/CancelReservationJob.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/app/Models/Abonne.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/app/Models/Abonne.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/abonnes/mes_emprunt.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/abonnes/mes_emprunt.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/emprunt/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/emprunt/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/template/base.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/template/base.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/user/userShow.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/user/userShow.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/reservation/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/reservation/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +57,7 @@
       <workItem from="1666449680292" duration="29000" />
       <workItem from="1667130419677" duration="78000" />
       <workItem from="1687686893913" duration="13680000" />
-      <workItem from="1687718473158" duration="6306000" />
+      <workItem from="1687718473158" duration="7231000" />
     </task>
     <servers />
   </component>
