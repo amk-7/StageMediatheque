@@ -181,16 +181,11 @@ class AbonneController extends Controller
             $utilisateur->assignRole(Role::find(3));
             if (Auth::guest() || Auth::user()->nom_utilisateur==$utilisateur->nom_utilisateur){
                 event(new Registered($utilisateur));
-
                 Auth::login($utilisateur);
-
-                //Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
-
-                return redirect(RouteServiceProvider::HOME);
-                //return redirect()->route('/');
-            } else {
-                return redirect()->route('listeAbonnes');
+                // Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+                // return redirect(RouteServiceProvider::HOME);
             }
+
         } else {
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
