@@ -15,7 +15,9 @@
                         <button type="Submit" class="button button_primary">Ajouter</button>
                     </form>
                 </div>
-                <table class="fieldset_border bg-white">
+            <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
+
+            <table class="fieldset_border bg-white">
                     <thead class="thead">
                     <tr class="fieldset_border">
                         <th class="fieldset_border">Numéro</th>

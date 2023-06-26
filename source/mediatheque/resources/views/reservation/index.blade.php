@@ -7,50 +7,14 @@
     </select>
 @stop
 @section('content')
-    <style>
-        .container {
-            height: 300px;
-            width: 100%;
-            overflow-x: scroll;
-        }
-        .data, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 4px;
-        }
-        @media (width < 1200px){
-            .container {
-                height: 300px;
-                width: 600px;
-                overflow-x: scroll;
-            }
-            .data, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;
-                padding: 4px;
-            }
-        }
-
-        @media (width < 600px){
-            .container {
-                height: 300px;
-                width: 300px;
-                overflow-x: scroll;
-            }
-            .data, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;
-                padding: 4px;
-            }
-        }
-    </style>
-    <div class="flex flex-col justify-center items-center">
-        <h1 class="label_title"> Liste des Réservations</h1>
-        @include('reservation.share_search_bar')
-        <div class="space-y-2 mt-8 container">
-            @if(!empty($reservations ?? "") && $reservations->count() > 0)
-                <table class="fieldset_border data">
-                    <thead class="thead">
+    <div class="flex flex-col justify-center items-center mt-16 md:mt-0">
+        <div class="flex flex-col items-center">
+            <h1 class="label_title"> Liste des Réservations</h1>
+            @include('reservation.share_search_bar')
+            <div class="space-y-2 mt-8 overflow-x-auto my_content2">
+                @if(!empty($reservations ?? "") && $reservations->count() > 0)
+                    <table class="fieldset_border">
+                        <thead class="thead">
                         <tr class="fieldset_border">
                             <th class="fieldset_border" >Numéro</th>
                             <th class="fieldset_border" >Date de réservation</th>
@@ -65,72 +29,72 @@
                             @endif
                             <th class="fieldset_border" >Supprimer</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($reservations as $reservation)
-
-                        <tr class="fieldset_border" >
-                            <td class="fieldset_border" > {{ $loop->index +1 }} </td>
-                            <td class="fieldset_border" > {{ \App\Service\GlobaleService::afficherDate($reservation->date_reservation) }} </td>
-                            <td class="fieldset_border" > {{ $reservation->durre." H" }} </td>
-                            <td class="fieldset_border" > {{ \App\Helpers\ReservationHelper::afficherDurreRestante(\App\Service\ReservationService::reservationExpirer($reservation)) }} </td>
-                            <td class="fieldset_border" > {{ $reservation->abonne->utilisateur->userFullName }} </td>
-                            <td class="fieldset_border" > {{ $reservation->ouvragePhysique->ouvrage->titre ?? "" }} </td>
-                            {!! \App\Helpers\ReservationHelper::afficherEtat($reservation) !!}
-                            @if(Auth::user()->hasRole('bibliothecaire'))
-                                <form method="post" action="{{ route('enregistrerReservationEmprunt', $reservation) }}">
-                                    @csrf
-                                    <td class="fieldset_border" >
-                                        <select name="etat" id="etat_entree_ouvrage_edite{{$loop->index+1}}" class=
-                                            @if($reservation->etat==0)
-                                                "disabled:opacity-25" disabled
-                                        @endif>
-                                            <option selected>Séléctionner etat</option>
-                                            @for($i=4; $i>3; $i--)
-                                                <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
-                                            @endfor
-                                        </select>
-                                    </td>
-                                    <td class="fieldset_border" >
+                        </thead>
+                        <tbody>
+                        @foreach($reservations as $reservation)
+                            <tr class="fieldset_border" >
+                                <td class="fieldset_border" > {{ $loop->index +1 }} </td>
+                                <td class="fieldset_border" > {{ \App\Service\GlobaleService::afficherDate($reservation->date_reservation) }} </td>
+                                <td class="fieldset_border" > {{ $reservation->durre." H" }} </td>
+                                <td class="fieldset_border" > {{ \App\Helpers\ReservationHelper::afficherDurreRestante(\App\Service\ReservationService::reservationExpirer($reservation)) }} </td>
+                                <td class="fieldset_border" > {{ $reservation->abonne->utilisateur->userFullName }} </td>
+                                <td class="fieldset_border" > {{ $reservation->ouvragePhysique->ouvrage->titre ?? "" }} </td>
+                                {!! \App\Helpers\ReservationHelper::afficherEtat($reservation) !!}
+                                @if(Auth::user()->hasRole('bibliothecaire'))
+                                    <form method="post" action="{{ route('enregistrerReservationEmprunt', $reservation) }}">
+                                        @csrf
+                                        <td class="fieldset_border" >
+                                            <select name="etat" id="etat_entree_ouvrage_edite{{$loop->index+1}}" class=
+                                                @if($reservation->etat==0)
+                                                    "disabled:opacity-25" disabled
+                                                @endif>
+                                                <option selected>Séléctionner etat</option>
+                                                @for($i=4; $i>3; $i--)
+                                                    <option value="{{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }}"> {{ \App\Helpers\OuvragesPhysiqueHelper::demanderEtat()[$i] }} </option>
+                                                @endfor
+                                            </select>
+                                        </td>
+                                        <td class="fieldset_border" >
                                             <input type="submit" id="emp{{ $loop->index +1 }}" onclick="emprunter({{ $loop->index +1 }})" value="Emprunter" class=
                                                 @if($reservation->etat==0)
                                                         "button button_show disabled:opacity-25" disabled
                                             @else
                                                 "button button_show"
                                             @endif>
-                                    </td>
-                                </form>
-                            @endif
-                            <td class="fieldset_border" >
-                                <form action="{{ route('destroyReservation', $reservation) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <input type="submit" value="Supprimer" class=
-                                        @if($reservation->etat==0)
-                                                    "button button_delete_disabled disabled:opacity-25" disabled
-                                    @else
-                                        "button button_delete"
-                                    @endif>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                {!! $reservations->links() !!}
-            @else
-                <h4>Aucune Réservation</h4>
-            @endif
-        </div>
-    </div>
-    <!-- Overlay element -->
-    <div id="overlay" style="z-index: 1000;" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
-    <div style="z-index: 1001;" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
-        <div class="flex flex-col items-center space-y-4">
-            <div class="alert">
-                <p id="etat_ouvrage_modif_erreur">Vous devez renseigner l'état de l'ouvrage emprunté .</p>
+                                        </td>
+                                    </form>
+                                @endif
+                                <td class="fieldset_border" >
+                                    <form action="{{ route('destroyReservation', $reservation) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <input type="submit" value="Supprimer" class=
+                                            @if($reservation->etat==0)
+                                                        "button button_delete_disabled disabled:opacity-25" disabled
+                                        @else
+                                            "button button_delete"
+                                        @endif>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    {!! $reservations->links() !!}
+                @else
+                    <h4>Aucune Réservation</h4>
+                @endif
             </div>
-            <button id="btn_modifier" class="button button_primary">J'ai compris</button>
+        </div>
+        <!-- Overlay element -->
+        <div id="overlay" style="z-index: 1000;" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
+        <div style="z-index: 1001;" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_editer">
+            <div class="flex flex-col items-center space-y-4">
+                <div class="alert">
+                    <p id="etat_ouvrage_modif_erreur">Vous devez renseigner l'état de l'ouvrage emprunté .</p>
+                </div>
+                <button id="btn_modifier" class="button button_primary">J'ai compris</button>
+            </div>
         </div>
     </div>
 @endsection

@@ -22,4 +22,7 @@ class Reservation extends Model
         return $this->belongsTo(OuvragesPhysique::class, 'id_ouvrage_physique');
     }
 
+    public function isEnable(){
+        return $this->etat=="1";
+    }
 }

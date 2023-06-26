@@ -82,12 +82,6 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         @if(Auth::guest())
             <div class="pt-2 pb-3 space-y-1">
-                <!--button class="button button_show">
-                    <a href="/register">{ { __("Register") }}</a>
-                </button>
-                <button class="button button_primary">
-                    <a href="/login">{ { __("") }}</a>
-                </button-->
                 <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
                     {{ __('Register') }}
                 </x-responsive-nav-link>
@@ -104,7 +98,7 @@
         @endif
         <!-- Responsive Settings Options -->
         @if(Auth::user())
-            <div class="pt-4 pb-1 border-t border-gray-200">
+            {{--<div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->nom }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
@@ -126,7 +120,7 @@
                         </x-responsive-nav-link>
                     </form>
                 </div>
-            </div>
+            </div>--}}
         @endif
     </div>
 </nav>

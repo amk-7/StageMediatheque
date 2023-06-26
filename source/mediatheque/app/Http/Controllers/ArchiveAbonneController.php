@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\ArchiveAbonne;
 use App\Models\Abonne;
 
 class ArchiveAbonneController extends Controller
@@ -16,9 +15,7 @@ class ArchiveAbonneController extends Controller
      */
     public function index()
     {
-        //
-        //dd(Abonne::all());
-        $archives = ArchiveAbonne::paginate(10);
+        $archives = Abonne::onlyTrashed()->paginate(10);
         return view('archivesAbonne.index')->with('archives', $archives);
     }
 
@@ -83,8 +80,10 @@ class ArchiveAbonneController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Abonne $abonne)
     {
-        //
+        $abonne->utilisateur->delete();
+        $abonne->delete();
+        return redirect()->route('');
     }
 }

@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="83395f1e-c14e-4a20-9063-807c53dad8b9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/ouvrageZJS/setDate.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/livresNumerique/excel_import.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/AbonneController.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/AbonneController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/LivreNumeriqueController.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/app/Http/Controllers/LivreNumeriqueController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/app/Service/LignesRestitutionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/app/Service/LignesRestitutionService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/lang/fr/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/lang/fr/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/lang/fr/pagination.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/lang/fr/pagination.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/abonnes/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/abonnes/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/abonnes/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/abonnes/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/ouvrageZJS/ouvrageCreate.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/ouvrageZJS/ouvrageCreate.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/user/userEdit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/layout/user/userEdit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/personnels/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/personnels/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/resources/views/side_bar/side_bar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/resources/views/side_bar/side_bar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/mediatheque/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/source/mediatheque/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,20 +22,31 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/bin/php" />
   <component name="ProjectId" id="2GUif4cah4zTixXibNmaIFK7ke6" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/amk/IFNTI/STAGE/stageL2/StageMediatheque/source/mediatheque",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/amk/IFNTI/StageMediatheque&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -55,6 +57,9 @@
       <updated>1666449669547</updated>
       <workItem from="1666449680292" duration="29000" />
       <workItem from="1667130419677" duration="78000" />
+      <workItem from="1687686893913" duration="13680000" />
+      <workItem from="1687718473158" duration="7231000" />
+      <workItem from="1687762905083" duration="333000" />
     </task>
     <servers />
   </component>

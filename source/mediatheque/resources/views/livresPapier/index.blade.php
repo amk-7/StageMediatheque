@@ -4,6 +4,7 @@
 @stop
 @section("styles")
     <style type="text/css">
+
         .card{
             width: 200px;
             height: 350px;

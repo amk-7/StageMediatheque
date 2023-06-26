@@ -62,6 +62,8 @@ class AbonneController extends Controller
             $abonnes = Abonne::paginate($paginate);
         }
 
+        \Session(['paye' => $request->paye]);
+
         return view('abonnes.index')->with([
                 'abonnes' => $abonnes,
                 'paye' => $request->paye,
@@ -163,33 +165,30 @@ class AbonneController extends Controller
                                     ->where('prenom', '=', $request->prenom)
                                     ->where('nom_utilisateur', '=', $request->nom_utilisateur)
                                     ->first();
+
         if(! $utilisateur){
             $utilisateur = UserService::enregistrerUtilisateur($request);
             Abonne::create([
                 'date_naissance' => $request->date_naissance,
                 'niveau_etude' => $request->niveau_etude,
-                'profession' => $request->profession,
+                'profession' => $request->profession ?? '',
                 'contact_a_prevenir' => $request->contact_a_prevenir?? '',
                 'numero_carte' => $request->numero_carte ?? '',
-                'type_de_carte' => $request->type_de_carte,
+                'type_de_carte' => $request->type_de_carte ?? 0,
                 'id_utilisateur' => $utilisateur->id_utilisateur,
                 'profil_valider' => $request->profil_valide ?? 0,
             ]);
             $utilisateur->assignRole(Role::find(3));
-            if (Auth::guest()){
-
+            if (Auth::guest() || Auth::user()->nom_utilisateur==$utilisateur->nom_utilisateur){
                 event(new Registered($utilisateur));
+                Auth::login($utilisateur);
+                // Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
+                // return redirect(RouteServiceProvider::HOME);
+            }
 
-            //     Auth::login($utilisateur);
-
-            //     Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
-
-            //     return redirect(RouteServiceProvider::HOME);
-            // }
         } else {
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
-        return redirect()->route('listeAbonnes');
     }
 
     /**
@@ -261,7 +260,6 @@ class AbonneController extends Controller
      */
     public function destroy(Abonne $abonne)
     {
-
         $abonne->delete();
         return redirect()->route('listeAbonnes');
     }
@@ -274,12 +272,13 @@ class AbonneController extends Controller
 
     public function mesEmpruntsEnCours(Abonne $abonne)
     {
-        $emprunts = $abonne->getEmpruntsEnCours();
-        return view('abonnes.mes_emprunt_actuelle')->with('emprunts', $emprunts);
+        $emprunts = Collect($abonne->getEmpruntsEnCours());
+        return view('abonnes.mes_emprunt')->with('emprunts', $emprunts);
     }
 
     public function exportExcel()
     {
+        //dd("Okay");
         return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
     }
 

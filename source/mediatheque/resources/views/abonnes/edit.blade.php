@@ -1,19 +1,19 @@
 @extends('layout.user.userEdit', ['action'=>'updateAbonne', 'title'=>"Modifier un abonné", 'utilisateur'=>$abonne->utilisateur, 'model'=>$abonne])
 
 @section('abonne')
-    <div class="flex flex-row space-x-3">
-        <div  class="w-1/2">
+    <div class="flex flex-col md:flex-row md:space-x-3 space-y-3 md:space-y-0 mt-3">
+        <div class="w-full md:w-1/2">
             <label class="label" for="date_naissance">Date de naissance</label>
             <input type="date" name="date_naissance" value="{{\App\Service\GlobaleService::afficherDate($abonne->date_naissance)}}" class="input">
         </div>
-        <div  class="w-1/2">
+        <div class="w-full md:w-1/2">
             <label class="label" for="contact_a_prevenir">Contact à prévenir</label>
             <input type="text" name="contact_a_prevenir" value="{{ $abonne->contact_a_prevenir }}" class="input">
         </div>
     </div>
 
-    <div class="flex flex-row">
-        <div class="w-1/2">
+    <div class="flex flex-col md:flex-row space-y-3 md:space-y-0">
+        <div class="w-full md:w-1/2">
             <label for="niveau_etude">Niveau d'étude</label>
             <div  class="label">
                 <input type="radio" name="niveau_etude" value="Primaire" {{ $abonne->niveau_etude == "Primaire" ? "checked" : "" }}>
@@ -32,8 +32,8 @@
                 <label>Université</label>
             </div>
         </div>
-        <div class="w-1/2">
-            <label class="label" for="profession">Profession : </label>
+        <div class="w-full md:w-1/2">
+            <label class="" for="profession">Profession : </label>
             <div class="label">
                 <input type="radio" name="profession" value="Elève" {{ $abonne->profession == "Elève" ? "checked" : "" }}>
                 <label>Elève</label>
@@ -54,7 +54,7 @@
     </div>
 
     <div>
-        <label class="label" for="type_de_carte">Type de carte</label>
+        <label class="" for="type_de_carte">Type de carte</label>
         <div class="label">
             <input type="radio" name="type_de_carte" value="1" {{ $abonne->type_de_carte == "1" ? "checked" : "" }}>
             <label> Identité</label>
@@ -62,9 +62,8 @@
             <label> Scolaire</label>
         </div>
     </div>
-
     <div>
-    <label class="label" for="numero_carte">Numéro de carte</label>
+        <label class="label" for="numero_carte">Numéro de carte</label>
         <input type="text" name="numero_carte" value="{{ $abonne->numero_carte }}" class="input">
     </div>
     @if(Auth::user() && Auth::user()->hasRole('bibliothecaire'))
