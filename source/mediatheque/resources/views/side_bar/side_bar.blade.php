@@ -130,6 +130,9 @@
                                    <a href="/liste_livres_papier" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600" >Livres Papier</a>
                                </li>
                                <li>
+                                   <a href="/liste_approvisionnements" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Approvisionnement</a>
+                               </li>
+                               <li>
                                    <a href="/liste_livres_numerique" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres PDF</a>
                                </li>
                                <li>
@@ -160,7 +163,7 @@
                                    </li>
                            </ul>
                        </li>
-                       <li>
+                       <!-- <li>
                            <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Imports excel</span>
                            </label>
@@ -174,7 +177,7 @@
                                    <a href="/formulaire_import_excel_livres_numerique" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres Numérique</a>
                                </li>
                            </ul>
-                       </li>
+                       </li> -->
                        <li>
                            <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Archives</span>

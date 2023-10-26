@@ -88,6 +88,7 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
@@ -179,13 +180,12 @@ class AbonneController extends Controller
                 'profil_valider' => $request->profil_valide ?? 0,
             ]);
             $utilisateur->assignRole(Role::find(3));
-            if (Auth::guest() || Auth::user()->nom_utilisateur==$utilisateur->nom_utilisateur){
+            if (Auth::guest()){
                 event(new Registered($utilisateur));
                 Auth::login($utilisateur);
                 // Mail::to($utilisateur->email)->send(new MailInscription($utilisateur));
-                // return redirect(RouteServiceProvider::HOME);
             }
-
+            return redirect(RouteServiceProvider::HOME);
         } else {
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
         }
