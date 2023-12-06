@@ -25,7 +25,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
 
 Route::group(['middleware' => ['role:responsable|bibliothecaire|abonne', 'auth']], function () {
     Route::get('/dashboard', function () {
@@ -161,6 +160,7 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::post('modification_restitution/{restitution}', [RestitutionController::class, 'update'])->name('modificationRestitution');
     Route::delete('suppression_restitution', [RestitutionController::class, 'destroy'])->name('suppressionRestitution');
 
+    Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
 });
 
 Route::group(['middleware' => ['role:responsable', 'auth']], function () {
@@ -183,8 +183,8 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::post('modification_approvisionnements', [ApprovisionnementsController::class, 'update'])->name('modificationApprovisionnements');
     Route::delete('suppression_approvisionnements', [ApprovisionnementsController::class, 'destroy'])->name('suppressionApprovisionnements');
 
-    Route::get('formulaire_import_excel', [LivresPapierController::class, 'uploadLivresPapierCreate'])->name('formulaireImportExcel');
-    Route::put('enregistrement_import_excel', [LivresPapierController::class, 'uploadLivresPapierStore'])->name('enregistrementImportExcel');
+    // Route::get('formulaire_import_excel', [LivresPapierController::class, 'uploadLivresPapierCreate'])->name('formulaireImportExcel');
+    // Route::put('enregistrement_import_excel', [LivresPapierController::class, 'uploadLivresPapierStore'])->name('enregistrementImportExcel');
 
     Route::get('formulaire_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueCreate'])->name('formulaireImportExcelLivresNumerique');
     Route::put('enregistrement_import_excel_livres_numerique', [LivreNumeriqueController::class, 'uploadLivresNumeriqueStore'])->name('enregistrementImportExcelLivresNumerique');
@@ -199,15 +199,6 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::get('liste_des_archive_ouvrages', 'App\Http\Controllers\ArchiveOuvrageController@index')->name('listeArchiveOuvrages');
 });
 
-
-/*Route::middleware('auth')->group(function(){
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-    Route::get('/getCodeIDTitle', [\App\Service\OuvragesPhysiqueService::class, 'getCodeIDTitle'] );
-    Route::get('/getCodeID', [\App\Service\OuvragesPhysiqueService::class, 'getCodeID'] );
-    Route::get('/getOuvragePhysiqueByType', [\App\Service\OuvragesPhysiqueService::class, 'getOuvragePhysiqueByType'] );
-});*/
 
 Route::get('affichage_livre_papier/{livres_papier}', [LivresPapierController::class, 'show'])->name('affichageLivrePapier');
 Route::get('affichage_livre_numerique/{livres_numerique}', [LivreNumeriqueController::class, 'show'])->name('affichageLivreNumerique');

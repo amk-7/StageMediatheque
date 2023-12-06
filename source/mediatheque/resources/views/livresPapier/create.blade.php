@@ -14,7 +14,7 @@
             @error('categorie')
             <div class="alert">{{ $message }}</div>
             @enderror
-            <div id="liste_categorie"></div>
+            <div id="liste_categorie"  class="mt-3"></div>
         </div>
         <div>
             <label class="label">ISBN</label>

@@ -22,14 +22,14 @@ class DatabaseSeeder extends Seeder
             RoleHasPermissionSeeder::class,
         ]);
          //\App\Models\User::factory(10)->create();
-        $this->call(ClassificationDeweyCentaineSeeder::class);
+        /*$this->call(ClassificationDeweyCentaineSeeder::class);
         $this->call(ClassificationDeweyDizaineSeeder::class);
-        $this->call(LivrePapierSeeder::class);
+        $this->call(LivrePapierSeeder::class);*/
         $this->call(PersonnelSeeder::class);
         $this->call(AbonneSeeder::class);
-        $this->call(EmpruntSeeder::class);
+        /*$this->call(EmpruntSeeder::class);
         $this->call(TarifAbonnementSeeder::class);
-        $this->call(RestitutionSeeder::class);
-        $this->call(LivreNumeriqueSeeder::class);
+        $this->call(RestitutionSeeder::class);*/
+        //$this->call(LivreNumeriqueSeeder::class);
     }
 }

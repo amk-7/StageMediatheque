@@ -20,14 +20,15 @@ class OuvragesPhysiqueService
 
     public static function enregisterOuvragePhysique(Request $request, Ouvrage $ouvrage)
     {
-        $classificationDizaine = ClassificationDeweyDizaine::all()->where("id_classification_dewey_dizaine", $request["id_classification_dewey_dizaine"])->first();
-        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", $classificationDizaine->classe, [$ouvrage->auteurs()->first()], $ouvrage);
+        //$classificationDizaine = ClassificationDeweyDizaine::all()->where("id_classification_dewey_dizaine", $request["id_classification_dewey_dizaine"])->first();
+        //$classificationDizaine->classe
+        $cote = OuvragesPhysiqueService::genererCoteNouvelleOuvrage("livre_papier", "000", [$ouvrage->auteurs()->first()], $ouvrage);
 
         $ouvragePhysique = OuvragesPhysique::Create([
             'nombre_exemplaire' => $request["nombre_exemplaire"],
             'id_ouvrage'=>$ouvrage->id_ouvrage,
             'cote' => $cote,
-            'id_classification_dewey_dizaine'=>$classificationDizaine->id_classification_dewey_dizaine,
+            //'id_classification_dewey_dizaine'=>$classificationDizaine->id_classification_dewey_dizaine,
         ]);
 
         return $ouvragePhysique ;
@@ -115,7 +116,7 @@ class OuvragesPhysiqueService
         }
 
         $cote = $type_livre;
-        $cote .= GlobaleService::formatString($indice_dewey, 3);
+        //$cote .= GlobaleService::formatString($indice_dewey, 3);
         $cote .= strtoupper(substr("CCC", 0, 3)); //utf8_encode($auteurs[0]->nom)
         $cote .= strtolower(substr("O", 0, 1)).GlobaleService::formatString($ouvrage->id_ouvrage, 6); //$ouvrage->titre
         return $cote;

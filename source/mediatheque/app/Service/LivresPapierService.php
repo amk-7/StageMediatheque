@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Models\LivresPapier;
 use App\Models\OuvragesPhysique;
+use App\Models\Ouvrage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 
 class LivresPapierService
@@ -15,16 +17,131 @@ class LivresPapierService
         return LivresPapier::all()->where("isbn", $ISBN)->first();
     }
 
-    public static function searchByParamaters($annee_debut, $annee_fin, $langue, $niveau, $type, $dommaine)
+    public static function searchByParamaters($request)
     {
-        $id_ouvrages = OuvrageService::searchByParamaters($annee_debut, $annee_fin, $langue, $niveau, $type);
-        $id_ouvrage_physique = OuvragesPhysiqueService::getIDOuvragePhysiqueByIDOuvrage($id_ouvrages);
-        $id_livres_papier = DB::table('livres_papiers')
-                            ->whereJsonContains('categorie', [strtolower($dommaine)])
-                            ->whereIn('id_livre_papier', $id_ouvrage_physique)
-                            ->get();
-        //dd(self::id_livre_papier_from_array($id_livres_papier));
-        return self::id_livre_papier_from_array($id_livres_papier);
+        $annees = OuvrageService::convertAnneeForResearch($request->annee_debut, $request->annee_fin, 1900);
+        $search = strtolower($request->search);
+        $niveau = strtolower($request->niveau);
+        $type = strtolower($request->type);
+        $annee_debut = (int) $annees[0];
+        $annee_fin = (int) $annees[1];
+        $langue = $request->langue;
+        $domaine = $request->domaine;
+
+        $ouvrages = LivresPapierService::getLivresPapierWithAllAttributes();
+        $id_livres_papier = [];
+        $result = [];
+        foreach ($ouvrages as $ouvrage) {
+            $ouvrage->mot_cle = json_decode($ouvrage->mot_cle, true);
+
+            $titre = strtolower($ouvrage->titre);
+            $mots_cle = implode(";", $ouvrage->mot_cle);
+            $ouvrage_annee = (int) $ouvrage->annee_apparution;
+            $ouvrage_niveau = strtolower($ouvrage->niveau);
+            $ouvrage_type = strtolower($ouvrage->type);
+            $ouvrage_langue = strtolower($ouvrage->langue);
+            $ouvrage_domaine = implode(";", $ouvrage->categorie);
+
+            if (str_contains($titre, $search) || str_contains($mots_cle, $search)) {
+                array_push($result, $ouvrage);
+            }
+        }
+
+        $ouvrages = $result;
+        $result = [];
+
+        foreach ($ouvrages as $ouvrage) {
+
+            $titre = strtolower($ouvrage->titre);
+            $mots_cle = implode(";", $ouvrage->mot_cle);
+            $ouvrage_annee = (int) $ouvrage->annee_apparution;
+            $ouvrage_niveau = strtolower($ouvrage->niveau);
+            $ouvrage_type = strtolower($ouvrage->type);
+            $ouvrage_langue = strtolower($ouvrage->langue);
+            $ouvrage_domaine = implode(";", $ouvrage->categorie);
+
+            if ($ouvrage_annee >= $annee_debut && $ouvrage_annee <= $annee_fin) {
+                array_push($result, $ouvrage);
+            }
+        }
+
+        $ouvrages = $result;
+        $result = [];
+
+        foreach ($ouvrages as $ouvrage) {
+
+            $titre = strtolower($ouvrage->titre);
+            $mots_cle = implode(";", $ouvrage->mot_cle);
+            $ouvrage_annee = (int) $ouvrage->annee_apparution;
+            $ouvrage_niveau = strtolower($ouvrage->niveau);
+            $ouvrage_type = strtolower($ouvrage->type);
+            $ouvrage_langue = strtolower($ouvrage->langue);
+            $ouvrage_domaine = implode(";", $ouvrage->categorie);
+
+            if (empty($langue) || str_contains($ouvrage_langue, $langue)) {
+                array_push($result, $ouvrage);
+            }
+        }
+
+        $ouvrages = $result;
+        $result = [];
+
+        foreach ($ouvrages as $ouvrage) {
+            $titre = strtolower($ouvrage->titre);
+            $mots_cle = implode(";", $ouvrage->mot_cle);
+            $ouvrage_annee = (int) $ouvrage->annee_apparution;
+            $ouvrage_niveau = strtolower($ouvrage->niveau);
+            $ouvrage_type = strtolower($ouvrage->type);
+            $ouvrage_langue = strtolower($ouvrage->langue);
+            $ouvrage_domaine = implode(";", $ouvrage->categorie);
+
+            if (empty($niveau) || str_contains($ouvrage_niveau, $niveau)) {
+                array_push($result, $ouvrage);
+            }
+        }
+
+        $ouvrages = $result;
+        $result = [];
+
+        foreach ($ouvrages as $ouvrage) {
+            //$ouvrage->mot_cle = json_decode($ouvrage->mot_cle, true);
+
+            $titre = strtolower($ouvrage->titre);
+            $mots_cle = implode(";", $ouvrage->mot_cle);
+            $ouvrage_annee = (int) $ouvrage->annee_apparution;
+            $ouvrage_niveau = strtolower($ouvrage->niveau);
+            $ouvrage_type = strtolower($ouvrage->type);
+            $ouvrage_langue = strtolower($ouvrage->langue);
+            $ouvrage_domaine = implode(";", $ouvrage->categorie);
+
+            if (empty($type) || str_contains($ouvrage_type, $type)) {
+                array_push($result, $ouvrage);
+            }
+        }
+
+
+        $ouvrages = $result;
+        $result = [];
+
+        foreach ($ouvrages as $ouvrage) {
+            $titre = strtolower($ouvrage->titre);
+            $mots_cle = implode(";", $ouvrage->mot_cle);
+            $ouvrage_annee = (int) $ouvrage->annee_apparution;
+            $ouvrage_niveau = strtolower($ouvrage->niveau);
+            $ouvrage_type = strtolower($ouvrage->type);
+            $ouvrage_langue = strtolower($ouvrage->langue);
+            $ouvrage_domaine = implode(";", $ouvrage->categorie);
+
+            if (empty($domaine) || str_contains($ouvrage_domaine, $domaine)) {
+                array_push($result, $ouvrage);
+            }
+        }
+
+        foreach ($result as $ouvrage) {
+            array_push($id_livres_papier, $ouvrage->id_livre_papier);
+        }
+
+        return $id_livres_papier;
     }
 
     public static function searchByTitreMotCleISBN(String $value)
@@ -118,6 +235,23 @@ class LivresPapierService
 
     public static function setOuvragesLIstInSession($liste){
         \session(['ouvrages_key' => $liste]);
+    }
+
+    public static function getLivresPapierWithAllAttributes()
+    {
+        return LivresPapier::join('ouvrages_physiques', 'livres_papiers.id_ouvrage_physique', '=', 'ouvrages_physiques.id_ouvrage_physique')
+        ->join('ouvrages', 'ouvrages_physiques.id_ouvrage', '=', 'ouvrages.id_ouvrage')
+        ->select('livres_papiers.*', 'ouvrages.*', 'ouvrages_physiques.*')
+        ->get();
+
+        // $livresPapier = Cache::remember('livres_papier_with_all_attributes', now()->addMinutes(30), function () {
+        //     return LivresPapier::join('ouvrages_physiques', 'livres_papiers.id_ouvrage_physique', '=', 'ouvrages_physiques.id_ouvrage_physique')
+        //     ->join('ouvrages', 'ouvrages_physiques.id_ouvrage', '=', 'ouvrages.id_ouvrage')
+        //     ->select('livres_papiers.*', 'ouvrages.*', 'ouvrages_physiques.*')
+        //     ->get();
+        // });
+
+        // return $livresPapier;
     }
 
 }

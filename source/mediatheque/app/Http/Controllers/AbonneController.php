@@ -112,17 +112,17 @@ class AbonneController extends Controller
                 }
             ],
         ])->validate();
-        if ($request->type_de_carte == "1"){
-            Validator::make($request->all(), [
-                'numero_carte'=>['required',
-                    function ($attribute, $value, $flail){
-                        if (! GlobaleService::verifieCart($value)){
-                            $flail("Ce numéro de carte est invalide");
-                        }
-                    }
-                ],
-            ])->validate();
-        }
+        // if ($request->type_de_carte == "1"){
+        //     Validator::make($request->all(), [
+        //         'numero_carte'=>['required',
+        //             function ($attribute, $value, $flail){
+        //                 if (! GlobaleService::verifieCart($value)){
+        //                     $flail("Ce numéro de carte est invalide");
+        //                 }
+        //             }
+        //         ],
+        //     ])->validate();
+        // }
         if (! empty($request->contact)){
             Validator::make($request->all(), [
                 'contact'=>['required',

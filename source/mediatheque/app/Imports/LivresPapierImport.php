@@ -65,7 +65,8 @@ class LivresPapierImport implements ToModel
             //dd($ouvrage);
             try {
                 //$data_auteurs = ImportExcelService::exctratUserInfo($row[$indice_auteur]);//
-                $auteurs = AuteurService::enregistrerAuteur($row[$indice_auteur]);
+                //dd(explode(",",$row[$indice_auteur]));
+                $auteurs = AuteurService::enregistrerAuteur(explode(",",$row[$indice_auteur]));
                 $chemin_image = ($row[$indice_image_path] ?? null) == null ? "default_book_image.png" : $row[$indice_image_path];
                 $ouvrage = Ouvrage::create([
                     'titre'=>strtolower(trim($row[$indice_titre], ' ')),

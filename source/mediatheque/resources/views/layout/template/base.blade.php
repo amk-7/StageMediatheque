@@ -52,7 +52,7 @@
 <body class="bg-gray-100">
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
     <!-- nav bar -->
-    @include('layout.template.navigation')
+    @include('layout.components.navigation')
     <div class="flex h-screen antialiased text-gray-900 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
         <div
@@ -64,12 +64,9 @@
         <!-- Sidebar -->
             <div class="flex flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" style="z-index: 1000">
                 @if(Auth::user())
-                    @include('side_bar.side_bar')
+                    @include('layout.components.side_bar')
                 @endif
             </div>
-            {{--
-            class=@if(Auth::user())"flex items-center justify-center flex-1 px-4 py-8 mt-16"@else"my_content flex items-center justify-center flex-1 px-4 py-8"@endif
-            --}}
             @php
                 $classe = "my_content ";
                 if (Auth::user()){

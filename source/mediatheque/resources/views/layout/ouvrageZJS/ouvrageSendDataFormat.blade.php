@@ -1,5 +1,5 @@
 <script type="text/javascript" async>
-    console.log("Ok");
+    //console.log("Ok");
 
     let id_oject = 0;
     //============== Initialisation des composant ====================
@@ -7,6 +7,7 @@
     const addGenreSelect = document.getElementById("ajouter_genre");
     const addAuteurBtn = document.getElementById("ajouter_auteur");
     const addkeyWord = document.getElementById("ajouter_mot_cle");
+    const addRessource = document.getElementById("ajouter_ressource");
     const inputSave = document.getElementById("enregistrer");
 
     //============== Ajout des event listener ========================
@@ -21,19 +22,24 @@
     }
 
     inputSave.addEventListener('click', function addDataBeforeSend(e){
+
+        //stoperPropagation(e);
+
         let auteur_data = document.getElementById('data_auteurs');
         let mots_cle_data = document.getElementById('data_mots_cle');
         let categorie_data = document.getElementById('data_categorie');
+        let ressources_externe_data = document.getElementById('ressources_externe');
 
         auteur_data.value = "";
         mots_cle_data.value = "";
         categorie_data.value = "";
+        ressources_externe_data.value = "";
 
         let div_auteurs = document.getElementById("liste_auteurs");
         let div_mots_cle = document.getElementById("liste_mots_cle");
         let div_categorie = document.getElementById("liste_categorie");
         let div_genre = document.getElementById("listeGenre");
-        console.log(div_mots_cle);
+        let div_external_resources = document.getElementById("external_ressource_list");
 
         let nom_auteur = document.getElementById("nom");
         let prenom_auteur = document.getElementById("prenom");
@@ -44,6 +50,7 @@
         setData(auteur_data, div_auteurs);
         setData(mots_cle_data, div_mots_cle);
         setData(categorie_data, div_categorie);
+        setData(ressources_externe_data, div_external_resources);
     });
 
     if (addCategorieSelect != null){
@@ -73,6 +80,15 @@
         mot_cle.value = "";
     });
 
+
+    addRessource.addEventListener('click', function (e){
+        stoperPropagation(e);
+        let external_ressource = document.getElementById("input_external_ressource");
+        let valeur = external_ressource.value;
+        ajouterElement("external_ressource_list", valeur);
+        external_ressource.value = "";
+    });
+
     if (addGenreSelect != null){
         addGenreSelect.addEventListener('change', function addCategorie(e){
             stoperPropagation(e);
@@ -91,7 +107,7 @@
         elt_canvas.disabled = true;
         elt_canvas.id = valeur_insert;
         let remove_elt_btn = document.createElement("button");
-        remove_elt_btn.innerText = "x"
+        remove_elt_btn.innerText = "supprimer"
         remove_elt_btn.className = "button_remove_elt button_delete"
         remove_elt_btn.name=valeur_insert;
 
@@ -101,7 +117,7 @@
             stoperPropagation(e);
             //let removeBtn = btn.previousSibling; //voici le souci sur chrome
             let removeBtn = document.getElementById(btn.name); //voici le souci sur chrome
-            console.log(btn);
+            //console.log(btn);
             div_auteurs.removeChild(removeBtn);
             div_auteurs.removeChild(btn);
         } , {capture: true});
@@ -110,7 +126,7 @@
         div_liste_elt.appendChild(remove_elt_btn);
     }
 
-    function  stoperPropagation(e){
+    function stoperPropagation(e) {
         e.preventDefault();
         e.stopPropagation();
     }

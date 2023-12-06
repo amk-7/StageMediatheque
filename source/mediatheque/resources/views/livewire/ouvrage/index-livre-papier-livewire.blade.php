@@ -113,33 +113,35 @@
                 </table>
             </div>
         @else
-           <div class="flex flex-row mb-12" style="flex-wrap: wrap; margin-left: 95px;">
+            <!-- style="flex-wrap: wrap; margin-left: 95px;" -->
+           <div class="flex flex-col items-center mb-12 w-full">
                @foreach($livresPapiers as $livresPapier)
-                   <div class="flex flex-row space-x-3">
-                       <div class="">
-                           <a href="{{route('affichageLivrePapier', $livresPapier)}}" class="card">
-                               <div class="image">
-                                   <img src="{{ asset('storage/ouvrage_electonique/'.$livresPapier->ouvragesPhysique->ouvrage->image) }}"
-                                        alt="{{$livresPapier->ouvragesPhysique->ouvrage->image}}" class="border border-solid"/>
-                               </div>
-                               @if(Auth::user() && Auth::user()->hasRole('abonne'))
-                                   <div class="flex flex-row space-x-10">
-                                       <form method="post" action="{{route('enregistrerReservation')}}">
-                                           @csrf
-                                           <input type="text" name="data" value="{{ $livresPapier->ouvragesPhysique->id_ouvrage }}" hidden="true">
-                                           <input type="submit" class="button button_primary" name="reservation" value="reserver">
-                                       </form>
-                                       <label class="button button_delete">{{ $livresPapier->ouvragesPhysique->nombre_exemplaire }}</label>
-                                   </div>
-                               @endif
-                               <div class="label">
-                                   <label>
-                                       <span>{{ \App\Helpers\OuvrageHelper::formatString(strtolower($livresPapier->ouvragesPhysique->ouvrage->titre)) }}</span>
-                                   </label>
-                               </div>
-                           </a>
-                       </div>
-                   </div>
+                <a href="{{route('affichageLivrePapier', $livresPapier)}}"  class="mb-3 flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row w-full hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <img
+                        class="object-cover rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+                        src="{{ asset(''.$livresPapier->ouvragesPhysique->ouvrage->image) }}" alt=""
+                        >
+                    <div class="flex flex-col justify-between p-4 leading-normal">
+                        <div class="space-x-3">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{ $livresPapier->ouvragesPhysique->ouvrage->titre }}
+                            </h5>
+                            <h3 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Résumé</h3>
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                            </p>
+                        </div>
+                        {{-- @if(Auth::user() && Auth::user()->hasRole('abonne'))
+                            <div class="flex flex-row space-x-10">
+                                <form method="post" action="{{route('enregistrerReservation')}}">
+                                    @csrf
+                                    <input type="text" name="data" value="{{ $livresPapier->ouvragesPhysique->id_ouvrage }}" hidden="true">
+                                    <input type="submit" class="button button_primary" name="reservation" value="reserver">
+                                </form>
+                                <label class="button button_delete">{{ $livresPapier->ouvragesPhysique->nombre_exemplaire }}</label>
+                            </div>
+                        @endif --}}
+                    </div>
+                </a>
                @endforeach
            </div>
         @endif

@@ -40,18 +40,13 @@ class IndexLivrePapierLivewire extends Component
             $this->langue,
             $this->niveau,
             $this->type,
-            $this->categorie
+            $this->categorie,
+            $this->search,
         );
     }
     public function searchByAll()
     {
-        //dd("search...");
-
-        if (! empty($this->search)){
-            $this->id_livre_papier = LivresPapierService::searchByTitreMotCleISBN($this->search);
-        }else{
-            $this->searchByParameters();
-        }
+        $this->searchByParameters();
     }
 
     public function render()

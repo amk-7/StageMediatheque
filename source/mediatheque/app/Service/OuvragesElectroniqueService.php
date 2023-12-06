@@ -17,15 +17,13 @@ class OuvragesElectroniqueService
 
     public static function enregistrerPdf($ouvrage, $url)
     {
-        if (! $url == null)
+        if ($url)
         {
             $chemin_ouvrage = strtolower(str_replace(' ', '_', $ouvrage->titre)).'.'.$url->extension();
             $url->storeAs('public/ouvrage_electonique', $chemin_ouvrage);
             return $chemin_ouvrage;
-        } else
-        {
-            dd("::::Appeller le developpeur::::");
         }
+        return $ouvrage->image;
     }
 
     public static function enregistrerOuvrageELectronique($ouvrage, $url)

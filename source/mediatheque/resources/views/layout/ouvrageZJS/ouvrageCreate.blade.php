@@ -16,7 +16,7 @@
         search_options[i].addEventListener("click", function () {
             applySelected(input_searche_bar, search_options[i].id, select_prenom);
         }, false);
-        console.log(search_options[i]);
+        //console.log(search_options[i]);
     }
 
     function search_object(id_searchbar, class_elts) {

@@ -1,13 +1,16 @@
 @extends('layout.ouvrage.ouvrageEdite', ['ouvrage'=>$ouvragesPhysique->ouvrage])
 @section("stock")
-    <fieldset>
+    <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
         <legend>Stock</legend>
         <div>
             <label class="label">Nombre d'exemplaire</label>
-            <input name="nombre_exemplaire" type="number" class="input_elt"
-                   value="{{ $ouvragesPhysique->nombre_exemplaire }}">
+            <input name="nombre_exemplaire" type="number" value="{{ $ouvragesPhysique->nombre_exemplaire }}"
+                class="input @error('nombre_exemplaire') is-invalid @enderror">
+            @error('nombre_exemplaire')
+            <div class="alert">{{ $message }}</div>
+            @enderror
         </div>
-        <div>
+        {{-- <div>
             <div>
                 <label class="label">Rayons</label>
                 <select id="id_classification_dewey_centaine" name="id_classification_dewey_centaine" class="select_btn">
@@ -34,7 +37,7 @@
                     @endforeach
                 </select>
             </div>
-        </div>
+        </div> --}}
     </fieldset>
 @stop
 @section('ouvrage_physique_content_js')

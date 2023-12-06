@@ -1,6 +1,6 @@
 @extends('layout.ouvragePhysique.ouvragePhysiqueEdite', ['update_object'=>$livresPapier, 'ouvragesPhysique'=>$livresPapier->ouvragesPhysique, 'action'=>"modificationLivrePapier"])
 @section("particularite")
-    <fieldset>
+    <fieldset class="border border-solid border-gray-600 p-4 space-y-3 rounded-md">
         <legend>Particularité</legend>
         <div>
             <label>Catégorie</label>
@@ -11,12 +11,11 @@
                     <option value="{{$categorie}}">{{$categorie}}</option>
                 @endforeach
             </select>
-            <div id="liste_categorie">
+            <div id="liste_categorie" class="flex space-x-3 mt-3">
                 @foreach($livresPapier->categorie as $categorie)
                     @if(! empty($categorie))
-                        <input class="input_elt" id="categorie{{$loop->index}}" type="text" name="categorie{{$loop->index}}"
-                               value="{{ $categorie }}" disabled/>
-                        <button class="button button_delete" onclick="removeElt('liste_categorie','categorie{{$loop->index}}')">x</button>
+                    <input class="input_elt" type="text" name="categorie{{$loop->index}}" id="categorie{{$loop->index}}" value="{{ $categorie }}" disabled/>
+                    <button type="button" class="button button_delete" onclick="removeElt('liste_categorie','categorie{{$loop->index}}')">supprimer</button>
                     @endif
                 @endforeach
             </div>

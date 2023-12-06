@@ -64,27 +64,29 @@ class OuvrageService
         }
         $image = $request->file('image_livre');
 
-        if (! $image==null){
-            $chemin_image = $image->storeAs('public/images/images_livre', $request->titre.'.'.$image->extension());
+        if ($image){
+            $chemin_image = $image->storeAs('images/images_livre', "livre_".Ouvrage::all()->count().'.'.$image->extension());
+            // $chemin_image = "/storage/images/images_livre/".str_replace(" ", "_", $request->titre).'.'.$image->extension();
         } else {
-            $image = "default_book_image.png";
+            $chemin_image = "images/images_livredefault_book_image.png";
         }
-
         $ouvrage['titre'] = strtoupper($request["titre"]);
         $ouvrage['niveau'] = strtolower($request["niveau"]);
         $ouvrage['type'] = strtolower($request["type"]);
-        $ouvrage['image'] = $image;
+        $ouvrage['image'] = $chemin_image;
         $ouvrage['langue'] = strtolower($request["langue"]);
         $ouvrage['resume'] = ucfirst($request["resume"]);
         $ouvrage['mot_cle'] = $mots_cle;
+        $ouvrage['annee_apparution'] = $request["annee_apparution"];
+        $ouvrage['ressources_externe'] = $request["ressources_externe"];
         $ouvrage->save();
 
         $ouvrage->auteurs()->detach();
         $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
-        self::definireAuteur($request, $ouvrage, $auteurs);
-
+        self::definireAuteur($ouvrage, $auteurs);
     }
+
     public static function getNiveausTypesLanguesAuteursAnnee(){
         $niveaus = [
             '1', '2', '3', 'université'
@@ -103,7 +105,6 @@ class OuvrageService
 
     public static function enregisterOuvrage(Request $request, Array $auteurs)
     {
-
         $mots_cle_data = GlobaleService::extractLineToData($request->data_mots_cle);
         $mots_cle = [];
         foreach ($mots_cle_data as $mot_cle_array){
@@ -112,10 +113,10 @@ class OuvrageService
         $image = $request->file('image_livre');
 
         if (! $image==null){
-            $chemin_image = strtolower($request->titre).'.'.$image->extension();
-            $image->storeAs('public/images/images_livre', $chemin_image);
+            $chemin_image = "livre_".Ouvrage::all()->count().'.'.$image->extension();
+            $image->storeAs('images/images_livre', $chemin_image);
         } else {
-            $chemin_image = "default_book_image.png";
+            $chemin_image = "images/images_livre/default_book_image.png";
         }
 
         $ouvrage = Ouvrage::create([
@@ -128,6 +129,7 @@ class OuvrageService
             'mot_cle'=>$mots_cle,
             'annee_apparution'=>$request["annee_apparution"],
             'lieu_edition'=>$request["lieu_edition"],
+            'ressources_externe' => $request['ressources_externe'],
         ]);
 
         // Definire les auteurs de l'ouvrage
@@ -197,6 +199,9 @@ class OuvrageService
     {
         $titre = str_replace(" ", "", trim(strtolower($titre) ?? ""));
         $ouvrages = session('ouvrages');
+        if (! $ouvrages){
+            $ouvrages = Ouvrage::all();
+        }
         foreach($ouvrages as $ouvrage){
             if (str_replace(" ", "", trim(strtolower($ouvrage['titre']) ?? ""))==$titre && $ouvrage['annee']== $annee){
                 return Ouvrage::all()->where('id_ouvrage', $ouvrage['id'])->first();
@@ -227,4 +232,6 @@ class OuvrageService
 
         return array($nombre_ouvrage, $nombre_examplaire);
     }
+
+
 }

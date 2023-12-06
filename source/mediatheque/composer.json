@@ -7,8 +7,6 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-json": "*",
-        "ext-mysql_xdevapi": "*",
-        "ext-mysqli": "*",
         "algolia/algoliasearch-client-php": "*",
         "bacon/bacon-qr-code": "*",
         "barryvdh/laravel-dompdf": "^2.0",
@@ -24,6 +22,7 @@
         "livewire/livewire": "*",
         "maatwebsite/excel": "^3.1",
         "mercuryseries/laravel-helpers": "^1.0",
+        "phpoffice/phpspreadsheet": "^1.29",
         "pragmarx/google2fa-laravel": "*",
         "predis/predis": "*",
         "simplesoftwareio/simple-qrcode": "~4",

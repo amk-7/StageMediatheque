@@ -26,10 +26,14 @@
             <h1 class="text-2xl text-center">{{$ouvrage->titre }}</h1>
             <div class="show-card m-auto items-center">
                 <div class="mt-4">
-                    <img src="{{ asset('storage/ouvrage_electonique/'.$ouvrage->image) }}"
+                    <img src="{{ asset(''.$ouvrage->image) }}"
                          alt="{{$ouvrage->image}}" class="border border-solid" style="width: 198px;height: 300px;"/>
                 </div>
                 <div class="pl-6 mt-4">
+                    @php
+                        $ressources = $ouvrage->ressources_externe ;
+                        $ressources = explode(';', $ressources);
+                    @endphp
                     <div class="flex flex-col">
                         <label>
                             <span class="label_title_sub_title">Titre :</span>
@@ -63,6 +67,16 @@
                         <label>
                             <span class="label_title_sub_title">Résumer :</span>
                             <p class="label_show_value">{{ $ouvrage->resume=="pas de resumé" ? "Aucun" : $ouvrage->resume }}</p>
+                        </label>
+                        <label>
+                            <span class="label_title_sub_title">Ressources :</span>
+                            <p class="label_show_value flex flex-col">
+                                @foreach($ressources as $ressource)
+                                    <li>
+                                        <a href="{{ $ressource }}">{{ $ressource }}</a>
+                                    </li>
+                                @endforeach
+                            </p>
                         </label>
                         @yield('stock')
                     </div>

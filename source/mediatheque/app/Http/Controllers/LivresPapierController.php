@@ -29,12 +29,15 @@ class LivresPapierController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //$livresPapiers = LivresPapierService::getLivresPapierWithAllAttributes();
+        $id_livre_papier = LivresPapierService::searchByParamaters($request);
+        //$id_livre_papier = $livresPapiers->pluck('id_livre_papier');
+
         $niveausTypesLanguesAuteursAnnee = OuvrageService::getNiveausTypesLanguesAuteursAnnee();
         $categories = LivresPapierService::getCategories();
-        $livresPapiers = LivresPapier::all();
-        //dd($livresPapiers);
+        $livresPapiers = LivresPapier::whereIn('id_livre_papier', $id_livre_papier)->paginate(20);
 
         return view('livresPapier.index')->with([
             'niveaus'=> $niveausTypesLanguesAuteursAnnee[0],
@@ -43,7 +46,8 @@ class LivresPapierController extends Controller
             'auteurs'=>$niveausTypesLanguesAuteursAnnee[3],
             'categories'=>$categories,
             'annees' => $niveausTypesLanguesAuteursAnnee[4],
-            'id_livre_papier'=>LivresPapierService::getAllIDLivrePapier($livresPapiers)
+            'id_livre_papier'=>LivresPapierService::getAllIDLivrePapier($livresPapiers),
+            'livresPapiers' => $livresPapiers,
         ]);
     }
 
@@ -89,8 +93,6 @@ class LivresPapierController extends Controller
             'data_categorie'=>'required',
             'resume'=>'required',
             'nombre_exemplaire'=>'required',
-            'id_classification_dewey_centaine'=>'required|not_in:Sélectionner rayon',
-            'id_classification_dewey_dizaine'=>'required|not_in:Sélectionner étagère',
         ]);
 
         if ($request["ISBN"]){
@@ -185,6 +187,8 @@ class LivresPapierController extends Controller
     public function update(Request $request, LivresPapier $livresPapier)
     {
 
+        //dd($request->all());
+
         $request->validate([
             'titre'=> 'required',
             'niveau'=>'required|not_in:Sélectionner niveau',
@@ -195,13 +199,12 @@ class LivresPapierController extends Controller
             'data_categorie'=>'required',
             'resume'=>'required',
             'nombre_exemplaire'=>'required',
-            'id_classification_dewey_centaine'=>'required|not_in:Sélectionner rayon',
-            'id_classification_dewey_dizaine'=>'required|not_in:Sélectionner étagère',
         ]);
-
+        //dump($request->all());
         $ouvragePhysique = OuvragesPhysique::all()->where("id_ouvrage_physique", $livresPapier->id_ouvrage_physique)->first();
+        //dd($ouvragePhysique);
         OuvragesPhysiqueService::updateOuvrage($ouvragePhysique, $request["nombre_exemplaire"]);
-        OuvrageService::updateOuvrage($request, $ouvragePhysique);
+        OuvrageService::updateOuvrage($request, $ouvragePhysique->ouvrage);
 
         return redirect()->route('listeLivresPapier');
     }
@@ -272,8 +275,8 @@ class LivresPapierController extends Controller
         }
         \Session(["error_id" => 0]);
         \Session(["compteur" => 0]);
-
-        Excel::import(new LivresPapierImport,'public/fichier_excel/'.$chemin_ouvrage_excel);
+        //dd('storage/fichier_excel/'.$chemin_ouvrage_excel);
+        Excel::import(new LivresPapierImport,'storage/fichier_excel/'.$chemin_ouvrage_excel);
 
         if (session('error_id') > 0){
             dd(session('error_id'));

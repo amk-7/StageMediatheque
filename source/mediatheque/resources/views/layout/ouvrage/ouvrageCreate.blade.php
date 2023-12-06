@@ -1,9 +1,10 @@
 @extends('layout.template.base', ['body_style'=> "bg-gray-200 flex content-center justify-center h-full items-center"])
 @section('content')
     <main class="flex flex-col justify-center items-center m-auto">
-        <form action="{{route($action)}}" method="post" enctype="multipart/form-data" class="bg-white p-12 mb-12">
+        <form action="{{route($action)}}" method="post" enctype="multipart/form-data" class="bg-white p-12 mb-12 max-w-4xl">
             @csrf
             <h1 class="label_title text-center pb-12">{{$title}}</h1>
+            {{ $errors }}
             <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
                 <legend>Ouvrage</legend>
                 <div class="flex flex-col my-auto">
@@ -16,22 +17,22 @@
                         <div class="alert">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="flex flex-row space-x-3">
-                        <div class="flex flex-col w-1/3 mt-6 mr-3">
+                    <div class="flex flex-row space-x-3 mt-3">
+                        <div class="flex flex-col w-1/3 mt-6">
                             <div>
                                 <label class="label">Image</label>
                             </div>
                             <div class="border border-gray-200 text-center">
-                                <img src="" alt="image_livre" id="profil_object" width="200" height="250" size>
+                                <img src="" alt="image_livre" id="profil_object" width="150" height="250" size>
                             </div>
                             <div class="flex flex-col-reverse p-2">
                                 <input type="file" onchange="previewPicture(this)" name="image_livre" id="" value=""
                                        accept="image/jpg, image/jpeg, image/png, image/jpeg"><br>
                             </div>
                         </div>
-                        <div class="flex flex-col">
-                            <div class="flex flex-row">
-                                <div class="flex flex-col m-3">
+                        <div class="flex flex-col space-y-3">
+                            <div class="flex flex-row space-x-3">
+                                <div class="flex flex-col">
                                     <label class="label">Niveau</label>
                                     <select id="ajouterNiveau" name="niveau" class="select_btn
                                   @error('niveau') is-invalid @enderror">
@@ -45,7 +46,7 @@
                                     @enderror
                                     <div id="listeNiveau"></div>
                                 </div>
-                                <div class="flex flex-col m-3">
+                                <div class="flex flex-col">
                                     <label class="label">Type</label>
                                     <select name="type" id="type" class="select_btn @error('type') is-invalid @enderror">
                                         <option>Sélectionner type</option>
@@ -58,8 +59,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="flex flex-row">
-                                <div class="flex flex-col m-3">
+                            <div class="flex flex-row space-x-3">
+                                <div class="flex flex-col">
                                     <label class="label">langue</label>
                                     <select name="langue" class="select_btn">
                                         <option>Sélectionner langue</option>
@@ -68,21 +69,16 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="flex flex-col m-3">
+                                <div class="flex flex-col">
                                     <label class="label">Année d'apparution</label>
-                                    <select name="annee_apparution" id="annee_apparution"
-                                            class="select_btn @error('annee_apparution') is-invalid @enderror">
-                                        <option>Séléctionner année</option>
-                                        @for($annee=$annees; $annee< date('Y'); $annee++)
-                                            <option value="{{$annee}}" {{ old('annee') == $annee ? 'selected':'' }} >{{$annee}}</option>
-                                        @endfor
-                                    </select>
+                                    <input name="annee_apparution" id="annee_apparution" type="number" value="{{ old('annee_apparution') }}"
+                                        class="input @error('annee_apparution') is-invalid @enderror" autocomplete="off">
                                     @error('annee_apparution')
                                     <div class="alert">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="flex flex-col m-3">
+                            <div class="flex flex-col">
                                 <label class="label">Lieu d'édition</label>
                                 <input name="lieu_edition" id="lieu_edition" type="text" value="{{ old('lieu_edition') }}"
                                        placeholder="Saisire le lieu d'édition"
@@ -99,8 +95,8 @@
                 <legend>Auteur</legend>
                 <input type="text" name="data_auteurs" id="data_auteurs" hidden>
                 <div class="flex flex-col">
-                    <div class="flex flex-row space-x-3">
-                        <div>
+                    <div class="flex flex-row space-x-3 w-full">
+                        <div class="w-1/2">
                             <label class="label">Nom</label>
                             <div class="flex flex-col">
                                 <input name="auteur" id="nom" type="text" value="{{ old('nom') }}"
@@ -116,7 +112,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div>
+                        <div class="w-1/2">
                             <label class="label">Prénom</label>
                             <div class="flex flex-row space-x-3">
                                 <input name="prenom" id="prenom" placeholder="saisire le prenom de l'auteur"
@@ -129,9 +125,9 @@
                     @error('auteur0')
                     <div class="alert">{{ $message }}</div>
                     @enderror
-                    <div id="auteurs">
+                    <div id="auteurs" class="mt-3">
                         <label class="label">Auteurs : </label>
-                        <div id="liste_auteurs"></div>
+                        <div id="liste_auteurs" class=""></div>
                     </div>
                 </div>
             </fieldset>
@@ -146,21 +142,33 @@
                         <input name="mot_cle" id="input_mot_cle" type="text" value="{{ old('mot_cle_') }}"
                                placeholder="Entrez un mot clé"
                                class="input" autocomplete="off"/>
-                        <button class="button button_primary" id="ajouter_mot_cle">+</button>
+                        <button type="button" class="button button_primary" id="ajouter_mot_cle">+</button>
                     </div>
-                    <div id="liste_mots_cle"></div>
+                    <div id="liste_mots_cle"  class="mt-3"></div>
                 </div>
             </fieldset>
             <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
                 <legend>Résumé de l'ouvrage</legend>
-                <textarea name="resume" rows="10" cols="85" placeholder="Saisir le résumé de l'ouvrage"
+                <textarea name="resume" rows="10" cols="10" placeholder="Saisir le résumé de l'ouvrage"
                           value="{{ old('resume') }}"
-                          class="bg-gray-200 focus:outline-none border border-gray-300 rounded-md resize-none focus:border-green-500 @error('resume') is-invalid @enderror">Résumé</textarea>
+                          class="bg-gray-200 w-full focus:outline-none border border-gray-300 rounded-md resize-none focus:border-green-500 @error('resume') is-invalid @enderror">Résumé</textarea>
                 @error('resume')
                 <div class="alert">{{ $message }}</div>
                 @enderror
             </fieldset>
             @yield('stock')
+            <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
+                <legend>Ressources externes</legend>
+                <input hidden type="text" name="ressources_externe" id="ressources_externe" value="{{ old('ressources_externe') }}">
+                <div class="flex space-x-3">
+                    <input type="text" id="input_external_ressource" class="input" autocomplete="off"/>
+                    <button type="button" class="button button_primary" id="ajouter_ressource">+</button>
+                </div>
+                <div class="" id="external_ressource_list"></div>
+                @error('resume')
+                <div class="alert">{{ $message }}</div>
+                @enderror
+            </fieldset>
             <div class="flex space-x-3">
                 <input class="button button_primary w-full mt-12" type="submit" id="enregistrer" name="enregister"
                        value="Enregister"/>

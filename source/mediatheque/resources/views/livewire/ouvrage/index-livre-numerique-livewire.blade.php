@@ -71,21 +71,24 @@
                 {!! $livresNumeriques->links() !!}
             </div>
         @else
-            <div id="id_table_liste" class="m-6 flex flex-row" style="flex-wrap: wrap; margin-right: 5rem ">
+            <div id="id_table_liste" class="flex flex-col items-center mb-12 w-full">
                 @foreach($livresNumeriques as $livresNumerique)
-                    <div class="card">
-                        <a href="{{route('affichageLivreNumerique', $livresNumerique)}}" class="">
-                            <div class="image">
-                                <img src="{{ asset('storage/ouvrage_electonique/'.$livresNumerique->ouvragesElectronique->ouvrage->image) }}"
-                                     alt="{{$livresNumerique->ouvragesElectronique->ouvrage->image}}" class="border border-solid"/>
+                    <a href="{{route('affichageLivreNumerique', $livresNumerique)}}"  class="mb-3 flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row w-full hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                        <img 
+                            class="object-cover rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" 
+                            src="{{ asset(''.$livresNumerique->ouvragesElectronique->ouvrage->image) }}" alt=""
+                            >
+                        <div class="flex flex-col justify-between p-4 leading-normal">
+                            <div class="space-x-3">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                {{ $livresNumerique->ouvragesElectronique->ouvrage->titre }}
+                                </h5>
+                                <!-- <h3 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Résumé</h3>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                </p> -->
                             </div>
-                            <div class="label">
-                                <label>
-                                    <span>{{ \App\Helpers\OuvrageHelper::formatString(strtolower($livresNumerique->ouvragesElectronique->ouvrage->titre)) }}</span>
-                                </label>
-                            </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 @endforeach
             </div>
             {!! $livresNumeriques->links() !!}

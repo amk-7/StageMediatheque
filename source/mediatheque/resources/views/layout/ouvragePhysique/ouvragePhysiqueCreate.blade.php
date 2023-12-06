@@ -10,7 +10,7 @@
             <div class="alert">{{ $message }}</div>
             @enderror
         </div>
-        <div class="flex flex-row space-x-3 mt-2">
+        {{-- <div class="flex flex-row space-x-3 mt-2">
             <div class="flex flex-col">
                 <label class="label">Rayons</label>
                 <select id="id_classification_dewey_centaine" name="id_classification_dewey_centaine"
@@ -37,9 +37,9 @@
                 <div class="alert">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
+        </div> --}}
     </fieldset>
 @stop
-@section('ouvrage_physique_content_js')
+{{-- @section('ouvrage_physique_content_js')
     @include('layout.ouvrageZJS.ouvragePhysique')
-@stop
+@stop --}}

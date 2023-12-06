@@ -15,9 +15,9 @@ class CreateArchiveOuvragesTable extends Migration
     {
         Schema::create('archive_ouvrages', function (Blueprint $table) {
             $table->bigIncrements('id_ouvrage');
-            $table->string('titre');
+            $table->text('titre');
             $table->json("mot_cle")->nullable();
-            $table->string('resume')->nullable();
+            $table->text('resume')->nullable();
             $table->integer('annee_apparution')->nullable();
             $table->string('lieu_edition')->nullable();
             $table->enum('niveau', ['1', '2', '3', 'université']);

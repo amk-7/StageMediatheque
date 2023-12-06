@@ -1,6 +1,6 @@
 @extends('layout.template.base', ['page' => 'welcome'])
 @section('content')
-	
+
    <!--script type="text/javascript">
        let bg = document.getElementById('bg');
        bg.classList = "w-full h-full";
@@ -9,7 +9,7 @@
    </script-->
 @stop
 @section('slider')
-    @include('layout.template.slider')
+    @include('layout.components.slider')
 @stop
 @section("footer")
     @include('layout.template.footer')
