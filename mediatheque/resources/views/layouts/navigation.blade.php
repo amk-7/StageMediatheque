@@ -81,11 +81,8 @@
                 <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
                     {{ __('Se connecter') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('listeLivresNumerique')" :active="request()->routeIs('listeLivresNumerique')">
-                    {{ __('Livres pdf') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('listeLivresPapier')" :active="request()->routeIs('listeLivresPapier')">
-                    {{ __('Livres papier') }}
+                <x-responsive-nav-link :href="route('ouvrages.index')" :active="request()->routeIs('listeLivresNumerique')">
+                    {{ __('Acceuil') }}
                 </x-responsive-nav-link>
             </div>
         @endif
