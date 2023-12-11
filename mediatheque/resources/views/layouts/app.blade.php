@@ -15,8 +15,6 @@
     {{-- <link rel="stylesheet" href="/assets/pagination.min.js"> --}}
     {{-- public/build/assets/app-f9e00fdb.css  42.40 kB │ gzip:  7.22 kB
     public/build/assets/app-b1941ff8.js  --}}
-    <link rel="stylesheet" href="/assets/app-f9e00fdb.css">
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @media only screen and (min-width: 768px) {
@@ -108,7 +106,6 @@
         }
     }
 </script>
-<link rel="stylesheet" href="/assets/app-b1941ff8.js">
 <script src="/assets/jquery.min.js"></script>
 <script src="/assets/select2.min.js"></script>
 <script src="/assets/pagination.min.js"></script>
