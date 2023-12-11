@@ -1,4 +1,4 @@
-@extends("layout.template.base")
+@extends("layouts.app")
 
 @section("content")
     <div class="flex flex-col justify-center items-center space-y-3">
@@ -49,7 +49,7 @@
                 <div class="flex items-center">
                     <label for="date_emprunt" class="w-3/5">Date Emprunt</label>
                     <input type="date" name="date_emprunt" id="date_emprunt" class="input w-2/5"
-                           value="{{ App\Service\GlobaleService::afficherDate($emprunt->date_emprunt) }}" disabled>
+                           value="{{ date_format($emprunt->date_emprunt, 'Y-m-d') }}" disabled>
                 </div>
                 <div>
                     <label for="duree_emprunt">Duree Emprunt</label>

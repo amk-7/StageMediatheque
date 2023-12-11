@@ -4,72 +4,66 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\LivresPapier;
-use App\Models\LivresNumerique;
-use App\Service\LivresPapierService;
-use App\Service\OuvrageService;
-use App\Service\GlobaleService;
-use App\Service\AuteurService;
-
 use App\Models\Ouvrage;
 use App\Models\TypesOuvrage;
 use App\Models\Langue;
 use App\Models\Domaine;
-use App\Models\Nature;
 use App\Models\Niveau;
+use App\Models\Auteur;
 
+use App\Imports\OuvragesImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 
 class OuvrageController extends Controller
 {
-    function welcome(Request $request){
-        $ouvrages = Ouvrage::paginate(4);
-        $annees = [];
-        $langues = [];
-        $types = [];
-        $categories = [];
-        $niveaus = [];
+    function welcome(){
+        $ouvrages = Ouvrage::all();
+        foreach ($ouvrages as $ouvrage) {
+            $ouvrage->domaines;
+            $ouvrage->domaine = $ouvrage->afficherDomaine;
+            $ouvrage->langues;
+            $ouvrage->langue = $ouvrage->afficherLangue;
+        }
+
+        $annees = 1900;
+        $langues = Langue::all();
+        $types = TypesOuvrage::all();
+        $categories = Domaine::all();
+        $niveaus = Niveau::all();
 
         return view('welcome', compact('ouvrages', 'annees', 'langues', 'types', 'categories', 'niveaus'));
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $ouvrages = Ouvrage::when($request->has('titre'), function ($query) use ($request) {
-            return $query->where('titre', 'like', '%' . $request->input('titre') . '%');
-        })
-        ->when($request->has('type'), function ($query) use ($request) {
-            $typeId = TypesOuvrage::where('libelle', $request->input('type'))->value('id_type_ouvrage');
-            return $query->where('id_type', $typeId);
-        })
-        ->when($request->has('langue'), function ($query) use ($request) {
-            $langueId = Langue::where('libelle', $request->input('langue'))->value('id_langue');
-            return $query->where('id_langue', $langueId);
-        })
-        // ->when($request->has('domaine'), function ($query) use ($request) {
-        //     return $query->where('id_domaine', $request->input('domaine'));
-        // })
-        ->when($request->has('nature'), function ($query) use ($request) {
-            $natureId = Nature::where('libelle', $request->input('nature'))->value('id_nature');
-            return $query->where('id_nature', $natureId);
-        })
-        ->when($request->has('niveau'), function ($query) use ($request) {
-            $niveauId = Niveau::where('libelle', $request->input('niveau'))->value('id_niveau');
-            return $query->where('id_niveau', $niveauId);
-        })
-        ->get();
-
-        $ouvrages = Ouvrage::paginate(100);
-
-        $annees = [];
-        $langues = [];
-        $types = [];
-        $categories = [];
-        $niveaus = [];
+        $ouvrages = Ouvrage::all();
+        $annees = 1900;
+        $langues = Langue::all();
+        $types = TypesOuvrage::all();
+        $categories = Domaine::all();;
+        $niveaus = Niveau::all();;
 
 
         return view('ouvrages2.index', compact('ouvrages', 'annees', 'langues', 'types', 'categories', 'niveaus'));
+    }
+
+    public function indexArchive()
+    {
+        $ouvrages = Ouvrage::withTrashed()->get();
+        $annees = 1900;
+        $langues = Langue::all();
+        $types = TypesOuvrage::all();
+        $categories = Domaine::all();
+        $niveaus = Niveau::all();
+
+        return view('archives.archivesAbonne', compact('ouvrages', 'annees', 'langues', 'types', 'categories', 'niveaus'));
+    }
+
+    public function imprimerCote(){
+        $ouvrages = Ouvrage::all();
+        return view('ouvrages2.imprimerCote', compact('ouvrages'));
     }
 
     public function create()
@@ -77,10 +71,10 @@ class OuvrageController extends Controller
         $types = TypesOuvrage::all();
         $langues = Langue::all();
         $domaines = Domaine::all();
-        $natures = Nature::all();
         $niveaux = Niveau::all();
+        $auteurs = Auteur::all();
 
-        return view('ouvrages2.create', compact('types', 'langues', 'domaines', 'natures', 'niveaux'));
+        return view('ouvrages2.create', compact('types', 'langues', 'domaines', 'niveaux', 'auteurs'));
     }
 
     public function store(Request $request)
@@ -144,15 +138,20 @@ class OuvrageController extends Controller
         return view('ouvrages2.show', compact('ouvrage'));
     }
 
+    public function readPdf(Ouvrage $ouvrage)
+    {
+        return view('ouvrages2.lire', compact('ouvrage'));
+    }
+
     public function edit(Ouvrage $ouvrage)
     {
         $types = TypesOuvrage::all();
         $langues = Langue::all();
         $domaines = Domaine::all();
-        $natures = Nature::all();
         $niveaux = Niveau::all();
-        //dd($ouvrage);
-        return view('ouvrages2.create', compact('ouvrage', 'types', 'langues', 'domaines', 'natures', 'niveaux'));
+        $auteurs = Auteur::all();
+
+        return view('ouvrages2.create', compact('ouvrage', 'types', 'langues', 'domaines', 'niveaux', 'auteurs'));
     }
 
     public function update(Request $request, Ouvrage $ouvrage)
@@ -162,7 +161,7 @@ class OuvrageController extends Controller
             'titre'=> 'required',
             'niveau'=>'required|not_in:Sélectionner niveau',
             'type'=>'required|not_in:Sélectionner type',
-            'langue'=>'required|not_in:Sélectionner type',
+            'langues'=>'required|not_in:Sélectionner type',
             'annee_apparution'=>'required',
             'lieu_edition'=>'required',
             'data_auteurs'=>'required',
@@ -187,10 +186,18 @@ class OuvrageController extends Controller
             $ouvrage->image = $chemin_image;
         }
 
+        $destination_path = "books/pdf/";
+        $chemin_ouvrage_excel = null;
+        if ($request->file("document") || $request->document != null)
+        {
+            $chemin_ouvrage_excel = strtolower($ouvrage->cote).'.'.$request->document->extension();
+            $request->document->storeAs("public/".$destination_path, $chemin_ouvrage_excel);
+        }
+
         $ouvrage->titre = strtolower($request->input("titre"));
         $ouvrage->id_niveau = $request->input("niveau");
         $ouvrage->id_type = $request->input("type");
-        $ouvrage->id_langue = $request->input("langue");
+        $ouvrage->documents =  $ouvrage->documents ?? $chemin_ouvrage_excel;
         $ouvrage->resume = $request->input("resume");
         $ouvrage->mot_cle = $mots_cle;
         $ouvrage->annee_apparution = $request->input("annee_apparution");
@@ -198,14 +205,16 @@ class OuvrageController extends Controller
         $ouvrage->ressources_externe = $request->input("ressources_externe");
         $ouvrage->save();
 
+        $ouvrage->retirerLangues($request->langues);
+        $ouvrage->ajouterLangues($request->langues);
+
         $ouvrage->retirerDomaines($request->domaines);
         $ouvrage->ajouterDomaines($request->domaines);
-        //dd($ouvrage->domaines);
-        // $ouvrage->auteurs()->detach();
-        // $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
-        // $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
-        // self::definireAuteur($ouvrage, $auteurs);
 
+        $data_auteurs = Controller::extractLineToData($request->data_auteurs);
+        $auteurs = Auteur::enregistrerAuteur($data_auteurs);
+        $ouvrage->retirerAuteurs();
+        $ouvrage->ajouterAuteurs($auteurs);
         return redirect()->route('ouvrages.index')->with('success', 'Ouvrage mis à jour avec succès.');
     }
 
@@ -215,11 +224,25 @@ class OuvrageController extends Controller
         return redirect()->route('ouvrages.index')->with('success', 'Ouvrage supprimé avec succès.');
     }
 
-    public static function definireAuteur($ouvrage, $auteurs)
+    public function uploadLivresPapierView()
     {
-        // Definire les auteurs de l'ouvrage
-        foreach ($auteurs as $auteur){
-            $ouvrage->auteurs()->attach($auteur->id_auteur);
-        }
+        return view('ouvrages2.excel_import');
     }
+
+    public function import(Request $request)
+    {
+        $destination_path = "book_excel_files/";
+        if ($request->file("fileList") || $request->excel != null)
+        {
+            $chemin_ouvrage_excel = strtolower('ouvrages').'.'.$request->excel->extension();
+            $request->excel->storeAs("public/".$destination_path, $chemin_ouvrage_excel);
+        } else {
+            return redirect()->route('formulaireImportExcelNew');
+        }
+        //dd($request->all());
+        Ouvrage::truncate();
+        Excel::import(new OuvragesImport, "storage/$destination_path/$chemin_ouvrage_excel");
+        return redirect('/')->with('success', 'All good!');
+    }
+
 }

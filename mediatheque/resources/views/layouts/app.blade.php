@@ -12,6 +12,11 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="/assets/select2.min.css">
+    {{-- <link rel="stylesheet" href="/assets/pagination.min.js"> --}}
+    {{-- public/build/assets/app-f9e00fdb.css  42.40 kB │ gzip:  7.22 kB
+    public/build/assets/app-b1941ff8.js  --}}
+    <link rel="stylesheet" href="/assets/app-f9e00fdb.css">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @media only screen and (min-width: 768px) {
@@ -103,8 +108,12 @@
         }
     }
 </script>
+<link rel="stylesheet" href="/assets/app-b1941ff8.js">
 <script src="/assets/jquery.min.js"></script>
 <script src="/assets/select2.min.js"></script>
+<script src="/assets/pagination.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
 @yield("js")
 </body>
 </html>

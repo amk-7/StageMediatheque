@@ -16,7 +16,7 @@ class CreateOuvragesTable extends Migration
         Schema::create('ouvrages', function (Blueprint $table) {
             $table->bigIncrements('id_ouvrage');
             $table->text('cote');
-            $table->text('titre');
+            $table->text('titre');#->unique();
             $table->json("mot_cle")->nullable();
             $table->text('resume')->nullable();
             $table->integer('annee_apparution')->nullable();
@@ -30,6 +30,7 @@ class CreateOuvragesTable extends Migration
             $table->integer('nombre_exemplaire')->nullable();
             $table->text('documents')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('id_type')->references('id_type_ouvrage')->on('types_ouvrages')->nullOnDelete();
             $table->foreign('id_langue')->references('id_langue')->on('langues')->nullOnDelete();
             $table->foreign('id_niveau')->references('id_niveau')->on('niveaux')->nullOnDelete();

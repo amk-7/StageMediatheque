@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('sexe');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

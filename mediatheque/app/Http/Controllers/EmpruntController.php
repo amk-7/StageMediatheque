@@ -185,8 +185,8 @@ class EmpruntController extends Controller
 
         return view('emprunt.edit')->with([
             'emprunt'=>$emprunt,
-            "personnels" => json_encode(PersonnelService::getPersonnelWithAllAttribut()),
-            "abonnes" => json_encode(AbonneService::getAbonnesWithAllAttribut()),
+            "personnels" => json_encode(Personnel::fullAttributs()),
+            "abonnes" => json_encode(Abonne::getAbonnesWithAllAttribut()),
         ]);
     }
 
@@ -216,7 +216,7 @@ class EmpruntController extends Controller
     public function destroy(Emprunt $emprunt)
     {
         foreach($emprunt->lignesEmprunts as $ligneEmprunt){
-            $ligneEmprunt->ouvragesPhysique->augmenterNombreExemplaire(1);
+            $ligneEmprunt->ouvrage->augmenterNombreExemplaire(1);
             $ligneEmprunt->delete();
         }
         $emprunt->delete();

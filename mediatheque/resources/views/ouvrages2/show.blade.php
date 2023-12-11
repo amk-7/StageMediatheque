@@ -57,12 +57,15 @@
                         </label>
                         <label>
                             <span class="label_title_sub_title">Type :</span>
-                            <span class="label_show_value">{{$ouvrage->type->libelle }}</span>
+                            <span class="label_show_value">{{$ouvrage->type->libelle ?? "" }}</span>
                         </label>
-                        @yield('particularite')
+                        <label>
+                            <span class="label_title_sub_title">Domaines :</span>
+                            <span class="label_show_value">{{$ouvrage->affichierDomaine }}</span>
+                        </label>
                         <label>
                             <span class="label_title_sub_title">Langue :</span>
-                            <span class="label_show_value">{{$ouvrage->langue->libelle }}</span>
+                            <span class="label_show_value">{{$ouvrage->affichierLangue }}</span>
                         </label>
                         <label>
                             <span class="label_title_sub_title">Résumer :</span>
@@ -85,13 +88,23 @@
                     </div>
                 </div>
             </div>
-            @if(Auth::user())
-                <div class="mt-3">
-                    <form action="{{ route('lirePDF', $ouvrage) }}" method="get">
-                        <input type="submit" value="Lire" class="button button_primary">
-                    </form>
+            <div class="mt-6 flex w-full justify-between">
+                <div>
+                    @if(Auth::user() && $ouvrage->documents)
+                        <form action="{{ route('lirePDF', $ouvrage) }}" method="get">
+                            <input type="submit" value="Lire" class="button button_primary">
+                        </form>
+                    @endif
                 </div>
-            @endif
+                <div class="flex flex-col items-center">
+                    <div>
+                        <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(200)->generate("ezrzr")) }}"
+                            download="{{ 'cote'.str_replace(' ', '_', strtolower($ouvrage->titre)).'qrcode.png' }}">
+                        {{ QrCode::generate($ouvrage->cote) }}
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @stop

@@ -12,11 +12,15 @@ class Emprunt extends Model
     use HasFactory;
     protected $fillable = ['date_emprunt', 'date_retour','id_abonne', 'id_personnel'];
     protected $primaryKey = 'id_emprunt';
-    protected $dates = ['date_emprunt', 'date_retour'];
+    protected $casts = [
+        'date_emprunt' => 'date',
+        'date_retour' => 'date',
+    ];
 
-    public static function etatEmprunt(Emprunt $emprunt)
+
+    public function etatEmprunt()
     {
-        $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
+        $restitution = Restitution::all()->where('id_emprunt', $this->id_emprunt)->first();
         if ($restitution == null)
         {
             return false;
@@ -91,28 +95,27 @@ class Emprunt extends Model
         ]);
     }
 
-    public static function getAllLignesEmpruntByEmprunt(Emprunt $emprunt)
+    public function getAllLignesEmpruntByEmprunt()
     {
         $lignes_emprunt = [];
-        $lignes_emprunt_by_emprunt = LignesEmprunt::all()->where('id_emprunt', $emprunt->id_emprunt)->sortBy('id_emprunt');
-        $restitution = Restitution::all()->where('id_emprunt', $emprunt->id_emprunt)->first();
+        $lignes_emprunt_by_emprunt = $this->lignesEmprunts;
+        $restitution = Restitution::all()->where('id_emprunt', $this->id_emprunt)->first();
 
         foreach ($lignes_emprunt_by_emprunt as $ligne){
 
-           if ($ligne->disponibilite){
-               $etat_entree = LignesRestitution::all()->where('id_restitution', $restitution->id_restitution)
-                                                ->first()->etat_entree;
-               $etat_entree =  OuvragesPhysiqueHelper::afficherEtat($etat_entree);
-           }
+            if ($ligne->disponibilite){
+                $etat_entree = LignesRestitution::all()->where('id_restitution', $restitution->id_restitution)->first()->etat_entree;
+                $etat_entree =  Controller::afficherEtat($etat_entree);
+            }
 
             $fullLine = [
                 'numero_ligne' => $ligne->id_ligne_emprunt,
                 'numero_emprunt' => $ligne->id_emprunt,
                 'numero_ouvrage' => $ligne->id_ouvrage,
-                'etat_sortie' => OuvragesPhysiqueHelper::afficherEtat($ligne->etat_sortie),
+                'etat_sortie' => Controller::afficherEtat($ligne->etat_sortie),
                 'etat_entree' => $etat_entree ?? "",
                 'titre_ouvrage' => $ligne->ouvrage->titre,
-                'cote' => $ligne->ouvrage->id_ouvrage,
+                'cote' => $ligne->ouvrage->cote,
                 'disponibilite' => $ligne->disponibilite,
             ];
             array_push($lignes_emprunt, $fullLine);

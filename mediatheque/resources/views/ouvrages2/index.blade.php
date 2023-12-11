@@ -16,11 +16,11 @@
                         @csrf
                         <input type="submit" class="button button_primary" name="approvisionement" value="approvisionner">
                     </form>
-                    <form action="{{route('downloadExcelListeLivresPapier')}}" method="get">
+                    {{-- <form action="" method="get">
                         @csrf
                         <input type="submit" class="button button_primary" name="export" value="Exporter">
-                    </form>
-                    <form action="{{route('imprimerOuvragesPhysiqueCodes')}}" method="get">
+                    </form> --}}
+                    <form action="{{route('imprimerCote')}}" method="get">
                         @csrf
                         <input type="submit" class="button button_show" name="export" value="Cotes QR codes">
                     </form>
@@ -34,23 +34,24 @@
                     $nb_ouvrage = $result[0];
                     $nbr_examplaire = $result[1];
                 @endphp
-                <div class="flex mt-3">
+                {{-- <div class="flex mt-3">
                     <h3>Nombre d'ouvrages : {{ $nb_ouvrage }}</h3>
                     <h3 class="ml-3">Nombre d'examplaire : {{ $nbr_examplaire }}</h3>
-                </div>
+                </div> --}}
                 <div class="m-3">
-                    <table class="fieldset_border bg-white">
+                    <table class="fieldset_border bg-white" id="ouvrages">
                         <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
                             <tr>
-                                <th class="fieldset_border">Numéro</th>
-                                <th class="fieldset_border">Titre</th>
+                                <th class="fieldset_border" hidden>Numéro</th>
+                                <th class="fieldset_border w-12">Titre</th>
                                 <th class="fieldset_border">Année apparution</th>
                                 <th class="fieldset_border">Niveau</th>
                                 <th class="fieldset_border">Type</th>
                                 <th class="fieldset_border">Langue</th>
+                                <th class="fieldset_border" hidden>Domaine</th>
                                 <th class="fieldset_border">Nombre d'exemplaire</th>
                                 <th class="fieldset_border">Disponibilité</th>
-                                <th class="fieldset_border">cote QR code</th>
+                                {{-- <th class="fieldset_border">cote QR code</th> --}}
                                 <th class="fieldset_border">Consulter</th>
                                 <th class="fieldset_border">Editer</th>
                                 @if(Auth::user()->hasRole('responsable'))
@@ -61,12 +62,13 @@
                         <tbody class="all_data">
                         @foreach($ouvrages as $ouvrage)
                             <tr class="dark:text-gray-500 text-center">
-                                <td class="fieldset_border" >{{ $ouvrage->id_ouvrage }}</td>
+                                <td class="fieldset_border" hidden>{{ $ouvrage->id_ouvrage }}</td>
                                 <td class="fieldset_border uppercase"> {{ $ouvrage->titre }} </td>
                                 <td class="fieldset_border"> {{ $ouvrage->annee_apparution }} </td>
-                                <td class="fieldset_border"> {{ $ouvrage->niveau->libelle }} </td>
-                                <td class="fieldset_border"> {{ $ouvrage->type->libelle }} </td>
-                                <td class="fieldset_border"> {{ $ouvrage->langue->libelle }} </td>
+                                <td class="fieldset_border"> {{ $ouvrage->niveau->libelle ?? "" }} </td>
+                                <td class="fieldset_border"> {{ $ouvrage->type->libelle ?? "" }} </td>
+                                <td class="fieldset_border"> {{ $ouvrage->afficherLangue }} </td>
+                                <td class="fieldset_border" hidden> {{ $ouvrage->afficherDomaine }} </td>
                                 <td class="fieldset_border"> {{ $ouvrage->nombre_exemplaire }} </td>
                                 <td class="fieldset_border">
                                     @if ($ouvrage->isAvailableInLibrary)
@@ -75,10 +77,10 @@
                                         <span class="text-red-600 capitalize">pas disponible</span>
                                     @endif
                                 </td>
-                                <td class="fieldset_border">
+                                {{-- <td class="fieldset_border">
                                     <div class="space-y-3">
-                                        {{-- <div>
-                                            {{ QrCode::generate("dsqsd") }}
+                                        <div>
+                                            {{ QrCode::generate($ouvrage->cote) }}
                                         </div>
                                         <div>
                                             <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(200)->generate("ezrzr")) }}"
@@ -86,9 +88,9 @@
                                                 class="text-center text-white bg-green-600 p-1 hover:bg-green-700 mt-2"
                                             >Imprimer
                                             </a>
-                                        </div> --}}
+                                        </div>
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td class="fieldset_border">
                                     <form action="{{route('ouvrages.show', $ouvrage)}}" method="get">
                                         @csrf
@@ -116,9 +118,9 @@
                         <tbody id="result" class="result_data"></tbody>
                     </table>
             @endif
-            <div style="mt-8">
+            {{-- <div style="mt-8">
                 {!! $ouvrages->links() !!}
-            </div>
+            </div> --}}
         @else
             <h3>Il n'y a aucun ouvrage.</h3>
         @endif
@@ -143,6 +145,83 @@
     </div>
 @stop
 @section('js')
+    <script>
+        let titre = "";
+        let langue = "";
+        let type = "";
+        let domaine = "";
+        let niveau = "";
+
+        DataTable.ext.search.push(function (settings, data, dataIndex) {
+            let min = $('#min').val();
+            let max = $('#max').val();
+            //console.log(min);
+            if (min==""){
+                min = null;
+            } else {
+                min = new Date(min);
+            }
+
+            if (max==""){
+                max = null;
+            } else {
+                max = new Date(max);
+            }
+
+            max = new Date(max);
+            let date = new Date(data[2]);
+
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        });
+
+        $('#langue').on('change', ()=>{
+            // console.log($('#langue').val());
+            langue = $('#langue').val();
+            $('#ouvrages_filter').find('label').find("input[type='search']").val(langue);
+            $('#ouvrages_filter').find('label').find("input[type='search']").trigger( "input" );
+        });
+
+        $('#type').on('change', ()=>{
+            type = $('#type option:selected').text();
+            //console.log(type);
+            $('#ouvrages_filter').find('label').find("input[type='search']").val(type);
+            $('#ouvrages_filter').find('label').find("input[type='search']").trigger( "input" );
+        });
+
+        $('#niveau').on('change', ()=>{
+            niveau = $('#niveau option:selected').text();
+            console.log(niveau);
+            $('#ouvrages_filter').find('label').find("input[type='search']").val(niveau);
+            $('#ouvrages_filter').find('label').find("input[type='search']").trigger( "input" );
+        });
+
+        $('#domaine').on('change', ()=>{
+            // console.log($('#domaine').val());
+            domaine = $('#domaine').val();
+            searchOuvrages();
+        });
+
+        $('#min, #max').each(function() {
+            $(this).on('change', function() {
+                table.draw();
+            });
+        });
+
+        let table = $('#ouvrages').DataTable();
+        $('#search_by').on('input', (e)=>{
+            $('#ouvrages_filter').find('label').find("input[type='search']").val($('#search_by').val());
+            $('#ouvrages_filter').find('label').find("input[type='search']").trigger( "input" );
+        });
+        console.log();
+    </script>
     <script type='text/javascript' async>
 
         //-------------------------------------------------

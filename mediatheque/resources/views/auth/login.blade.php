@@ -9,7 +9,7 @@
                 </a>
             </div>
 
-            @if ($errors)
+            @if ($errors->all())
                 <li class="error">Itentifiants invalide</li>
             @endif
 

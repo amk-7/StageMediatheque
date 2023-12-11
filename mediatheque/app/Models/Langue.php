@@ -10,8 +10,10 @@ class Langue extends Model
     use HasFactory;
     protected $fillable = ['libelle'];
     protected $primaryKey = 'id_langue';
-    public function ouvrages2()
+
+    public function ouvrages()
     {
-        return $this->hasMany(Ouvrages2::class, 'id_langue');
+        return $this->belongsToMany(Ouvrage::class, "langues_ouvrages", "id_langue", "id_ouvrage")
+                    ->withTimestamps();
     }
 }

@@ -22,9 +22,9 @@ class PersonnelSeeder extends Seeder
             'nom' => 'SUP ADMIN',
             'prenom' => 'SUP ADMIN',
             'nom_utilisateur' => '_admin',
-            'email' => 'abdoulmalikkondi8@gmail.com',
+            'email' => '',
             'password' => Hash::make('IFNTI2023!'),
-            'contact' => '93561240',
+            'contact' => '',
             'photo_profil' => 'profil.png',
             'adresse' => array(
                 'ville' => 'Sokode',
@@ -41,24 +41,49 @@ class PersonnelSeeder extends Seeder
         $utilisateur->assignRole([Role::find(2), Role::find(1)]);
 
         $utilisateur = User::create([
-            'nom' => strtoupper('Shintaro'),
-            'prenom' => strtolower('Midorima'),
-            'nom_utilisateur' => 'daiki5',
-            'email' => 'alhassan@gmail.com',
-            'password' => Hash::make('123456789'),
-            'contact' => '91817907',
+            'nom' => strtolower('mediatheque'),
+            'prenom' => strtolower('mediatheque'),
+            'nom_utilisateur' => 'mediatheque',
+            'email' => '',
+            'password' => Hash::make('mediatheque2023!'),
+            'contact' => '',
+            'photo_profil' => 'profil.png',
+            'adresse' => array(
+                'ville' => '',
+                'quartier' => '',
+                'numero_maison' => ''
+            ),
+            'sexe' => 'Masculin'
+        ]);
+
+        Personnel::create([
+            'statut' => 'Responsable',
+            'id_utilisateur' => $utilisateur->id_utilisateur
+        ]);
+
+        $utilisateur->assignRole([Role::find(2), Role::find(1)]);
+
+        $utilisateur = User::create([
+            'nom' => strtolower('napkan'),
+            'prenom' => strtolower('emma'),
+            'nom_utilisateur' => 'emma',
+            'email' => '',
+            'password' => Hash::make('emma2023!'),
+            'contact' => '90780406',
             'photo_profil' => 'profil.png',
             'adresse' => array(
                 'ville' => 'Sokode',
-                'quartier' => 'Lome',
-                'numero_maison' => 'N102'),
-            'sexe' => 'Masculin'
+                'quartier' => 'Komah 3',
+                'numero_maison' => ''
+            ),
+            'sexe' => 'Feminin'
         ]);
 
         Personnel::create([
             'statut' => 'Bibliothècaire',
             'id_utilisateur' => $utilisateur->id_utilisateur
         ]);
+
         $utilisateur->assignRole([Role::find(2)]);
     }
 }

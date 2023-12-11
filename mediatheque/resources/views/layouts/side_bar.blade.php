@@ -127,20 +127,20 @@
                            </label>
                            <ul id="dropdown-example" class="ml-12">
                                 <li>
-                                    <a href="{{ route('ouvrages.index') }}" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600" >Ouvrages</a>
+                                    <a href="{{ route('ouvrages.index') }}" class="@if(request()->routeIs('ouvrages.index')) current_link @else other_link @endif" >Ouvrages</a>
                                 </li>
                                 <li>
-                                    <a href="/liste_approvisionnements" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Approvisionnement</a>
+                                    <a href="/liste_approvisionnements" class="@if(request()->routeIs('listeApprovisionnements')) current_link @else other_link @endif">Approvisionnement</a>
                                 </li>
                                 <li>
-                                    <a href="/liste_des_emprunts" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunts</a>
+                                    <a href="/liste_des_emprunts" class="@if(request()->routeIs('listeEmprunts')) current_link @else other_link @endif">Emprunts</a>
                                 </li>
                                 <li>
-                                    <a href="/liste_des_restitutions" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réstitutions</a>
+                                    <a href="/liste_des_restitutions" class="@if(request()->routeIs('listeRestitutions')) current_link @else other_link @endif">Réstitutions</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réservations</a>
-                                </li>
+                                </li> --}}
                            </ul>
                        </li>
                        <li>
@@ -149,18 +149,18 @@
                            </label>
                            <ul id="dropdown-example" class="ml-12">
                                <li>
-                                   <a href="/liste_des_abonnes" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Abonnés</a>
+                                   <a href="/liste_des_abonnes" class="@if(request()->routeIs('listeAbonnes')) current_link @else other_link @endif">Abonnés</a>
                                </li>
                                <li>
-                                   <a href="/liste_des_liquides" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Abonnements</a>
+                                   <a href="/liste_des_liquides" class="@if(request()->routeIs('listeLiquides')) current_link @else other_link @endif">Abonnements</a>
                                </li>
                                @if(Auth::user()->hasRole('responsable'))
                                    <li>
-                                       <a href="/liste_des_personnels" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Presonnels</a>
+                                       <a href="/liste_des_personnels" class="@if(request()->routeIs('listePersonnels')) current_link @else other_link @endif">Presonnels</a>
                                    </li>
                            </ul>
                        </li>
-                       <!-- <li>
+                       <li>
                            <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Imports excel</span>
                            </label>
@@ -169,13 +169,8 @@
                                    <a href="/formulaire_import_excel_new" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres papier</a>
                                </li>
                            </ul>
-                           <ul id="dropdown-example" class="ml-12">
-                               <li>
-                                   <a href="/formulaire_import_excel_livres_numerique" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres Numérique</a>
-                               </li>
-                           </ul>
-                       </li> -->
-                       <li>
+                       </li>
+                       {{-- <li>
                            <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Archives</span>
                            </label>
@@ -190,7 +185,7 @@
                                    <a href="/liste_des_archive_ouvrages" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Archive des ouvrages</a>
                                </li>
                            </ul>
-                       </li>
+                       </li> --}}
                       @endif
                    @endif
                    <!-- Menu abonnee -->

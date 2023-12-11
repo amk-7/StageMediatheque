@@ -110,3 +110,49 @@ input_elt_prime {
 .error {
     @apply text-red-500;
 }
+
+.current_link {
+    @apply flex items-center p-2 w-full text-base font-normal rounded-lg  bg-green-600 text-white;
+}
+
+.other_link {
+    @apply flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 hover:text-white text-green-600 hover:bg-green-600;
+}
+
+#ouvrages_length, #ouvrages_filter {
+    @apply hidden;
+}
+
+#ouvrages_wrapper {
+    @apply flex flex-col items-center space-y-6;
+}
+
+.dataTables_paginate > span {
+    @apply p-3 border bg-white;
+}
+
+.dataTables_paginate > a {
+    @apply p-3 border bg-white cursor-pointer mt-3 justify-end;
+}
+
+.paginate_button {
+    @apply border p-3;
+}
+
+.current {
+    @apply bg-gray-300;
+}
+
+.pagination {
+    @apply flex space-x-3;
+}
+
+.pagination > .page-item {
+    @apply p-3;
+}
+
+.pagination > .active {
+    @apply bg-gray-300;
+}
+
+

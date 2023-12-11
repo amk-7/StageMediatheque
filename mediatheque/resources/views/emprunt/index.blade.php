@@ -6,10 +6,9 @@
         @include('components.abonne_search_bar')
         <div class="space-y-2 mt-8">
                 <div class="flex space-x-3">
-                    <form method="GET" action="{{ route('downloadExcelListeEnprunt') }}">
-                        {{-- {{ \App\Service\EmpruntService::setEmpruntLIstInSession(collect($emprunts)['data']) }} --}}
+                    {{-- <form method="GET" action="{{ route('downloadExcelListeEnprunt') }}">
                         <button type="Submit" class="button button_primary">Export</button>
-                    </form>
+                    </form> --}}
                     <form method="GET" action="{{route('createEmprunt')}}">
                         <button type="Submit" class="button button_primary">Ajouter</button>
                     </form>
@@ -37,6 +36,20 @@
                         <tr class="fieldset_border">
                             <td class="fieldset_border"> {{ $emprunt->id_emprunt }} </td>
                             <td class="fieldset_border"> {{ $emprunt->date_emprunt }} </td>
+                            <td class="fieldset_border">
+                                @if ($emprunt->empruntExpierAttribute())
+                                    <span class="alert"> {{ $emprunt->date_retour }} </span>
+                                @else
+                                    <span class="info"> {{ $emprunt->date_retour }} </span>
+                                @endif
+                            </td>
+                            <td class="fieldset_border">
+                                @if ($emprunt->jourRestant < 0 && (! $emprunt->etatEmprunt()))
+                                    <span class="alert"> {{ $emprunt->jourRestant }} </span>
+                                @else
+                                    <span class="info"> {{ $emprunt->jourRestant }} </span>
+                                @endif
+                            </td>
                             {{-- {!! \App\Helpers\Controller::afficherDateRetoure($emprunt) !!}
                             {!! \App\Helpers\RestitutionHelper::afficherEnpruntJourRestant($emprunt) !!} --}}
                             <td class="fieldset_border"> {{ $emprunt->nombreOuvrageEmprunte }} </td>
@@ -57,24 +70,24 @@
                                 <form action="{{ route('formulaireEnregistrementRestitution', $emprunt) }}"
                                       method="get">
                                     @csrf
-                                    {{-- <input type="submit" value="Restituer" class=
-                                            @if(\App\Service\EmpruntService::etatEmprunt($emprunt))
+                                    <input type="submit" value="Restituer" class=
+                                            @if($emprunt->etatEmprunt())
                                                 "button button_primary_disabled disabled:opacity-25 cursor-default" disabled
                                     @else
                                         "button button_primary "
-                                    @endif> --}}
+                                    @endif>
                                 </form>
                             </td><!--"class='button button_primary_disabled disabled:opacity-25' disabled"-->
                             <td class="fieldset_border">
                                 <form action="" method="post">
                                     @csrf
                                     @method("DELETE")
-                                    {{-- <input type="submit" onclick="activeModal({{$emprunt->id_emprunt}})" value="Supprimer" class=
-                                            @if(\App\Service\EmpruntService::etatEmprunt($emprunt))
+                                    <input type="submit" onclick="activeModal({{$emprunt->id_emprunt}})" value="Supprimer" class=
+                                            @if($emprunt->etatEmprunt())
                                                 "button button_delete_disabled disabled:opacity-25" disabled
                                     @else
                                         "button button_delete"
-                                    @endif> --}}
+                                    @endif>
                                 </form>
                             </td>
                         </tr>

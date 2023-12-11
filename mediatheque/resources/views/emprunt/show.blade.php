@@ -1,4 +1,4 @@
-@extends('layout.template.base')
+@extends('layouts.app')
 
 @section('content')
     <div class="flex flex-col space-y-3 bg-white p-3">
@@ -6,11 +6,11 @@
         <div class="flex flex-col">
             <label class="">
                 <span class="label_title_sub_title">Date Emprunt:</span>
-                <span class="label_show_value">{{ App\Service\GlobaleService::afficherDate($emprunt->date_emprunt)}}</span>
+                <span class="label_show_value">{{ date_format($emprunt->date_emprunt, 'Y-m-d') }}</span>
             </label>
             <label>
                 <span class="label_title_sub_title">Date Retour:</span>
-                <span class="label_show_value">{{App\Service\GlobaleService::afficherDate($emprunt->date_retour)}}</span>
+                <span class="label_show_value">{{date_format($emprunt->date_retour, 'Y-m-d') }}</span>
             </label>
             <label>
                 <span class="label_title_sub_title">Personnel :</span>
@@ -41,7 +41,7 @@
                         <td class="fieldset_border" > {{ $loop->index+1 }} </td>
                         <td class="fieldset_border" > {{ $ligne->ouvrage->cote }} </td>
                         <td class="fieldset_border" > {{ $ligne->ouvrage->titre }} </td>
-                        <td class="fieldset_border" > {{ \App\Helpers\OuvragesPhysiqueHelper::afficherEtat($ligne->etat_sortie) }} </td>
+                        <td class="fieldset_border" > {{ \App\Http\Controllers\Controller::afficherEtat($ligne->etat_sortie) }} </td>
                     </tr>
                 @endforeach
                 </tbody>

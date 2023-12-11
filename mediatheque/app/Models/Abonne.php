@@ -82,7 +82,7 @@ class Abonne extends Model
         $listesEmprunts = Emprunt::all()->where('id_abonne', $this->id_abonne);
 
         foreach ($listesEmprunts as $emprunt) {
-            if (! Emprunt::etatEmprunt($emprunt)) {
+            if (! $emprunt->etatEmprunt()) {
                 array_push($empuntNonRestitue, $emprunt);
             }
         }

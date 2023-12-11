@@ -1,7 +1,6 @@
 @extends('layouts.app', ['body_style'=> "bg-gray-200 flex content-center justify-center h-full items-center"])
 @section('content')
     @php
-        $auteurs = [];
         $action = ($ouvrage ?? null) ? route("ouvrages.update", $ouvrage) : route("ouvrages.store") ;
         $nb_exemplaire = ($ouvrage ?? null) ? $ouvrage->nombre_exemplaire : null;
         $document = ($ouvrage ?? null) ? $ouvrage->document : null;
@@ -81,17 +80,17 @@
                         <div class="flex space-x-3 w-full">
                             <div class="flex flex-col w-1/2">
                                 <label class="label">langue</label>
-                                <select name="langue" class="select_btn @error('langue') is-invalid @enderror">
+                                <select name="langues[]" class="select_btn @error('langue') is-invalid @enderror" multiple>
                                     <option>Sélectionner langue</option>
                                     @foreach($langues as $langue)
                                         @php
                                             if ($ouvrage ?? null) {
-                                                $current_value = $ouvrage->id_langue;
+                                                $value = $ouvrage->langues->contains($langue);
                                             }  else {
-                                                $current_value = old('langue');
+                                                $value = old('langue');
                                             }
                                         @endphp
-                                        <option value="{{$langue->id_langue}}" {{ $current_value == $langue->id_langue ? 'selected':'' }}>{{$langue->libelle}}</option>
+                                        <option value="{{$langue->id_langue}}" {{ $value == $langue->id_langue ? 'selected':'' }}>{{$langue->libelle}}</option>
                                     @endforeach
                                 </select>
                                 @error('langue')
@@ -250,9 +249,9 @@
             <fieldset class="border border-solid border-gray-600 p-4 rounded-md hidden" id="electronique">
                 <legend>Documents pdf</legend>
                 <div>
-                    <label class="label">Nombre d'exemplaire</label>
+                    <label class="label">Fichier</label>
                     <input name="document" type="file" value="{{ old('document') }}"
-                           class="input @error('document') is-invalid @enderror">
+                           class="input @error('document') is-invalid @enderror" accept=".pdf">
                     @error('document')
                     <div class="alert">{{ $message }}</div>
                     @enderror

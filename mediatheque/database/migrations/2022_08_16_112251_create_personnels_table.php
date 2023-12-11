@@ -19,6 +19,7 @@ class CreatePersonnelsTable extends Migration
             $table->bigInteger('id_utilisateur');
             $table->foreign('id_utilisateur')->references('id_utilisateur')->on('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
