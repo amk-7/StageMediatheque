@@ -1,6 +1,0 @@
-<?php
-
-class HelpersTest
-{
-    //TODO
-}
