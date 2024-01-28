@@ -6,7 +6,6 @@
     </div>
     @if(!empty($ouvrages ?? "") && $ouvrages->count())
         <div class="flex flex-col items-center mb-12 max-w-4xl" id="books">
-
         </div>
         <div class="bg-white" id="pagination">
         </div>
@@ -28,6 +27,7 @@
     <!-- Add this line to include twbs-pagination -->
     <script type="text/javaScript">
         const ouvrages = {!! $ouvrages !!};
+        console.log(ouvrages);
         let data = [];
         //console.log(ouvrages);
         //load_books(ouvrages);
@@ -105,40 +105,35 @@
             load_books(result);
         }
 
-        $('#search_by').on('input', ()=>{
-            titre = $('#search_by').val();
-            searchOuvrages();
-        });
+        // $('#search_by').on('input', ()=>{
+        //     // titre = $('#search_by').val();
+        //     // searchOuvrages();
+        //     submit_form();
+        // });
 
         $('#langue').on('change', ()=>{
-            // console.log($('#langue').val());
-            langue = $('#langue').val();
-            searchOuvrages();
+            submit_form();
         });
 
         $('#type').on('change', ()=>{
-            console.log($('#type').val());
-            type = $('#type').val();
-            searchOuvrages();
+            submit_form();
         });
 
         $('#niveau').on('change', ()=>{
-            console.log($('#niveau').val());
-            type = $('#niveau').val();
-            searchOuvrages();
+            submit_form();
         });
 
         $('#domaine').on('change', ()=>{
-            // console.log($('#domaine').val());
-            domaine = $('#domaine').val();
-            searchOuvrages();
+            submit_form();
         });
 
-        $('#min, #max').each(function() {
-            $(this).on('change', function() {
-                searchOuvrages();
-            });
+        $('#min, #max').on('change', () => {
+            submit_form();
         });
+
+        function submit_form() {
+            $('#form').submit();
+        }
 
         let currentPage = 1;
         const itemsPerPage = 10; // Adjust the number of items per page as needed

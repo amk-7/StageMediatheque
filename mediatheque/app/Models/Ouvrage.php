@@ -12,7 +12,7 @@ class Ouvrage extends Model
 
     protected $fillable = [
         'titre', 'mot_cle', 'resume', 'annee_apparution', 'lieu_edition',
-        'id_niveau', 'image', 'ressources_externe',
+        'id_niveau', 'image', 'ressources_externe', 'id_type',
         'isbn', 'nombre_exemplaire', 'documents', 'id_nature', 'cote'
     ];
 
@@ -20,7 +20,57 @@ class Ouvrage extends Model
         'mot_cle'=>'array',
     ];
 
+    protected $with = ['langues', 'domaines', 'auteurs', 'type', 'niveau', 'nature'];
+
     protected $primaryKey = 'id_ouvrage';
+
+    public function scopeFilter($query, $filters)
+    {
+        // Filtre par titre, ISBN ou mot-clé
+        if (isset($filters['search']) && !empty($filters['search'])) {
+            $query->where(function ($query) use ($filters) {
+                $query->where('titre', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('isbn', 'like', '%' . $filters['search'] . '%')
+                    ->orWhereJsonContains('mot_cle', $filters['search']);
+            });
+        }
+
+        // Filtre par année
+        if (isset($filters['min']) && !empty($filters['min'])) {
+            $query->where('annee_apparution', '>=', $filters['min']);
+        }
+
+        if (isset($filters['max']) && !empty($filters['max'])) {
+            $query->where('annee_apparution', '<=', $filters['max']);
+        }
+
+        // Filtre par langue
+        if (isset($filters['langue']) && !empty($filters['langue'])) {
+            $query->whereHas('langues', function ($query) use ($filters) {
+                $query->where('libelle', $filters['langue']);
+            });
+        }
+
+        // Filtre par type
+        if (isset($filters['type']) && !empty($filters['type'])) {
+            $query->where('id_type', $filters['type']);
+        }
+
+        // Filtre par domaine
+        if (isset($filters['domaine']) && !empty($filters['domaine'])) {
+            $query->whereHas('domaines', function ($query) use ($filters) {
+                $query->where('libelle', $filters['domaine']);
+            });
+        }
+
+        // Filtre par niveau
+        if (isset($filters['niveau']) && !empty($filters['niveau'])) {
+            $query->where('id_niveau', $filters['niveau']);
+        }
+
+        return $query;
+    }
+
 
     public function getAfficherLangueAttribute(){
         $result = "";
@@ -73,18 +123,15 @@ class Ouvrage extends Model
     }
 
     public function getHasDigitalVersionAttribute(){
-        return $this->documents ? true : false;
+        return !($this->documents);
     }
 
     public function getHasPhysicalVersionAttribute(){
-        return $this->nombre_exemplaire ? true : false;;
+        return $this->nombre_exemplaire > 0 ;
     }
 
     public function getIsAvailableInLibraryAttribute(){
-        if ($this->hasPhysicalVersion){
-            return $this->nombre_exemplaire > 0;
-        }
-        return false ;
+        return $this->hasPhysicalVersion && $this->nombre_exemplaire > 0;
     }
 
     public function augmenterNombreExemplaire($nombre_exemplaire)

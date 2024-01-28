@@ -14,7 +14,7 @@ class TypesOuvrage extends Model
 
     public function ouvrages2()
     {
-        return $this->hasMany(Ouvrages2::class, 'id_type');
+        return $this->hasMany(Ouvrages::class, 'id_type');
     }
 }
 

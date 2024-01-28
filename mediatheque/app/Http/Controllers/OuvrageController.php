@@ -14,18 +14,32 @@ use App\Models\Auteur;
 use App\Imports\OuvragesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 
 class OuvrageController extends Controller
 {
-    function welcome(){
-        $ouvrages = Ouvrage::all();
-        foreach ($ouvrages as $ouvrage) {
-            $ouvrage->domaines;
-            $ouvrage->domaine = $ouvrage->afficherDomaine;
-            $ouvrage->langues;
-            $ouvrage->langue = $ouvrage->afficherLangue;
-        }
+    function welcome(Request $request){
+
+        $selected_search = $request->input('search');
+        $selected_min = $request->input('min');
+        $selected_max = $request->input('max');
+        $selected_langue = $request->input('langue');
+        $selected_type = $request->input('type');
+        $selected_domaine = $request->input('domaine');
+        $selected_niveau = $request->input('niveau');
+
+        $filters = [
+            'search' => $selected_search,
+            'min' => $selected_min,
+            'max' => $selected_max,
+            'langue' => $selected_langue,
+            'type' => $selected_type,
+            'domaine' => $selected_domaine,
+            'niveau' => $selected_niveau,
+        ];
+
+        $ouvrages = Ouvrage::filter($filters)->orderBy('titre', 'asc') ->get();
 
         $annees = 1900;
         $langues = Langue::all();
@@ -33,20 +47,67 @@ class OuvrageController extends Controller
         $categories = Domaine::all();
         $niveaus = Niveau::all();
 
-        return view('welcome', compact('ouvrages', 'annees', 'langues', 'types', 'categories', 'niveaus'));
+        return view('welcome')->with([
+            'ouvrages' => $ouvrages,
+            'annees' => $annees,
+            'langues' => $langues,
+            'types' => $types,
+            'categories' => $categories,
+            'niveaus' => $niveaus,
+            'selected_search' => $selected_search,
+            'selected_min' => $selected_min,
+            'selected_max' => $selected_max,
+            'selected_langue' => $selected_langue,
+            'selected_type' => $selected_type,
+            'selected_domaine' => $selected_domaine,
+            'selected_niveau' => $selected_niveau,
+        ]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $ouvrages = Ouvrage::all();
         $annees = 1900;
         $langues = Langue::all();
         $types = TypesOuvrage::all();
-        $categories = Domaine::all();;
-        $niveaus = Niveau::all();;
+        $categories = Domaine::all();
+        $niveaus = Niveau::all();
+
+        $selected_search = $request->input('search');
+        $selected_min = $request->input('min');
+        $selected_max = $request->input('max');
+        $selected_langue = $request->input('langue');
+        $selected_type = $request->input('type');
+        $selected_domaine = $request->input('domaine');
+        $selected_niveau = $request->input('niveau');
+
+        $filters = [
+            'search' => $selected_search,
+            'min' => $selected_min,
+            'max' => $selected_max,
+            'langue' => $selected_langue,
+            'type' => $selected_type,
+            'domaine' => $selected_domaine,
+            'niveau' => $selected_niveau,
+        ];
+
+        $ouvrages = Ouvrage::filter($filters)->orderBy('titre', 'asc') ->get();
 
 
-        return view('ouvrages2.index', compact('ouvrages', 'annees', 'langues', 'types', 'categories', 'niveaus'));
+        return view('ouvrages2.index')->with([
+            'ouvrages' => $ouvrages,
+            'annees' => $annees,
+            'langues' => $langues,
+            'types' => $types,
+            'categories' => $categories,
+            'niveaus' => $niveaus,
+            'selected_search' => $selected_search,
+            'selected_min' => $selected_min,
+            'selected_max' => $selected_max,
+            'selected_langue' => $selected_langue,
+            'selected_type' => $selected_type,
+            'selected_domaine' => $selected_domaine,
+            'selected_niveau' => $selected_niveau,
+        ]);
     }
 
     public function indexArchive()
@@ -232,17 +293,23 @@ class OuvrageController extends Controller
     public function import(Request $request)
     {
         $destination_path = "book_excel_files/";
-        if ($request->file("fileList") || $request->excel != null)
-        {
-            $chemin_ouvrage_excel = strtolower('ouvrages').'.'.$request->excel->extension();
-            $request->excel->storeAs("public/".$destination_path, $chemin_ouvrage_excel);
-        } else {
-            return redirect()->route('formulaireImportExcelNew');
+
+        try {
+            DB::beginTransaction();
+
+            $chemin_ouvrage_excel = strtolower('ouvrages') . '.' . $request->excel->extension();
+            $request->excel->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
+
+            Excel::import(new OuvragesImport, "storage/$destination_path/$chemin_ouvrage_excel");
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Gérer les erreurs
+            dd($e->getMessage());
         }
-        //dd($request->all());
-        Ouvrage::truncate();
-        Excel::import(new OuvragesImport, "storage/$destination_path/$chemin_ouvrage_excel");
-        return redirect('/')->with('success', 'All good!');
+
+        return redirect('/')->with('success', 'Importation réussie !');
     }
 
 }

@@ -77,20 +77,6 @@
                                         <span class="text-red-600 capitalize">pas disponible</span>
                                     @endif
                                 </td>
-                                {{-- <td class="fieldset_border">
-                                    <div class="space-y-3">
-                                        <div>
-                                            {{ QrCode::generate($ouvrage->cote) }}
-                                        </div>
-                                        <div>
-                                            <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(200)->generate("ezrzr")) }}"
-                                                download="{{ 'cote'.str_replace(' ', '_', strtolower($ouvrage->titre)).'qrcode.png' }}"
-                                                class="text-center text-white bg-green-600 p-1 hover:bg-green-700 mt-2"
-                                            >Imprimer
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td> --}}
                                 <td class="fieldset_border">
                                     <form action="{{route('ouvrages.show', $ouvrage)}}" method="get">
                                         @csrf
@@ -146,74 +132,35 @@
 @stop
 @section('js')
     <script>
-        let titre = "";
-        let langue = "";
-        let type = "";
-        let domaine = "";
-        let niveau = "";
-
-        DataTable.ext.search.push(function (settings, data, dataIndex) {
-            let min = $('#min').val();
-            let max = $('#max').val();
-            //console.log(min);
-            if (min==""){
-                min = null;
-            } else {
-                min = new Date(min);
-            }
-
-            if (max==""){
-                max = null;
-            } else {
-                max = new Date(max);
-            }
-
-            max = new Date(max);
-            let date = new Date(data[2]);
-
-            if (
-                (min === null && max === null) ||
-                (min === null && date <= max) ||
-                (min <= date && max === null) ||
-                (min <= date && date <= max)
-            ) {
-                return true;
-            }
-            return false;
-        });
-
-        $('#langue').on('change', ()=>{
-            // console.log($('#langue').val());
-            langue = $('#langue').val();
-            $('#ouvrages_filter').find('label').find("input[type='search']").val(langue);
-            $('#ouvrages_filter').find('label').find("input[type='search']").trigger( "input" );
-        });
-
-        $('#type').on('change', ()=>{
-            type = $('#type option:selected').text();
-            //console.log(type);
-            $('#ouvrages_filter').find('label').find("input[type='search']").val(type);
-            $('#ouvrages_filter').find('label').find("input[type='search']").trigger( "input" );
-        });
-
-        $('#niveau').on('change', ()=>{
-            niveau = $('#niveau option:selected').text();
-            console.log(niveau);
-            $('#ouvrages_filter').find('label').find("input[type='search']").val(niveau);
-            $('#ouvrages_filter').find('label').find("input[type='search']").trigger( "input" );
-        });
-
-        $('#domaine').on('change', ()=>{
-            // console.log($('#domaine').val());
-            domaine = $('#domaine').val();
-            searchOuvrages();
-        });
-
         $('#min, #max').each(function() {
             $(this).on('change', function() {
                 table.draw();
             });
         });
+
+        $('#langue').on('change', ()=>{
+            submit_form();
+        });
+
+        $('#type').on('change', ()=>{
+            submit_form();
+        });
+
+        $('#niveau').on('change', ()=>{
+            submit_form();
+        });
+
+        $('#domaine').on('change', ()=>{
+            submit_form();
+        });
+
+        $('#min, #max').on('change', () => {
+            submit_form();
+        });
+
+        function submit_form() {
+            $('#form').submit();
+        }
 
         let table = $('#ouvrages').DataTable();
         $('#search_by').on('input', (e)=>{
