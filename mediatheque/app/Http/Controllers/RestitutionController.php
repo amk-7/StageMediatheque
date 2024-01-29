@@ -17,7 +17,7 @@ class RestitutionController extends Controller
      */
     public function index(Request $request)
     {
-        $restitution = Restitution::all();
+        $restitution = Restitution::paginate(10);
 
         return view('restitution.index')->with([
             'restitutions' => $restitution,
@@ -50,14 +50,14 @@ class RestitutionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'data'=>'required',
+            'data' => 'required',
         ]);
         $datas = Controller::extractLineToData($request->data);
 
         $id_emprunt = $datas[0][0];
 
         $restitution = Restitution::create([
-            'etat' => Restitution::etatRestitution($id_emprunt, count($datas)-2), //verifier si la restitution est partielle ou complet.
+            'etat' => Restitution::etatRestitution($id_emprunt, count($datas) - 2), //verifier si la restitution est partielle ou complet.
             'date_restitution' => date('Y-m-d'),
             'id_personnel' => $datas[0][1],
             'id_abonne' => $datas[0][2],
@@ -106,7 +106,7 @@ class RestitutionController extends Controller
     public function update(Request $request, Restitution $restitution)
     {
         $request->validate([
-            'data'=>'required',
+            'data' => 'required',
         ]);
         $datas = Controller::extractLineToData($request->data);
         LignesRestitution::enregistrerLignesRestitution($datas, $restitution->id_restitution, $restitution->id_emprunt);

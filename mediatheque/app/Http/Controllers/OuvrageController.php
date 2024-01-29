@@ -19,7 +19,8 @@ use Illuminate\Support\Facades\DB;
 
 class OuvrageController extends Controller
 {
-    function welcome(Request $request){
+    function welcome(Request $request)
+    {
 
         $selected_search = $request->input('search');
         $selected_min = $request->input('min');
@@ -39,7 +40,7 @@ class OuvrageController extends Controller
             'niveau' => $selected_niveau,
         ];
 
-        $ouvrages = Ouvrage::filter($filters)->orderBy('titre', 'asc') ->get();
+        $ouvrages = Ouvrage::filter($filters)->orderBy('titre', 'asc')->get();
 
         $annees = 1900;
         $langues = Langue::all();
@@ -121,7 +122,8 @@ class OuvrageController extends Controller
         return view('archives.archivesAbonne', compact('ouvrages', 'annees', 'langues', 'types', 'categories', 'niveaus'));
     }
 
-    public function imprimerCote(){
+    public function imprimerCote()
+    {
         $ouvrages = Ouvrage::all();
         return view('ouvrages2.imprimerCote', compact('ouvrages'));
     }
@@ -141,27 +143,27 @@ class OuvrageController extends Controller
     {
         //dd($request->langues);
         $request->validate([
-            'titre'=> 'required|unique:ouvrages',
-            'niveau'=>'required|not_in:Sélectionner niveau',
-            'type'=>'required|not_in:Sélectionner type',
-            'langues'=>'required',
-            'annee_apparution'=>'required',
-            'lieu_edition'=>'required',
-            'data_auteurs'=>'required',
-            'domaines'=>'required',
-            'resume'=>'required',
-            'nombre_exemplaire'=>'numeric|min:1',
+            'titre' => 'required|unique:ouvrages',
+            'niveau' => 'required|not_in:Sélectionner niveau',
+            'type' => 'required|not_in:Sélectionner type',
+            'langues' => 'required',
+            'annee_apparution' => 'required',
+            'lieu_edition' => 'required',
+            'data_auteurs' => 'required',
+            'domaines' => 'required',
+            'resume' => 'required',
+            'nombre_exemplaire' => 'numeric|min:1',
         ]);
 
         $mots_cle_data = Controller::extractLineToData($request->data_mots_cle);
         $mots_cle = [];
-        foreach ($mots_cle_data as $mot_cle_array){
+        foreach ($mots_cle_data as $mot_cle_array) {
             array_push($mots_cle, $mot_cle_array[0]);
         }
         $image = $request->file('image_livre');
 
-        if (! $image==null){
-            $chemin_image = "livre_".Ouvrage::all()->count().'.'.$image->extension();
+        if (!$image == null) {
+            $chemin_image = "livre_" . Ouvrage::all()->count() . '.' . $image->extension();
             $image->storeAs('images/images_livre', $chemin_image);
         } else {
             $chemin_image = "images/images_livre/default_book_image.png";
@@ -170,18 +172,18 @@ class OuvrageController extends Controller
         //dd($request->all());
 
         $ouvrage = Ouvrage::create([
-            'titre'=>strtolower($request->input("titre")),
+            'titre' => strtolower($request->input("titre")),
             'id_niveau' => $request->input("niveau"),
-            'id_type'=> $request->input("type"),
+            'id_type' => $request->input("type"),
             'image' => $chemin_image,
-            'id_langue'=> $request->input("langue"),
-            'resume'=> $request->input("resume"),
-            'mot_cle'=>$mots_cle,
-            'annee_apparution'=>$request->input('annee_apparution'),
-            'lieu_edition'=>$request->input('lieu_edition'),
-            'nombre_exemplaire'=>$request->input('nombre_exemplaire'),
+            'id_langue' => $request->input("langue"),
+            'resume' => $request->input("resume"),
+            'mot_cle' => $mots_cle,
+            'annee_apparution' => $request->input('annee_apparution'),
+            'lieu_edition' => $request->input('lieu_edition'),
+            'nombre_exemplaire' => $request->input('nombre_exemplaire'),
             'ressources_externe' => $request['ressources_externe'],
-            'cote' => md5(Ouvrage::all()->count()+1),
+            'cote' => md5(Ouvrage::all()->count() + 1),
         ]);
 
         // $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
@@ -218,39 +220,38 @@ class OuvrageController extends Controller
     {
         //dd($request->langues);
         $request->validate([
-            'titre'=> 'required',
-            'niveau'=>'required|not_in:Sélectionner niveau',
-            'type'=>'required|not_in:Sélectionner type',
-            'langues'=>'required|not_in:Sélectionner type',
-            'annee_apparution'=>'required',
-            'lieu_edition'=>'required',
-            'data_auteurs'=>'required',
-            'domaines'=>'required',
-            'resume'=>'required',
+            'titre' => 'required',
+            'niveau' => 'required|not_in:Sélectionner niveau',
+            'type' => 'required|not_in:Sélectionner type',
+            'langues' => 'required|not_in:Sélectionner type',
+            'annee_apparution' => 'required',
+            'lieu_edition' => 'required',
+            'data_auteurs' => 'required',
+            'domaines' => 'required',
+            'resume' => 'required',
         ]);
 
 
         $mots_cle_data = Controller::extractLineToData($request->data_mots_cle);
         $mots_cle = [];
-        foreach ($mots_cle_data as $mot_cle_array){
+        foreach ($mots_cle_data as $mot_cle_array) {
             array_push($mots_cle, $mot_cle_array[0]);
         }
         $image = $request->file('image_livre');
 
-        if ($image){
-            $chemin_image = $image->storeAs('images/images_livre', "livre_".Ouvrage::all()->count().'.'.$image->extension());
+        if ($image) {
+            $chemin_image = $image->storeAs('images/images_livre', "livre_" . Ouvrage::all()->count() . '.' . $image->extension());
             $ouvrage->image = $chemin_image;
-        } else if( ! $ouvrage->image) {
+        } else if (!$ouvrage->image) {
             $chemin_image = "images/images_livredefault_book_image.png";
             $ouvrage->image = $chemin_image;
         }
 
         $destination_path = "books/pdf/";
         $chemin_ouvrage_excel = null;
-        if ($request->file("document") || $request->document != null)
-        {
-            $chemin_ouvrage_excel = strtolower($ouvrage->cote).'.'.$request->document->extension();
-            $request->document->storeAs("public/".$destination_path, $chemin_ouvrage_excel);
+        if ($request->file("document") || $request->document != null) {
+            $chemin_ouvrage_excel = strtolower($ouvrage->cote) . '.' . $request->document->extension();
+            $request->document->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
         }
 
         $ouvrage->titre = strtolower($request->input("titre"));
@@ -307,5 +308,4 @@ class OuvrageController extends Controller
 
         return redirect('/')->with('success', 'Importation réussie !');
     }
-
 }
