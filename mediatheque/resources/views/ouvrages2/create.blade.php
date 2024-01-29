@@ -80,17 +80,19 @@
                         <div class="flex space-x-3 w-full">
                             <div class="flex flex-col w-1/2">
                                 <label class="label">langue</label>
-                                <select name="langues[]" class="select_btn @error('langue') is-invalid @enderror" multiple>
+                                <select name="langues[]" class="select-multiple select_btn @error('langue') is-invalid @enderror" multiple>
                                     <option>Sélectionner langue</option>
                                     @foreach($langues as $langue)
                                         @php
                                             if ($ouvrage ?? null) {
                                                 $value = $ouvrage->langues->contains($langue);
-                                            }  else {
-                                                $value = old('langue');
                                             }
                                         @endphp
-                                        <option value="{{$langue->id_langue}}" {{ $value == $langue->id_langue ? 'selected':'' }}>{{$langue->libelle}}</option>
+                                        @if(($ouvrage ?? null) && ! old('langues'))
+                                            <option value="{{$langue->id_langue}}" {{ $value == $langue->id_langue ? 'selected':'' }}>{{$langue->libelle}}</option>
+                                        @else
+                                            <option value="{{$langue->id_langue}}" {{ in_array($langue->id_langue, old('langues') ?? []) ? 'selected':'' }}>{{$langue->libelle}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 @error('langue')
@@ -117,19 +119,20 @@
                         </div>
                     </div>
                 </div>
-
                 <div>
                     <label class="label">Domaine</label>
-                    <select name="domaines[]" class="select_btn @error('domaines') is-invalid @enderror" multiple>
+                    <select name="domaines[]" class="select-multiple select_btn @error('domaines') is-invalid @enderror" multiple>
                         @foreach($domaines as $domaine)
                             @php
                                 if ($ouvrage ?? null) {
                                     $value = $ouvrage->domaines->contains($domaine);
-                                } else {
-                                    $value = old('domaine');
                                 }
                             @endphp
-                            <option value="{{$domaine->id_domaine}}" {{ $value == $domaine ? 'selected':'' }}>{{$domaine->libelle}}</option>
+                            @if(($ouvrage ?? null) && ! old('domaines'))
+                                <option value="{{$domaine->id_domaine}}" {{ $value == $domaine ? 'selected':'' }}>{{$domaine->libelle}}</option>
+                            @else
+                                <option value="{{$domaine->id_domaine}}"  {{ in_array($domaine->id_domaine, old('domaines') ?? []) ? 'selected':'' }}>{{$domaine->libelle}}</option>
+                            @endif
                         @endforeach
                     </select>
                     @error('domaines')
@@ -226,21 +229,20 @@
                 <legend>Disponible en versions :</legend>
                 <div>
                     <div class="flex space-x-3">
-                        <input type="checkbox" name="versions" id="version_physique">
+                        <input type="checkbox" name="versions" id="version_physique" @if(old('nombre_exemplaire')) checked @enderror>
                         <span class="label">physique</span>
                     </div>
                     <div class="flex space-x-3">
-                        <input type="checkbox" name="versions" id="version_electronique">
+                        <input type="checkbox" name="versions" id="version_electronique" @if(old('document')) checked @enderror >
                         <span class="label">Electronique</span>
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="border border-solid border-gray-600 p-4 rounded-md hidden" id="physique">
+            <fieldset class="border border-solid border-gray-600 p-4 rounded-md @if(old('nombre_exemplaire')) show @else hidden @enderror" id="physique">
                 <legend>Stock</legend>
                 <div>
                     <label class="label">Nombre d'exemplaire</label>
-                    <input name="nombre_exemplaire" type="number" value="{{ $ouvrage->nombre_exemplaire ?? old('nombre_exemplaire') }}"
-                           class="input @error('nombre_exemplaire') is-invalid @enderror">
+                    <input name="nombre_exemplaire" type="number" value="{{ $ouvrage->nombre_exemplaire ?? old('nombre_exemplaire') }}" class="input @error('nombre_exemplaire') is-invalid @enderror">
                     @error('nombre_exemplaire')
                     <div class="alert">{{ $message }}</div>
                     @enderror
@@ -250,13 +252,13 @@
                 <legend>Documents pdf</legend>
                 <div>
                     <label class="label">Fichier</label>
-                    <input name="document" type="file" value="{{ old('document') }}"
-                           class="input @error('document') is-invalid @enderror" accept=".pdf">
+                    <input name="document" type="file" value="{{ old('document') }}" class="input @error('document') is-invalid @enderror" accept=".pdf">
                     @error('document')
                     <div class="alert">{{ $message }}</div>
                     @enderror
                 </div>
             </fieldset>
+
             <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
                 <legend>Ressources externes</legend>
                 <input hidden type="text" name="ressources_externe" id="ressources_externe" value="{{ $ouvrage->ressources_externe ?? old('ressources_externe') }}">
@@ -327,6 +329,10 @@
             } else {
                 block_electronique.classList.add('hidden');
             }
+        });
+
+        $(document).ready(function() {
+            $('.select-multiple').select2();
         });
 
     </script>

@@ -46,9 +46,18 @@
                         </x-slot>
                         <x-slot name="content">
                             <!-- Authentication -->
-                            <x-dropdown-link :href="route('ouvrages.index')">
-                                {{ __('Tableau de bord') }}
-                            </x-dropdown-link>
+                            @if (Auth::user()->roles()->first()->name == "abonne")
+                                @php
+                                    $id_user = \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne;
+                                @endphp
+                                <x-dropdown-link :href="route('showAbonne', $id_user)">
+                                    {{ __('Tableau de bord') }}
+                                </x-dropdown-link>
+                            @else
+                                <x-dropdown-link :href="route('ouvrages.index')">
+                                    {{ __('Tableau de bord') }}
+                                </x-dropdown-link>
+                            @endif
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"

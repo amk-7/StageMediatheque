@@ -30,37 +30,46 @@ class AbonneController extends Controller
         //dd(Abonne::all());
         $abonnes = "";
         $paginate = 10;
-        if (isset($request->search_by) || isset($request->profession) || isset($request->niveau_etude)){
+        $selected_search_by = $request->search_by;
+        $selected_profession = $request->profession;
+        $selected_niveau_etude = $request->niveau_etude;
+        $selected_etat = $request->etat;
+
+        if (isset($selected_search_by) || isset($request->profession) || isset($selected_niveau_etude) || isset($selected_etat)){
             $users = DB::table('users')
                 ->select("id_utilisateur")
                 ->where("nom", "like", "%".strtoupper($request->search_by)."%")
                 ->orWhere("prenom", "like", "%".strtolower($request->search_by)."%")
                 ->get();
-            $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
+            $userIds = $users->pluck('id_utilisateur')->toArray();
             $professions = ["Retraite", "Etudiant", "Fonctionnaire", "Elève"];
             if (! empty($request->profession)){
                 $professions = [$request->profession];
             }
-            //dump($users);
             $niveau_etudes = ["Université", "Lycée", "Collège", "Primaire"];
             if (! empty($request->niveau_etude)){
                 $niveau_etudes = [$request->niveau_etude];
             }
 
-            $abonnes = Abonne::whereIn("id_utilisateur", $users)
+            $abonnes = Abonne::whereIn("id_utilisateur", $userIds)
                         ->whereIn("profession", $professions)
+                        ->where("etat", boolval($request->etat))
                         ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
-            //dd($abonnes);
 
         } else {
             $abonnes = Abonne::paginate($paginate);
         }
 
+        \Session(['abonnes_key' => $abonnes->pluck('id_abonne')->toArray()]);
         \Session(['paye' => $request->paye]);
 
         return view('abonnes.index')->with([
                 'abonnes' => $abonnes,
                 'paye' => $request->paye,
+                'selected_search_by' => $selected_search_by,
+                'selected_profession' => $selected_profession,
+                'selected_niveau_etude' => $selected_niveau_etude,
+                'selected_etat' => $selected_etat,
                 ]);
     }
 
@@ -163,8 +172,8 @@ class AbonneController extends Controller
                 'id_utilisateur' => $utilisateur->id_utilisateur,
                 'profil_valider' => $request->profil_valide ?? 0,
             ]);
-            // $utilisateur->assignRole(Role::find(3));
-            // Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName));
+            $utilisateur->assignRole(Role::find(3));
+            Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName));
             return redirect('liste_des_abonnes');
         } else {
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
@@ -179,7 +188,6 @@ class AbonneController extends Controller
      */
     public function show(Abonne $abonne)
     {
-        //abdoulmalikkondi8@gmail.com
         return view('abonnes.show')->with('abonne', $abonne);
     }
 
@@ -191,7 +199,6 @@ class AbonneController extends Controller
      */
     public function edit(Abonne $abonne)
     {
-
         return view('abonnes.edit')->with('abonne', $abonne);
     }
 
@@ -204,7 +211,6 @@ class AbonneController extends Controller
      */
     public function update(Request $request, Abonne $abonne)
     {
-        //dd($request["niveau_etude"]);
         $request['adresse'] = array(
             'ville' => $request->ville,
             'quartier' => $request->quartier,
@@ -225,13 +231,6 @@ class AbonneController extends Controller
 
         $abonne->save();
         $utilisateur->assignRole(Role::find(3));
-
-        // if (Auth::user()->hasRole("abonne")){
-        //     return redirect()->route('showAbonne', $abonne);
-        // } else{
-        //     return redirect()->route('listeAbonnes');
-        // }
-
         return redirect()->route('listeAbonnes');
     }
     /**
@@ -242,7 +241,15 @@ class AbonneController extends Controller
      */
     public function destroy(Abonne $abonne)
     {
-        $abonne->delete();
+        $abonne->etat=false;
+        $abonne->save();
+        return redirect()->route('listeAbonnes');
+    }
+
+    public function fenix_user(Abonne $abonne)
+    {
+        $abonne->etat = true;
+        $abonne->save();
         return redirect()->route('listeAbonnes');
     }
 

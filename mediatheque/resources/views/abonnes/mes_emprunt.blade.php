@@ -1,4 +1,4 @@
-@extends('layout.template.base')
+@extends('layouts.app')
 
 @section('content')
     <div class="flex flex-col justify-center items-center m-auto">
@@ -21,7 +21,7 @@
                         </thead>
                         <tbody>
                         @foreach($emprunts as $emprunt)
-                            <tr class="fieldset_border" >
+                            <tr class="fieldset_border">
                                 <td class="fieldset_border" > {{ $emprunt->id_emprunt }} </td>
                                 <td class="fieldset_border" > {{ $emprunt->date_emprunt->format('Y-m-d') }} </td>
                                 <td class="fieldset_border" > {{ $emprunt->nombreOuvrageEmprunte }} </td>
@@ -34,7 +34,7 @@
                                     </form>
                                 </td>
                                 <td class="fieldset_border" >
-                                    @if(\App\Service\EmpruntService::etatEmprunt($emprunt))
+                                    @if($emprunt->etatEmprunt())
                                         ✅
                                     @else
                                         ️❌

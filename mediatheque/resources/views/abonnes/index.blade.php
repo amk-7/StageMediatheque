@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
     <div class="flex flex-col justify-center items-center m-auto" style="margin-top: 100px;">
-        <h1 class="label_title">Liste des Abonnes</h1>
+        <h1 class="label_title">Liste des Abonnes {{  old('paye') }} </h1>
         <form class="flex flex-col items-center" method="get" action="{{route("listeAbonnes")}}">
             <div class="">
                 <div class="flex flex-row w-96">
-                    <input class="search w-5/6" type="search" name="search_by" id="search_by" placeholder="rechercher par nom, prénom">
+                    <input class="search w-5/6" type="search" name="search_by" id="search_by" placeholder="rechercher par nom, prénom" value="{{ old('selected_search_by') }}">
                     <button type="submit" class="button button_primary w-1/6">
                         <img src="{{ asset('storage/images/search.png') }}" class="block h-auto w-auto fill-current text-gray-600">
                     </button>
@@ -16,22 +16,26 @@
                 <div class="flex space-x-3">
                     <select name="paye" class="select_btn">
                         <option value="">Ont Payé</option>
-                        <option value="oui">oui</option>
-                        <option value="non">non</option>
+                        <option value="oui" {{ $paye=="oui" ? "selected" : "" }}>oui</option>
+                        <option value="non" {{ $paye=="non" ? "selected" : "" }}>non</option>
                     </select>
                     <select name="profession" class="select_btn">
                         <option value="">Profession</option>
-                        <option value="Eleve">Élève</option>
-                        <option value="Etudiant">Étudiant</option>
-                        <option value="Fonctionnaire">Fonctionnaire</option>
-                        <option value="Retraite">Retraité</option>
+                        <option value="Eleve" {{ $selected_profession=="Eleve" ? "selected" : "" }} >Élève</option>
+                        <option value="Etudiant" {{ $selected_profession=="Etudiant" ? "selected" : "" }} >Étudiant</option>
+                        <option value="Fonctionnaire" {{ $selected_profession=="Fonctionnaire" ? "selected" : "" }} >Fonctionnaire</option>
+                        <option value="Retraite" {{ $selected_profession=="Retraite" ? "selected" : "" }} >Retraité</option>
                     </select>
                     <select name="niveau_etude" class="select_btn">
                         <option value="">Niveau étude</option>
-                        <option value="primaire">Primaire</option>
-                        <option value="college">Collège</option>
-                        <option value="lycee">Lycée</option>
-                        <option value="Université">Université</option>
+                        <option value="primaire" {{ $selected_niveau_etude=="primaire" ? "selected" : "" }} >Primaire</option>
+                        <option value="college" {{ $selected_niveau_etude=="college" ? "selected" : "" }} >Collège</option>
+                        <option value="lycee" {{ $selected_niveau_etude=="lycee" ? "selected" : "" }} >Lycée</option>
+                        <option value="Université" {{ $selected_niveau_etude=="Université" ? "selected" : "" }} >Université</option>
+                    </select>
+                    <select name="etat" class="select_btn">
+                        <option value="1" {{ $selected_etat=="1" ? "selected" : "" }}>Activer</option>
+                        <option value="0" {{ $selected_etat=="0" ? "selected" : "" }}>Desactiver</option>
                     </select>
                 </div>
             </div>
@@ -73,9 +77,9 @@
                     <tbody>
                         @foreach ($abonnes as $abonne)
                             @php
-                                $payeB = ($paye == "oui" ? true : false);
+                                $is_registrate = $abonne->isRegistrate();
                             @endphp
-                            @if($paye == null ? true : false || $abonne->isRegistrate()==$payeB)
+                            @if($paye == null || $is_registrate == ($paye == "oui"))
                                 <tr class="fieldset_border">
                                     <td class="fieldset_border" >{{$loop->index+1}}</td>
                                     <td class="fieldset_border" ><img src="{{asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil}}" width="80" height="80"></td>
@@ -85,11 +89,11 @@
                                     <td class="fieldset_border" >{{$abonne->utilisateur->contact}}</td>
                                     <td class="fieldset_border" >{{$abonne->utilisateur->adresse["ville"]}}</td>
                                     <td class="fieldset_border" >{{$abonne->profession}}</td>
-                                    <td class="fieldset_border" >{{$abonne->contact_a_prevenir}}</td>
+                                    <td class="fieldset_border" >{{$abonne->contact_a_prevenir}} </td>
                                     <td class="fieldset_border" >{{$abonne->numero_carte}}</td>
                                     <td class="fieldset_border" >{{  $abonne->type_de_carte == 0 ? "Scolaire" : "Identité"  }}</td>
                                     <td class="fieldset_border" >
-                                        @if ($abonne->isRegistrate())
+                                        @if ($is_registrate)
                                             <span class="info">Oui</span>
                                         @else
                                             <span class="alert">Non</span>
@@ -114,11 +118,19 @@
                                     </td>
                                     @if(Auth::user()->hasRole('responsable'))
                                         <td class="fieldset_border" >
-                                            <form method="POST" action="">
+                                            @if(! $abonne->etat)
+                                            <form method="POST" action="{{route('fenix_user', $abonne->id_abonne)}}">
                                                 @csrf
-                                                @method("DELETE")
-                                                <button onclick="activeModal({{$abonne->id_abonne}})" class="button button_delete" type="Submit">Supprimer</button>
+                                                @method("PUT")
+                                                <button class="button button_primary" type="Submit">Activer</button>
                                             </form>
+                                            @else
+                                                <form method="POST" action="">
+                                                    @csrf
+                                                    @method("DELETE")
+                                                    <button onclick="activeModal({{$abonne->id_abonne}})" class="button button_delete" type="Submit">Désactiver</button>
+                                                </form>
+                                            @endif
                                         </td>
                                     @endif
                                 </tr>
@@ -137,14 +149,14 @@
     <div style="z-index:1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_supprimer">
         <div class="flex flex-col items-center space-y-4">
             <div id="id_message" class="text-center">
-                <p>Voulez vous vraiment supprimer cet abonne ?</p>
+                <p>Voulez vous vraiment désactiver cet abonne ?</p>
             </div>
             <div class="flex flex-row space-x-8">
                 <button id="btn_annuler" class="button button_show">Annuler</button>
                 <form id="form_delete_confirm" action="{{url("suppression_des_abonnes")}}" method="post">
                     @csrf
                     @method('delete')
-                    <input type="submit" id="supprimer_ouvrage_confirm" name="supprimer" value="Supprimer" class="button button_delete">
+                    <input type="submit" id="supprimer_ouvrage_confirm" name="supprimer" value="Oui" class="button button_delete">
                 </form>
             </div>
         </div>

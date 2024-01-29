@@ -130,7 +130,7 @@
                                     <a href="{{ route('ouvrages.index') }}" class="@if(request()->routeIs('ouvrages.index')) current_link @else other_link @endif" >Ouvrages</a>
                                 </li>
                                 <li>
-                                    <a href="/liste_approvisionnements" class="@if(request()->routeIs('listeApprovisionnements')) current_link @else other_link @endif">Approvisionnement</a>
+                                    <a href="/liste_approvisionnements" class="@if(request()->routeIs('listeApprovisionnements')) current_link @else other_link @endif">Approvisionnements</a>
                                 </li>
                                 <li>
                                     <a href="/liste_des_emprunts" class="@if(request()->routeIs('listeEmprunts')) current_link @else other_link @endif">Emprunts</a>
@@ -192,12 +192,6 @@
                    @if (Auth::user()->roles()->first()->name == "abonne")
                        <ul>
                            <li>
-                               <a href="/liste_livres_papier" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600" >Livres Papier</a>
-                           </li>
-                           <li>
-                               <a href="/liste_livres_numerique" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres PDF</a>
-                           </li>
-                           <li>
                                <a href="/affiche_abonne/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mon compte</a>
                            </li>
                            <li>
@@ -206,9 +200,9 @@
                            <li>
                                <a href="/liste_mes_emprunts_actuelle/{{ \App\Models\Abonne::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_abonne }}?" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Emprunts en cours</a>
                            </li>
-                           <li>
+                           {{-- <li>
                                <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Mes réservations</a>
-                           </li>
+                           </li> --}}
                            <li>
                                <a class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">
                                    <form method="POST" action="{{ route('logout') }}">
@@ -218,7 +212,6 @@
                                </a>
                            </li>
                        </ul>
-
                    @endif
                </ul>
             </div>

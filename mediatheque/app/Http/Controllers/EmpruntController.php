@@ -40,21 +40,11 @@ class EmpruntController extends Controller
                 $users = DB::table('users')
                     ->select("id_utilisateur")
                     ->where("nom", "like", "%".strtoupper($request->nom_abonne)."%")
-                    ->get();
-                $users = GlobaleService::getArrayKeyFromDBResult($users, "id_utilisateur");
-                $abonnes = DB::table('abonnes')->select('id_abonne')->whereIn('id_utilisateur', $users)->get();
-
-                $abonnes = GlobaleService::getArrayKeyFromDBResult($abonnes, "id_abonne");
+                    ->get()->pluck('id_utilisateur');
+                $abonnes = DB::table('abonnes')->select('id_abonne')->whereIn('id_utilisateur', $users)->get()->pluck('id_abonne');
             }
-            if(count($abonnes) != 0){
-
-                $emprunts = Emprunt::whereIn('id_abonne', $abonnes)->paginate($paginate);
-
-            }else{
-                $emprunts = new Collection();
-            }
+            $emprunts = Emprunt::whereIn('id_abonne', $abonnes)->paginate($paginate);
         } else {
-
             $emprunts = Emprunt::paginate($paginate);
         }
 
@@ -74,7 +64,7 @@ class EmpruntController extends Controller
     {
         //
         return view('emprunt.create')->with([
-            "ouvrages" => json_encode(Ouvrage::all()),
+            "ouvrages" => json_encode(Ouvrage::where('nombre_exemplaire', '>', 0)->get()),
             "personnels" => json_encode(Personnel::fullAttributs()),
             "abonnes" => json_encode(Abonne::getAbonnesValidateWithAllAttribut()),
         ]);

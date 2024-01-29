@@ -10,7 +10,7 @@
 
             <fieldset class="fieldset_border" >
                 <legend>Ouvrage</legend>
-                <div>
+                <div hidden>
                     <div class="flex flex-col">
                         <label for="ouvrage_cote">Cote</label>
                         <div class="flex space-x-8">
@@ -23,12 +23,6 @@
                         <p id="cote_ouvrage_erreur" hidden>Le champ cote doit être renseigner</p>
                         <p id="cote_ouvrage_not_found" hidden>Cet ouvrage n'existe pas</p>
                         <p id="cote_ouvrage_exist" hidden>Cet ouvrage existe déjà dans cet emprunt</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex flex-col">
-                        <label for="nombre_examplaire">Nombre d'examplaire</label>
-                        <input id="nombre_examplaire" type="number" name="nombre_examplaire" class="input" value="0">
                     </div>
                 </div>
                 <div>
@@ -46,6 +40,12 @@
                             </select>
                         </div>
                         <input name="data" id="data" type="text" hidden>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col">
+                        <label for="nombre_examplaire">Nombre d'examplaire</label>
+                        <input id="nombre_examplaire" type="number" name="nombre_examplaire" class="input" value="0">
                     </div>
                 </div>
             </fieldset>

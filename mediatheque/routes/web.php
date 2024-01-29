@@ -7,6 +7,7 @@ use App\Http\Controllers\RestitutionController;
 use App\Http\Controllers\AbonneController;
 use App\Http\Controllers\OuvrageController;
 use App\Http\Controllers\EmpruntController;
+// use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,17 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-//->middleware(['auth', 'verified'])
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-
 Route::get('/', [OuvrageController::class, 'welcome'])->name('welcome');
-
-
 
 Route::group(['middleware' => ['role:abonne', 'auth']], function () {
     Route::get('liste_mes_emprunts/{abonne}', [AbonneController::class, 'mesEmprunts'])->name('ListemesEmprunts');
@@ -61,6 +52,8 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('liste_des_abonnes', [AbonneController::class, 'index'])->name('listeAbonnes');
     Route::delete('suppression_des_abonnes/{abonne}', [AbonneController::class, 'destroy'])->name('destroyAbonne');
     Route::get('formulaire_Abonne', [AbonneController::class, 'create'])->name('createAbonne');
+
+    Route::put('activer_abonne/{abonne}', [AbonneController::class, 'fenix_user'])->name('fenix_user');
 
     // Path: Emprunt routes/web.php
     Route::get('liste_des_emprunts', 'App\Http\Controllers\EmpruntController@index')->name('listeEmprunts');

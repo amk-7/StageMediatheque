@@ -90,8 +90,7 @@ class OuvrageController extends Controller
             'niveau' => $selected_niveau,
         ];
 
-        $ouvrages = Ouvrage::filter($filters)->orderBy('titre', 'asc') ->get();
-
+        $ouvrages = Ouvrage::filter($filters)->orderBy('annee_apparution', 'asc')->paginate(20);
 
         return view('ouvrages2.index')->with([
             'ouvrages' => $ouvrages,
@@ -140,18 +139,18 @@ class OuvrageController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        //dd($request->langues);
         $request->validate([
             'titre'=> 'required|unique:ouvrages',
             'niveau'=>'required|not_in:Sélectionner niveau',
             'type'=>'required|not_in:Sélectionner type',
-            'langue'=>'required|not_in:Sélectionner type',
+            'langues'=>'required',
             'annee_apparution'=>'required',
             'lieu_edition'=>'required',
             'data_auteurs'=>'required',
             'domaines'=>'required',
             'resume'=>'required',
-            'nombre_exemplaire'=>'required',
+            'nombre_exemplaire'=>'numeric|min:1',
         ]);
 
         $mots_cle_data = Controller::extractLineToData($request->data_mots_cle);
@@ -217,7 +216,7 @@ class OuvrageController extends Controller
 
     public function update(Request $request, Ouvrage $ouvrage)
     {
-        //dd($request->all());
+        //dd($request->langues);
         $request->validate([
             'titre'=> 'required',
             'niveau'=>'required|not_in:Sélectionner niveau',
@@ -228,7 +227,6 @@ class OuvrageController extends Controller
             'data_auteurs'=>'required',
             'domaines'=>'required',
             'resume'=>'required',
-            'nombre_exemplaire'=>'required',
         ]);
 
 
@@ -240,7 +238,7 @@ class OuvrageController extends Controller
         $image = $request->file('image_livre');
 
         if ($image){
-            $chemin_image = $image->storeAs('images/images_livre', "livre_".Ouvrages2::all()->count().'.'.$image->extension());
+            $chemin_image = $image->storeAs('images/images_livre', "livre_".Ouvrage::all()->count().'.'.$image->extension());
             $ouvrage->image = $chemin_image;
         } else if( ! $ouvrage->image) {
             $chemin_image = "images/images_livredefault_book_image.png";
@@ -299,9 +297,7 @@ class OuvrageController extends Controller
 
             $chemin_ouvrage_excel = strtolower('ouvrages') . '.' . $request->excel->extension();
             $request->excel->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
-
             Excel::import(new OuvragesImport, "storage/$destination_path/$chemin_ouvrage_excel");
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

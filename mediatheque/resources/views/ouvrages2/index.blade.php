@@ -43,7 +43,7 @@
                         <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
                             <tr>
                                 <th class="fieldset_border" hidden>Numéro</th>
-                                <th class="fieldset_border w-12">Titre</th>
+                                <th class="fieldset_border w-32">Titre</th>
                                 <th class="fieldset_border">Année apparution</th>
                                 <th class="fieldset_border">Niveau</th>
                                 <th class="fieldset_border">Type</th>
@@ -51,7 +51,6 @@
                                 <th class="fieldset_border" hidden>Domaine</th>
                                 <th class="fieldset_border">Nombre d'exemplaire</th>
                                 <th class="fieldset_border">Disponibilité</th>
-                                {{-- <th class="fieldset_border">cote QR code</th> --}}
                                 <th class="fieldset_border">Consulter</th>
                                 <th class="fieldset_border">Editer</th>
                                 @if(Auth::user()->hasRole('responsable'))
@@ -104,9 +103,9 @@
                         <tbody id="result" class="result_data"></tbody>
                     </table>
             @endif
-            {{-- <div style="mt-8">
+            <div class="mt-8">
                 {!! $ouvrages->links() !!}
-            </div> --}}
+            </div>
         @else
             <h3>Il n'y a aucun ouvrage.</h3>
         @endif
@@ -132,11 +131,6 @@
 @stop
 @section('js')
     <script>
-        $('#min, #max').each(function() {
-            $(this).on('change', function() {
-                table.draw();
-            });
-        });
 
         $('#langue').on('change', ()=>{
             submit_form();
@@ -161,13 +155,6 @@
         function submit_form() {
             $('#form').submit();
         }
-
-        let table = $('#ouvrages').DataTable();
-        $('#search_by').on('input', (e)=>{
-            $('#ouvrages_filter').find('label').find("input[type='search']").val($('#search_by').val());
-            $('#ouvrages_filter').find('label').find("input[type='search']").trigger( "input" );
-        });
-        console.log();
     </script>
     <script type='text/javascript' async>
 

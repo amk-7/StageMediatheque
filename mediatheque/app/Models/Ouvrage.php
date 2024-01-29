@@ -13,7 +13,7 @@ class Ouvrage extends Model
     protected $fillable = [
         'titre', 'mot_cle', 'resume', 'annee_apparution', 'lieu_edition',
         'id_niveau', 'image', 'ressources_externe', 'id_type',
-        'isbn', 'nombre_exemplaire', 'documents', 'id_nature', 'cote'
+        'isbn', 'nombre_exemplaire', 'documents', 'id_nature', 'cote', 'etat'
     ];
 
     protected $casts = [
@@ -70,7 +70,6 @@ class Ouvrage extends Model
 
         return $query;
     }
-
 
     public function getAfficherLangueAttribute(){
         $result = "";

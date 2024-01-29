@@ -9,18 +9,20 @@
            </div>
             <fieldset class="fieldset_border" >
                 <legend>Abonné</legend>
-                <div class="flex flex-col">
-                    <label for="nom_abonnee">Nom</label>
-                    <select name="nom_abonne" id="nom_abonnes" class="select_btn w-full"></select>
+                <div class="flex space-x-3">
+                    <div class="flex flex-col w-full">
+                        <label for="nom_abonnee">Nom</label>
+                        <select name="nom_abonne" id="nom_abonnes" class="select_btn w-full"></select>
+                    </div>
+                    <div class="flex flex-col w-full">
+                        <label for="prenom_abonne">Prenom</label>
+                        <select name="prenom_abonne" id="prenom_abonnes" class="select_btn w-full">
+                            <option>Séléctionner prénom</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="alert">
                     <p id="nom_abonne_erreur" hidden>Vous devez séléctionner le nom</p>
-                </div>
-                <div class="flex flex-col">
-                    <label for="prenom_abonne">Prenom</label>
-                    <select name="prenom_abonne" id="prenom_abonnes" class="select_btn w-full">
-                        <option>Séléctionner prénom</option>
-                    </select>
                 </div>
                 <div class="alert">
                     <p id="prenom_abonne_erreur" hidden>Vous devez séléctionner le prenom</p>
@@ -39,7 +41,7 @@
 
             <fieldset class="fieldset_border space-y-3" >
                 <legend>Ouvrage</legend>
-                <div>
+                <div hidden>
                     <div class="flex flex-col">
                         <label for="ouvrage_cote">Cote</label>
                         <div class="flex space-x-8">
@@ -87,7 +89,7 @@
                 </div>
             </fieldset>
             <fieldset class="fieldset_border" >
-                <legend>Duree emprunt</legend>
+                <legend>Duree</legend>
                 <div class="flex flex-col">
                     <label for="duree_emprunt">Duree Emprunt</label>
                     <select name="duree_emprunt" id="duree_emprunt" class="select_btn">
