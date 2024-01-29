@@ -19,6 +19,7 @@ class ApprovisionnementsController extends Controller
     public function index()
     {
         $approvisionnements = Approvisionnement::paginate(10);
+        $approvisionnements->sortBy('date_approvisonnement');
         return view('approvisionnements.index')->with('approvisionnements', $approvisionnements);
     }
 
@@ -45,7 +46,7 @@ class ApprovisionnementsController extends Controller
     {
 
         $request->validate([
-            'data'=>'required',
+            'data' => 'required',
         ]);
 
         Approvisionnement::enregistrerPlusieursApprosionnement($request->data);
@@ -72,9 +73,9 @@ class ApprovisionnementsController extends Controller
     public function edit(Approvisionnement $approvisionnement)
     {
         return view('approvisionnements.edite')->with([
-            'ouvragesPhysique'=>OuvragesPhysique::all(),
-            'personnels'=>Personnel::all(),
-            'approvisionnements'=> $approvisionnement,
+            'ouvragesPhysique' => OuvragesPhysique::all(),
+            'personnels' => Personnel::all(),
+            'approvisionnements' => $approvisionnement,
         ]);
     }
 
@@ -104,7 +105,7 @@ class ApprovisionnementsController extends Controller
      */
     public function destroy(Approvisionnement $approvisionnement)
     {
-        $approvisionnement->ouvrage->augmenterNombreExemplaire($approvisionnement->nombre_exemplaire*-1);
+        $approvisionnement->ouvrage->augmenterNombreExemplaire($approvisionnement->nombre_exemplaire * -1);
         $approvisionnement->delete();
         return redirect()->route('approvisionnements.index');
     }

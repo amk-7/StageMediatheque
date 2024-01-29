@@ -83,7 +83,7 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('formulaire_TarifAbonnement', 'App\Http\Controllers\TarifAbonnementController@create')->name('createTarifAbonnement');
     Route::post('enregistrement_tarif_abonnement', 'App\Http\Controllers\TarifAbonnementController@store')->name('storeTarifAbonnement');
 
-   // Path: liquide routes/web.php
+    // Path: liquide routes/web.php
     Route::get('liste_des_liquides', 'App\Http\Controllers\LiquideController@index')->name('listeLiquides');
     Route::get('affiche_liquide', 'App\Http\Controllers\LiquideController@show')->name('showLiquide');
     Route::get('formulaire_edition_des_liquides', 'App\Http\Controllers\LiquideController@edit')->name('editLiquide');
@@ -142,13 +142,13 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::fallback(function (){
+Route::fallback(function () {
     return view('404');
 });
 
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

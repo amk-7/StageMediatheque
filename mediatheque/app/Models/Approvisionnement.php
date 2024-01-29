@@ -18,28 +18,31 @@ class Approvisionnement extends Model
     public static function enregistrerPlusieursApprosionnement($data)
     {
         $data = Controller::extractLineToData($data);
-        for ($i=0; $i<count($data)-1; $i++){
+        for ($i = 0; $i < count($data) - 1; $i++) {
             $id_personnel = Personnel::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_personnel;
             self::enregistrerUnApprovisionnement($data[$i][0], $data[$i][1], $id_personnel);
         }
     }
 
-    public static function enregistrerUnApprovisionnement($id_ouvrage, $nombre_exemplaire, $id_personnel){
+    public static function enregistrerUnApprovisionnement($id_ouvrage, $nombre_exemplaire, $id_personnel)
+    {
         $ouvrage = Ouvrage::find($id_ouvrage);
         $ouvrage->augmenterNombreExemplaire($nombre_exemplaire);
         $ouvrage->save();
         Approvisionnement::create([
             'nombre_exemplaire' => $nombre_exemplaire,
             'date_approvisionnement' => date('d-m-Y'),
-            'id_personnel'=>$id_personnel,
-            'id_ouvrage'=>$ouvrage->id_ouvrage,
+            'id_personnel' => $id_personnel,
+            'id_ouvrage' => $ouvrage->id_ouvrage,
         ]);
     }
 
-    public function ouvrage(){
+    public function ouvrage()
+    {
         return $this->belongsTo(Ouvrage::class, 'id_ouvrage');
     }
-    public function personnel(){
+    public function personnel()
+    {
         return $this->belongsTo(Personnel::class, 'id_personnel');
     }
 }
