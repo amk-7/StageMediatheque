@@ -6,12 +6,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "barryvdh/laravel-debugbar": "*",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "maatwebsite/excel": "^3.1",
-        "phpoffice/phpspreadsheet": "^1.21",
+        "phpoffice/phpspreadsheet": "*",
         "simplesoftwareio/simple-qrcode": "~4",
         "spatie/laravel-permission": "^6.2"
     },

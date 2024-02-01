@@ -43,7 +43,7 @@
         function show_book(book) {
             return (`
                 <div  class="mb-3 flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row w-full">
-                    <a href="/ouvrages/${book['id_ouvrage']}/">
+                    <a href="/ouvrages/show/${book['id_ouvrage']}/">
                         <img
                             class=" hover:bg-gray-100 cursor-pointer object-cover rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
                             src="${book['image']}" alt=""

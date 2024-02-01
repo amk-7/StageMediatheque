@@ -29,17 +29,18 @@ Route::get('/', [OuvrageController::class, 'welcome'])->name('welcome');
 Route::group(['middleware' => ['role:abonne', 'auth']], function () {
     Route::get('liste_mes_emprunts/{abonne}', [AbonneController::class, 'mesEmprunts'])->name('ListemesEmprunts');
     Route::get('liste_mes_emprunts_actuelle/{abonne}', [AbonneController::class, 'mesEmpruntsEnCours'])->name('ListemesEmpruntsActuelle');
-    Route::post('enregistrer_une_reservation', [\App\Http\Controllers\ReservationController::class, 'store'])->name('enregistrerReservation');
+    //Route::post('enregistrer_une_reservation', [\App\Http\Controllers\ReservationController::class, 'store'])->name('enregistrerReservation');
 });
 
 Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function () {
-    Route::get('liste_des_reservations', [ReservationController::class, 'index'])->name('listeReservations');
-    Route::delete('suppression_reservation/{reservation}', [ReservationController::class, 'destroy'])->name('destroyReservation');
+    //Route::get('liste_des_reservations', [ReservationController::class, 'index'])->name('listeReservations');
+    //Route::delete('suppression_reservation/{reservation}', [ReservationController::class, 'destroy'])->name('destroyReservation');
     Route::get('affiche_abonne/{abonne}', [AbonneController::class, 'show'])->name('showAbonne');
     Route::get('formulaire_edition_des_abonnes/{abonne}/edit', [AbonneController::class, 'edit'])->name('editAbonne');
     Route::put('mise_a_jour_des_abonnes/{abonne}', [AbonneController::class, 'update'])->name('updateAbonne');
     Route::get('affiche_emprunt/{emprunt}', [EmpruntController::class, 'show'])->name('showEmprunt');
     Route::get('lire_pdf/{ouvrage}/lecture', [OuvrageController::class, 'readPdf'])->name('lirePDF');
+    Route::get('/ouvrages/show/{ouvrage}', [OuvrageController::class, 'show'])->name('ouvrages.show');
 });
 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
@@ -103,11 +104,10 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::post('enregistrement_abonne', 'App\Http\Controllers\AbonneController@store')->name('storeAbonne');
 
     Route::get('/ouvrages', [OuvrageController::class, 'index'])->name('ouvrages.index');
-    Route::get('/ouvrages/create', [OuvrageController::class, 'create'])->name('ouvrages.create');
-    Route::post('/ouvrages/store', [OuvrageController::class, 'store'])->name('ouvrages.store');
-    Route::get('/ouvrages/{ouvrage}', [OuvrageController::class, 'show'])->name('ouvrages.show');
+    Route::get('/ouvrages/create/', [OuvrageController::class, 'create'])->name('ouvrages.create');
+    Route::post('/ouvrages/store/', [OuvrageController::class, 'store'])->name('ouvrages.store');
     Route::get('/ouvrages/{ouvrage}/edit', [OuvrageController::class, 'edit'])->name('ouvrages.edit');
-    Route::put('/ouvrages/{ouvrage}', [OuvrageController::class, 'update'])->name('ouvrages.update');
+    Route::put('/ouvrages/{ouvrage}/', [OuvrageController::class, 'update'])->name('ouvrages.update');
     Route::delete('/ouvrages/{ouvrage}', [OuvrageController::class, 'destroy'])->name('ouvrages.destroy');
 });
 
@@ -131,14 +131,6 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::post('modification_approvisionnements', [ApprovisionnementsController::class, 'update'])->name('modificationApprovisionnements');
     Route::delete('approvisionnements/{approvisionnement}', [ApprovisionnementsController::class, 'destroy'])->name('approvisionnements.delete');
 
-    // Path: ArchiveAbonne routes/web.php
-    Route::get('liste_des_archive_abonnes', [AbonneeController::class, 'indexArchive'])->name('listeArchiveAbonnes');
-
-    // Path: ArchiveLivresPapiers routes/web.php
-    Route::get('liste_des_archive_livres_papiers', 'App\Http\Controllers\ArchiveLivresPapiersController@index')->name('listeArchiveLivresPapiers');
-
-    // Path: ArchiveOuvrage routes/web.php
-    Route::get('liste_des_archive_ouvrages',  [OuvrageController::class, 'indexArchive'])->name('listeArchiveOuvrages');
 });
 
 

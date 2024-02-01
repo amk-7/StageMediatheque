@@ -1,4 +1,4 @@
-@extends('layout.template.base', ['page' => 'welcome'])
+@extends('layouts.app', ['page' => 'welcome'])
 @section('content')
    <div class="flex flex-col items-center space-y-8">
        <img style="border-radius: 20px" src="{{ asset('storage/images/logo2.png') }}">

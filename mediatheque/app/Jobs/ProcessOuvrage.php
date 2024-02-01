@@ -1,7 +1,14 @@
 <?php
 
-namespace App\Imports;
+namespace App\Jobs;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+
+use App\Http\Controllers\Controller;
 use App\Models\Ouvrage;
 use App\Models\TypesOuvrage;
 use App\Models\Langue;
@@ -9,44 +16,25 @@ use App\Models\Domaine;
 use App\Models\Niveau;
 use App\Models\Auteur;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use App\Jobs\ProcessOuvrage;
-
-use Illuminate\Support\Facades\Artisan;
-
-
-class OuvragesImport implements ToCollection, WithBatchInserts, WithChunkReading, ShouldQueue
+class ProcessOuvrage implements ShouldQueue
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function supprimerElementsVides($tableau)
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $data;
+
+    public function __construct(array $data)
     {
-        $tableauFiltre = array_filter($tableau, function ($valeur) {
-            return $valeur !== "" && $valeur !== null;
-        });
-        // Réindexer les clés
-        return array_values($tableauFiltre);
+        $this->data = $data;
     }
 
-    public function collection(Collection $rows)
+    public function handle()
     {
         try {
-
-            $rows->each(function ($row) {
-                $this->processRow($row->toArray());
-            });
+            // Traitement des données pour une seule ligne
+            $this->processRow($this->data);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // Gérer les erreurs
+            \Log::error('Error processing row: ' . $e->getMessage());
         }
     }
 
@@ -126,18 +114,19 @@ class OuvragesImport implements ToCollection, WithBatchInserts, WithChunkReading
                     dd($domaine_data);
                 }
             }
+
             $ouvrage->retirerDomaines();
             $ouvrage->ajouterDomaines($domaines);
         }
     }
 
-    public function batchSize(): int
+    public function supprimerElementsVides($tableau)
     {
-        return 100;
-    }
+        $tableauFiltre = array_filter($tableau, function ($valeur) {
+            return $valeur !== "" && $valeur !== null;
+        });
 
-    public function chunkSize(): int
-    {
-        return 200;
+        // Réindexer les clés
+        return array_values($tableauFiltre);
     }
 }

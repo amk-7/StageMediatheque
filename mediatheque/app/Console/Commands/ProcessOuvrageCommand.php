@@ -1,7 +1,12 @@
 <?php
 
-namespace App\Imports;
+namespace App\Console\Commands;
 
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+use App\Http\Controllers\Controller;
 use App\Models\Ouvrage;
 use App\Models\TypesOuvrage;
 use App\Models\Langue;
@@ -9,48 +14,46 @@ use App\Models\Domaine;
 use App\Models\Niveau;
 use App\Models\Auteur;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use App\Jobs\ProcessOuvrage;
-
-use Illuminate\Support\Facades\Artisan;
-
-
-class OuvragesImport implements ToCollection, WithBatchInserts, WithChunkReading, ShouldQueue
+class ProcessOuvrageCommand extends Command
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function supprimerElementsVides($tableau)
-    {
-        $tableauFiltre = array_filter($tableau, function ($valeur) {
-            return $valeur !== "" && $valeur !== null;
-        });
-        // Réindexer les clés
-        return array_values($tableauFiltre);
-    }
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'process:ouvrage';
 
-    public function collection(Collection $rows)
+    protected $description = 'Import les ouvrages';
+
+    public function handle()
     {
+
+        $file = storage_path("app/public/book_excel_files/ouvrages.xlsx");
+        $last_row_index = 0;
+        $ouvrages = Ouvrage::all();
         try {
-
-            $rows->each(function ($row) {
-                $this->processRow($row->toArray());
-            });
+            $this->info("Importing data from $file...");
+            $spreadsheet = IOFactory::load($file);
+            $sheet = $spreadsheet->getActiveSheet();
+            $data = $sheet->toArray();
+            foreach ($data as $i => $row) {
+                $i++;
+                if ($i > $last_row_index) {
+                    $this->info("Insert row $i");
+                    if ($row) {
+                        $this->processRow($row,  $ouvrages);
+                    }
+                }
+            }
+            $this->info('Import completed successfully.');
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            $this->error('Error during import: ' . $e->getMessage());
         }
+
+        $this->comment("Success");
     }
 
-    public function processRow($row)
+    public function processRow($row,  $ouvrages)
     {
         $numero = 0;
         $indice_auteur = 1;
@@ -66,11 +69,21 @@ class OuvragesImport implements ToCollection, WithBatchInserts, WithChunkReading
         $indice_image_path = 11;
 
         if (strtolower($row[$numero])!=="n°"){
+            $titre = strtolower($row[$indice_titre]);
+            $annee_apparution = $row[$indice_annee];
+            $ouvrage =  $ouvrages->where('titre', $titre)->where('annee_apparution', $annee_apparution)->first();
+
+            if ($ouvrage) {
+                // dump($ouvrage->titre);
+                return;
+            }
+
             $mots_cle_data = Controller::extractLineToData($row[$indice_mot_cle]);
             $mots_cle = [];
             foreach ($mots_cle_data as $mot_cle_array){
                 array_push($mots_cle, $mot_cle_array[0]);
             }
+
             $data_auteurs = Controller::extractLineToData($row[$indice_auteur])[0];
             $data_auteurs[0] = explode(' ', trim($data_auteurs[0] ?? ""));
             $data_auteurs[1] = explode(' ', trim($data_auteurs[1] ?? ""));
@@ -85,15 +98,16 @@ class OuvragesImport implements ToCollection, WithBatchInserts, WithChunkReading
             if ($type==null){
                 dump($row[$indice_type]);
             }
+
             $ouvrage = Ouvrage::create([
-                'titre'=>strtolower($row[$indice_titre]),
+                'titre'=>$titre,
                 'id_niveau' => Niveau::all()->first()->id_niveau,
                 'id_type'=> $type->id_type_ouvrage ?? null,
                 'image' => $chemin_image ?? "/storage/books/logo.png",
                 'isbn' => $row[$indice_isbn],
                 'resume'=> "",
                 'mot_cle'=>$mots_cle,
-                'annee_apparution'=>$row[$indice_annee],
+                'annee_apparution'=>$annee_apparution,
                 'lieu_edition'=>$row[$indice_lieu],
                 'nombre_exemplaire'=>$row[$indice_nombre_exemplaire],
                 'ressources_externe' => "",
@@ -126,18 +140,19 @@ class OuvragesImport implements ToCollection, WithBatchInserts, WithChunkReading
                     dd($domaine_data);
                 }
             }
+
             $ouvrage->retirerDomaines();
             $ouvrage->ajouterDomaines($domaines);
         }
     }
 
-    public function batchSize(): int
+    public function supprimerElementsVides($tableau)
     {
-        return 100;
-    }
+        $tableauFiltre = array_filter($tableau, function ($valeur) {
+            return $valeur !== "" && $valeur !== null;
+        });
 
-    public function chunkSize(): int
-    {
-        return 200;
+        // Réindexer les clés
+        return array_values($tableauFiltre);
     }
 }

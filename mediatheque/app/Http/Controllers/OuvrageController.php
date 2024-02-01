@@ -15,6 +15,7 @@ use App\Imports\OuvragesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 
 
 class OuvrageController extends Controller
@@ -90,11 +91,11 @@ class OuvrageController extends Controller
             'domaine' => $selected_domaine,
             'niveau' => $selected_niveau,
         ];
-
         $ouvrages = Ouvrage::filter($filters)->orderBy('annee_apparution', 'asc')->paginate(20);
-
+        $nb_ouvrage = Ouvrage::count();
         return view('ouvrages2.index')->with([
             'ouvrages' => $ouvrages,
+            'nb_ouvrage' => $nb_ouvrage,
             'annees' => $annees,
             'langues' => $langues,
             'types' => $types,
@@ -128,7 +129,7 @@ class OuvrageController extends Controller
         return view('ouvrages2.imprimerCote', compact('ouvrages'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $types = TypesOuvrage::all();
         $langues = Langue::all();
@@ -141,7 +142,6 @@ class OuvrageController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->langues);
         $request->validate([
             'titre' => 'required|unique:ouvrages',
             'niveau' => 'required|not_in:Sélectionner niveau',
@@ -158,8 +158,11 @@ class OuvrageController extends Controller
         $mots_cle_data = Controller::extractLineToData($request->data_mots_cle);
         $mots_cle = [];
         foreach ($mots_cle_data as $mot_cle_array) {
-            array_push($mots_cle, $mot_cle_array[0]);
+            if (! empty($mot_cle_array[0])){
+                array_push($mots_cle, $mot_cle_array[0]);
+            }
         }
+
         $image = $request->file('image_livre');
 
         if (!$image == null) {
@@ -218,7 +221,6 @@ class OuvrageController extends Controller
 
     public function update(Request $request, Ouvrage $ouvrage)
     {
-        //dd($request->langues);
         $request->validate([
             'titre' => 'required',
             'niveau' => 'required|not_in:Sélectionner niveau',
@@ -294,18 +296,13 @@ class OuvrageController extends Controller
         $destination_path = "book_excel_files/";
 
         try {
-            DB::beginTransaction();
-
             $chemin_ouvrage_excel = strtolower('ouvrages') . '.' . $request->excel->extension();
             $request->excel->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
-            Excel::import(new OuvragesImport, "storage/$destination_path/$chemin_ouvrage_excel");
-            DB::commit();
+            Artisan::call("process:ouvrage");
         } catch (\Exception $e) {
-            DB::rollBack();
-            // Gérer les erreurs
             dd($e->getMessage());
         }
 
-        return redirect('/')->with('success', 'Importation réussie !');
+        return redirect('/ouvrages')->with('success', 'Importation réussie !');
     }
 }

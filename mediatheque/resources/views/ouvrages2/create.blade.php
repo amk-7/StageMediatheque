@@ -184,9 +184,33 @@
                     <div class="alert">{{ $message }}</div>
                     @enderror
                     <div id="auteurs" class="mt-3">
-                        <label class="label">Auteurs : </label>
+                        <label class="label">Auteurs : {{ old('data_auteurs') }} </label>
                         <div id="liste_auteurs" class="flex flex-wrap mt-3">
-
+                            @php
+                                $data_auteurs = [];
+                                if (old('data_auteurs')){
+                                    $data_auteurs = explode(';', old('data_auteurs'));
+                                }
+                            @endphp
+                            @if($data_auteurs)
+                                @foreach( $data_auteurs as $data_auteur)
+                                    @if(! empty($data_auteur))
+                                        <div class="flex m-3" id="liste_auteurs-{{$loop->index}}">
+                                            <input type="text" id="" value="{{ $data_auteur }}" class="input_elt" disabled="">
+                                            <button type="button" onclick="removeElt('liste_auteurs-{{$loop->index}}')" class="button button_delete">supprimer</button>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @elseif($ouvrage ?? [])
+                                @foreach( $ouvrage->auteurs ?? [] as $data_auteur)
+                                    @if(! empty($data_auteur))
+                                        <div class="flex m-3" id="liste_auteurs-{{$data_auteur->id_auteur}}">
+                                            <input type="text" id="" value="{{ $data_auteur->nom }}, {{ $data_auteur->prenom }}" class="input_elt" disabled="">
+                                            <button type="button" onclick="removeElt('liste_auteurs-{{$data_auteur->id_auteur}}')" class="button button_delete">supprimer</button>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -202,7 +226,22 @@
                         <button type="button" class="button button_primary" id="ajouter_mot_cle">+</button>
                     </div>
                     <div id="liste_mots_cle"  class="flex flex-wrap mt-3">
-                        @if ($ouvrage ?? null)
+                        @php
+                            $data_mots_cle = [];
+                            if (old('data_mots_cle')){
+                                $data_mots_cle = explode(';', old('data_mots_cle'));
+                            }
+                        @endphp
+                        @if ($data_mots_cle)
+                            @foreach( $data_mots_cle ?? [] as $mot_cle)
+                                @if(! empty($mot_cle))
+                                <div class="flex m-3" id="mot_cle_{{$loop->index}}">
+                                    <input type="text" name="ressource_{{$loop->index}}" class="input_elt" value="{{ $mot_cle }}" disabled/>
+                                    <button type="button" onclick="removeElt('mot_cle_{{$loop->index}}')" class="button button_delete">supprimer</button>
+                                </div>
+                                @endif
+                            @endforeach
+                        @elseif($ouvrage ?? [])
                             @foreach($ouvrage->mot_cle as $mot_cle)
                                 @if(! empty($mot_cle))
                                 <div class="flex m-3" id="mot_cle_{{$loop->index}}">
@@ -226,19 +265,19 @@
                 @enderror
             </fieldset>
             <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
-                <legend>Disponible en versions :</legend>
+                <legend>Disponible en versions : {{ old('nombre_exemplaire') }} </legend>
                 <div>
                     <div class="flex space-x-3">
-                        <input type="checkbox" name="versions" id="version_physique" @if(old('nombre_exemplaire')) checked @enderror>
+                        <input type="checkbox" name="version_physique" id="version_physique" @if(old('version_physique')) checked @enderror>
                         <span class="label">physique</span>
                     </div>
                     <div class="flex space-x-3">
-                        <input type="checkbox" name="versions" id="version_electronique" @if(old('document')) checked @enderror >
+                        <input type="checkbox" name="version_electronique" id="version_electronique" @if(old('version_electronique')) checked @enderror >
                         <span class="label">Electronique</span>
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="border border-solid border-gray-600 p-4 rounded-md @if(old('nombre_exemplaire')) show @else hidden @enderror" id="physique">
+            <fieldset class="border border-solid border-gray-600 p-4 rounded-md @if(old('version_physique')) show @else hidden @enderror" id="physique">
                 <legend>Stock</legend>
                 <div>
                     <label class="label">Nombre d'exemplaire</label>
@@ -248,7 +287,7 @@
                     @enderror
                 </div>
             </fieldset>
-            <fieldset class="border border-solid border-gray-600 p-4 rounded-md hidden" id="electronique">
+            <fieldset class="border border-solid border-gray-600 p-4 rounded-md @if(old('version_electronique')) show @else hidden @enderror" id="electronique">
                 <legend>Documents pdf</legend>
                 <div>
                     <label class="label">Fichier</label>
