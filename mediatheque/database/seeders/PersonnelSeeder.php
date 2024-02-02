@@ -64,6 +64,29 @@ class PersonnelSeeder extends Seeder
         $utilisateur->assignRole([Role::find(2), Role::find(1)]);
 
         $utilisateur = User::create([
+            'nom' => strtolower('MEMEM'),
+            'prenom' => strtolower('islam'),
+            'nom_utilisateur' => 'islam',
+            'email' => '',
+            'password' => Hash::make('mediatheque2023!'),
+            'contact' => '90915825',
+            'photo_profil' => 'profil.png',
+            'adresse' => array(
+                'ville' => 'sokodé',
+                'quartier' => 'akamadè',
+                'numero_maison' => ''
+            ),
+            'sexe' => 'Masculin'
+        ]);
+
+        Personnel::create([
+            'statut' => 'Responsable',
+            'id_utilisateur' => $utilisateur->id_utilisateur
+        ]);
+
+        $utilisateur->assignRole([Role::find(2), Role::find(1)]);
+
+        $utilisateur = User::create([
             'nom' => strtolower('napkan'),
             'prenom' => strtolower('emma'),
             'nom_utilisateur' => 'emma',
