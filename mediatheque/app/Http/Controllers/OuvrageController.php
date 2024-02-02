@@ -244,14 +244,10 @@ class OuvrageController extends Controller
         $image = $request->file('image_livre');
 
         if ($image) {
-            try {
-                $id = $ouvrage->id_ouvrage ;
-                $chemin_image = "/images/images_livre/livre" . $id . '.' . $image->extension();
-                $image->storeAs('public/', $chemin_image);
-                $ouvrage->image = "/storage$chemin_image";
-            } catch (\Throwable $th) {
-
-            }
+            $id = $ouvrage->id_ouvrage ;
+            $chemin_image = "/images/images_livre/livre" . $id . '.' . $image->extension();
+            $image->storeAs('public/', $chemin_image);
+            $ouvrage->image = "/storage$chemin_image";
         }
 
 
