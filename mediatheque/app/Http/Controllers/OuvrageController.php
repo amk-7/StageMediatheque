@@ -166,10 +166,11 @@ class OuvrageController extends Controller
         $image = $request->file('image_livre');
 
         if (!$image == null) {
-            $chemin_image = "livre_" . Ouvrage::all()->count() . '.' . $image->extension();
-            $image->storeAs('images/images_livre', $chemin_image);
+            $id = Ouvrage::all()->count()+1;
+            $chemin_image = "images/images_livre/livre_" . $id . '.' . $image->extension();
+            $image->storeAs('public/', $chemin_image);
         } else {
-            $chemin_image = "images/images_livre/default_book_image.png";
+            $chemin_image = "/storage/books/logo.png";
         }
 
         //dd($request->all());
@@ -231,6 +232,7 @@ class OuvrageController extends Controller
             'data_auteurs' => 'required',
             'domaines' => 'required',
             'resume' => 'required',
+            'image' => 'max:10',
         ]);
 
 
@@ -242,12 +244,17 @@ class OuvrageController extends Controller
         $image = $request->file('image_livre');
 
         if ($image) {
-            $chemin_image = $image->storeAs('images/images_livre', "livre_" . Ouvrage::all()->count() . '.' . $image->extension());
-            $ouvrage->image = $chemin_image;
-        } else if (!$ouvrage->image) {
-            $chemin_image = "images/images_livredefault_book_image.png";
-            $ouvrage->image = $chemin_image;
+            try {
+                $id = $ouvrage->id_ouvrage ;
+                $chemin_image = "/storage/images/images_livre/livre_" . $id . '.' . $image->extension();
+                $image->storeAs('public/', $chemin_image);
+                $ouvrage->image = $chemin_image;
+            } catch (\Throwable $th) {
+
+            }
         }
+
+
 
         $destination_path = "books/pdf/";
         $chemin_ouvrage_excel = null;
@@ -265,6 +272,7 @@ class OuvrageController extends Controller
         $ouvrage->annee_apparution = $request->input("annee_apparution");
         $ouvrage->lieu_edition = $request->input("lieu_edition");
         $ouvrage->ressources_externe = $request->input("ressources_externe");
+
         $ouvrage->save();
 
         $ouvrage->retirerLangues($request->langues);
