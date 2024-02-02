@@ -246,9 +246,9 @@ class OuvrageController extends Controller
         if ($image) {
             try {
                 $id = $ouvrage->id_ouvrage ;
-                $chemin_image = "/storage/images/images_livre/livre_" . $id . '.' . $image->extension();
+                $chemin_image = "/images/images_livre/livre" . $id . '.' . $image->extension();
                 $image->storeAs('public/', $chemin_image);
-                $ouvrage->image = $chemin_image;
+                $ouvrage->image = "/storage/$chemin_image";
             } catch (\Throwable $th) {
 
             }
@@ -259,8 +259,12 @@ class OuvrageController extends Controller
         $destination_path = "books/pdf/";
         $chemin_ouvrage_excel = null;
         if ($request->file("document") || $request->document != null) {
-            $chemin_ouvrage_excel = strtolower($ouvrage->cote) . '.' . $request->document->extension();
-            $request->document->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
+            try {
+                $chemin_ouvrage_excel = strtolower($ouvrage->cote) . '.' . $request->document->extension();
+                $request->document->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
         }
 
         $ouvrage->titre = strtolower($request->input("titre"));
