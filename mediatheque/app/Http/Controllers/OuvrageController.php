@@ -232,7 +232,6 @@ class OuvrageController extends Controller
             'data_auteurs' => 'required',
             'domaines' => 'required',
             'resume' => 'required',
-            'image' => 'max:10',
         ]);
 
 
