@@ -248,7 +248,7 @@ class OuvrageController extends Controller
                 $id = $ouvrage->id_ouvrage ;
                 $chemin_image = "/images/images_livre/livre" . $id . '.' . $image->extension();
                 $image->storeAs('public/', $chemin_image);
-                $ouvrage->image = "/storage/$chemin_image";
+                $ouvrage->image = "/storage$chemin_image";
             } catch (\Throwable $th) {
 
             }
