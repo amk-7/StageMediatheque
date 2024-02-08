@@ -124,8 +124,6 @@ class ProcessOuvrageCommand extends Command
             foreach ($langues_data as $libelle) {
                 if (! empty($libelle)) {
                     $langue=Langue::where('libelle', trim(strtolower($libelle)))->first();
-                    dump($libelle);
-                    dump($langue->libelle);
                     if ($langue){
                         array_push($langues, $langue->id_langue);
                     }
