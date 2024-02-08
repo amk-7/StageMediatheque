@@ -42,7 +42,7 @@ class OuvrageSeeder extends Seeder
             ]);
         }
 
-        $libelles = ["français", "anglais", "allemend"];
+        $libelles = ["français", "anglais", "allemand", "espagnol", "Italien"];
         foreach($libelles as $libelle){
             DB::table('langues')->insert([
                 'libelle' => strtolower($libelle),

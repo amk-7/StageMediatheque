@@ -122,9 +122,13 @@ class ProcessOuvrageCommand extends Command
             $langues = [];
 
             foreach ($langues_data as $libelle) {
-                $langue=Langue::where('libelle', trim(strtolower($libelle)))->first();
-                if ($langue){
-                    array_push($langues, $langue->id_langue);
+                if (! empty($libelle)) {
+                    $langue=Langue::where('libelle', trim(strtolower($libelle)))->first();
+                    dump($libelle);
+                    dump($langue->libelle);
+                    if ($langue){
+                        array_push($langues, $langue->id_langue);
+                    }
                 }
             }
             $ouvrage->retirerLangues();
