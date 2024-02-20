@@ -151,7 +151,6 @@ class OuvrageController extends Controller
             'lieu_edition' => 'required',
             'data_auteurs' => 'required',
             'domaines' => 'required',
-            'resume' => 'required',
             'nombre_exemplaire' => 'numeric|min:1',
         ]);
 
@@ -231,7 +230,6 @@ class OuvrageController extends Controller
             'lieu_edition' => 'required',
             'data_auteurs' => 'required',
             'domaines' => 'required',
-            'resume' => 'required',
         ]);
 
 
@@ -271,6 +269,7 @@ class OuvrageController extends Controller
         $ouvrage->annee_apparution = $request->input("annee_apparution");
         $ouvrage->lieu_edition = $request->input("lieu_edition");
         $ouvrage->ressources_externe = $request->input("ressources_externe");
+        $ouvrage->nombre_exemplaire = $request->input("nombre_exemplaire");
 
         $ouvrage->save();
 
