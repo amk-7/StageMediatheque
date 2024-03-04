@@ -191,9 +191,17 @@ class OuvrageController extends Controller
 
         // $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
         // $auteurs = AuteurService::enregistrerAuteur($data_auteurs);
-        // self::definireAuteur($ouvrage, $auteurs);
 
+        $ouvrage->retirerLangues($request->langues);
+        $ouvrage->ajouterLangues($request->langues);
+
+        $ouvrage->retirerDomaines($request->domaines);
         $ouvrage->ajouterDomaines($request->domaines);
+
+        $data_auteurs = Controller::extractLineToData($request->data_auteurs);
+        $auteurs = Auteur::enregistrerAuteur($data_auteurs);
+        $ouvrage->retirerAuteurs();
+        $ouvrage->ajouterAuteurs($auteurs);
 
         return redirect()->route('ouvrages.index')->with('success', 'Ouvrage créé avec succès.');
     }
