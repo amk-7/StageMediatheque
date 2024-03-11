@@ -246,8 +246,12 @@
         }
 
         function cleanInput() {
+            console.log("Hello");
             cote_ouvrage.value = "";
             titre.value = "";
+            nombre_examplaire.value = 0;
+
+            $('#titre_ouvrage').val('')
         }
 
         function cleanALl() {

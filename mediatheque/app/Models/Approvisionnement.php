@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 class Approvisionnement extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre_exemplaire', 'id_ouvrage', 'type_ouvrage', 'id_personnel', 'date_approvisonnement'];
+    protected $fillable = ['nombre_exemplaire', 'id_ouvrage', 'type_ouvrage', 'id_personnel', 'date_approvisionnement'];
     protected $primaryKey = 'id_approvisionnement';
-    protected $dates = ['date_approvisonnement'];
+    protected $dates = ['date_approvisionnement'];
 
     public static function enregistrerPlusieursApprosionnement($data)
     {

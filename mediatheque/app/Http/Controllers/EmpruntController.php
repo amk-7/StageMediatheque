@@ -21,9 +21,12 @@ use App\Mail\AlertMessage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Jobs\MailEmpruntJob;
 use Carbon\Carbon;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+
 
 class EmpruntController extends Controller
 {
+    use DispatchesJobs;
     /**
      * Display a listing of the resource.
      *
@@ -87,7 +90,6 @@ class EmpruntController extends Controller
 
         ]);
 
-        //dd($request->all());
 
         $date_retour = Controller::determinerDateRetour($request->duree_emprunt);
 
@@ -100,8 +102,6 @@ class EmpruntController extends Controller
 
 
         Emprunt::enregistrerLignesEmprunt($request->data, $emprunt);
-
-
 
         $abonne = Abonne::find($request->prenom_abonne);
 
@@ -116,24 +116,22 @@ class EmpruntController extends Controller
         $duree_emprunt = $request->duree_emprunt;
 
         $data = array(
-            'nom' => $utilisateur->nom,
-            'prenom' => $utilisateur->prenom,
-            'date_retour' => $date_retour,
-            'date_emprunt' => $date_emprunt,
-            'duree_emprunt' => $duree_emprunt,
-            'ouvrages' => $emprunt->ouvrageEmprunte,
+            'user' => $utilisateur->nom_utilisateur,
+            'date_retour' => $date_retour->format('d-m-Y'),
+            'date_emprunt' => $date_emprunt->format('d-m-Y'),
+            'ouvrages' => implode(';', $emprunt->ouvrageEmprunte),
         );
 
-        //$jobMailEmprunt = new MailEmpruntJob($email, $data);
-        //$jobMailEmprunt->delay(Carbon::now()->addSeconds($date_retour->subDays(1)));
-        //$jobMailEmprunt->delay(Carbon::now()->addSeconds(1));
-        //$this->dispatch($jobMailEmprunt);
+        $jobMailEmprunt = new MailEmpruntJob($email, $data);
+        //$jobMailEmprunt->delay(Carbon::now()->addSeconds($date_retour->subDays(2)));
+        $jobMailEmprunt->delay(Carbon::now()->addSeconds(5));
+        $this->dispatch($jobMailEmprunt);
         return redirect()->route("listeEmprunts");
     }
 
     public function storeReservationEmprunt(Request $request, Reservation $reservation){
 
-        $date_retour = EmpruntService::determinerDateRetour("2");
+        $date_retour = Controller::determinerDateRetour("2");
         $reservation->etat = 0;
         $reservation->save();
         $emprunt = Emprunt::create([
@@ -190,9 +188,30 @@ class EmpruntController extends Controller
     public function update(Request $request, Emprunt $emprunt)
     {
 
-        $date_retour = EmpruntService::determinerDateRetour($request->duree_emprunt);
+        $date_retour = Controller::determinerDateRetour($request->duree_emprunt);
         $emprunt->date_retour = $date_retour;
         $emprunt->save();
+
+        $abonne = Abonne::find($emprunt->id_abonne);
+        $utilisateur = User::find($abonne->id_utilisateur);
+
+        $email = $utilisateur->email;
+
+        $date_retour = $emprunt->date_retour;
+
+        $date_emprunt =  $emprunt->date_emprunt;
+
+        $data = array(
+            'user' => $utilisateur->nom_utilisateur,
+            'date_retour' => $date_retour->format('d-m-Y'),
+            'date_emprunt' => $date_emprunt->format('d-m-Y'),
+            'ouvrages' => implode(';', $emprunt->ouvrageEmprunte),
+        );
+
+        $jobMailEmprunt = new MailEmpruntJob($email, $data);
+        //$jobMailEmprunt->delay(Carbon::now()->addSeconds($date_retour->subDays(2)));
+        $jobMailEmprunt->delay(Carbon::now()->addSeconds(5));
+        $this->dispatch($jobMailEmprunt);
 
         return redirect()->route('listeEmprunts');
     }

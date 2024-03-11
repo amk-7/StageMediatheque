@@ -91,7 +91,6 @@ class AbonneController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
@@ -115,30 +114,6 @@ class AbonneController extends Controller
                 }
             ],
         ])->validate();
-
-        if (! empty($request->contact)){
-            Validator::make($request->all(), [
-                'contact'=>['required',
-                    function ($attribute, $value, $flail){
-                        if (! Controller::verifieContact($value)){
-                            $flail("Ce ".$attribute." est invalide");
-                        }
-                    }
-                ],
-            ])->validate();
-        }
-
-        if (! empty($request->contact_a_prevenir)){
-            Validator::make($request->all(), [
-                'contact_a_prevenir'=>['required',
-                    function ($attribute, $value, $flail){
-                        if (! GlobaleService::verifieContact($value)){
-                            $flail("Ce ".$attribute." est invalide");
-                        }
-                    }
-                ],
-            ])->validate();
-        }
 
 
         if (Auth::user()){
@@ -173,7 +148,7 @@ class AbonneController extends Controller
                 'profil_valider' => $request->profil_valide ?? 0,
             ]);
             $utilisateur->assignRole(Role::find(3));
-            Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName));
+            Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
             return redirect('liste_des_abonnes');
         } else {
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
@@ -231,6 +206,9 @@ class AbonneController extends Controller
 
         $abonne->save();
         $utilisateur->assignRole(Role::find(3));
+
+        Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
+
         return redirect()->route('listeAbonnes');
     }
     /**

@@ -1,148 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-
-    .container {
-      width: 80%;
-      margin: auto;
-      overflow: hidden;
-    }
-
-    header {
-      background: #ffffff;
-      color: #333;
-      padding: 10px 0;
-      border-bottom: 1px solid #ddd;
-    }
-
-    header a {
-      color: #333;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-size: 16px;
-    }
-
-    header ul {
-      padding: 0;
-      margin: 0;
-      list-style: none;
-      overflow: hidden;
-    }
-
-    header #logo {
-      text-align: left;
-    }
-
-    header #logo img {
-      height: 40px;
-      width: auto;
-      float: left;
-    }
-
-    header #logo a {
-      display: inline-block;
-    }
-
-    header nav {
-      float: right;
-      margin-top: 10px;
-    }
-
-    header .menu-icon {
-      display: none;
-    }
-
-    header #menu {
-      clear: both;
-      max-height: 0;
-      transition: max-height 0.2s ease-out;
-    }
-
-    header #menu.show-menu {
-      max-height: 300px;
-    }
-
-    header #menu ul {
-      list-style: none;
-    }
-
-    header #menu ul li {
-      padding: 10px 0;
-      clear: both;
-    }
-
-    header #menu ul li a {
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      color: #333;
-      transition: color 0.3s ease-out;
-    }
-
-    header #menu ul li a:hover {
-      color: #1abc9c;
-    }
-
-    @media (max-width: 768px) {
-      header #menu {
-        max-height: 300px;
-      }
-
-      header .menu-icon {
-        display: block;
-        float: right;
-        cursor: pointer;
-      }
-
-      header .menu-icon .fa {
-        font-size: 24px;
-      }
-    }
-
-    section {
-      padding: 20px 0;
-    }
-
-    section h1 {
-      color: #333;
-    }
-
-    section p {
-      font-size: 18px;
-      line-height: 1.6em;
-      color: #666;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue à la Médiathèque Sokodé !</title>
 </head>
 <body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
 
-  <header>
-    <div class="container">
-      <div id="logo">
-        <img src="{{ asset('storage/images/logo2.png') }}" alt="Description de l'image">
-        {{-- <img src="127.0.0.1:8000/storage/images/logo.png" alt="Logo mediatheque"> --}}
-        <img src="127.0.0.1:8000/storage/images/logo2.png" alt="Logo mediatheque">
-      </div>
-    </div>
-  </header>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
+            <div style="display: flex; max-width: 100%; margin: 20px;">
+                <img src="http://uf-mediathequesokode.org/storage/images/logo.png" alt="Logo de Urbis Foundation" style="max-width: 70%; margin-bottom: 20px;">
+                <img width="100px" src="http://uf-mediathequesokode.org/storage/images/logo2.png" alt="Logo de la Médiathèque Sokodé" style="max-width: 30%; margin-bottom: 20px;">
+            </div>
+            <h1 style="color: #008814;">Bienvenue à la Médiathèque Sokodé !</h1>
+        </div>
 
-  <section>
-    <div class="container">
-      <h1> {{ $title ?? "" }} </h1>
-      <p>
-        Bonjour M {{ $user ?? "" }},
-        {{ $content ?? "" }}
-      </p>
+        <p>Cher(e) {{ $user }},</p>
+
+        <p>Nous sommes ravis de vous accueillir à la Médiathèque Sokodé, un lieu dédié à la découverte, à l'apprentissage et à l'épanouissement culturel. Nous sommes enchantés que vous ayez choisi de faire partie de notre communauté de lecteurs et d'apprenants.</p>
+
+        <h2>Votre compte :</h2>
+        <p>Votre compte a été créé avec succès. Vous pouvez dès à présent accéder à notre vaste collection de livres. Utilisez vos identifiants ci-dessous pour vous connecter à notre portail en ligne :</p>
+        <ul>
+            <li><strong>Nom d'utilisateur :</strong> {{ $nom_utilisateur }}</li>
+            <li><strong>Mot de passe :</strong> 123456789 - vous serez invité(e) à le changer lors de votre première connexion </li>
+        </ul>
+        <h2>Nos Services :</h2>
+        <p>À la Médiathèque Sokodé, nous nous engageons à fournir des services exceptionnels pour répondre à vos besoins de recherche et de loisirs. Profitez de nos espaces de lecture confortables, assistez à des événements culturels et éducatifs, et explorez nos ressources numériques en ligne.</p>
+
+        <h2>Contactez-nous :</h2>
+        <p>N'hésitez pas à nous contacter si vous avez des questions, des suggestions ou si vous avez besoin d'aide pour naviguer dans nos services. Notre équipe est là pour vous aider.</p>
+
+        <p>Nous sommes impatients de vous voir à la médiathèque et de partager avec vous notre passion pour la lecture et la découverte.</p>
+
+        <p><strong>Bienvenue à la Médiathèque Sokodé !</strong></p>
+
+        <p>Cordialement,</p>
+        <p>L'équipe de la Médiathèque Sokodé</p>
+        <p> + 228 25 50 14 40 </p>
+        <p> + 228 90 91 58 25 </p>
+        <p> + 228 90 78 04 06 </p>
     </div>
-  </section>
 </body>
 </html>

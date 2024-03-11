@@ -15,14 +15,14 @@
                 @csrf
                 <input type="submit" class="button button_primary" name="approvisionement" value="approvisionner">
             </form>
-            {{-- <form action="" method="get">
-                        @csrf
-                        <input type="submit" class="button button_primary" name="export" value="Exporter">
-                    </form> --}}
-            <form action="{{route('imprimerCote')}}" method="get">
+            <form action="{{ route('exporter_ouvrages') }}" method="get">
+                @csrf
+                <input type="submit" class="button button_primary" name="export" value="Exporter">
+            </form>
+            {{-- <form action="{{route('imprimerCote')}}" method="get">
                 @csrf
                 <input type="submit" class="button button_show" name="export" value="Cotes QR codes">
-            </form>
+            </form> --}}
         </td>
         @endif
     </div>
@@ -30,12 +30,12 @@
     <div class="flex mt-3">
         <h3>Nombre d'ouvrages : {{ $nb_ouvrage ?? 0 }}</h3>
     </div>
-    <div class="m-3">
-        <table class="fieldset_border bg-white" id="ouvrages">
-            <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
+    <div class="m-3 max-w-96 overflow-x-auto">
+        <table class="fieldset_border bg-white w-12" id="ouvrages">
+            <thead class="text-xs bg-white uppercase bg-gray-50 text-center">
                 <tr>
                     <th class="fieldset_border" hidden>Numéro</th>
-                    <th class="fieldset_border w-32">Titre</th>
+                    <th class="fieldset_border">Titre</th>
                     <th class="fieldset_border">Année apparution</th>
                     <th class="fieldset_border">Niveau</th>
                     <th class="fieldset_border">Type</th>

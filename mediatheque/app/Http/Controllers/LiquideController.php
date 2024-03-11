@@ -9,6 +9,8 @@ use App\Models\TarifAbonnement;
 use App\Models\Abonne;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Exports\AbonnementsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LiquideController extends Controller
 {
@@ -17,11 +19,55 @@ class LiquideController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //dd(Liquide::all());
+        // foreach (Liquide::all() as $liquide) {
+        //     $liquide->registration->etat = 1;
+        //     $liquide->registration->save();
+        // }
+        $moment_year = date('Y');
+        $global_min_year = 2024;
+        $min_annee = $global_min_year;
+        $max_annee = $moment_year;
+
+        $selected_min = $request->input('min_annee');
+        $selected_max = $request->input('min_annee');
+        $selected_etat = $request->input('etat');
+
+        $paginate_number = 10;
+
+        if ( $selected_min !== null || $selected_max !== null || $selected_etat !== null) {
+            $query = Liquide::query();
+
+            $query->join('registrations', 'liquides.id_registration', '=', 'registrations.id_registration');
+
+            if ($selected_min && $selected_min !== "") {
+                $query->whereYear('registrations.date_debut', '>=', $selected_min);
+            }
+
+            if ($selected_max && $selected_max !== "") {
+                $query->whereYear('registrations.date_fin', '<=', $selected_max);
+            }
+
+            if ($selected_etat !== "") {
+                $query->where('registrations.etat', $selected_etat);
+            }
+        } else {
+            $query = Liquide::query();
+        }
+        session()->put('id_liquides', $query->pluck('id_liquide'));
+        $liquides = $query->paginate($paginate_number);
+        $query->orderBy('registrations.date_debut', 'desc');
+        //dd(session()->get('id_liquides'));
+
         return view('liquide.index')->with([
-                "liquides" => Liquide::paginate(10),
+                "liquides" => $liquides,
+                "selected_etat" => $selected_etat,
+                "selected_min" => $selected_min,
+                "selected_max" => $selected_max,
+                "min_annee" => $min_annee,
+                "max_annee" => $max_annee,
             ]);
     }
 
@@ -136,10 +182,23 @@ class LiquideController extends Controller
      */
     public function destroy(Liquide $liquide)
     {
+        $liquide->registration->etat = 0;
+        $liquide->registration->save();
+        return redirect()->route("listeLiquides");
+    }
+
+    public function delete_all(Request $request)
+    {
         foreach (Registration::all() as $registration){
             $registration->etat = 0;
             $registration->save();
         }
         return redirect()->route("listeLiquides");
+    }
+
+    public function export()
+    {
+        //dd("Okay");
+        return Excel::download(new AbonnementsExport(), "liste_des_abonnements.xlsx");
     }
 }

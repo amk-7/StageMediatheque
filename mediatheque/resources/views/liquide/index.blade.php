@@ -4,15 +4,53 @@
     <div class="flex flex-col justify-center items-center m-auto">
         <h1 class="text-3xl"> Liste des Abonements </h1>
         <div>
-            <div class="flex space-x-3">
-                <form method="GET" action="{{route('createLiquide')}}" class="mb-3">
-                    @csrf
-                    <button type="Submit" class="button button_primary">Faire un abonement</button>
-                </form>
+            <form class="flex flex-col items-center" method="get" action="{{route("listeLiquides")}}">
+                <div class="">
+                    <div class="flex flex-row w-96">
+                        <input class="search w-5/6" type="search" name="search_by" id="search_by" placeholder="rechercher par nom, prénom" value="{{ old('selected_search_by') }}">
+                        <button type="submit" class="button button_primary w-1/6">
+                            <img src="{{ asset('storage/images/search.png') }}" class="block h-auto w-auto fill-current text-gray-600">
+                        </button>
+                    </div>
+                </div>
+                <div class="" id="searchParametersField">
+                    <p>Paramètres de recherche</p>
+                    <div class="flex space-x-3">
+                        <select id="min" name="min_annee" class="select_btn w-1/3 mb-3">
+                            <option value=""> Début </option>
+                            @for($a=$min_annee; $a <= $max_annee; $a++)
+                                <option value="{{ $a }}" {{ $selected_min==$a ? "selected" : "" }} > {{ $a }} </option>
+                            @endfor
+                        </select>
+                        <select id="max" name="max_annee" class="select_btn w-1/3 mb-3" style="">
+                            <option value=""> Fin </option>
+                            @for($a=$max_annee; $a >= $min_annee; $a--)
+                                <option value="{{ $a }}" {{ $selected_max==$a ? "selected" : "" }} > {{ $a }} </option>
+                            @endfor
+                        </select>
+                        <select name="etat" class="select_btn w-1/3 mb-3">
+                            <option value="" {{ $selected_etat=="" ? "selected" : "" }}>Tous</option>
+                            <option value="1" {{ $selected_etat=="1" ? "selected" : "" }}>Activer</option>
+                            <option value="0" {{ $selected_etat=="0" ? "selected" : "" }}>Desactiver</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="flex justify-between">
+                <div>
+                    <form method="GET" action="{{route('createLiquide')}}" class="mb-3">
+                        @csrf
+                        <button type="Submit" class="button button_primary">Faire un abonement</button>
+                    </form>
+                    <form method="GET" action="{{ route('exporter_abonnements') }}" class="mb-3">
+                        @csrf
+                        <button type="Submit" class="button button_show">Imprimer</button>
+                    </form>
+                </div>
                 <form method="POST" action="" class="mb-3">
                     @method('delete')
                     @csrf
-                    <button type="Submit" class="button button_delete" onclick="activeModal()">Annuler abonement</button>
+                    <button type="Submit" class="button button_delete" onclick="activeModal('-')">Annuler abonement</button>
                 </form>
             </div>
             @if(!empty($liquides ?? "") && $liquides->count() > 0)
@@ -24,6 +62,7 @@
                             <th class="fieldset_border">Date debut</th>
                             <th class="fieldset_border">Date fin</th>
                             <th class="fieldset_border">Etat</th>
+                            <th class="fieldset_border">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="">
@@ -35,10 +74,13 @@
                             <td class="fieldset_border"> {{ $liquide->registration->date_fin->format('Y-m-d') }} </td>
                             <td class="fieldset_border">
                                 @if ($liquide->registration->etat==0)
-                                    <span class="alert">Non</span>
+                                    <span class="alert">Expiré</span>
                                 @else
-                                    <span class="info">Oui</span>
+                                    <span class="info">Actif</span>
                                 @endif
+                            </td>
+                            <td class="fieldset_border">
+                                <input type="button" onclick="activeModal('{{$liquide->id_liquide}}')" value="Annuler" class="button button_delete">
                             </td>
                         </tr>
                     @endforeach
@@ -82,11 +124,15 @@
             event.stopPropagation();
         }
 
-        function activeModal(){
+        function activeModal(id){
             stopPropagation();
             div_modal_supprimer.classList.remove("hidden");
             overlay.classList.remove('hidden');
-            form_confirm.action = `${form_confirm.action}/`;
+            if (id==='-') {
+                form_confirm.action = `${form_confirm.action}/`;
+            } else {
+                form_confirm.action = `/suppression_liquide/${id}/`;
+            }
         }
 
         btn_annuler.addEventListener('click', function (){

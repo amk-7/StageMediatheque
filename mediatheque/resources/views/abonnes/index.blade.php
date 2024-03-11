@@ -51,8 +51,8 @@
                 </form>
             </div>
             @if(!empty($abonnes ?? "") && $abonnes->count() > 0)
-                <table class="fieldset_border" style="margin-bottom: 100px;">
-                    <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
+                <table class="fieldset_border bg-white" style="margin-bottom: 100px;">
+                    <thead class="text-xs  uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
                         <tr class="fieldset_border">
                             <th class="fieldset_border" >N°</th>
                             <th class="fieldset_border" >Profil</th>

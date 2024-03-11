@@ -73,7 +73,7 @@ class ProcessOuvrageCommand extends Command
             $annee_apparution = $row[$indice_annee];
             $ouvrage =  $ouvrages->where('titre', $titre)->where('annee_apparution', $annee_apparution)->first();
 
-            if ($ouvrage) {
+            if ($ouvrage || $titre == "") {
                 // dump($ouvrage->titre);
                 return;
             }
@@ -132,14 +132,14 @@ class ProcessOuvrageCommand extends Command
             $ouvrage->retirerLangues();
             $ouvrage->ajouterLangues($langues);
 
-            $domaine_data = explode(",", $row[$indice_domaine]);
+            $domaine_data = explode(";", $row[$indice_domaine]);
             $domaines = [];
             foreach ($domaine_data as $libelle) {
                 $domaine=Domaine::where('libelle', trim(strtolower($libelle)))->first();
                 if ($domaine){
                     array_push($domaines, $domaine->id_domaine);
                 } else {
-                    dd($domaine_data);
+                    //dump($libelle);
                 }
             }
 

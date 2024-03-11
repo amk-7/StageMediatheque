@@ -88,11 +88,13 @@ class ApprovisionnementsController extends Controller
      */
     public function update(Request $request, Approvisionnement $approvisionnement)
     {
+        $delta = $request->nombre_exemplaire - $approvisionnement->nombre_exemplaire;
+        $approvisionnement->ouvrage->augmenterNombreExemplaire($delta);
+        $approvisionnement->ouvrage->save();
 
-        $approvisionnement->update(array([
-            'nombre_exemplaire' => $request['nombre_exemplaire'],
-            'date_approvisionnement' => $request['date_approvisionnement']
-        ]));
+        $approvisionnement->nombre_exemplaire= $request->nombre_exemplaire;
+        $approvisionnement->date_approvisionnement = date('m-d-Y');
+        $approvisionnement->save();
 
         return redirect()->route('approvisionnements.index');
     }

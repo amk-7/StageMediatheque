@@ -139,10 +139,14 @@ class PersonnelController extends Controller
 
         $utilisateur = User::modifierUtilisateur($request, $personnel->id_utilisateur);
 
+
         if (strtolower($request["statut"]) == "responsable"){
+            $utilisateur->syncRoles([]);
             $utilisateur->assignRole([Role::find(1), Role::find(2)]);
         } else {
+            $utilisateur->syncRoles([]);
             $utilisateur->assignRole([Role::find(2)]);
+            // dd($utilisateur->roles);
         }
         $utilisateur->save();
         $personnel->statut = $request["statut"];

@@ -9,22 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Contact extends Mailable
+class AlertEmprunt extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(String $user, String $nom_utilisateur)
+    public $data;
+    public function __construct($data)
     {
-        $this->data['user'] = $user;
-        $this->data['title'] = "Bienvenue à la médiatheque sokodé";
-        $this->data['content'] = "";
-        $this->data['nom_utilisateur'] = $nom_utilisateur;
-
+        $this->data = $data;
     }
 
     /**
@@ -33,7 +28,7 @@ class Contact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bienvenue à la médiatheque sokodé 2',
+            subject: 'Alerte Emprunt',
         );
     }
 
@@ -43,7 +38,7 @@ class Contact extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.contact',
+            view: 'emails.alert',
             with: $this->data,
         );
     }

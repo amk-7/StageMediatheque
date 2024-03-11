@@ -73,8 +73,27 @@ class Ouvrage extends Model
 
     public function getAfficherLangueAttribute(){
         $result = "";
-        foreach ($this->langues as $langue) {
-            $result = $result.$langue->libelle.";";
+        $langues = $this->langues;
+        foreach ($langues as $index=>$langue) {
+            if ($index < $langues->count()-1) {
+                $result = $result.$langue->libelle.",";
+            } else {
+                $result = $result.$langue->libelle;
+            }
+        }
+
+        return $result;
+    }
+
+    public function getAfficherAuteursAttribute(){
+        $result = "";
+        $auteurs = $this->auteurs;
+        foreach ($auteurs as $index=>$auteur) {
+            if ($index < $auteurs->count()-1) {
+                $result = $result." ".$auteur->nom." ".$auteur->prenom." ,";
+            } else {
+                $result = $result.$auteur->nom." ".$auteur->prenom;
+            }
         }
 
         return $result;

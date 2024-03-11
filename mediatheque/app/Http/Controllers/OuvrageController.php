@@ -16,10 +16,16 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
+use App\Exports\OuvragesExport;
 
+use App\Jobs\OuvrageImportJob;
+use Carbon\Carbon;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class OuvrageController extends Controller
 {
+    use DispatchesJobs;
+
     function welcome(Request $request)
     {
 
@@ -312,11 +318,18 @@ class OuvrageController extends Controller
         try {
             $chemin_ouvrage_excel = strtolower('ouvrages') . '.' . $request->excel->extension();
             $request->excel->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
-            Artisan::call("process:ouvrage");
+            $ouvrageImportJob = new OuvrageImportJob();
+            $ouvrageImportJob->delay(Carbon::now()->addSeconds(1));
+            $this->dispatch($ouvrageImportJob);
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
 
         return redirect('/ouvrages')->with('success', 'Importation réussie !');
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new OuvragesExport(), "ouvrages.xlsx");
     }
 }
