@@ -200,16 +200,16 @@ class AbonneController extends Controller
         $abonne->contact_a_prevenir = $request["contact_a_prevenir"];
         $abonne->numero_carte = $request["numero_carte"];
         $abonne->type_de_carte = $request["type_de_carte"];
-        if ( ! Auth::user()->hasRole('abonne')){
-            $abonne->profil_valider = $request->profil_valide;
-        }
-
         $abonne->save();
         $utilisateur->assignRole(Role::find(3));
-
-        Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
-
-        return redirect()->route('listeAbonnes');
+        //dd(Auth::user()->hasRole('abonne'));
+        if (Auth::user()->hasRole('abonne')){
+            return redirect("affiche_abonne/$abonne->id_abonne");
+        } else {
+            $abonne->profil_valider = $request->profil_valide;
+            Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
+            return redirect()->route('listeAbonnes');
+        }
     }
     /**
      * Remove the specified resource from storage.
