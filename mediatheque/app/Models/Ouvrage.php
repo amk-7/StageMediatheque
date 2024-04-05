@@ -71,6 +71,11 @@ class Ouvrage extends Model
         return $query;
     }
 
+    public function getAfficherMotCleAttribute(){
+        $result = implode(",", $this->mot_cle);
+        return $result;
+    }
+
     public function getAfficherLangueAttribute(){
         $result = "";
         $langues = $this->langues;
@@ -90,9 +95,9 @@ class Ouvrage extends Model
         $auteurs = $this->auteurs;
         foreach ($auteurs as $index=>$auteur) {
             if ($index < $auteurs->count()-1) {
-                $result = $result." ".$auteur->nom." ".$auteur->prenom." ,";
+                $result = $result." ".strtoupper($auteur->nom)." ".ucfirst($auteur->prenom)." ,";
             } else {
-                $result = $result.$auteur->nom." ".$auteur->prenom;
+                $result = $result.strtoupper($auteur->nom)." ".ucfirst($auteur->prenom);
             }
         }
 

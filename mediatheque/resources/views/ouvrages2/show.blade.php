@@ -42,9 +42,7 @@
                         <label>
                             <span class="label_title_sub_title">Auteurs :</span>
                             <span class="label_show_value">
-                                @foreach($ouvrage->auteurs as $auteur)
-                                <span>{{ $auteur->nom }} {{ $auteur->prenom }}</span>
-                                @endforeach
+                                {{ $ouvrage->afficherAuteurs }}
                             </span>
                         </label>
                         <label>
@@ -65,17 +63,17 @@
                         </label>
                         <label>
                             <span class="label_title_sub_title">Domaines :</span>
-                            <span class="label_show_value">{{$ouvrage->affichierDomaine }}</span>
+                            <span class="label_show_value">{{$ouvrage->afficherDomaine }}</span>
                         </label>
                         <label>
                             <span class="label_title_sub_title">Langue :</span>
-                            <span class="label_show_value">{{$ouvrage->affichierLangue }}</span>
+                            <span class="label_show_value">{{$ouvrage->afficherLangue }}</span>
                         </label>
-                        <label>
+                        {{-- <label>
                             <span class="label_title_sub_title">Résumer :</span>
-                            {{-- <p class="label_show_value">{{ $ouvrage->resume=="pas de resumé" ? "Aucun" : $ouvrage->resume }}</p> --}}
-                        </label>
-                        <label>
+                            <p class="label_show_value">{{ $ouvrage->resume=="" ? "Aucun" : $ouvrage->resume }}</p>
+                        </label> --}}
+                        {{-- <label>
                             <span class="label_title_sub_title">Ressources :</span>
                             <p class="label_show_value flex flex-col">
                                 @foreach($ressources as $ressource)
@@ -91,10 +89,14 @@
                                     </li>
                                 @endforeach
                             </p>
-                        </label>
+                        </label> --}}
                         <label>
                             <span class="label_title_sub_title">Nombre exemplaire :</span>
                             <span class="label_show_value">{{$ouvrage->nombre_exemplaire }}</span>
+                        </label>
+                        <label>
+                            <span class="label_title_sub_title">Mot clé :</span>
+                            <span class="label_show_value">{{ $ouvrage->afficherMotCle }}</span>
                         </label>
                     </div>
                 </div>
@@ -111,7 +113,15 @@
                     <div>
                         <a href="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(200)->generate("ezrzr")) }}"
                             download="{{ 'cote'.str_replace(' ', '_', strtolower($ouvrage->titre)).'qrcode.png' }}">
-                        {{ QrCode::generate($ouvrage->titre."-") }}
+                            @php
+                                $text = utf8_encode($ouvrage->titre);
+                                try {
+                                    $qrcode = QrCode::generate($text."-");
+                                } catch (\Throwable $th) {
+                                    $qrcode = QrCode::generate("-");
+                                }
+                            @endphp
+                            {{ $qrcode }}
                         </a>
                     </div>
                 </div>

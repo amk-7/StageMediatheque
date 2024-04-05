@@ -48,7 +48,6 @@ class OuvrageController extends Controller
         ];
 
         $ouvrages = Ouvrage::filter($filters)->orderBy('titre', 'asc')->get();
-
         $annees = 1900;
         $langues = Langue::all();
         $types = TypesOuvrage::all();
@@ -318,9 +317,10 @@ class OuvrageController extends Controller
         try {
             $chemin_ouvrage_excel = strtolower('ouvrages') . '.' . $request->excel->extension();
             $request->excel->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
-            $ouvrageImportJob = new OuvrageImportJob();
-            $ouvrageImportJob->delay(Carbon::now()->addSeconds(1));
-            $this->dispatch($ouvrageImportJob);
+
+            //$ouvrageImportJob = new OuvrageImportJob();
+            // $ouvrageImportJob->delay(Carbon::now()->addSeconds(1));
+            // OuvrageImportJob::dispatch($ouvrageImportJob);
         } catch (\Exception $e) {
             dd($e->getMessage());
         }

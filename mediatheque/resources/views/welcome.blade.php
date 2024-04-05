@@ -41,6 +41,7 @@
         }
 
         function show_book(book) {
+            // console.log(book);
             return (`
                 <div  class="mb-3 flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row w-full">
                     <a href="/ouvrages/show/${book['id_ouvrage']}/">
@@ -53,7 +54,14 @@
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 text-center">
                             ${book['titre']}
                         </h5>
-                        <!--Data réservation-->
+                        <div class="flex justify-between">
+                            <p>
+                                Type : ${book['type']['libelle']}
+                            </p>
+                            <p>
+                                Année de publication : ${book['annee_apparution']}
+                            </p>
+                        </div>
                     </div>
                 </div>
             `);
