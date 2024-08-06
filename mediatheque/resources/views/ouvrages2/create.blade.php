@@ -1,14 +1,14 @@
 @extends('layouts.app', ['body_style'=> "bg-gray-200 flex content-center justify-center h-full items-center"])
 @section('content')
     @php
-        $action = ($ouvrage ?? null) ? route("ouvrages.update", $ouvrage) : route("ouvrages.store") ;
+        $action = (($ouvrage && ($ouvrage->id_ouvrage ?? null)) ?? null) ? route("ouvrages.update", $ouvrage) : route("ouvrages.store") ;
         $nb_exemplaire = ($ouvrage ?? null) ? $ouvrage->nombre_exemplaire : null;
         $document = ($ouvrage ?? null) ? $ouvrage->document : null;
     @endphp
     <main class="flex flex-col justify-center items-center m-auto">
         <form action="{{ $action }}" method="post" enctype="multipart/form-data" class="bg-white p-12 mb-12 max-w-4xl">
             @csrf
-            @if ($ouvrage ?? null)
+            @if (($ouvrage && ($ouvrage->id_ouvrage ?? null)) ?? null)
                 @method('PUT')
             @endif
             <h1 class="label_title text-center pb-12">{{ $title ?? "title" }}</h1>
@@ -141,10 +141,10 @@
                 </div>
                 <div>
                     <label class="label">ISBN</label>
-                    <input name="ISBN" type="text" value="{{ $ouvrage->isbn ?? old('ISBN') }}" placeholder="Saisire l'ISBN de l'ouvrage"
-                           class="input @error('ISBN') is-invalid @enderror">
+                    <input name="isbn" type="text" value="{{ $ouvrage->isbn ?? old('isbn') }}" placeholder="Saisire l'ISBN de l'ouvrage"
+                           class="input @error('isbn') is-invalid @enderror">
                 </div>
-                @error('ISBN')
+                @error('isbn')
                 <div class="alert">{{ $message }}</div>
                 @enderror
 

@@ -21,6 +21,7 @@ use App\Exports\OuvragesExport;
 use App\Jobs\OuvrageImportJob;
 use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Support\Facades\Storage;
 
 class OuvrageController extends Controller
 {
@@ -48,19 +49,19 @@ class OuvrageController extends Controller
         ];
 
         $ouvrages = Ouvrage::filter($filters)->orderBy('titre', 'asc')->get();
-        $annees = 1900;
-        $langues = Langue::all();
-        $types = TypesOuvrage::all();
-        $categories = Domaine::all();
-        $niveaus = Niveau::all();
+        // $annees = 1900;
+        // $langues = Langue::all();
+        // $types = TypesOuvrage::all();
+        // $categories = Domaine::all();
+        // $niveaus = Niveau::all();
 
         return view('welcome')->with([
             'ouvrages' => $ouvrages,
-            'annees' => $annees,
-            'langues' => $langues,
-            'types' => $types,
-            'categories' => $categories,
-            'niveaus' => $niveaus,
+            'annees' => 1900,
+            'langues' => Langue::all(),
+            'types' => TypesOuvrage::all(),
+            'categories' => Domaine::all(),
+            'niveaus' => Niveau::all(),
             'selected_search' => $selected_search,
             'selected_min' => $selected_min,
             'selected_max' => $selected_max,
@@ -141,8 +142,10 @@ class OuvrageController extends Controller
         $domaines = Domaine::all();
         $niveaux = Niveau::all();
         $auteurs = Auteur::all();
-
-        return view('ouvrages2.create', compact('types', 'langues', 'domaines', 'niveaux', 'auteurs'));
+        $ouvrage = Ouvrage::first();
+        $ouvrage->id_ouvrage = null;
+        //dd($ouvrage);
+        return view('ouvrages2.create', compact('types', 'langues', 'domaines', 'niveaux', 'auteurs', 'ouvrage'));
     }
 
     public function store(Request $request)
@@ -168,16 +171,26 @@ class OuvrageController extends Controller
         }
 
         $image = $request->file('image_livre');
-
-        if (!$image == null) {
-            $id = Ouvrage::all()->count()+1;
+        $id = Ouvrage::max("id_ouvrage")+1;
+        if ($image != null) {
             $chemin_image = "images/images_livre/livre_" . $id . '.' . $image->extension();
             $image->storeAs('public/', $chemin_image);
         } else {
             $chemin_image = "/storage/books/logo.png";
         }
 
-        //dd($request->all());
+        $destination_path = "books/pdf/";
+        $chemin_ouvrage_excel = null;
+        if ($request->file("document") || $request->document != null) {
+            try {
+                $chemin_ouvrage_excel = "livre_".strtolower($id) . '.' . $request->document->extension();
+                $request->document->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
+
+        //dd($chemin_ouvrage_excel);
 
         $ouvrage = Ouvrage::create([
             'titre' => strtolower($request->input("titre")),
@@ -191,7 +204,10 @@ class OuvrageController extends Controller
             'lieu_edition' => $request->input('lieu_edition'),
             'nombre_exemplaire' => $request->input('nombre_exemplaire'),
             'ressources_externe' => $request['ressources_externe'],
-            'cote' => md5(Ouvrage::all()->count() + 1),
+            'cote' => md5($id),
+            'documents' => $chemin_ouvrage_excel,
+            'isbn' => $request->input("isbn"),
+
         ]);
 
         // $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
@@ -213,6 +229,7 @@ class OuvrageController extends Controller
 
     public function show(Ouvrage $ouvrage)
     {
+        // dd($ouvrage);
         return view('ouvrages2.show', compact('ouvrage'));
     }
 
@@ -253,11 +270,19 @@ class OuvrageController extends Controller
         }
         $image = $request->file('image_livre');
 
+        // if ($image) {
+        //     $id = $ouvrage->id_ouvrage ;
+        //     $chemin_image = "/images/images_livre/livre" . $id . '.' . $image->extension();
+        //     $image->storeAs('public/', $chemin_image);
+        //     $ouvrage->image = "/storage$chemin_image";
+        // }
+
+        $id = $ouvrage->id_ouvrage ;
         if ($image) {
-            $id = $ouvrage->id_ouvrage ;
-            $chemin_image = "/images/images_livre/livre" . $id . '.' . $image->extension();
+            $chemin_image = "images/images_livre/livre_" . $id . '.' . $image->extension();
             $image->storeAs('public/', $chemin_image);
-            $ouvrage->image = "/storage$chemin_image";
+        } else {
+            $chemin_image = "/storage/books/logo.png";
         }
 
 
@@ -266,7 +291,7 @@ class OuvrageController extends Controller
         $chemin_ouvrage_excel = null;
         if ($request->file("document") || $request->document != null) {
             try {
-                $chemin_ouvrage_excel = strtolower($ouvrage->cote) . '.' . $request->document->extension();
+                $chemin_ouvrage_excel = "livre_".strtolower($id) . '.' . $request->document->extension();
                 $request->document->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
             } catch (\Throwable $th) {
                 //throw $th;
@@ -276,14 +301,14 @@ class OuvrageController extends Controller
         $ouvrage->titre = strtolower($request->input("titre"));
         $ouvrage->id_niveau = $request->input("niveau");
         $ouvrage->id_type = $request->input("type");
-        $ouvrage->documents =  $ouvrage->documents ?? $chemin_ouvrage_excel;
+        $ouvrage->documents = $chemin_ouvrage_excel ?? $ouvrage->documents;
         $ouvrage->resume = $request->input("resume");
         $ouvrage->mot_cle = $mots_cle;
         $ouvrage->annee_apparution = $request->input("annee_apparution");
         $ouvrage->lieu_edition = $request->input("lieu_edition");
         $ouvrage->ressources_externe = $request->input("ressources_externe");
         $ouvrage->nombre_exemplaire = $request->input("nombre_exemplaire");
-
+        $ouvrage->isbn = $request->input("isbn");
         $ouvrage->save();
 
         $ouvrage->retirerLangues($request->langues);
@@ -301,7 +326,9 @@ class OuvrageController extends Controller
 
     public function destroy(Ouvrage $ouvrage)
     {
-        $ouvrage->delete();
+        $book_path = "public/books/pdf/".$ouvrage->documents;
+        Storage::delete($book_path);
+        $ouvrage->forceDelete();
         return redirect()->route('ouvrages.index')->with('success', 'Ouvrage supprimé avec succès.');
     }
 
