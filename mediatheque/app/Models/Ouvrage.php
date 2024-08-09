@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Ouvrage extends Model
 {
@@ -20,7 +21,7 @@ class Ouvrage extends Model
         'mot_cle'=>'array',
     ];
 
-    protected $with = ['langues', 'domaines', 'auteurs', 'type', 'niveau', 'nature'];
+    //protected $with = ['langues', 'domaines', 'auteurs', 'type', 'niveau', 'nature'];
 
     protected $primaryKey = 'id_ouvrage';
 
@@ -76,18 +77,14 @@ class Ouvrage extends Model
         return $result;
     }
 
-    public function getAfficherLangueAttribute(){
-        $result = "";
-        $langues = $this->langues;
-        foreach ($langues as $index=>$langue) {
-            if ($index < $langues->count()-1) {
-                $result = $result.$langue->libelle.",";
-            } else {
-                $result = $result.$langue->libelle;
-            }
-        }
-
+    public function getAfficherLanguesAttribute(){
+        $langues = $this->langues->pluck('libelle')->toArray();
+        $result = implode(', ', $langues);
         return $result;
+    }
+
+    public function getcoverPathAttribute(){
+        return "/storage/".$this->image;
     }
 
     public function getAfficherAuteursAttribute(){

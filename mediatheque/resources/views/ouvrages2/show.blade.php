@@ -26,8 +26,8 @@
             <h1 class="text-2xl text-center uppercase w-96">{{$ouvrage->titre }}</h1>
             <div class="show-card m-auto items-center">
                 <div class="mt-4">
-                    <img src="{{ $ouvrage->image }}"
-                        alt="{{$ouvrage->image}}" class="border border-solid" style="width: 198px;height: 300px;"/>
+                    <img src="{{ $ouvrage->coverPath }}"
+                        alt="{{$ouvrage->coverPath}}" class="border border-solid" style="width: 198px;height: 300px;"/>
                 </div>
                 <div class="pl-6 mt-4">
                     @php

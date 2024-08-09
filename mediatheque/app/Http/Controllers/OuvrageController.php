@@ -48,7 +48,15 @@ class OuvrageController extends Controller
             'niveau' => $selected_niveau,
         ];
 
-        $ouvrages = Ouvrage::filter($filters)->orderBy('titre', 'asc')->get();
+        //protected $with = ['langues', 'domaines', 'auteurs', 'type', 'niveau', 'nature'];
+        $ouvrages = Ouvrage::filter($filters)
+                            ->addSelect([
+                                'type' => TypesOuvrage::select('libelle')
+                                                        ->whereColumn('types_ouvrages.id_type_ouvrage', 'ouvrages.id_type')
+                                                        ->take(1)
+                            ])
+                            ->orderBy('titre', 'asc')
+                            ->get();
         // $annees = 1900;
         // $langues = Langue::all();
         // $types = TypesOuvrage::all();
@@ -58,10 +66,10 @@ class OuvrageController extends Controller
         return view('welcome')->with([
             'ouvrages' => $ouvrages,
             'annees' => 1900,
-            'langues' => Langue::all(),
-            'types' => TypesOuvrage::all(),
-            'categories' => Domaine::all(),
-            'niveaus' => Niveau::all(),
+            'langues' => Langue::get(),
+            'types' => TypesOuvrage::get(),
+            'categories' => Domaine::get(),
+            'niveaus' => Niveau::get(),
             'selected_search' => $selected_search,
             'selected_min' => $selected_min,
             'selected_max' => $selected_max,
@@ -75,10 +83,6 @@ class OuvrageController extends Controller
     public function index(Request $request)
     {
         $annees = 1900;
-        $langues = Langue::all();
-        $types = TypesOuvrage::all();
-        $categories = Domaine::all();
-        $niveaus = Niveau::all();
 
         $selected_search = $request->input('search');
         $selected_min = $request->input('min');
@@ -97,16 +101,31 @@ class OuvrageController extends Controller
             'domaine' => $selected_domaine,
             'niveau' => $selected_niveau,
         ];
-        $ouvrages = Ouvrage::filter($filters)->orderBy('annee_apparution', 'asc')->paginate(20);
+
+        //$ouvrages = Ouvrage::filter($filters)->orderBy('annee_apparution', 'asc')->paginate(20);
+        
         $nb_ouvrage = Ouvrage::count();
+       
+        $ouvrages = Ouvrage::filter($filters)
+                            ->with(['langues'])
+                            ->addSelect([
+                                'type' => TypesOuvrage::select('libelle')
+                                ->whereColumn('types_ouvrages.id_type_ouvrage', 'ouvrages.id_type')
+                                ->take(1),
+                            ])
+                            ->orderBy('annee_apparution', 'asc')
+                            //->get();
+                            ->paginate(20);
+        
+    
         return view('ouvrages2.index')->with([
             'ouvrages' => $ouvrages,
             'nb_ouvrage' => $nb_ouvrage,
             'annees' => $annees,
-            'langues' => $langues,
-            'types' => $types,
-            'categories' => $categories,
-            'niveaus' => $niveaus,
+            'langues' => Langue::get(),
+            'types' => TypesOuvrage::get(),
+            'categories' => Domaine::get(),
+            'niveaus' => Niveau::get(),
             'selected_search' => $selected_search,
             'selected_min' => $selected_min,
             'selected_max' => $selected_max,
@@ -173,10 +192,10 @@ class OuvrageController extends Controller
         $image = $request->file('image_livre');
         $id = Ouvrage::max("id_ouvrage")+1;
         if ($image != null) {
-            $chemin_image = "images/images_livre/livre_" . $id . '.' . $image->extension();
+            $chemin_image = "books/covers/livre_" . $id . '.' . $image->extension();
             $image->storeAs('public/', $chemin_image);
         } else {
-            $chemin_image = "/storage/books/logo.png";
+            $chemin_image = "books/covers/livre_logo.jpeg";
         }
 
         $destination_path = "books/pdf/";
@@ -189,8 +208,6 @@ class OuvrageController extends Controller
                 //throw $th;
             }
         }
-
-        //dd($chemin_ouvrage_excel);
 
         $ouvrage = Ouvrage::create([
             'titre' => strtolower($request->input("titre")),
@@ -279,13 +296,11 @@ class OuvrageController extends Controller
 
         $id = $ouvrage->id_ouvrage ;
         if ($image) {
-            $chemin_image = "images/images_livre/livre_" . $id . '.' . $image->extension();
+            $chemin_image = "books/covers/livre_" . $id . '.' . $image->extension();
             $image->storeAs('public/', $chemin_image);
         } else {
-            $chemin_image = "/storage/books/logo.png";
+            $chemin_image = "books/covers/livre_logo.jpeg";
         }
-
-
 
         $destination_path = "books/pdf/";
         $chemin_ouvrage_excel = null;
@@ -302,6 +317,7 @@ class OuvrageController extends Controller
         $ouvrage->id_niveau = $request->input("niveau");
         $ouvrage->id_type = $request->input("type");
         $ouvrage->documents = $chemin_ouvrage_excel ?? $ouvrage->documents;
+        $ouvrage->image = $chemin_image ?? $ouvrage->image;
         $ouvrage->resume = $request->input("resume");
         $ouvrage->mot_cle = $mots_cle;
         $ouvrage->annee_apparution = $request->input("annee_apparution");
@@ -326,6 +342,9 @@ class OuvrageController extends Controller
 
     public function destroy(Ouvrage $ouvrage)
     {
+        //dd($ouvrage->image);
+        $book_cover_path = "public/".$ouvrage->image;
+        Storage::delete($book_cover_path);
         $book_path = "public/books/pdf/".$ouvrage->documents;
         Storage::delete($book_path);
         $ouvrage->forceDelete();

@@ -103,7 +103,7 @@ class ProcessOuvrageCommand extends Command
                 'titre'=>$titre,
                 'id_niveau' => Niveau::all()->first()->id_niveau,
                 'id_type'=> $type->id_type_ouvrage ?? null,
-                'image' => $chemin_image ?? "/storage/books/logo.png",
+                'image' => $chemin_image ?? "books/covers/livre_logo.jpeg",
                 'isbn' => $row[$indice_isbn],
                 'resume'=> "",
                 'mot_cle'=>$mots_cle,

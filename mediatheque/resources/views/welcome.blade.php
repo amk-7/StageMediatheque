@@ -27,7 +27,8 @@
     <!-- Add this line to include twbs-pagination -->
     <script type="text/javaScript">
         const ouvrages = {!! $ouvrages !!};
-        console.log(ouvrages);
+        // console.log("Hello");
+        // console.log(ouvrages);
         let data = [];
         //console.log(ouvrages);
         //load_books(ouvrages);
@@ -46,9 +47,8 @@
                 <div  class="mb-3 flex flex-col bg-white border border-gray-200 rounded-lg shadow md:flex-row w-full">
                     <a href="/ouvrages/show/${book['id_ouvrage']}/">
                         <img
-                            class=" hover:bg-gray-100 cursor-pointer object-cover rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-                            src="${book['image']}" alt=""
-                        >
+                            class="hover:bg-gray-100 cursor-pointer object-cover rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+                            src="storage/${book['image']}" style="height: 150px;" alt="">
                     </a>
                     <div class="flex flex-col justify-between p-4 leading-normal w-full">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 text-center">
@@ -56,7 +56,7 @@
                         </h5>
                         <div class="flex justify-between">
                             <p>
-                                Type : ${book['type']['libelle']}
+                                Type : ${book['type']}
                             </p>
                             <p>
                                 Année de publication : ${book['annee_apparution']}

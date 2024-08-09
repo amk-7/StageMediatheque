@@ -9,7 +9,8 @@
     </div>
     <div class="flex flex-col items-center m-auto" id="searchParametersField">
         <div>
-            <p class="m-3 text-2xl">Paramètres de recherche </p>
+            <p class="m-3 text-2xl">Paramètres de recherche {{ $selected_niveau }} </p>
+            <p>{{ $selected_domaine }}</p>
         </div>
         <div class="m-3 md:flex md:space-x-3">
             <div class="flex space-x-3">
@@ -47,7 +48,7 @@
                         <option value="{{ $categorie->libelle }}" {{ $selected_domaine==$categorie->libelle ? "selected" : "" }}> {{ $categorie->libelle }} </option>
                     @endforeach
                 </select>
-                <select id="niveau" class="select_btn w-full mb-3">
+                <select id="niveau" name="niveau" class="select_btn w-full mb-3">
                     <option value="">Tous niveaus</option>
                     @foreach($niveaus as $niveau)
                         <option value="{{ $niveau->id_niveau }}"  {{ $selected_niveau==$niveau->id_niveau ? "selected" : "" }} > {{ $niveau->libelle }} </option>

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Exports\AbonnesExport;
 use App\Models\Abonne;
 use App\Models\User;
-use DB;
-use Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +14,8 @@ use Spatie\Permission\Models\Role;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Contact;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AbonneController extends Controller
 {
@@ -249,52 +248,4 @@ class AbonneController extends Controller
         return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
     }
 
-    public function storeAndIndexActivity(Request $request, Abonne $abonne)
-    {
-        if ($request->method()=="POST"){
-            if ($request->supprimer){
-                Activite::all()->where('id_activite', $request->id_activite)->first()->delete();
-                return redirect()->route('enregistrementActivite', $abonne);
-            }
-            $request->validate([
-                'titres' => 'required',
-                'sugestion' => 'required',
-            ]);
-            if ($request->activite){
-                $activite = Activite::all()->where('id_activite', $request->activite)->first();
-                $activite->ouvrages = $request->titres;
-                $activite->sugestions = $request->sugestion;
-                $activite->save();
-                return redirect()->route('abonnes.set_activity');
-            }
-            Activite::create([
-                'ouvrages' => $request->titres,
-                'sugestions' => $request->sugestion,
-                'id_abonne' => $abonne->id_abonne,
-            ]);
-            return redirect()->route('abonnes.set_activity');
-
-        } else {
-            $data = [
-                'abonne' => $abonne,
-                'activitys' => $abonne->activitys,
-                'livre_papier' => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
-            ];
-            if ($request->editer){
-                $data['editer'] = 'oui';
-                $data['activite_edit'] = Activite::all()->where('id_activite', $request->id_activite)->first();
-            }
-            return view('abonnes.set_activity')->with($data);
-        }
-    }
-
-    public function editeAndUpdateActivite(Abonne $abonne,Activite $activite)
-    {
-        return view('abonnes.set_activity')->with([
-            'abonne' => $abonne,
-            'activity' => Activite::all()->where('id', $activite->id_activite)->first(),
-            'activitys' => $abonne->activitys,
-            'livre_papier' => json_encode(OuvragesPhysiqueService::getLivrePapierWithAllAttribute()),
-        ]);
-    }
 }

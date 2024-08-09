@@ -24,7 +24,6 @@ class CreateOuvragesTable extends Migration
             $table->bigInteger('id_niveau')->nullable();
             $table->bigInteger('id_type')->nullable();
             $table->text('image')->nullable();
-            $table->bigInteger('id_langue')->nullable();
             $table->text('ressources_externe')->nullable();
             $table->string('isbn')->nullable();
             $table->integer('nombre_exemplaire')->nullable();
@@ -32,7 +31,6 @@ class CreateOuvragesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('id_type')->references('id_type_ouvrage')->on('types_ouvrages')->nullOnDelete();
-            $table->foreign('id_langue')->references('id_langue')->on('langues')->nullOnDelete();
             $table->foreign('id_niveau')->references('id_niveau')->on('niveaux')->nullOnDelete();
         });
     }

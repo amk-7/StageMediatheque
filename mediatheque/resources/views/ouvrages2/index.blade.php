@@ -57,8 +57,8 @@
                     <td class="fieldset_border uppercase"> {{ $ouvrage->titre }} </td>
                     <td class="fieldset_border"> {{ $ouvrage->annee_apparution }} </td>
                     <td class="fieldset_border"> {{ $ouvrage->niveau->libelle ?? "" }} </td>
-                    <td class="fieldset_border"> {{ $ouvrage->type->libelle ?? "" }} </td>
-                    <td class="fieldset_border"> {{ $ouvrage->afficherLangue }} </td>
+                    <td class="fieldset_border"> {{ $ouvrage->type ?? "" }} </td>
+                    <td class="fieldset_border"> {{ $ouvrage->afficherLangues }} </td>
                     <td class="fieldset_border" hidden> {{ $ouvrage->afficherDomaine }} </td>
                     <td class="fieldset_border"> {{ $ouvrage->nombre_exemplaire }} </td>
                     <td class="fieldset_border">

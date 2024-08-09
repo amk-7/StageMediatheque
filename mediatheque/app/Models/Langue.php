@@ -13,7 +13,7 @@ class Langue extends Model
 
     public function ouvrages()
     {
-        return $this->belongsToMany(Ouvrage::class, "langues_ouvrages", "id_langue", "id_ouvrage")
+        return $this->belongsToMany(Ouvrage::class, "langues_ouvrages", "id_ouvrage", "id_langue")
                     ->withTimestamps();
     }
 }

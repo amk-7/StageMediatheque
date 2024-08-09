@@ -29,11 +29,11 @@
                             <label class="label">Image</label>
                         </div>
                         <div class="border border-gray-200 text-center">
-                            <img src="" alt="image_livre" id="profil_object" height="250px" width="100">
+                            <img src="{{ $ouvrage ? $ouvrage->coverPath : '' }}" alt="image_livre" id="profil_object" height="250px" width="250">
                         </div>
                         <div class="flex flex-col-reverse p-2">
                             <input type="file" onchange="previewPicture(this)" name="image_livre" id="" value=""
-                                   accept="image/jpg, image/jpeg, image/png, image/jpeg">
+                                   accept="image/jpg, image/png, image/jpeg">
                         </div>
                     </div>
                     <div class="flex flex-col w-2/3 space-y-3">
@@ -291,7 +291,7 @@
                 <legend>Documents pdf</legend>
                 <div>
                     <label class="label">Fichier</label>
-                    <input name="document" type="file" value="{{ old('document') }}" class="input @error('document') is-invalid @enderror" accept=".pdf">
+                    <input name="document" type="file" value="{{ $ouvrage->document ?? old('document') }}" class="input @error('document') is-invalid @enderror" accept=".pdf">
                     @error('document')
                     <div class="alert">{{ $message }}</div>
                     @enderror
@@ -338,7 +338,7 @@
     @include("js.ouvrageLoadFile")
     <script type="text/javaScript">
         const ouvrage_nombre_exemplaire = '{!! $nb_exemplaire !!}';
-        const ouvrage_document = '{!! $document !!}';
+        const ouvrage_document = '{!! $ouvrage->document !!}';
 
         const version_physique = document.getElementById('version_physique');
         const version_electronique = document.getElementById('version_electronique');
