@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -90,7 +90,7 @@ class User extends Authenticatable
             'prenom' => strtolower($request->prenom),
             'nom_utilisateur' => $request->nom_utilisateur,
             'email' => $request->email,
-            'password' => \Hash::make($request->password),
+            'password' => Hash::make($request->password),
             'contact' => $request->contact ?? '',
             'photo_profil' => $chemin_image,
             'adresse' => $request->adresse,
@@ -120,7 +120,7 @@ class User extends Authenticatable
         }
 
         if ($request->password){
-            $utilisateur->password = \Hash::make($request->password);
+            $utilisateur->password = Hash::make($request->password);
         }
         $utilisateur->save();
         return $utilisateur;

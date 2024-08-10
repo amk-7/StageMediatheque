@@ -26,11 +26,6 @@ class Abonne extends Model
         return $this->belongsTo(User::class, 'id_utilisateur');
     }
 
-    public function activitys(){
-        return $this->hasMany(Activite::class, 'id_abonne');
-    }
-
-
     public function restitutions(){
         return $this->hasMany(Restitution::class, 'id_abonne');
     }

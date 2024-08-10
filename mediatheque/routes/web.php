@@ -8,6 +8,8 @@ use App\Http\Controllers\AbonneController;
 use App\Http\Controllers\OuvrageController;
 use App\Http\Controllers\EmpruntController;
 use App\Http\Controllers\LiquideController;
+use App\Http\Controllers\PersonnelController;
+
 // use App\Http\Controllers\ReservationController;
 
 /*
@@ -44,7 +46,7 @@ Route::group(['middleware' => ['role:bibliothecaire|abonne', 'auth']], function 
 Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
     Route::get('exporter_ouvrages', [OuvrageController::class, 'export'])->name('exporter_ouvrages');
     Route::get('exporter_abonnements', [LiquideController::class, 'export'])->name('exporter_abonnements');
-
+    Route::post('import_abonne', [AbonneController::class, 'importExcel'])->name('import_abonne');
 
     Route::get('imprimerCote', [OuvrageController::class, 'imprimerCote'])->name('imprimerCote');
     Route::get('formulaire_enregistrement_approvisionnements', [ApprovisionnementsController::class, 'create'])->name('formulaireEnregistrementApprovisionnements');
@@ -114,6 +116,10 @@ Route::group(['middleware' => ['role:bibliothecaire', 'auth']], function () {
 Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::get('formulaire_import_excel_new', [OuvrageController::class, 'uploadLivresPapierView'])->name('formulaireImportExcelNew');
     Route::put('enregistrement_import_excel_new', [OuvrageController::class, 'import'])->name('enregistrementImportExcelNew');
+
+    // Route::post('import_personnel', [PersonnelController::class, 'import'])->name('import_personnel');
+    // Route::get('export_personnel', [PersonnelController::class, 'export'])->name('export_personnel');
+
 
     // Path: Personnel routes/web.php
     Route::get('liste_des_personnels', 'App\Http\Controllers\PersonnelController@index')->name('listePersonnels');

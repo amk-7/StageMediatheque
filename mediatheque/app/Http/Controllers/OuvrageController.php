@@ -246,7 +246,6 @@ class OuvrageController extends Controller
 
     public function show(Ouvrage $ouvrage)
     {
-        // dd($ouvrage);
         return view('ouvrages2.show', compact('ouvrage'));
     }
 
@@ -359,7 +358,6 @@ class OuvrageController extends Controller
     public function import(Request $request)
     {
         $destination_path = "book_excel_files/";
-
         try {
             $chemin_ouvrage_excel = strtolower('ouvrages') . '.' . $request->excel->extension();
             $request->excel->storeAs("public/" . $destination_path, $chemin_ouvrage_excel);
@@ -370,7 +368,6 @@ class OuvrageController extends Controller
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
-
         return redirect('/ouvrages')->with('success', 'Importation réussie !');
     }
 

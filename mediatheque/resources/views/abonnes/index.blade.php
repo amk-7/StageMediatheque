@@ -2,7 +2,7 @@
 @section('content')
     <div class="flex flex-col justify-center items-center m-auto" style="margin-top: 100px;">
         <h1 class="label_title">Liste des Abonnes {{  old('paye') }} </h1>
-        <form class="flex flex-col items-center" method="get" action="{{route("listeAbonnes")}}">
+        <form class="flex flex-col items-center" method="get" action="{{route('listeAbonnes')}}">
             <div class="">
                 <div class="flex flex-row w-96">
                     <input class="search w-5/6" type="search" name="search_by" id="search_by" placeholder="rechercher par nom, prénom" value="{{ old('selected_search_by') }}">
@@ -49,6 +49,7 @@
                     {{-- {{ \App\Service\AbonneService::setAbonnesLIstInSession(collect($abonnes)['data']) }} --}}
                     <button class="button button_primary" type="Submit">Exporter</button>
                 </form>
+                <!-- <button id="btn_import" class="button button_primary" type="button">Importer</button> -->
             </div>
             @if(!empty($abonnes ?? "") && $abonnes->count() > 0)
                 <table class="fieldset_border bg-white" style="margin-bottom: 100px;">
@@ -161,14 +162,41 @@
             </div>
         </div>
     </div>
+    <div style="z-index:1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_import">
+        <div class="flex flex-col items-center space-y-4">
+            <form id="form_delete_confirm" action="{{ route('import_abonne') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="flex flex-col space-y-6">
+                    <div id="id_message" class="text-center">
+                        <p>Importer des abonnes</p>
+                    </div>
+                    <div class="">
+                        <input type="file" name="file" class="px-3 py-2 bg-gray-300">
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" id="btn_annuler_2" class="button button_show">Annuler</button>
+                        <input type="submit" id="import_abonne" name="import" value="Importer" class="button button_primary">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @stop
 @section('js')
     <script type="text/javascript">
         //-------------------------------------------------
         let div_modal_supprimer = document.getElementById("modal_supprimer");
+        let div_modal_import = document.getElementById("modal_import");
+
+        
         let form_confirm = document.getElementById("form_delete_confirm");
         let btn_supprimer_ouvrage_confirm = document.getElementById("supprimer_ouvrage_confirm");
+
         let btn_annuler = document.getElementById("btn_annuler");
+        let btn_annuler_2 = document.getElementById("btn_annuler_2");
+        //import_abonnee
+        //btn_annuler_2
+        let btn_import = document.getElementById("btn_import");
         let overlay = document.getElementById("overlay_suppression");
 
         function stopPropagation(){
@@ -183,9 +211,21 @@
             form_confirm.action = `suppression_des_abonnes/${id}`;
         }
 
+        btn_import.addEventListener('click', function (){
+            stopPropagation();
+            div_modal_import.classList.remove("hidden");
+            overlay.classList.remove('hidden');
+        });
+
         btn_annuler.addEventListener('click', function (){
             stopPropagation();
             div_modal_supprimer.classList.add("hidden");
+            overlay.classList.add('hidden');
+        });
+
+        btn_annuler_2.addEventListener('click', function (){
+            stopPropagation();
+            div_modal_import.classList.add("hidden");
             overlay.classList.add('hidden');
         });
     </script>

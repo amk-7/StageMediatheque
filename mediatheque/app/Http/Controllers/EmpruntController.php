@@ -122,10 +122,10 @@ class EmpruntController extends Controller
             'ouvrages' => implode(';', $emprunt->ouvrageEmprunte),
         );
 
-        $jobMailEmprunt = new MailEmpruntJob($email, $data);
-        //$jobMailEmprunt->delay(Carbon::now()->addSeconds($date_retour->subDays(2)));
-        $jobMailEmprunt->delay(Carbon::now()->addSeconds(5));
-        $this->dispatch($jobMailEmprunt);
+        // $jobMailEmprunt = new MailEmpruntJob($email, $data);
+        // //$jobMailEmprunt->delay(Carbon::now()->addSeconds($date_retour->subDays(2)));
+        // $jobMailEmprunt->delay(Carbon::now()->addSeconds(5));
+        // $this->dispatch($jobMailEmprunt);
         return redirect()->route("listeEmprunts");
     }
 

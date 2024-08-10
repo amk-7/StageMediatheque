@@ -83,30 +83,23 @@ class Ouvrage extends Model
         return $result;
     }
 
-    public function getcoverPathAttribute(){
+    public function getCoverPathAttribute(){
         return "/storage/".$this->image;
     }
 
-    public function getAfficherAuteursAttribute(){
-        $result = "";
-        $auteurs = $this->auteurs;
-        foreach ($auteurs as $index=>$auteur) {
-            if ($index < $auteurs->count()-1) {
-                $result = $result." ".strtoupper($auteur->nom)." ".ucfirst($auteur->prenom)." ,";
-            } else {
-                $result = $result.strtoupper($auteur->nom)." ".ucfirst($auteur->prenom);
-            }
-        }
+    public function getDocumentPathAttribute(){
+        return "/storage/books/pdf/".$this->documents;
+    }
 
+    public function getAfficherAuteursAttribute(){
+        $auteurs = $this->auteurs->pluck('libelle')->toArray();
+        $result = implode(', ', $auteurs);
         return $result;
     }
 
     public function getAfficherDomaineAttribute(){
-        $result = "";
-        foreach ($this->domaines as $domaine) {
-            $result = $result.$domaine->libelle.";";
-        }
-
+        $domaines = $this->domaines->pluck('libelle')->toArray();
+        $result = implode(', ', $domaines);
         return $result;
     }
 
@@ -143,7 +136,7 @@ class Ouvrage extends Model
     }
 
     public function getHasDigitalVersionAttribute(){
-        return !($this->documents);
+        return $this->documents != null;
     }
 
     public function getHasPhysicalVersionAttribute(){

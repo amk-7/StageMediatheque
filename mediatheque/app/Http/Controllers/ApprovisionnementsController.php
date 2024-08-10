@@ -18,8 +18,7 @@ class ApprovisionnementsController extends Controller
      */
     public function index()
     {
-        $approvisionnements = Approvisionnement::paginate(10);
-        $approvisionnements->sortBy('date_approvisonnement');
+        $approvisionnements = Approvisionnement::orderBy('date_approvisionnement', 'desc')->paginate(10);
         return view('approvisionnements.index')->with('approvisionnements', $approvisionnements);
     }
 
@@ -32,7 +31,6 @@ class ApprovisionnementsController extends Controller
     {
         return view('approvisionnements.create')->with([
             "ouvrages" => json_encode(Ouvrage::all()),
-            "personnels" => json_encode(Personnel::fullAttributs()),
         ]);
     }
 
@@ -72,11 +70,7 @@ class ApprovisionnementsController extends Controller
      */
     public function edit(Approvisionnement $approvisionnement)
     {
-        return view('approvisionnements.edite')->with([
-            'ouvragesPhysique' => OuvragesPhysique::all(),
-            'personnels' => Personnel::all(),
-            'approvisionnements' => $approvisionnement,
-        ]);
+
     }
 
     /**

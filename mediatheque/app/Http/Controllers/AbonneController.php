@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AbonnesExport;
+use App\Imports\AbonneImport;
 use App\Models\Abonne;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Contact;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class AbonneController extends Controller
 {
@@ -51,12 +53,13 @@ class AbonneController extends Controller
             }
 
             $abonnes = Abonne::whereIn("id_utilisateur", $userIds)
+                        ->with(['utilisateur'])
                         ->whereIn("profession", $professions)
                         ->where("etat", boolval($request->etat))
                         ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
 
         } else {
-            $abonnes = Abonne::paginate($paginate);
+            $abonnes = Abonne::with(['utilisateur'])->paginate($paginate);
         }
 
         \Session(['abonnes_key' => $abonnes->pluck('id_abonne')->toArray()]);
@@ -129,7 +132,7 @@ class AbonneController extends Controller
             return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
         }
 
-        $utilisateur = User::all()->where('nom', '=', $request->nom)
+        $utilisateur = User::where('nom', '=', $request->nom)
                                     ->where('prenom', '=', $request->prenom)
                                     ->where('nom_utilisateur', '=', $request->nom_utilisateur)
                                     ->first();
@@ -147,7 +150,7 @@ class AbonneController extends Controller
                 'profil_valider' => $request->profil_valide ?? 0,
             ]);
             $utilisateur->assignRole(Role::find(3));
-            Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
+            //Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
             return redirect('liste_des_abonnes');
         } else {
             return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
@@ -246,6 +249,68 @@ class AbonneController extends Controller
     {
         //dd("Okay");
         return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
+    }
+
+    public function importExcel(Request $request)
+    {
+        $file = $request->file('file');
+        dump($file);
+        try {
+
+            Excel::import(new AbonneImport, $file);
+            // try {
+            //     $spreadsheet = IOFactory::load($file);
+            //     $sheet = $spreadsheet->getActiveSheet();
+            //     $data = $sheet->toArray();
+            //     // foreach ($data as $i => $row) {
+            //     //     $i++;
+            //     //     dump($row);
+
+            //     //     $nom = $row
+
+            //     //     $utilisateur = User::create([
+            //     //         'nom' => strtoupper($request->nom),
+            //     //         'prenom' => strtolower($request->prenom),
+            //     //         'nom_utilisateur' => $request->nom_utilisateur,
+            //     //         'email' => $request->email,
+            //     //         'password' => '',
+            //     //         'contact' => $request->contact ?? '',
+            //     //         'photo_profil' => $chemin_image,
+            //     //         'adresse' => $request->adresse,
+            //     //         'sexe' => $request->sexe,
+            
+            //     //     ]);
+
+            //     //     // $utilisateur = User::where('nom', '=', $request->nom)
+            //     //     //                 ->where('prenom', '=', $request->prenom)
+            //     //     //                 ->where('nom_utilisateur', '=', $request->nom_utilisateur)
+            //     //     //                 ->first();
+            //     //     // $utilisateur = User::enregistrerUtilisateur($request);
+            //     //     // Abonne::create([
+            //     //     //     'date_naissance' => $request->date_naissance,
+            //     //     //     'niveau_etude' => $request->niveau_etude,
+            //     //     //     'profession' => $request->profession ?? '',
+            //     //     //     'contact_a_prevenir' => $request->contact_a_prevenir?? '',
+            //     //     //     'numero_carte' => $request->numero_carte ?? '',
+            //     //     //     'type_de_carte' => $request->type_de_carte ?? 0,
+            //     //     //     'id_utilisateur' => $utilisateur->id_utilisateur,
+            //     //     //     'profil_valider' => $request->profil_valide ?? 0,
+            //     //     // ]);
+            //     //     // $utilisateur->assignRole(Role::find(3));
+            
+
+            //     // }
+            // } catch (\Exception $e) {
+            //     dd($e->getMessage());
+            // }
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        dd("Arrêt.. !");
+
+        return redirect()->route('listeAbonnes');
     }
 
 }

@@ -1,14 +1,17 @@
 @extends('layouts.app', ['body_style'=> "bg-gray-200 flex content-center justify-center h-full items-center"])
 @section('content')
     @php
-        $action = (($ouvrage && ($ouvrage->id_ouvrage ?? null)) ?? null) ? route("ouvrages.update", $ouvrage) : route("ouvrages.store") ;
-        $nb_exemplaire = ($ouvrage ?? null) ? $ouvrage->nombre_exemplaire : null;
-        $document = ($ouvrage ?? null) ? $ouvrage->document : null;
+        $is_edit = ($ouvrage && ($ouvrage->id_ouvrage ?? null)) ? true : false;
+        $title = $is_edit ? "Mise à jour de l'ouvrage ".$ouvrage->titre : "Ajouter un nouvelle ouvrage" ;
+        $action = $is_edit ? route("ouvrages.update", $ouvrage) : route("ouvrages.store") ;
+        $nb_exemplaire = $is_edit ? $ouvrage->nombre_exemplaire : null;
+        $hasDigitalVersion = $is_edit ? $ouvrage->hasDigitalVersion : false;
+        $hasPhysicalVersion = $is_edit ? $ouvrage->hasPhysicalVersion : false;
     @endphp
     <main class="flex flex-col justify-center items-center m-auto">
         <form action="{{ $action }}" method="post" enctype="multipart/form-data" class="bg-white p-12 mb-12 max-w-4xl">
             @csrf
-            @if (($ouvrage && ($ouvrage->id_ouvrage ?? null)) ?? null)
+            @if ($is_edit)
                 @method('PUT')
             @endif
             <h1 class="label_title text-center pb-12">{{ $title ?? "title" }}</h1>
@@ -265,14 +268,14 @@
                 @enderror
             </fieldset>
             <fieldset class="border border-solid border-gray-600 p-4 rounded-md">
-                <legend>Disponible en versions : {{ old('nombre_exemplaire') }} </legend>
+                <legend>Disponible en versions : </legend>
                 <div>
                     <div class="flex space-x-3">
-                        <input type="checkbox" name="version_physique" id="version_physique" @if(old('version_physique')) checked @enderror>
+                        <input type="checkbox" name="version_physique" id="version_physique" @if(old('version_physique', $hasPhysicalVersion)) checked @enderror>
                         <span class="label">physique</span>
                     </div>
                     <div class="flex space-x-3">
-                        <input type="checkbox" name="version_electronique" id="version_electronique" @if(old('version_electronique')) checked @enderror >
+                        <input type="checkbox" name="version_electronique" id="version_electronique" @if(old('version_electronique', $hasDigitalVersion)) checked @enderror >
                         <span class="label">Electronique</span>
                     </div>
                 </div>
@@ -287,10 +290,17 @@
                     @enderror
                 </div>
             </fieldset>
-            <fieldset class="border border-solid border-gray-600 p-4 rounded-md @if(old('version_electronique')) show @else hidden @enderror" id="electronique">
+            <fieldset class="border border-solid border-gray-600 p-4 rounded-md @if($hasPhysicalVersion) show @else hidden @enderror" id="electronique">
                 <legend>Documents pdf</legend>
                 <div>
-                    <label class="label">Fichier</label>
+                    <label class="label flex justify-between">
+                        <span>Fichier</span>
+                        <span>
+                            <a href="{{ $ouvrage->documentPath }}" target="_blank" rel="noopener noreferrer">
+                                {{ $ouvrage->documentPath }}
+                            </a>
+                        </span>
+                    </label>
                     <input name="document" type="file" value="{{ $ouvrage->document ?? old('document') }}" class="input @error('document') is-invalid @enderror" accept=".pdf">
                     @error('document')
                     <div class="alert">{{ $message }}</div>
@@ -331,6 +341,7 @@
             </div>
         </form>
     </main>
+
 @stop
 @section("js")
     @include("js.ouvrageSendDataFormat")

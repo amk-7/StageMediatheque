@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div>
-        <embed src="/storage/books/pdf/{{ $ouvrage->documents }}" width="" height="" type="application/pdf"
+        <embed src="{{ $ouvrage->documentPath }}" width="" height="" type="application/pdf"
                 id="read_canvas"
         />
     </div>
