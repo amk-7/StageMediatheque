@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Domaine;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DomaineController extends Controller
 {
@@ -12,11 +13,11 @@ class DomaineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $domaines = Domaine::when($request->has('libelle'), function ($query) use ($request) {
-            return $query->where('libelle', 'like', '%' . $request->input('libelle') . '%');
-        })->get();
+        $domaines = Domaine::when($request->has('search'), function ($query) use ($request) {
+            return $query->where('libelle', 'like', '%' . $request->input('search') . '%');
+        })->paginate(10);
 
         return view('domaines.index', compact('domaines'));
     }
@@ -28,7 +29,7 @@ class DomaineController extends Controller
      */
     public function create()
     {
-        //
+        return view('domaines.create_or_edit');
     }
 
     /**
@@ -39,7 +40,13 @@ class DomaineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated_data = $request->validate([
+            'libelle' => 'required|unique:domaines',
+        ]);
+        
+        $domaine = Domaine::create($validated_data);
+
+        return redirect()->route('domaines.index')->with("success", "Le domaine $domaine->libelle à été créer avec success !");
     }
 
     /**
@@ -61,7 +68,7 @@ class DomaineController extends Controller
      */
     public function edit(Domaine $domaine)
     {
-        //
+        return view('domaines.create_or_edit', compact('domaine'));
     }
 
     /**
@@ -73,7 +80,15 @@ class DomaineController extends Controller
      */
     public function update(Request $request, Domaine $domaine)
     {
-        //
+        $validated_data = $request->validate([
+            'libelle' => 'required',
+            Rule::unique('domaines')->ignore($domaine->id),
+        ]);
+        
+        $domaine->update($validated_data);
+
+        return redirect()->route('domaines.index')->with("success", "Le domaine $domaine->libelle à été mis à jour avec success !");
+    
     }
 
     /**
@@ -84,6 +99,13 @@ class DomaineController extends Controller
      */
     public function destroy(Domaine $domaine)
     {
-        //
+        $ouvrages = $domaine->ouvrages;
+
+        if ($ouvrages->count() > 0) {
+            return redirect()->route('domaines.index')->with("error", "Le domaine $domaine->libelle ne peut pas être supprimer car il est relier à certain ouvrages !");
+        }
+        
+        $domaine->delete();
+        return redirect()->route('domaines.index')->with("success", "Le domaine $domaine->libelle à été bien supprimer !");
     }
 }

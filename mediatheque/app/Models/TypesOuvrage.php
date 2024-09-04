@@ -12,9 +12,9 @@ class TypesOuvrage extends Model
     protected $fillable = ['libelle'];
     protected $primaryKey = 'id_type_ouvrage';
 
-    public function ouvrages2()
+    public function ouvrages()
     {
-        return $this->hasMany(Ouvrages::class, 'id_type');
+        return $this->hasMany(Ouvrage::class, 'id_type');
     }
 }
 

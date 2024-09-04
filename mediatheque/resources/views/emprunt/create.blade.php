@@ -1,7 +1,7 @@
 @extends("layouts.app")
 @section("content")
     <div class="flex flex-col justify-center items-center m-auto">
-        <form action="{{route('storeEmprunt')}}" method="post" class="bg-white p-12 mb-12 space-y-3">
+        <form action="{{route('emprunts.store')}}" method="post" class="bg-white p-12 mb-12 space-y-3 border">
             @csrf
            <div class="flex flex-col items-center justify-center">
                <h1 class="label_title" >Emprunt</h1>

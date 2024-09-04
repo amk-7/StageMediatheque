@@ -21,8 +21,8 @@
             }
         }
     </style>
-    <div class="flex flex-col items-center justify-center">
-        <div class="bg-white flex flex-col m-auto items-center margin p-12">
+    <div class="flex flex-col justify-center items-center w-full ml-28 mx-12 space-y-6">
+        <div class="border flex flex-col m-auto items-center margin p-12">
             <h1 class="text-2xl text-center uppercase w-96">{{$ouvrage->titre }}</h1>
             <div class="show-card m-auto items-center">
                 <div class="mt-4">

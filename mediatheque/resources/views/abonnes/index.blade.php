@@ -1,61 +1,59 @@
 @extends('layouts.app')
 @section('content')
-    <div class="flex flex-col justify-center items-center m-auto" style="margin-top: 100px;">
-        <h1 class="label_title">Liste des Abonnes {{  old('paye') }} </h1>
-        <form class="flex flex-col items-center" method="get" action="{{route('listeAbonnes')}}">
-            <div class="">
-                <div class="flex flex-row w-96">
-                    <input class="search w-5/6" type="search" name="search_by" id="search_by" placeholder="rechercher par nom, prénom" value="{{ old('selected_search_by') }}">
-                    <button type="submit" class="button button_primary w-1/6">
-                        <img src="{{ asset('storage/images/search.png') }}" class="block h-auto w-auto fill-current text-gray-600">
-                    </button>
+    <div class="flex flex-col justify-center items-center w-full ml-28 mx-12 space-y-6">
+        <h1 class="text-3xl"> Liste des Abonnes </h1>
+        <div class="space-y-3 w-full">
+            <form class="flex flex-col items-center" method="get" action="">
+                <div class="space-y-6">
+                    <div class="w-96 lg:w-[800px]">
+                        <div class="flex flex-row w-full border border-green-500">
+                            <input class="w-10/12 lg:w-11/12 border border-none py-3" type="text" name="search_by" id="search_by" placeholder="rechercher par nom, prénom" value="{{ old('search_by') }}">
+                            <button type="submit" class="flex flex-col items-center justify-center w-2/12 lg:w-1/12">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-3" id="searchParametersField">
+                        <p>Paramètres de recherche</p>
+                        <div class="flex space-x-3">
+                            <select name="paye" class="select_btn">
+                                <option value="">Ont Payé</option>
+                                <option value="oui" {{ $paye=="oui" ? "selected" : "" }}>oui</option>
+                                <option value="non" {{ $paye=="non" ? "selected" : "" }}>non</option>
+                            </select>
+                            <select name="profession" class="select_btn">
+                                <option value="">Profession</option>
+                                <option value="Eleve" {{ $selected_profession=="Eleve" ? "selected" : "" }} >Élève</option>
+                                <option value="Etudiant" {{ $selected_profession=="Etudiant" ? "selected" : "" }} >Étudiant</option>
+                                <option value="Fonctionnaire" {{ $selected_profession=="Fonctionnaire" ? "selected" : "" }} >Fonctionnaire</option>
+                                <option value="Retraite" {{ $selected_profession=="Retraite" ? "selected" : "" }} >Retraité</option>
+                            </select>
+                            <select name="niveau_etude" class="select_btn">
+                                <option value="">Niveau étude</option>
+                                <option value="primaire" {{ $selected_niveau_etude=="primaire" ? "selected" : "" }} >Primaire</option>
+                                <option value="college" {{ $selected_niveau_etude=="college" ? "selected" : "" }} >Collège</option>
+                                <option value="lycee" {{ $selected_niveau_etude=="lycee" ? "selected" : "" }} >Lycée</option>
+                                <option value="Université" {{ $selected_niveau_etude=="Université" ? "selected" : "" }} >Université</option>
+                            </select>
+                            <select name="etat" class="select_btn">
+                                <option value="1" {{ $selected_etat=="1" ? "selected" : "" }}>Activer</option>
+                                <option value="0" {{ $selected_etat=="0" ? "selected" : "" }}>Desactiver</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
+            </form>
+            <div class="flex flex-row-reverse">
+                <a href="{{ route('abonnes.create') }}">
+                    <button type="button" class="button button_primary">Ajouter</button>
+                </a>
             </div>
-            <div class="" id="searchParametersField">
-                <p>Paramètres de recherche</p>
-                <div class="flex space-x-3">
-                    <select name="paye" class="select_btn">
-                        <option value="">Ont Payé</option>
-                        <option value="oui" {{ $paye=="oui" ? "selected" : "" }}>oui</option>
-                        <option value="non" {{ $paye=="non" ? "selected" : "" }}>non</option>
-                    </select>
-                    <select name="profession" class="select_btn">
-                        <option value="">Profession</option>
-                        <option value="Eleve" {{ $selected_profession=="Eleve" ? "selected" : "" }} >Élève</option>
-                        <option value="Etudiant" {{ $selected_profession=="Etudiant" ? "selected" : "" }} >Étudiant</option>
-                        <option value="Fonctionnaire" {{ $selected_profession=="Fonctionnaire" ? "selected" : "" }} >Fonctionnaire</option>
-                        <option value="Retraite" {{ $selected_profession=="Retraite" ? "selected" : "" }} >Retraité</option>
-                    </select>
-                    <select name="niveau_etude" class="select_btn">
-                        <option value="">Niveau étude</option>
-                        <option value="primaire" {{ $selected_niveau_etude=="primaire" ? "selected" : "" }} >Primaire</option>
-                        <option value="college" {{ $selected_niveau_etude=="college" ? "selected" : "" }} >Collège</option>
-                        <option value="lycee" {{ $selected_niveau_etude=="lycee" ? "selected" : "" }} >Lycée</option>
-                        <option value="Université" {{ $selected_niveau_etude=="Université" ? "selected" : "" }} >Université</option>
-                    </select>
-                    <select name="etat" class="select_btn">
-                        <option value="1" {{ $selected_etat=="1" ? "selected" : "" }}>Activer</option>
-                        <option value="0" {{ $selected_etat=="0" ? "selected" : "" }}>Desactiver</option>
-                    </select>
-                </div>
-            </div>
-        </form>
-        <div class="ml-16" style="margin-bottom: 100px;">
-            <div class="flex flex-row space-x-3 mb-3">
-                <form method="GET" action="{{route('createAbonne')}}">
-                    <button class="button button_primary" type="Submit">Ajouter</button>
-                </form>
-                <form method="GET" action="{{ route('downloadExcelListeAbonnes')}}">
-                    {{-- {{ \App\Service\AbonneService::setAbonnesLIstInSession(collect($abonnes)['data']) }} --}}
-                    <button class="button button_primary" type="Submit">Exporter</button>
-                </form>
-                <!-- <button id="btn_import" class="button button_primary" type="button">Importer</button> -->
-            </div>
-            @if(!empty($abonnes ?? "") && $abonnes->count() > 0)
-                <table class="fieldset_border bg-white" style="margin-bottom: 100px;">
-                    <thead class="text-xs  uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
-                        <tr class="fieldset_border">
-                            <th class="fieldset_border" >N°</th>
+            <div class="w-full">
+                <table class="bg-white w-full">
+                    <thead class="text-xs uppercase bg-gray-200 dark:bg-gray-300 dark:text-gray-500 text-left">
+                        <tr class="fieldset_border w-full">
                             <th class="fieldset_border" >Profil</th>
                             <th class="fieldset_border" >Nom</th>
                             <th class="fieldset_border" >Prenom</th>
@@ -68,166 +66,103 @@
                             <th class="fieldset_border" >Type de Carte</th>
                             <th class="fieldset_border" >A payé</th>
                             <th class="fieldset_border" >Profil valider</th>
-                            <th class="fieldset_border" >Modifier</th>
-                            <th class="fieldset_border" >Afficher</th>
-                            @if(Auth::user()->hasRole('responsable'))
-                                <th class="fieldset_border" >Supprimer</th>
-                            @endif
+                            <th class="fieldset_border" >Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($abonnes as $abonne)
-                            @php
-                                $is_registrate = $abonne->isRegistrate();
-                            @endphp
-                            @if($paye == null || $is_registrate == ($paye == "oui"))
-                                <tr class="fieldset_border">
-                                    <td class="fieldset_border" >{{$loop->index+1}}</td>
-                                    <td class="fieldset_border" ><img src="{{asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil}}" width="80" height="80"></td>
-                                    <td class="fieldset_border" >{{$abonne->utilisateur->nom}}</td>
-                                    <td class="fieldset_border" >{{$abonne->utilisateur->prenom}}</td>
-                                    <td class="fieldset_border" >{{$abonne->utilisateur->email}}</td>
-                                    <td class="fieldset_border" >{{$abonne->utilisateur->contact}}</td>
-                                    <td class="fieldset_border" >{{$abonne->utilisateur->adresse["ville"]}}</td>
-                                    <td class="fieldset_border" >{{$abonne->profession}}</td>
-                                    <td class="fieldset_border" >{{$abonne->contact_a_prevenir}} </td>
-                                    <td class="fieldset_border" >{{$abonne->numero_carte}}</td>
-                                    <td class="fieldset_border" >{{  $abonne->type_de_carte == 0 ? "Scolaire" : "Identité"  }}</td>
-                                    <td class="fieldset_border" >
-                                        @if ($is_registrate)
-                                            <span class="info">Oui</span>
-                                        @else
-                                            <span class="alert">Non</span>
-                                        @endif
-                                    </td>
-                                    <td class="fieldset_border" >
-                                        @if ($abonne->profil_valider==1)
-                                            <span class="info">Oui</span>
-                                        @else
-                                            <span class="alert">Non</span>
-                                        @endif
-                                    </td>
-                                    <td class="fieldset_border" >
-                                        <form method="GET" action="{{route('editAbonne', $abonne->id_abonne)}}">
-                                            <button class="button button_primary" type="Submit">Editer</button>
-                                        </form>
-                                    </td>
-                                    <td class="fieldset_border">
-                                        <form methode="GET" action="{{route('showAbonne', $abonne->id_abonne)}}">
-                                            <button class="button button_show" type="Submit">Consulter</button>
-                                        </form>
-                                    </td>
-                                    @if(Auth::user()->hasRole('responsable'))
-                                        <td class="fieldset_border" >
-                                            @if(! $abonne->etat)
-                                            <form method="POST" action="{{route('fenix_user', $abonne->id_abonne)}}">
-                                                @csrf
-                                                @method("PUT")
-                                                <button class="button button_primary" type="Submit">Activer</button>
-                                            </form>
-                                            @else
-                                                <form method="POST" action="">
-                                                    @csrf
-                                                    @method("DELETE")
-                                                    <button onclick="activeModal({{$abonne->id_abonne}})" class="button button_delete" type="Submit">Désactiver</button>
-                                                </form>
-                                            @endif
-                                        </td>
+                    <tbody class="">
+                    @forelse ($abonnes as $abonne)
+                        @php
+                            $is_registrate = $abonne->isRegistrate();
+                        @endphp
+                        @if($paye == null || $is_registrate == ($paye == "oui"))
+                            <tr class="fieldset_border">
+                                <td class="fieldset_border" ><img src="{{asset('storage/images/image_utilisateur').'/'.$abonne->utilisateur->photo_profil}}" width="80" height="80"></td>
+                                <td class="fieldset_border" >{{$abonne->utilisateur->nom}}</td>
+                                <td class="fieldset_border" >{{$abonne->utilisateur->prenom}}</td>
+                                <td class="fieldset_border" >{{$abonne->utilisateur->email}}</td>
+                                <td class="fieldset_border" >{{$abonne->utilisateur->contact}}</td>
+                                <td class="fieldset_border" >{{$abonne->utilisateur->adresse["ville"]}}</td>
+                                <td class="fieldset_border" >{{$abonne->profession}}</td>
+                                <td class="fieldset_border" >{{$abonne->contact_a_prevenir}} </td>
+                                <td class="fieldset_border" >{{$abonne->numero_carte}}</td>
+                                <td class="fieldset_border" >{{ $abonne->type_de_carte == 0 ? "Scolaire" : "Identité"  }}</td>
+                                <td class="fieldset_border" >
+                                    @if ($is_registrate)
+                                        <span class="info">Oui</span>
+                                    @else
+                                        <span class="alert">Non</span>
                                     @endif
-                                </tr>
-                            @endif
-                        @endforeach
+                                </td>
+                                <td class="fieldset_border" >
+                                    @if ($abonne->profil_valider==1)
+                                        <span class="info">Oui</span>
+                                    @else
+                                        <span class="alert">Non</span>
+                                    @endif
+                                </td>
+                                <td class="fieldset_border">
+                                    <div class="flex space-x-3 px-3">
+                                        <div>
+                                            <form method="GET" action="{{route('abonnes.edit', $abonne->id_abonne)}}">
+                                                <button class="button button_primary" type="Submit">Editer</button>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form methode="GET" action="{{route('abonnes.show', $abonne->id_abonne)}}">
+                                                <button class="button button_show" type="Submit">Consulter</button>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            @if(Auth::user()->hasRole('responsable'))
+                                                @if(! $abonne->etat)
+                                                <form method="POST" action="{{route('fenix_user', $abonne->id_abonne)}}">
+                                                    @csrf
+                                                    @method("PUT")
+                                                    <button class="button button_primary" type="Submit">Activer</button>
+                                                </form>
+                                                @else
+                                                    <form method="POST" action="" id="form_destroy_{{$abonne->id_abonne}}">
+                                                        @csrf
+                                                        @method("DELETE")
+                                                        <button class="button button_delete" type="button" onclick="AlertSwal(title='Attention', text='Voulez vous vraiment désactiver cet abonné ?', icon='warning', form_tag='form_destroy_{{$abonne->id_abonne}}');">Désactiver</button>
+                                                    </form>
+                                                @endif
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endif
+                    @empty
+                        <tr>
+                            <td class="fieldset_border">
+                                Aucun abonné n'est enregistré
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
-            @else
-                <span>Aucun Abonne</span>
-            @endif
-            {!! $abonnes->links() !!}
-        </div>
-    </div>
-    <!-- Overlay element -->
-    <div style="z-index:1000" id="overlay_suppression" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
-    <div style="z-index:1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_supprimer">
-        <div class="flex flex-col items-center space-y-4">
-            <div id="id_message" class="text-center">
-                <p>Voulez vous vraiment désactiver cet abonne ?</p>
-            </div>
-            <div class="flex flex-row space-x-8">
-                <button id="btn_annuler" class="button button_show">Annuler</button>
-                <form id="form_delete_confirm" action="{{url("suppression_des_abonnes")}}" method="post">
-                    @csrf
-                    @method('delete')
-                    <input type="submit" id="supprimer_ouvrage_confirm" name="supprimer" value="Oui" class="button button_delete">
-                </form>
             </div>
         </div>
-    </div>
-    <div style="z-index:1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_import">
-        <div class="flex flex-col items-center space-y-4">
-            <form id="form_delete_confirm" action="{{ route('import_abonne') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="flex flex-col space-y-6">
-                    <div id="id_message" class="text-center">
-                        <p>Importer des abonnes</p>
-                    </div>
-                    <div class="">
-                        <input type="file" name="file" class="px-3 py-2 bg-gray-300">
-                    </div>
-                    <div class="flex justify-between">
-                        <button type="button" id="btn_annuler_2" class="button button_show">Annuler</button>
-                        <input type="submit" id="import_abonne" name="import" value="Importer" class="button button_primary">
-                    </div>
-                </div>
-            </form>
+        <div class="w-full">
+            {{ $abonnes->links() }}
         </div>
     </div>
-@stop
+@endsection
+@if (session('success'))
 @section('js')
-    <script type="text/javascript">
-        //-------------------------------------------------
-        let div_modal_supprimer = document.getElementById("modal_supprimer");
-        let div_modal_import = document.getElementById("modal_import");
-
-        
-        let form_confirm = document.getElementById("form_delete_confirm");
-        let btn_supprimer_ouvrage_confirm = document.getElementById("supprimer_ouvrage_confirm");
-
-        let btn_annuler = document.getElementById("btn_annuler");
-        let btn_annuler_2 = document.getElementById("btn_annuler_2");
-        //import_abonnee
-        //btn_annuler_2
-        let btn_import = document.getElementById("btn_import");
-        let overlay = document.getElementById("overlay_suppression");
-
-        function stopPropagation(){
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        function activeModal(id){
-            stopPropagation();
-            div_modal_supprimer.classList.remove("hidden");
-            overlay.classList.remove('hidden');
-            form_confirm.action = `suppression_des_abonnes/${id}`;
-        }
-
-        btn_import.addEventListener('click', function (){
-            stopPropagation();
-            div_modal_import.classList.remove("hidden");
-            overlay.classList.remove('hidden');
-        });
-
-        btn_annuler.addEventListener('click', function (){
-            stopPropagation();
-            div_modal_supprimer.classList.add("hidden");
-            overlay.classList.add('hidden');
-        });
-
-        btn_annuler_2.addEventListener('click', function (){
-            stopPropagation();
-            div_modal_import.classList.add("hidden");
-            overlay.classList.add('hidden');
-        });
+    <script>
+        AlertSwalInfo(title='Info', text="{!! session('success') !!}", icon='success');
     </script>
-@stop
+@endsection
+@endif
+@if (session('error'))
+@section('js')
+    <script>
+        AlertSwalInfo(title='Info', text="{!! session('error') !!}", icon='error');
+    </script>
+@endsection
+@endif
 

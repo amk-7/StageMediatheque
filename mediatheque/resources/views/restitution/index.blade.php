@@ -3,7 +3,7 @@
 <div class="flex flex-col text-center">
     <h1 class="label_title">Liste des restitutions</h1>
     <div>
-        <form class="flex flex-col items-center mb-12" method="get" action="{{route("listeRestitutions")}}">
+        <form class="flex flex-col items-center mb-12" method="get" action="{{route('restitutions.index')}}">
             <div class="flex space-x-3">
                 <div>
                     <select name="etat" class="select_btn">
@@ -54,7 +54,7 @@
                     </td>
                     <td class="fieldset_border"> {{ $restitution->date_restitution }} </td>
                     <td class="fieldset_border">
-                        <form action="{{ route('formulaireModificationRestitution', $restitution) }}" method="get">
+                        <form action="{{ route('restitutions.edit', $restitution) }}" method="get">
                             @if ($restitution->etat)
                             <input type='submit' value='Consulter' class='button button_show'>
                             @else

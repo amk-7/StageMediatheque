@@ -65,7 +65,7 @@ class RestitutionController extends Controller
         ]);
 
         LignesRestitution::enregistrerLignesRestitution($datas, $restitution->id_restitution, $id_emprunt);
-        return redirect()->route('listeRestitutions');
+        return redirect()->route('restitutions.index');
     }
 
     /**
@@ -113,7 +113,7 @@ class RestitutionController extends Controller
         $restitution->etat = Restitution::etatRestitutionUpdate($restitution);
         $restitution->save();
 
-        return redirect()->route('listeRestitutions');
+        return redirect()->route('restitutions.index');
     }
 
     /**

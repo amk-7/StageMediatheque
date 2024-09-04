@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex flex-col justify-center items-center m-auto">
-    <form method="POST" action="{{route($action)}}" enctype="multipart/form-data" class="bg-white p-12 mb-12">
+<div class="flex flex-col justify-center items-center m-auto bg-white border">
+    <form method="POST" action="{{route($action)}}" enctype="multipart/form-data" class="p-12 mb-12">
         @csrf
         <h1 class="label_title text-center pb-12">{{$title}}</h1>
         @error('users_exist')

@@ -130,17 +130,14 @@
                                     <a href="{{ route('ouvrages.index') }}" class="@if(request()->routeIs('ouvrages.index')) current_link @else other_link @endif" >Ouvrages</a>
                                 </li>
                                 <li>
-                                    <a href="/liste_approvisionnements" class="@if(request()->routeIs('listeApprovisionnements')) current_link @else other_link @endif">Approvisionnements</a>
+                                    <a href="{{ route('approvisionnements.index') }}" class="@if(request()->routeIs('approvisionnements.index')) current_link @else other_link @endif">Approvisionnements</a>
                                 </li>
                                 <li>
-                                    <a href="/liste_des_emprunts" class="@if(request()->routeIs('listeEmprunts')) current_link @else other_link @endif">Emprunts</a>
+                                    <a href="{{ route('emprunts.index') }}" class="@if(request()->routeIs('emprunts.index')) current_link @else other_link @endif">Emprunts</a>
                                 </li>
                                 <li>
-                                    <a href="/liste_des_restitutions" class="@if(request()->routeIs('listeRestitutions')) current_link @else other_link @endif">Réstitutions</a>
+                                    <a href="{{ route('restitutions.index') }}" class="@if(request()->routeIs('restitutions.index')) current_link @else other_link @endif">Réstitutions</a>
                                 </li>
-                                {{-- <li>
-                                    <a href="/liste_des_reservations" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Réservations</a>
-                                </li> --}}
                            </ul>
                        </li>
                        <li>
@@ -149,7 +146,7 @@
                            </label>
                            <ul id="dropdown-example" class="ml-12">
                                <li>
-                                   <a href="/liste_des_abonnes" class="@if(request()->routeIs('listeAbonnes')) current_link @else other_link @endif">Abonnés</a>
+                                   <a href="{{ route('abonnes.index') }}" class="@if(request()->routeIs('abonnes.index')) current_link @else other_link @endif">Abonnés</a>
                                </li>
                                <li>
                                    <a href="/liste_des_liquides" class="@if(request()->routeIs('listeLiquides')) current_link @else other_link @endif">Abonnements</a>
@@ -160,32 +157,35 @@
                                    </li>
                            </ul>
                        </li>
-                       <li>
+                       <!-- <li>
                            <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Imports excel</span>
                            </label>
                            <ul id="dropdown-example" class="ml-12">
                                <li>
-                                   <a href="/formulaire_import_excel_new" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Livres papier</a>
+                                   <a href="{{ route('ouvrages.excel_import') }}" class="@if(request()->routeIs('ouvrages.excel_import')) current_link @else other_link @endif">Livres papier</a>
                                </li>
                            </ul>
-                       </li>
-                       {{-- <li>
+                       </li> -->
+                       <li>
                            <label class="flex items-center p-2 w-full text-base font-normal text-yellow-600 font-bold" aria-controls="dropdown-example">
-                               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Archives</span>
+                               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Configurations</span>
                            </label>
                            <ul id="dropdown-example" class="ml-12">
                                <li>
-                                   <a href="/liste_des_archive_abonnes" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Archive des abonnes</a>
+                                   <a href="{{ route('types_ouvrages.index') }}" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Types</a>
                                </li>
-                           </ul>
-
-                           <ul id="dropdown-example" class="ml-12">
                                <li>
-                                   <a href="/liste_des_archive_ouvrages" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Archive des ouvrages</a>
+                                   <a href="{{ route('domaines.index') }}" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Domaines</a>
+                               </li>
+                               <li>
+                                   <a href="{{ route('langues.index') }}" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Langues</a>
+                               </li>
+                               <li>
+                                   <a href="{{ route('niveaux.index') }}" class="flex items-center p-2 w-full text-base font-normal rounded-lg transition duration-75 group hover:text-white text-green-600 hover:bg-green-600">Niveaux</a>
                                </li>
                            </ul>
-                       </li> --}}
+                       </li>
                       @endif
                    @endif
                    <!-- Menu abonnee -->

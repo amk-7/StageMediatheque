@@ -48,7 +48,6 @@ class OuvrageController extends Controller
             'niveau' => $selected_niveau,
         ];
 
-        //protected $with = ['langues', 'domaines', 'auteurs', 'type', 'niveau', 'nature'];
         $ouvrages = Ouvrage::filter($filters)
                             ->addSelect([
                                 'type' => TypesOuvrage::select('libelle')
@@ -57,19 +56,16 @@ class OuvrageController extends Controller
                             ])
                             ->orderBy('titre', 'asc')
                             ->get();
-        // $annees = 1900;
-        // $langues = Langue::all();
-        // $types = TypesOuvrage::all();
-        // $categories = Domaine::all();
-        // $niveaus = Niveau::all();
+        
+        $annees = Ouvrage::where('annee_apparution', '<>', null)->distinct()->orderBy('annee_apparution', 'asc')->pluck('annee_apparution');
 
         return view('welcome')->with([
             'ouvrages' => $ouvrages,
-            'annees' => 1900,
-            'langues' => Langue::get(),
-            'types' => TypesOuvrage::get(),
-            'categories' => Domaine::get(),
-            'niveaus' => Niveau::get(),
+            'annees' => $annees,
+            'langues' => Langue::has('ouvrages')->get(),
+            'types' => TypesOuvrage::has('ouvrages')->get(),
+            'categories' => Domaine::has('ouvrages')->get(),
+            'niveaus' => Niveau::has('ouvrages')->get(),
             'selected_search' => $selected_search,
             'selected_min' => $selected_min,
             'selected_max' => $selected_max,
@@ -82,8 +78,7 @@ class OuvrageController extends Controller
 
     public function index(Request $request)
     {
-        $annees = 1900;
-
+    
         $selected_search = $request->input('search');
         $selected_min = $request->input('min');
         $selected_max = $request->input('max');
@@ -102,7 +97,6 @@ class OuvrageController extends Controller
             'niveau' => $selected_niveau,
         ];
 
-        //$ouvrages = Ouvrage::filter($filters)->orderBy('annee_apparution', 'asc')->paginate(20);
         
         $nb_ouvrage = Ouvrage::count();
        
@@ -114,18 +108,18 @@ class OuvrageController extends Controller
                                 ->take(1),
                             ])
                             ->orderBy('annee_apparution', 'asc')
-                            //->get();
-                            ->paginate(20);
+                            ->paginate(10);
         
-    
-        return view('ouvrages2.index')->with([
+        $annees = Ouvrage::where('annee_apparution', '<>', null)->distinct()->orderBy('annee_apparution', 'asc')->pluck('annee_apparution');
+
+        return view('ouvrages.index')->with([
             'ouvrages' => $ouvrages,
             'nb_ouvrage' => $nb_ouvrage,
             'annees' => $annees,
-            'langues' => Langue::get(),
-            'types' => TypesOuvrage::get(),
-            'categories' => Domaine::get(),
-            'niveaus' => Niveau::get(),
+            'langues' => Langue::has('ouvrages')->get(),
+            'types' => TypesOuvrage::has('ouvrages')->get(),
+            'categories' => Domaine::has('ouvrages')->get(),
+            'niveaus' => Niveau::has('ouvrages')->get(),
             'selected_search' => $selected_search,
             'selected_min' => $selected_min,
             'selected_max' => $selected_max,
@@ -163,8 +157,7 @@ class OuvrageController extends Controller
         $auteurs = Auteur::all();
         $ouvrage = Ouvrage::first();
         $ouvrage->id_ouvrage = null;
-        //dd($ouvrage);
-        return view('ouvrages2.create', compact('types', 'langues', 'domaines', 'niveaux', 'auteurs', 'ouvrage'));
+        return view('ouvrages.create', compact('types', 'langues', 'domaines', 'niveaux', 'auteurs', 'ouvrage'));
     }
 
     public function store(Request $request)
@@ -224,7 +217,6 @@ class OuvrageController extends Controller
             'cote' => md5($id),
             'documents' => $chemin_ouvrage_excel,
             'isbn' => $request->input("isbn"),
-
         ]);
 
         // $data_auteurs = GlobaleService::extractLineToData($request->data_auteurs);
@@ -246,12 +238,12 @@ class OuvrageController extends Controller
 
     public function show(Ouvrage $ouvrage)
     {
-        return view('ouvrages2.show', compact('ouvrage'));
+        return view('ouvrages.show', compact('ouvrage'));
     }
 
     public function readPdf(Ouvrage $ouvrage)
     {
-        return view('ouvrages2.lire', compact('ouvrage'));
+        return view('ouvrages.lire', compact('ouvrage'));
     }
 
     public function edit(Ouvrage $ouvrage)
@@ -262,7 +254,7 @@ class OuvrageController extends Controller
         $niveaux = Niveau::all();
         $auteurs = Auteur::all();
 
-        return view('ouvrages2.create', compact('ouvrage', 'types', 'langues', 'domaines', 'niveaux', 'auteurs'));
+        return view('ouvrages.create', compact('ouvrage', 'types', 'langues', 'domaines', 'niveaux', 'auteurs'));
     }
 
     public function update(Request $request, Ouvrage $ouvrage)
@@ -341,7 +333,9 @@ class OuvrageController extends Controller
 
     public function destroy(Ouvrage $ouvrage)
     {
-        //dd($ouvrage->image);
+        if ($ouvrage->lignesEmprunts->count() > 0){
+            return redirect()->route('ouvrages.index')->with('success', "L'ouvrage $ouvrage->libelle ne peut pas être supprimer car relier avec un emprunt.");
+        }
         $book_cover_path = "public/".$ouvrage->image;
         Storage::delete($book_cover_path);
         $book_path = "public/books/pdf/".$ouvrage->documents;
@@ -352,7 +346,7 @@ class OuvrageController extends Controller
 
     public function uploadLivresPapierView()
     {
-        return view('ouvrages2.excel_import');
+        return view('ouvrages.excel_import');
     }
 
     public function import(Request $request)

@@ -12,8 +12,8 @@ class Niveau extends Model
     protected $fillable = ['libelle'];
     protected $primaryKey = 'id_niveau';
 
-    public function ouvrages2()
+    public function ouvrages()
     {
-        return $this->hasMany(Ouvrages2::class, 'id_niveau');
+        return $this->hasMany(Ouvrage::class, 'id_niveau');
     }
 }

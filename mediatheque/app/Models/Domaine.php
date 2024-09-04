@@ -9,11 +9,12 @@ class Domaine extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['libelle',];
+    protected $fillable = ['libelle'];
     protected $primaryKey = 'id_domaine';
 
-    public function ouvrages2s()
+    public function ouvrages()
     {
-        return $this->belongsToMany(Ouvrages2::class, 'domaines_ouvrages','id_ouvrage', 'id_domaine');
+        return $this->belongsToMany(Ouvrage::class, 'domaines_ouvrages','id_ouvrage', 'id_domaine')
+                ->withTimestamps();
     }
 }

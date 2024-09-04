@@ -1,40 +1,55 @@
 @extends('layouts.app')
-
 @section('content')
-    <div class="flex flex-col justify-center items-center">
-        <h1 class="label_title"> Liste des Emprunts </h1>
-        @include('components.abonne_search_bar')
-        <div class="space-y-2 mt-8">
-                <div class="flex space-x-3">
-                    {{-- <form method="GET" action="{{ route('downloadExcelListeEnprunt') }}">
-                        <button type="Submit" class="button button_primary">Export</button>
-                    </form> --}}
-                    <form method="GET" action="{{route('createEmprunt')}}">
-                        <button type="Submit" class="button button_primary">Ajouter</button>
-                    </form>
+    <div class="flex flex-col justify-center items-center w-full ml-28 mx-12 space-y-6">
+        <h1 class="text-3xl"> Liste des emprunts</h1>
+        <div class="space-y-3 w-full">
+            <form action="" method="get" class="space-y-3">
+                <div class="flex flex-col items-center" method="get" action="">
+                    <div class="w-96 lg:w-[800px]">
+                        <div class="flex flex-row w-full border border-green-500">
+                            <input class="w-10/12 lg:w-11/12 border border-none py-3" type="text" name="search" id="search" placeholder="rechercher par libelle" value="{{ $search ?? '' }}">
+                            <button type="submit" class="flex flex-col items-center justify-center w-2/12 lg:w-1/12">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            @if(!empty($emprunts ?? "") && $emprunts->count() > 0)
-            <table class="fieldset_border bg-white">
-                    <thead class="thead">
-                    <tr class="fieldset_border">
-                        <th class="fieldset_border">Numéro</th>
-                        <th class="fieldset_border">Date de l'emprunt</th>
-                        <th class="fieldset_border">Date de retour</th>
-                        <th class="fieldset_border">Jour restant</th>
-                        <th class="fieldset_border">Nombre Ouvrage</th>
-                        <th class="fieldset_border">Abonné</th>
-                        <th class="fieldset_border">personnel</th>
-                        <th class="fieldset_border">Consulter</th>
-                        <th class="fieldset_border">Editer</th>
-                        <th class="fieldset_border">Restituer</th>
-                        <th class="fieldset_border">Supprimer</th>
-                    </tr>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-3">
+                        <div class="flex flex-col space-y-3">
+                            <label for="start_date">Date début</label>
+                            <input onchange="this.form.submit();" value="{{ $start_date ?? '' }}" type="date" name="start_date" class="border-black bg-gray-300 text-gray-900">
+                        </div>
+                        <div class="flex flex-col space-y-3">
+                            <label for="end_date">Date fin {{  old('start_date') }} </label>
+                            <input onchange="this.form.submit();" value="{{ $end_date ?? '' }}" type="date" name="end_date" class="border-black bg-gray-300 text-gray-900">
+                        </div>
+                    </div>
+                    <div>
+                        <a href="{{ route('approvisionnements.create') }}">
+                            <button type="button" class="button button_primary">Ajouter</button>
+                        </a>
+                    </div>
+                </div>
+            </form>
+            <div class="w-full">
+                <table class="bg-white w-full">
+                    <thead class="text-xs uppercase bg-gray-200 dark:bg-gray-300 dark:text-gray-500 text-left">
+                        <tr class="fieldset_border w-full">
+                            <th class="fieldset_border">Date de l'emprunt</th>
+                            <th class="fieldset_border">Date de retour</th>
+                            <th class="fieldset_border">Jour restant</th>
+                            <th class="fieldset_border">Nombre Ouvrage</th>
+                            <th class="fieldset_border">Abonné</th>
+                            <th class="fieldset_border">personnel</th>
+                            <th class="fieldset_border">Actions</th>
+                        </tr>
                     </thead>
-                    <tbody>
-                    @foreach($emprunts as $emprunt)
-
+                    <tbody class="">
+                    @forelse($emprunts as $emprunt)
                         <tr class="fieldset_border">
-                            <td class="fieldset_border"> {{ $emprunt->id_emprunt }} </td>
                             <td class="fieldset_border"> {{ $emprunt->date_emprunt }} </td>
                             <td class="fieldset_border">
                                 @if ($emprunt->empruntExpierAttribute())
@@ -50,140 +65,82 @@
                                     <span class="info"> {{ $emprunt->jourRestant }} </span>
                                 @endif
                             </td>
-                            {{-- {!! \App\Helpers\Controller::afficherDateRetoure($emprunt) !!}
-                            {!! \App\Helpers\RestitutionHelper::afficherEnpruntJourRestant($emprunt) !!} --}}
                             <td class="fieldset_border"> {{ $emprunt->nombreOuvrageEmprunte }} </td>
                             <td class="fieldset_border"> {{ $emprunt->abonne->utilisateur->userFullName ?? "" }} </td>
                             <td class="fieldset_border"> {{ $emprunt->personnel->utilisateur->userFullName ?? "" }} </td>
-                            <td class="fieldset_border">
-                                <form action="{{ route('showEmprunt', $emprunt)}}" method="get">
-                                    <input type="submit" class="button button_show" value="Consulter">
-                                </form>
-                            </td>
-                            <td class="fieldset_border">
-                                <form action="{{route('editEmprunt', $emprunt)}}" method="get">
-                                    <input type="submit" class="button button_primary" value="Editer">
-                                </form>
-                            </td>
-                            <td class="fieldset_border">
-                                <!-- Verifier si l'emprunt à été déjà restituer -->
-                                <form action="{{ route('formulaireEnregistrementRestitution', $emprunt) }}"
-                                      method="get">
-                                    @csrf
-                                    <input type="submit" value="Restituer" class=
-                                            @if($emprunt->etatEmprunt())
-                                                "button button_primary_disabled disabled:opacity-25 cursor-default" disabled
-                                    @else
-                                        "button button_primary "
-                                    @endif>
-                                </form>
-                            </td><!--"class='button button_primary_disabled disabled:opacity-25' disabled"-->
-                            <td class="fieldset_border">
-                                <form action="" method="post">
-                                    @csrf
-                                    @method("DELETE")
-                                    <input type="submit" onclick="activeModal({{$emprunt->id_emprunt}})" value="Supprimer" class=
-                                            @if($emprunt->etatEmprunt())
-                                                "button button_delete_disabled disabled:opacity-25" disabled
-                                    @else
-                                        "button button_delete"
-                                    @endif>
-                                </form>
+                    
+                            <td class="flex space-x-3 p-2">
+                                <div>
+                                    <a href="{{ route('emprunts.show', $emprunt) }}">
+                                        <button type="button" class="button button_show">
+                                            consulter
+                                        </button>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="{{ route('restitutions.create', $emprunt) }}">
+                                        <button type="button" class="button button_primary">
+                                            Restituer
+                                        </button>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="{{ route('emprunts.edit', $emprunt) }}">
+                                        <button type="button" class="button button_show">
+                                            Modifier
+                                        </button>
+                                    </a>
+                                </div>
+                                @if(Auth::user()->hasRole('responsable'))
+                                <div>
+                                    <form action="{{ route('emprunts.destroy', $emprunt) }}" id="form_destroy_{{$emprunt->id_emprunt}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <input type="button" onclick="AlertSwal(title='Attention', text='Voulez vous vraiment supprimer cet approvisionnement ?', icon='warning', form_tag='form_destroy_{{$emprunt->id_emprunt}}');" value="Supprimer" class="button button_delete">
+                                    </form>
+                                </div>
+                                @endif
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td class="fieldset_border">
+                                Aucun approvisionnements n'est enregistré
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
-                {!! $emprunts->links() !!}
-            @else
-                <h4>Aucun emprunt</h4>
-            @endif
+            </div>
         </div>
-    </div>
-    <!-- Overlay element -->
-    <div style="z-index:1000" id="overlay_suppression" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
-    <div style="z-index:1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_supprimer">
-        <div class="flex flex-col items-center space-y-4">
-            <div id="id_message" class="text-center">
-                <p>Voulez vous vraiment supprimer cet emprunt ?</p>
-            </div>
-            <div class="flex flex-row space-x-8">
-                <button id="btn_annuler" class="button button_show">Annuler</button>
-                <form id="form_delete_confirm" action="{{url("suppression_des_emprunts")}}" method="post">
-                    @csrf
-                    @method('delete')
-                    <input type="submit" id="supprimer_ouvrage_confirm" name="supprimer" value="Supprimer" class="button button_delete">
-                </form>
-            </div>
+        <div class="w-full">
+            {{ $emprunts->links() }}
         </div>
     </div>
 @endsection
+@if (session('success'))
 @section('js')
-    <script type="text/javascript">
-        let abonnes = {!! $abonnes !!};
-
-        let nom_abonnes = document.getElementById('nom_abonnes');
-        let prenom_abonnes = document.getElementById('prenom_abonnes');
-
-        setLiteOptions(nom_abonnes, abonnes);
-        nom_abonnes.addEventListener('change', function (e) {
-            mettreListePrenomParNom(prenom_abonnes, nom_abonnes.value, abonnes);
-        });
-
-        function stopPropagation() {
-            event.stopPropagation();
-            event.preventDefault();
-        }
-
-        function setLiteOptions(elt, liste) {
-            for (let i = 0; i < liste.length; i++) {
-                let option = document.createElement('option');
-                option.value = liste[i]['nom'];
-                option.innerText = option.value;
-                elt.appendChild(option);
-            }
-        }
-
-        function mettreListePrenomParNom(balise, elt, liste) {
-            while (balise.firstChild) {
-                balise.removeChild(balise.firstChild);
-            }
-            let option = document.createElement('option');
-            option.innerText = "Séléctionner prénom";
-            balise.appendChild(option);
-            for (let i = 0; i < liste.length; i++) {
-                if (elt === liste[i]['nom']) {
-                    let option = document.createElement('option');
-                    option.value = liste[i]['id'];
-                    option.innerText = liste[i]['prenom'];
-                    balise.appendChild(option);
-                }
-            }
-        }
-
-        //-------------------------------------------------
-        let div_modal_supprimer = document.getElementById("modal_supprimer");
-        let form_confirm = document.getElementById("form_delete_confirm");
-        let btn_supprimer_ouvrage_confirm = document.getElementById("supprimer_ouvrage_confirm");
-        let btn_annuler = document.getElementById("btn_annuler");
-        let overlay = document.getElementById("overlay_suppression");
-
-        function stopPropagation(){
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        function activeModal(id){
-            stopPropagation();
-            div_modal_supprimer.classList.remove("hidden");
-            overlay.classList.remove('hidden');
-            form_confirm.action = `/suppression_des_emprunts/${id}`;
-        }
-
-        btn_annuler.addEventListener('click', function (){
-            stopPropagation();
-            div_modal_supprimer.classList.add("hidden");
-            overlay.classList.add('hidden');
-        });
+    <script>
+        AlertSwalInfo(title='Info', text="{!! session('success') !!}", icon='success');
     </script>
-@stop
+@endsection
+@endif
+@if (session('error'))
+@section('js')
+    <script>
+        AlertSwalInfo(title='Info', text="{!! session('error') !!}", icon='error');
+    </script>
+@endsection
+@endif

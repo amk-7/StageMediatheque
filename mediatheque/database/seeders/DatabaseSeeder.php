@@ -21,8 +21,6 @@ class DatabaseSeeder extends Seeder
             RoleHasPermissionSeeder::class,
         ]);
          //\App\Models\User::factory(10)->create();
-        $this->call(ClassificationDeweyCentaineSeeder::class);
-        $this->call(ClassificationDeweyDizaineSeeder::class);
         $this->call(PersonnelSeeder::class);
         $this->call(AbonneSeeder::class);
         $this->call(OuvrageSeeder::class);

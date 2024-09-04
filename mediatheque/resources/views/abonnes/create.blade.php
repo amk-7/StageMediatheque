@@ -1,4 +1,4 @@
-@extends('layouts.user.userCreate', ['action'=>"storeAbonne", 'title'=>"Ajouter un abonné"])
+@extends('layouts.user.userCreate', ['action'=>"abonnes.store", 'title'=>"Ajouter un abonné"])
 
 @section('abonne')
     <div class="flex flex-row space-x-3">
@@ -85,3 +85,4 @@
         </div>
     @endif
 @stop
+

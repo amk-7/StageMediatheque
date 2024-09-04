@@ -21,8 +21,6 @@ class Ouvrage extends Model
         'mot_cle'=>'array',
     ];
 
-    //protected $with = ['langues', 'domaines', 'auteurs', 'type', 'niveau', 'nature'];
-
     protected $primaryKey = 'id_ouvrage';
 
     public function scopeFilter($query, $filters)
@@ -178,7 +176,8 @@ class Ouvrage extends Model
 
     public function domaines()
     {
-        return $this->belongsToMany(Domaine::class, 'domaines_ouvrages','id_ouvrage', 'id_domaine');
+        return $this->belongsToMany(Domaine::class, 'domaines_ouvrages', 'id_domaine', 'id_ouvrage')
+                    ->withTimestamps();
     }
 
     public function nature()
@@ -213,6 +212,6 @@ class Ouvrage extends Model
 
     public function lignesEmprunts()
     {
-        return $this->hasMany(LignesEmprunt::class, 'id_ouvrage_physique');
+        return $this->hasMany(LignesEmprunt::class, 'id_ouvrage');
     }
 }

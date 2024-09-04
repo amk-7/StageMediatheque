@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Langue;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class LangueController extends Controller
 {
@@ -12,11 +13,11 @@ class LangueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $langues = Langue::when($request->has('libelle'), function ($query) use ($request) {
-            return $query->where('libelle', 'like', '%' . $request->input('libelle') . '%');
-        })->get();
+        $langues = Langue::when($request->has('search'), function ($query) use ($request) {
+            return $query->where('libelle', 'like', '%' . $request->input('search') . '%');
+        })->paginate(10);
 
         return view('langues.index', compact('langues'));
     }
@@ -28,7 +29,7 @@ class LangueController extends Controller
      */
     public function create()
     {
-        //
+        return view('langues.create_or_edit');
     }
 
     /**
@@ -39,7 +40,13 @@ class LangueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated_data = $request->validate([
+            'libelle' => 'required|unique:langues',
+        ]);
+        
+        $langue = Langue::create($validated_data);
+
+        return redirect()->route('langues.index')->with("success", "Le Langue $langue->libelle à été créer avec success !");
     }
 
     /**
@@ -61,7 +68,7 @@ class LangueController extends Controller
      */
     public function edit(Langue $langue)
     {
-        //
+        return view('langues.create_or_edit', compact('langue'));
     }
 
     /**
@@ -73,7 +80,14 @@ class LangueController extends Controller
      */
     public function update(Request $request, Langue $langue)
     {
-        //
+        $validated_data = $request->validate([
+            'libelle' => 'required',
+            Rule::unique('langues')->ignore($langue->id),
+        ]);
+        
+        $langue->update($validated_data);
+
+        return redirect()->route('langues.index')->with("success", "La langue $langue->libelle à été mis à jour avec success !");
     }
 
     /**
@@ -84,6 +98,12 @@ class LangueController extends Controller
      */
     public function destroy(Langue $langue)
     {
-        //
+        $ouvrages = $langue->ouvrages;
+        if ($ouvrages->count() > 0) {
+            return redirect()->route('langues.index')->with("error", "Le Langue $langue->libelle ne peut pas être supprimer car il est relier à certain ouvrages !");
+        }
+        
+        $langue->delete();
+        return redirect()->route('langues.index')->with("success", "Le Langue $langue->libelle à été bien supprimer !");
     }
 }

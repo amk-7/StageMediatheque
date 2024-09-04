@@ -14,11 +14,9 @@ class CreateDomainesOuvragesTable extends Migration
     public function up()
     {
         Schema::create('domaines_ouvrages', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('id_ouvrage')->nullable();
-            $table->bigInteger('id_domaine')->nullable();
+            $table->foreignId('id_domaine');
+            $table->foreignId('id_ouvrage');
             $table->timestamps();
-            $table->foreign('id_domaine')->references('id_domaine')->on('domaines')->nullOnDelete();
         });
     }
 

@@ -4,7 +4,7 @@
     <div class="flex flex-col items-center space-y-3">
         <h1 class="label_title">Restitution de l'emprunt N° EMP{{ $restitution->emprunt->id_emprunt }}</h1>
         <h4 class="label_title_sub_title">Date : {{ $restitution->date_restitution }} </h4>
-        <form action="{{route('modificationRestitution', $restitution)}}" method="post">
+        <form action="{{route('restitutions.update', $restitution)}}" method="post">
             @csrf
             <fieldset class="fieldset_border">
                 <legend>Personnel</legend>

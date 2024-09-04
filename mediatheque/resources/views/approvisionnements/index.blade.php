@@ -1,139 +1,139 @@
 @extends('layouts.app')
 @section('content')
-<div class="flex flex-col items-center">
-    <h1 class="label_title">Liste des approvisionnements</h1>
-    <div class="mt-3 mb-3 flex flex-col justify-start">
-        <form method="GET" action="{{ route('formulaireEnregistrementApprovisionnements') }}">
-            <input type="submit" value="Ajouter" class="button button_primary">
-        </form>
-    </div>
-    @if(! empty($approvisionnements ?? "") and $approvisionnements->count() >0)
-    <table class="bg-white">
-        <thead>
-            <tr>
-                <th class="fieldset_border">Numero</th>
-                <th class="fieldset_border">Ouvrage</th>
-                <th class="fieldset_border">ISBN</th>
-                <th class="fieldset_border">Nombre exempalire</th>
-                <th class="fieldset_border">Nom</th>
-                <th class="fieldset_border">Prenom</th>
-                <th class="fieldset_border">Date</th>
-                <th class="fieldset_border">Supprimer</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($approvisionnements as $approvisionnement)
-            <tr>
-                <td class="fieldset_border"> {{ $approvisionnement->id_approvisionnement }} </td>
-                <td class="fieldset_border"> {{ $approvisionnement->ouvrage->titre }} </td>
-                <td class="fieldset_border">{{ $approvisionnement->ouvrage->isbn }}</td>
-                <td class="fieldset_border"> {{ $approvisionnement->nombre_exemplaire }} </td>
-                <td class="fieldset_border"> {{ $approvisionnement->personnel->utilisateur->nom }} </td>
-                <td class="fieldset_border"> {{ $approvisionnement->personnel->utilisateur->prenom }} </td>
-                <td class="fieldset_border"> {{ substr($approvisionnement->date_approvisionnement, 0, 10) }} </td>
-                <td class="fieldset_border">
-                    <div class="flex space-x-3">
-                        <input type="button" onclick="activeModifierModal('{{$approvisionnement->id_approvisionnement}}', '{{$approvisionnement->ouvrage->titre}}', '{{ $approvisionnement->nombre_exemplaire }}')" value="Modifier" class="button button_primary">
-                        <input type="button" onclick="activeModal('{{$approvisionnement->id_approvisionnement}}')" value="Supprimer" class="button button_delete">
+    <div class="flex flex-col justify-center items-center w-full ml-28 mx-12 space-y-6">
+        <h1 class="text-3xl"> Liste des Approvisionnements</h1>
+        <div class="space-y-3 w-full">
+            <form action="" method="get" class="space-y-3">
+                <div class="flex flex-col items-center" method="get" action="">
+                    <div class="w-96 lg:w-[800px]">
+                        <div class="flex flex-row w-full border border-green-500">
+                            <input class="w-10/12 lg:w-11/12 border border-none py-3" type="text" name="search" id="search" placeholder="rechercher par libelle" value="{{ $title ?? '' }}">
+                            <button type="submit" class="flex flex-col items-center justify-center w-2/12 lg:w-1/12">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    @else
-    <h2>Aucun approvisionnement</h2>
-    @endif
-</div>
-<div style="z-index:1000" id="overlay_suppression" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
-<div style="z-index:1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_supprimer">
-    <div class="flex flex-col items-center space-y-4">
-        <div id="id_message" class="text-center">
-            <p>Voulez vous vraiment supprimer cet approvisionnement ?</p>
-        </div>
-        <div class="flex flex-row space-x-8">
-            <button id="btn_annuler" class="button button_show">Annuler</button>
-            <form id="form_delete_confirm" action="" method="post">
-                @csrf
-                @method('delete')
-                <input type="submit" id="supprimer_ouvrage_confirm" name="supprimer" value="Supprimer" class="button button_delete">
-            </form>
-        </div>
-    </div>
-</div>
-<div style="z-index:1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_modifer">
-    <div class="flex flex-col items-center space-y-4">
-        <div id="" class="text-center">
-            <p id="title_modification">Modifier l'approvisionnement N°</p>
-        </div>
-        <div class="flex flex-row space-x-8">
-            <form id="form_modifier" action="" method="post">
-                @csrf
-                @method('PUT')
-                <div class="flex flex-col items-center space-y-3">
-                    <p id="ouvrage_title"></p>
-                    <input name="nombre_exemplaire" id="app_quantite" type="number" value="" class="input">
-                    <div class="flex items-center space-x-3">
-                        <button id="btn_annuler2" type="button" class="button button_show">Annuler</button>
-                        <input type="submit" id="btn_modifier_ouvrage_confirm" name="modifer" value="modifer" class="button button_primary">
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-3">
+                        <div class="flex flex-col space-y-3">
+                            <label for="start_date">Date début</label>
+                            <input onchange="this.form.submit();" value="{{ $start_date ?? '' }}" type="date" name="start_date" class="border-black bg-gray-300 text-gray-900">
+                        </div>
+                        <div class="flex flex-col space-y-3">
+                            <label for="end_date">Date fin {{  old('start_date') }} </label>
+                            <input onchange="this.form.submit();" value="{{ $end_date ?? '' }}" type="date" name="end_date" class="border-black bg-gray-300 text-gray-900">
+                        </div>
+                    </div>
+                    <div>
+                        <a href="{{ route('approvisionnements.create') }}">
+                            <button type="button" class="button button_primary">Ajouter</button>
+                        </a>
                     </div>
                 </div>
             </form>
+            <div class="w-full">
+                <table class="bg-white w-full">
+                    <thead class="text-xs uppercase bg-gray-200 dark:bg-gray-300 dark:text-gray-500 text-left">
+                        <tr class="fieldset_border w-full">
+                            <th class="fieldset_border">Ouvrage</th>
+                            <th class="fieldset_border">ISBN</th>
+                            <th class="fieldset_border">Nombre exempalire</th>
+                            <th class="fieldset_border">Employé</th>
+                            <th class="fieldset_border">Date</th>
+                            <th class="fieldset_border">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                    @forelse($approvisionnements as $approvisionnement)
+                        <tr class="fieldset_border">
+                            <td class="fieldset_border"> {{ $approvisionnement->ouvrage->titre }} </td>
+                            <td class="fieldset_border">{{ $approvisionnement->ouvrage->isbn }}</td>
+                            <td class="fieldset_border"> {{ $approvisionnement->nombre_exemplaire }} </td>
+                            <td class="fieldset_border"> {{ $approvisionnement->personnel->utilisateur->userFullName }} </td>
+                            <td class="fieldset_border"> {{ substr($approvisionnement->date_approvisionnement, 0, 10) }} </td>
+                            <td class="flex space-x-3 p-2">
+                                <div>
+                                    <form action="{{ route('approvisionnements.update', $approvisionnement) }}" id="form_update_{{$approvisionnement->id_approvisionnement}}" method="post">
+                                        @csrf
+                                        @method('put')
+                                        <input hidden id="form_update_nombre_exemplaire_{{$approvisionnement->id_approvisionnement}}" type="text" name="nombre_exemplaire">
+                                        <button type="button" onclick="EditApprovisionnement('{{$approvisionnement->id_approvisionnement}}')" class="button button_show">
+                                            Modifier
+                                        </button>
+                                    </form>
+                                </div>
+                                @if(Auth::user()->hasRole('responsable'))
+                                <div>
+                                    <form action="{{ route('approvisionnements.destroy', $approvisionnement) }}" id="form_destroy_{{$approvisionnement->id_approvisionnement}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <input type="button" onclick="AlertSwal(title='Attention', text='Voulez vous vraiment supprimer cet approvisionnement ?', icon='warning', form_tag='form_destroy_{{$approvisionnement->id_approvisionnement}}');" value="Supprimer" class="button button_delete">
+                                    </form>
+                                </div>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td class="fieldset_border">
+                                Aucun approvisionnements n'est enregistré
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="w-full">
+            {{ $approvisionnements->links() }}
         </div>
     </div>
-</div>
-@stop
+@endsection
+@if (session('success'))
 @section('js')
-<script type='text/javascript' async>
-    const div_modal_supprimer = document.getElementById("modal_supprimer");
-    const form_confirm = document.getElementById("form_delete_confirm");
-    const btn_supprimer_ouvrage_confirm = document.getElementById("supprimer_ouvrage_confirm");
-    const btn_annuler = document.getElementById("btn_annuler");
-
-    const overlay = document.getElementById('overlay_suppression');
-
-    const div_modal_modifer = document.getElementById('modal_modifer');
-    const form_modifier = document.getElementById("form_modifier");
-    const btn_modifier_ouvrage_confirm = document.getElementById("btn_modifier_ouvrage_confirm");
-    const btn_annuler2 = document.getElementById("btn_annuler2");
-    const title_modification = document.getElementById("title_modification");
-
-    const ouvrage_title = document.getElementById("ouvrage_title");
-    const app_quantite = document.getElementById("app_quantite");
-
-
-    function stopPropagation() {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-
-    function activeModal(id) {
-        div_modal_supprimer.classList.remove("hidden");
-        overlay.classList.remove('hidden');
-        stopPropagation();
-        form_confirm.action = `/approvisionnements/${id}/`;
-    }
-
-    btn_annuler.addEventListener('click', function() {
-        stopPropagation();
-        div_modal_supprimer.classList.add("hidden");
-        overlay.classList.add('hidden');
-    });
-
-    function activeModifierModal(id, title, quantity) {
-        stopPropagation();
-        div_modal_modifer.classList.remove("hidden");
-        overlay.classList.remove('hidden');
-        title_modification.innerText = `Modifier l'approvisionnement N° ${id}`;
-        ouvrage_title.innerText = title
-        app_quantite.value = quantity
-        form_modifier.action = `/modification_approvisionnements/${id}/`;
-    }
-
-    btn_annuler2.addEventListener('click', function() {
-        stopPropagation();
-        div_modal_modifer.classList.add("hidden");
-        overlay.classList.add('hidden');
-    });
-</script>
+    <script>
+        AlertSwalInfo(title='Info', text="{!! session('success') !!}", icon='success');
+    </script>
+@endsection
+@endif
+@if (session('error'))
+@section('js')
+    <script>
+        AlertSwalInfo(title='Info', text="{!! session('error') !!}", icon='error');
+    </script>
+@endsection
+@endif
+@section('js_again')
+    <script>
+        function EditApprovisionnement(id){
+            Swal.fire({
+                title: "Mettre à jour l'approvisionnement",
+                html: "<input class='input' id='nombre_exemplaire_sweet' type='number' name='nombre_exemplaire'>",
+                showCancelButton: true,
+                confirmButtonColor: "#16A34A",
+                cancelButtonColor: "#DC2626",
+                confirmButtonText: "Oui",
+                cancelButtonText: "Annuler",
+            }).then((result) => {
+                if (result.isConfirmed && id != "") {
+                    $(`#form_update_nombre_exemplaire_${id}`).val($('#nombre_exemplaire_sweet').val());
+                    $(`#form_update_${id}`).submit();
+                    $('#nombre_exemplaire_sweet').val("")
+                }
+            });
+        }
+    </script>
 @endsection

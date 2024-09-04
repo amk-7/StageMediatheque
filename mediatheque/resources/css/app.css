@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* #select2-titre_ouvrage-container {
+    @apply bg-red-600;
+} */
+
 .optionnel {
     @apply text-green-700;
 }
@@ -34,14 +38,11 @@
 }
 
 .input {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3.5 focus:outline-none focus:border-green-500;
+    @apply bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-3.5 focus:outline-none focus:border-green-500;
 }
 
 .input_elt {
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-3 focus:outline-none focus:border-green-500;
-}
-
-input_elt_prime {
 }
 
 

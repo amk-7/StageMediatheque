@@ -2,7 +2,7 @@
 
 @section("content")
     <div class="flex flex-col justify-center items-center space-y-3">
-        <form action="{{route('updateEmprunt', $emprunt)}}" method="post" class="flex flex-col p-6 space-y-3 bg-white">
+        <form action="{{route('emprunts.update', $emprunt)}}" method="post" class="flex flex-col p-6 space-y-3 bg-white">
             @csrf
             <h1 class="label_title text-center" >Editer l'emprunt N° {{ $emprunt->id_emprunt }}</h1>
             {{ method_field('PUT') }}

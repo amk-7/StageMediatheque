@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exports\EmpruntExport;
 use App\Models\Emprunt;
-use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Abonne;
-use App\Models\LignesEmprunt;
 use App\Models\Personnel;
 use App\Models\Ouvrage;
 use Auth;
@@ -36,26 +34,21 @@ class EmpruntController extends Controller
     {
         $paginate = 10;
 
-        if (! in_array($request->nom_abonne, ["Séléctionner nom", null])) {
-            if ($request->prenom_abonne != "Séléctionner prénom" ?? null){
-                $abonnes = array($request->prenom_abonne);
-            } else {
-                $users = DB::table('users')
-                    ->select("id_utilisateur")
-                    ->where("nom", "like", "%".strtoupper($request->nom_abonne)."%")
-                    ->get()->pluck('id_utilisateur');
-                $abonnes = DB::table('abonnes')->select('id_abonne')->whereIn('id_utilisateur', $users)->get()->pluck('id_abonne');
-            }
-            $emprunts = Emprunt::whereIn('id_abonne', $abonnes)->paginate($paginate);
-        } else {
-            $emprunts = Emprunt::paginate($paginate);
-        }
-
-
-        return view('emprunt.index')->with([
-            'emprunts' => $emprunts,
-            'abonnes' => json_encode(Abonne::getAbonnesWithAllAttribut()),
-        ]);
+        $start_date = $request->input('start_date', date('Y-01-01'));
+        $end_date = $request->input('end_date', date('Y-m-d'));
+        $search = $request->input('search');
+        
+        $emprunts = Emprunt::whereBetween('date_emprunt', [$start_date, $end_date])
+                                                ->whereHas('abonne', function ($query) use ($search) {
+                                                    $query->whereHas('utilisateur', function ($query) use ($search) {
+                                                        $query->where("nom", "like", "%".strtoupper($search)."%");
+                                                    });
+                                                })
+                                                ->orderBy('date_emprunt', 'desc')->paginate($paginate);
+        
+        $abonnes = json_encode(Abonne::getAbonnesWithAllAttribut());
+        return view('emprunt.index', compact('emprunts', 'start_date', 'end_date', 'search'));
+    
     }
 
     /**
@@ -127,26 +120,6 @@ class EmpruntController extends Controller
         // $jobMailEmprunt->delay(Carbon::now()->addSeconds(5));
         // $this->dispatch($jobMailEmprunt);
         return redirect()->route("listeEmprunts");
-    }
-
-    public function storeReservationEmprunt(Request $request, Reservation $reservation){
-
-        $date_retour = Controller::determinerDateRetour("2");
-        $reservation->etat = 0;
-        $reservation->save();
-        $emprunt = Emprunt::create([
-            'date_emprunt' => date('Y-m-d'),
-            'date_retour' => $date_retour,
-            'id_abonne' => $reservation->abonne->id_abonne,
-            'id_personnel' => Personnel::all()->where("id_utilisateur", Auth::user()->id_utilisateur)->first()->id_personnel,
-        ]);
-        LignesEmprunt::create([
-            'etat_sortie' => array_search($request->etat, OuvragesPhysiqueHelper::demanderEtat()),
-            'disponibilite' => false,
-            'id_ouvrage_physique' => $reservation->ouvragePhysique->id_ouvrage_physique,
-            'id_emprunt' => $emprunt->id_emprunt,
-        ]);
-        return redirect()->route("listeReservations");
     }
 
     /**
@@ -234,6 +207,6 @@ class EmpruntController extends Controller
 
     public function exportExcel()
     {
-        return Excel::download(new EmpruntExport(), 'liste_des_emprunt.xlsx');
+        return "";
     }
 }

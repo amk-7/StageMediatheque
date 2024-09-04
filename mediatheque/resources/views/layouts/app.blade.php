@@ -12,80 +12,14 @@
     <link rel="icon" type="image/png" sizes="50x50" href="{{ asset('storage/images/logo2.png') }}">
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    
     <link rel="stylesheet" href="/assets/select2.min.css">
-    {{-- <link rel="stylesheet" href="/assets/pagination.min.js"> --}}
-    {{-- public/build/assets/app-f9e00fdb.css  42.40 kB │ gzip:  7.22 kB
-    public/build/assets/app-b1941ff8.js  --}}
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        @media only screen and (min-width: 768px) {
-
-            /* For desktop: */
-            .col-1 {
-                width: 8.33%;
-            }
-
-            .col-2 {
-                width: 16.66%;
-            }
-
-            .col-3 {
-                width: 25%;
-            }
-
-            .col-4 {
-                width: 33.33%;
-            }
-
-            .col-5 {
-                width: 41.66%;
-            }
-
-            .col-6 {
-                width: 50%;
-            }
-
-            .col-7 {
-                width: 58.33%;
-            }
-
-            .col-8 {
-                width: 66.66%;
-            }
-
-            .col-9 {
-                width: 75%;
-            }
-
-            .col-10 {
-                width: 83.33%;
-            }
-
-            .col-11 {
-                width: 91.66%;
-            }
-
-            .col-12 {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .my_content {
-                width: 380px;
-                margin-bottom: 100px;
-            }
-
-            .my_content2 {
-                width: 342px;
-                height: 550px;
-            }
-        }
-    </style>
     @yield("styles")
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-white">
     <div class="h-screen" x-data="setup()" x-init="$refs.loading.classList.add('hidden');" @resize.window="watchScreen()">
         <!-- nav bar -->
         @include('layouts.navigation')
@@ -95,35 +29,59 @@
                 Chargement.....
             </div>
             <!-- Sidebar -->
-            {{-- @php
-            $welcome
-        @endphp --}}
             <div class="flex flex-shrink-0 h-full transition-all fixed mt-16" id="dashbord" style="z-index: 1000">
-                @if(Auth::user() && ! request()->routeIs('welcome') )
-                @include('layouts.side_bar')
+                @if(Auth::user())
+                    @include('layouts.side_bar')
                 @endif
             </div>
             @php
-            $classe = "";
-            if (Auth::user()){
-            $classe = $classe."flex items-center justify-center flex-1 px-0 py-8 mt-16";
-            } else {
-            $classe = "flex flex-col items-center justify-center w-full mt-32";
-            }
+                $classe = "";
+                if (Auth::user()){
+                    $classe = $classe."flex items-center justify-center flex-1 px-0 py-8 mt-16";
+                } else {
+                    $classe = "flex flex-col items-center justify-center w-full mt-32";
+                }
             @endphp
-            <main style="" id="main" class="{{ $classe ?? "" }}">
-                @yield('slider')
-                <!-- Content -->
+            <main id="main" class="{{ $classe ?? '' }}">
                 @yield('content')
             </main>
         </div>
         @if(request()->routeIs('welcome') )
-        @include('layouts.footer')
+            @include('layouts.footer')
         @endif
         <div x-show="isSettingsPanelOpen" class="fixed inset-0 bg-black bg-opacity-50" @click="isSettingsPanelOpen = false" aria-hidden="true"></div>
     </div>
     </div>
+    
+    <script src="/assets/sweetalert2.all.min.js"></script>
+    <script>
+        function AlertSwalInfo(title, message, icon){
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: icon,
+                confirmButtonColor: "#16A34A",
+                confirmButtonText: "OK",
+            });
+        }
 
+        function AlertSwal(title, message, icon, form_tag){
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: icon,
+                showCancelButton: true,
+                confirmButtonColor: "#16A34A",
+                cancelButtonColor: "#DC2626",
+                confirmButtonText: "Oui",
+                cancelButtonText: "Annuler",
+            }).then((result) => {
+                if (result.isConfirmed && form_tag != "") {
+                    $(`#${form_tag}`).submit();
+                }
+            });
+        }
+    </script>
     <script async>
         const setup = () => {
             return {
@@ -137,7 +95,8 @@
                     }
                 },
             }
-        }
+        };
+        // console.log(Swal);
     </script>
     <script src="/assets/jquery.min.js"></script>
     <script src="/assets/select2.min.js"></script>
@@ -145,6 +104,7 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
     @yield("js")
+    @yield("js_again")
 </body>
 
 </html>
