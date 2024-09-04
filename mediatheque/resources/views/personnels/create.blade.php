@@ -1,4 +1,4 @@
-@extends('layouts.user.userCreate', ['action'=>"storePersonnel", 'title'=>"Ajouter un personnel"])
+@extends('layouts.user.userCreate', ['action'=>"personnels.store", 'title'=>"Ajouter un personnel"])
 @section('personnel')
     <div>
         <label class="label" for="statut">Statut : </label>

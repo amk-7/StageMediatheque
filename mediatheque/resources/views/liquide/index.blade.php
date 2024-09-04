@@ -1,38 +1,39 @@
 @extends('layouts.app')
-
 @section('content')
-    <div class="flex flex-col justify-center items-center m-auto">
-        <h1 class="text-3xl"> Liste des Abonements </h1>
-        <div>
-            <form class="flex flex-col items-center" method="get" action="{{route("listeLiquides")}}">
-                <div class="">
-                    <div class="flex flex-row w-96">
-                        <input class="search w-5/6" type="search" name="search_by" id="search_by" placeholder="rechercher par nom, prénom" value="{{ old('selected_search_by') }}">
-                        <button type="submit" class="button button_primary w-1/6">
-                            <img src="{{ asset('storage/images/search.png') }}" class="block h-auto w-auto fill-current text-gray-600">
+    <div class="flex flex-col justify-center items-center w-full ml-28 mx-12 space-y-6">
+        <h1 class="text-3xl">  Liste des Abonements </h1>
+        <div class="space-y-3 w-full">
+            <form class="flex flex-col items-center" method="get" action="">
+                <div class="w-96 lg:w-[800px] space-y-3">
+                    <div class="flex flex-row w-full border border-green-500">
+                        <input class="w-10/12 lg:w-11/12 border border-none py-3" type="text" name="search" id="search" placeholder="rechercher par nom, prénom" value="{{ old('selected_search_by') }}">
+                        <button type="submit" class="flex flex-col items-center justify-center w-2/12 lg:w-1/12">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
                         </button>
                     </div>
-                </div>
-                <div class="" id="searchParametersField">
-                    <p>Paramètres de recherche</p>
-                    <div class="flex space-x-3">
-                        <select id="min" name="min_annee" class="select_btn w-1/3 mb-3">
-                            <option value=""> Début </option>
-                            @for($a=$min_annee; $a <= $max_annee; $a++)
-                                <option value="{{ $a }}" {{ $selected_min==$a ? "selected" : "" }} > {{ $a }} </option>
-                            @endfor
-                        </select>
-                        <select id="max" name="max_annee" class="select_btn w-1/3 mb-3" style="">
-                            <option value=""> Fin </option>
-                            @for($a=$max_annee; $a >= $min_annee; $a--)
-                                <option value="{{ $a }}" {{ $selected_max==$a ? "selected" : "" }} > {{ $a }} </option>
-                            @endfor
-                        </select>
-                        <select name="etat" class="select_btn w-1/3 mb-3">
-                            <option value="" {{ $selected_etat=="" ? "selected" : "" }}>Tous</option>
-                            <option value="1" {{ $selected_etat=="1" ? "selected" : "" }}>Activer</option>
-                            <option value="0" {{ $selected_etat=="0" ? "selected" : "" }}>Desactiver</option>
-                        </select>
+                    <div class="" id="searchParametersField">
+                        <p>Paramètres de recherche</p>
+                        <div class="flex space-x-3">
+                            <select id="min" name="min_annee" class="select_btn w-1/3 mb-3">
+                                <option value=""> Début </option>
+                                @for($a=$min_annee; $a <= $max_annee; $a++)
+                                    <option value="{{ $a }}" {{ $selected_min==$a ? "selected" : "" }} > {{ $a }} </option>
+                                @endfor
+                            </select>
+                            <select id="max" name="max_annee" class="select_btn w-1/3 mb-3" style="">
+                                <option value=""> Fin </option>
+                                @for($a=$max_annee; $a >= $min_annee; $a--)
+                                    <option value="{{ $a }}" {{ $selected_max==$a ? "selected" : "" }} > {{ $a }} </option>
+                                @endfor
+                            </select>
+                            <select name="etat" class="select_btn w-1/3 mb-3">
+                                <option value="" {{ $selected_etat=="" ? "selected" : "" }}>Tous</option>
+                                <option value="1" {{ $selected_etat=="1" ? "selected" : "" }}>Activer</option>
+                                <option value="0" {{ $selected_etat=="0" ? "selected" : "" }}>Desactiver</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -53,11 +54,11 @@
                     <button type="Submit" class="button button_delete" onclick="activeModal('-')">Annuler abonement</button>
                 </form>
             </div>
-            @if(!empty($liquides ?? "") && $liquides->count() > 0)
-                <table class="bg-white">
-                    <thead class="text-xs bg-white uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-500 text-center">
-                        <tr class="fieldset_border">
-                            <th class="fieldset_border">Abonne</th>
+            <div class="w-full">
+                <table class="bg-white w-full">
+                    <thead class="text-xs uppercase bg-gray-200 dark:bg-gray-300 dark:text-gray-500 text-left">
+                        <tr class="fieldset_border w-full">
+                        <th class="fieldset_border">Abonne</th>
                             <th class="fieldset_border">Tarif</th>
                             <th class="fieldset_border">Date debut</th>
                             <th class="fieldset_border">Date fin</th>
@@ -66,9 +67,9 @@
                         </tr>
                     </thead>
                     <tbody class="">
-                    @foreach($liquides as $liquide)
+                    @forelse($liquides as $liquide)
                         <tr class="fieldset_border">
-                            <td class="fieldset_border"> {{ $liquide->registration->abonne->utilisateur->userFullName }} </td>
+                        <td class="fieldset_border"> {{ $liquide->registration->abonne->utilisateur->userFullName }} </td>
                             <td class="fieldset_border"> {{ $liquide->registration->tarifAbonnement->designation }} </td>
                             <td class="fieldset_border"> {{ $liquide->registration->date_debut->format('Y-m-d') }} </td>
                             <td class="fieldset_border"> {{ $liquide->registration->date_fin->format('Y-m-d') }} </td>
@@ -83,62 +84,34 @@
                                 <input type="button" onclick="activeModal('{{$liquide->id_liquide}}')" value="Annuler" class="button button_delete">
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td class="fieldset_border">
+                            Aucun abonnement n'est enregistré
+                            </td>
+                            <td class="fieldset_border">
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
-            @else
-                <h4>Aucun abonnement</h4>
-            @endif
-        </div>
-        {{ $liquides->links() }}
-    </div>
-    <!-- Overlay element -->
-    <div style="z-index:1000" id="overlay_suppression" class="fixed hidden z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60"></div>
-    <div style="z-index:1001" class="fixed hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 bg-white rounded-md px-8 py-6 space-y-5 drop-shadow-lg" id="modal_supprimer">
-        <div class="flex flex-col items-center space-y-4">
-            <div id="id_message" class="text-center">
-                <p>Voulez vous  annuler tous les abonnement ?</p>
-            </div>
-            <div class="flex flex-row space-x-8">
-                <button id="btn_annuler" class="button button_show">Annuler</button>
-                <form id="form_delete_confirm" action="{{route('destroyLiquide')}}" method="post">
-                    @csrf
-                    @method('delete')
-                    <input type="submit" id="supprimer_ouvrage_confirm" name="supprimer" value="Supprimer" class="button button_delete">
-                </form>
             </div>
         </div>
-    </div>
+        <div class="w-full">
+            {{ $liquides->links() }}
+        </div>
 @endsection
+@if (session('success'))
 @section('js')
-    <script type="text/javascript">
-        //-------------------------------------------------
-        let div_modal_supprimer = document.getElementById("modal_supprimer");
-        let form_confirm = document.getElementById("form_delete_confirm");
-        let btn_supprimer_ouvrage_confirm = document.getElementById("supprimer_ouvrage_confirm");
-        let btn_annuler = document.getElementById("btn_annuler");
-        let overlay = document.getElementById("overlay_suppression");
-
-        function stopPropagation(){
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        function activeModal(id){
-            stopPropagation();
-            div_modal_supprimer.classList.remove("hidden");
-            overlay.classList.remove('hidden');
-            if (id==='-') {
-                form_confirm.action = `${form_confirm.action}/`;
-            } else {
-                form_confirm.action = `/suppression_liquide/${id}/`;
-            }
-        }
-
-        btn_annuler.addEventListener('click', function (){
-            stopPropagation();
-            div_modal_supprimer.classList.add("hidden");
-            overlay.classList.add('hidden');
-        });
+    <script>
+        AlertSwalInfo(title='Info', text="{!! session('success') !!}", icon='success');
     </script>
-@stop
+@endsection
+@endif
+@if (session('error'))
+@section('js')
+    <script>
+        AlertSwalInfo(title='Info', text="{!! session('error') !!}", icon='error');
+    </script>
+@endsection
+@endif

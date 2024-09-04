@@ -122,13 +122,16 @@ Route::group(['middleware' => ['role:responsable', 'auth']], function () {
     Route::put('enregistrement_import_excel_new', [OuvrageController::class, 'import'])->name('enregistrementImportExcelNew');
 
     // Path: Personnel routes/web.php
-    Route::get('liste_des_personnels', 'App\Http\Controllers\PersonnelController@index')->name('listePersonnels');
-    Route::get('affiche_personnel/{personnel}', 'App\Http\Controllers\PersonnelController@show')->name('showPersonnel');
-    Route::get('formulaire_edition_des_personnels/{personnel}/edition', 'App\Http\Controllers\PersonnelController@edit')->name('editPersonnel');
-    Route::put('mise_a_jour_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@update')->name('updatePersonnel');
-    Route::delete('suppression_des_personnels/{personnel}', 'App\Http\Controllers\PersonnelController@destroy')->name('destroyPersonnel');
-    Route::get('formulaire_Personnel', 'App\Http\Controllers\PersonnelController@create')->name('createPersonnel');
-    Route::post('enregistrement_personnel', 'App\Http\Controllers\PersonnelController@store')->name('storePersonnel');
+   
+    Route::get('personnels', [PersonnelController::class, 'index'])->name('personnels.index');
+    Route::get('personnels/create/', [PersonnelController::class, 'create'])->name('personnels.create');
+    Route::post('personnels/store/', [PersonnelController::class, 'store'])->name('personnels.store');
+    Route::get('personnels/{personnel}/edit', [PersonnelController::class, 'edit'])->name('personnels.edit');
+    Route::get('personnels/{personnel}/show', [PersonnelController::class, 'show'])->name('personnels.show');
+    Route::put('personnels/{personnel}/', [PersonnelController::class, 'update'])->name('personnels.update');
+    Route::delete('personnels/{personnel}', [PersonnelController::class, 'destroy'])->name('personnels.destroy');
+    Route::put('personnels/{abonne}/activer', [PersonnelController::class, 'fenix_user'])->name('fenix_user');
+
 });
 
 

@@ -1,6 +1,6 @@
 
 
-@extends('layouts.user.userEdit', ['action'=>"updatePersonnel", 'title'=>"Modifier un personnel", 'utilisateur'=>$personnel->utilisateur, 'model'=>$personnel])
+@extends('layouts.user.userEdit', ['action'=>"personnels.update", 'title'=>"Modifier un personnel", 'utilisateur'=>$personnel->utilisateur, 'model'=>$personnel])
 @section('personnel')
     <div>
         <label for="" class="label">Statut : </label>

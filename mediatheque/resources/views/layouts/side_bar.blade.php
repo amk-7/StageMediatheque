@@ -153,7 +153,7 @@
                                </li>
                                @if(Auth::user()->hasRole('responsable'))
                                    <li>
-                                       <a href="/liste_des_personnels" class="@if(request()->routeIs('listePersonnels')) current_link @else other_link @endif">Presonnels</a>
+                                       <a href="{{ route('personnels.index') }}" class="@if(request()->routeIs('personnels.index')) current_link @else other_link @endif">Presonnels</a>
                                    </li>
                            </ul>
                        </li>

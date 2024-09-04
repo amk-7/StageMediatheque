@@ -1,4 +1,4 @@
-@extends('layouts.user.userShow', ['action'=>"showPersonnel", 'title'=>"Afficher un personnel", 'utilisateur'=>$personnel->utilisateur, 'model'=>$personnel])
+@extends('layouts.user.userShow', ['action'=>"personnels.show", 'title'=>"Afficher un personnel", 'utilisateur'=>$personnel->utilisateur, 'model'=>$personnel])
 
 @section('personnel')
     <label>
