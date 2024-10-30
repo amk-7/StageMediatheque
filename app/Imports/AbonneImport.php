@@ -27,7 +27,7 @@ class AbonneImport implements ToCollection
             $numero_carte = $abonne_data[11];
             $a_payer = $abonne_data[12]=="Oui" ? true : false;
             
-            dump($abonne_data);
+            //dd($abonne_data);
         }
         //dump($collection);
     }

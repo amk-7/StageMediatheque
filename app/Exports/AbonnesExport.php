@@ -12,9 +12,11 @@ class AbonnesExport implements FromCollection
     */
     public function collection()
     {
-        $id_abonnes = collect(session('abonnes_key'));
-        $liste = Abonne::whereIn('id_abonne', $id_abonnes)->get();
+        // $id_abonnes = collect(session('abonnes_key'));
+        // $liste = Abonne::whereIn('id_abonne', $id_abonnes)->get();
 
+        $liste = Abonne::all();
+        
         if (session('paye') !== null) {
             $payeFilter = session('paye') === "oui" ? true : false;
             $abonnes = $liste->filter(function ($abonne) use ($payeFilter) {

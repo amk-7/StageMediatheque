@@ -6,6 +6,7 @@
         <h4 class="label_title_sub_title">Date : {{ $restitution->date_restitution }} </h4>
         <form action="{{route('restitutions.update', $restitution)}}" method="post">
             @csrf
+            @method("PUT")
             <fieldset class="fieldset_border">
                 <legend>Personnel</legend>
                 <div>

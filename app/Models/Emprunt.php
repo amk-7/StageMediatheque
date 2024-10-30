@@ -45,10 +45,13 @@ class Emprunt extends Model
     public  function  empruntExpierAttribute(){
         return Carbon::now()->gt($this->date_retour);
     }
+    
     public function getJourRestantAttribute(){
-        $nbJour = -1;
+        $a_ete_restituer = $this->restitution()->where('etat', 1)->get()->count() > 0 ? true : false;
+        if ($a_ete_restituer){
+            return 0;
+        }
         $nbJour = $this->date_retour->diffInDays(Carbon::now());
-
         if ($this->empruntExpierAttribute()){
             $nbJour = $nbJour*-1;
         }
@@ -72,28 +75,9 @@ class Emprunt extends Model
 
     public function restitution()
     {
-        return $this->hasOne(Restitution::class, 'id_restitution');
+        return $this->hasOne(Restitution::class, 'id_emprunt');
     }
 
-    public static function enregistrerLignesEmprunt($datas, $emprunt)
-    {
-        $datas = Controller::extractLineToData($datas);
-        for ($i=0; $i<count($datas)-1; $i++){
-            self::enregistrerUneLignesEmprunt($datas[$i][0], $datas[$i][1], $emprunt);
-        }
-    }
-
-    public static function enregistrerUneLignesEmprunt($id_ouvrage, $etat_sortie, $emprunt)
-    {
-        $ouvrage = Ouvrage::find($id_ouvrage);
-        $ouvrage->decrementerNombreExemplaire();
-        LignesEmprunt::create([
-            'etat_sortie' => array_search($etat_sortie, Controller::demanderEtat()),
-            'disponibilite' => false,
-            'id_ouvrage' => $ouvrage->id_ouvrage,
-            'id_emprunt' => $emprunt->id_emprunt,
-        ]);
-    }
 
     public function getAllLignesEmpruntByEmprunt()
     {

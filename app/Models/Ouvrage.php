@@ -151,6 +151,12 @@ class Ouvrage extends Model
         $this->save();
     }
 
+    public function incrementerNombreExemplaire()
+    {
+        $this->nombre_exemplaire = $this->nombre_exemplaire + 1;
+        $this->save();
+    }
+
     public function decrementerNombreExemplaire()
     {
         $this->nombre_exemplaire = $this->nombre_exemplaire - 1;

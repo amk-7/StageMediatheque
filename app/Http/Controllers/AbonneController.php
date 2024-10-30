@@ -28,44 +28,44 @@ class AbonneController extends Controller
      */
     public function index(Request $request)
     {
-        //dd(Abonne::all());
-        $abonnes = "";
-        $paginate = 10;
-        $selected_search_by = $request->search_by;
-        $selected_profession = $request->profession;
-        $selected_niveau_etude = $request->niveau_etude;
-        $selected_etat = $request->etat;
+        try {
+            $abonnes = "";
+            $paginate = 10;
+            $selected_search_by = $request->search_by;
+            $selected_profession = $request->profession;
+            $selected_niveau_etude = $request->niveau_etude;
+            $selected_etat = $request->etat;
 
-        if (isset($selected_search_by) || isset($request->profession) || isset($selected_niveau_etude) || isset($selected_etat)){
-            $users = DB::table('users')
-                ->select("id_utilisateur")
-                ->where("nom", "like", "%".strtoupper($request->search_by)."%")
-                ->orWhere("prenom", "like", "%".strtolower($request->search_by)."%")
-                ->get();
-            $userIds = $users->pluck('id_utilisateur')->toArray();
-            $professions = ["Retraite", "Etudiant", "Fonctionnaire", "Elève"];
-            if (! empty($request->profession)){
-                $professions = [$request->profession];
+            if (isset($selected_search_by) || isset($request->profession) || isset($selected_niveau_etude) || isset($selected_etat)){
+                $users = DB::table('users')
+                    ->select("id_utilisateur")
+                    ->where("nom", "like", "%".strtoupper($request->search_by)."%")
+                    ->orWhere("prenom", "like", "%".strtolower($request->search_by)."%")
+                    ->get();
+                $userIds = $users->pluck('id_utilisateur')->toArray();
+                $professions = ["Retraite", "Etudiant", "Fonctionnaire", "Elève"];
+                if (! empty($request->profession)){
+                    $professions = [$request->profession];
+                }
+                $niveau_etudes = ["Université", "Lycée", "Collège", "Primaire"];
+                if (! empty($request->niveau_etude)){
+                    $niveau_etudes = [$request->niveau_etude];
+                }
+
+                $abonnes = Abonne::whereIn("id_utilisateur", $userIds)
+                            ->with(['utilisateur'])
+                            ->whereIn("profession", $professions)
+                            ->where("etat", boolval($request->etat))
+                            ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
+
+            } else {
+                $abonnes = Abonne::with(['utilisateur'])->paginate($paginate);
             }
-            $niveau_etudes = ["Université", "Lycée", "Collège", "Primaire"];
-            if (! empty($request->niveau_etude)){
-                $niveau_etudes = [$request->niveau_etude];
-            }
 
-            $abonnes = Abonne::whereIn("id_utilisateur", $userIds)
-                        ->with(['utilisateur'])
-                        ->whereIn("profession", $professions)
-                        ->where("etat", boolval($request->etat))
-                        ->whereIn("niveau_etude", $niveau_etudes)->paginate($paginate);
+            \Session(['abonnes_key' => $abonnes->pluck('id_abonne')->toArray()]);
+            \Session(['paye' => $request->paye]);
 
-        } else {
-            $abonnes = Abonne::with(['utilisateur'])->paginate($paginate);
-        }
-
-        \Session(['abonnes_key' => $abonnes->pluck('id_abonne')->toArray()]);
-        \Session(['paye' => $request->paye]);
-
-        return view('abonnes.index')->with([
+            return view('abonnes.index')->with([
                 'abonnes' => $abonnes,
                 'paye' => $request->paye,
                 'selected_search_by' => $selected_search_by,
@@ -73,6 +73,9 @@ class AbonneController extends Controller
                 'selected_niveau_etude' => $selected_niveau_etude,
                 'selected_etat' => $selected_etat,
                 ]);
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     /**
@@ -82,7 +85,11 @@ class AbonneController extends Controller
      */
     public function create()
     {
-        return view('abonnes.create');
+        try {
+            return view('abonnes.create');
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     /**
@@ -118,43 +125,48 @@ class AbonneController extends Controller
         ])->validate();
 
 
-        if (Auth::user()){
-            $request->validate(['profil_valide' => 'required']);
+        try {
+            if (Auth::user()){
+                $request->validate(['profil_valide' => 'required']);
+            }
+    
+            $request['adresse'] = array(
+                'ville' => $request->ville,
+                'quartier' => $request->quartier,
+                'numero_maison' => $request->numero_maison,
+            );
+    
+            if ($request->password != $request->confirmation_password){
+                return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
+            }
+    
+            $utilisateur = User::where('nom', '=', $request->nom)
+                                        ->where('prenom', '=', $request->prenom)
+                                        ->where('nom_utilisateur', '=', $request->nom_utilisateur)
+                                        ->first();
+    
+            if(! $utilisateur){
+                $utilisateur = User::enregistrerUtilisateur($request);
+                Abonne::create([
+                    'date_naissance' => $request->date_naissance,
+                    'niveau_etude' => $request->niveau_etude,
+                    'profession' => $request->profession ?? '',
+                    'contact_a_prevenir' => $request->contact_a_prevenir?? '',
+                    'numero_carte' => $request->numero_carte ?? '',
+                    'type_de_carte' => $request->type_de_carte ?? 0,
+                    'id_utilisateur' => $utilisateur->id_utilisateur,
+                    'profil_valider' => $request->profil_valide ?? 0,
+                ]);
+                $utilisateur->assignRole(Role::find(3));
+                //Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
+                return redirect('liste_des_abonnes');
+            } else {
+                return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
+            }
+        } catch (\Throwable $th) {
+            abort(500, "");
         }
-
-        $request['adresse'] = array(
-            'ville' => $request->ville,
-            'quartier' => $request->quartier,
-            'numero_maison' => $request->numero_maison,
-        );
-
-        if ($request->password != $request->confirmation_password){
-            return redirect()->back()->withInput()->with('error', "Assurez vous d'avoir saisi des mots de passe identiques");
-        }
-
-        $utilisateur = User::where('nom', '=', $request->nom)
-                                    ->where('prenom', '=', $request->prenom)
-                                    ->where('nom_utilisateur', '=', $request->nom_utilisateur)
-                                    ->first();
-
-        if(! $utilisateur){
-            $utilisateur = User::enregistrerUtilisateur($request);
-            Abonne::create([
-                'date_naissance' => $request->date_naissance,
-                'niveau_etude' => $request->niveau_etude,
-                'profession' => $request->profession ?? '',
-                'contact_a_prevenir' => $request->contact_a_prevenir?? '',
-                'numero_carte' => $request->numero_carte ?? '',
-                'type_de_carte' => $request->type_de_carte ?? 0,
-                'id_utilisateur' => $utilisateur->id_utilisateur,
-                'profil_valider' => $request->profil_valide ?? 0,
-            ]);
-            $utilisateur->assignRole(Role::find(3));
-            //Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
-            return redirect('liste_des_abonnes');
-        } else {
-            return redirect()->back()->withInput()->withErrors(['users_exist' => "L'utilisateur $request->nom $request->prenom avec le nom d'utilisateur $request->nom_utilisateur existe déjà."]);
-        }
+        
     }
 
     /**
@@ -165,7 +177,11 @@ class AbonneController extends Controller
      */
     public function show(Abonne $abonne)
     {
-        return view('abonnes.show')->with('abonne', $abonne);
+        try {
+            return view('abonnes.show')->with('abonne', $abonne);
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     /**
@@ -176,8 +192,11 @@ class AbonneController extends Controller
      */
     public function edit(Abonne $abonne)
     {
-        //dd($abonne->date_naissance);
-        return view('abonnes.edit')->with('abonne', $abonne);
+        try {
+            return view('abonnes.edit')->with('abonne', $abonne);
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     /**
@@ -195,23 +214,27 @@ class AbonneController extends Controller
             'numero_maison' => $request->numero_maison,
         );
 
-        $utilisateur = User::modifierUtilisateur($request, $abonne->id_utilisateur);
-        $utilisateur->save();
-        $abonne->date_naissance = $request["date_naissance"];
-        $abonne->niveau_etude = $request["niveau_etude"];
-        $abonne->profession = $request["profession"];
-        $abonne->contact_a_prevenir = $request["contact_a_prevenir"];
-        $abonne->numero_carte = $request["numero_carte"];
-        $abonne->type_de_carte = $request["type_de_carte"];
-        $abonne->save();
-        $utilisateur->assignRole(Role::find(3));
-        //dd(Auth::user()->hasRole('abonne'));
-        if (Auth::user()->hasRole('abonne')){
-            return redirect("affiche_abonne/$abonne->id_abonne");
-        } else {
-            $abonne->profil_valider = $request->profil_valide;
-            // Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
-            return redirect()->route('abonnes.index');
+        try {
+            $utilisateur = User::modifierUtilisateur($request, $abonne->id_utilisateur);
+            $utilisateur->save();
+            $abonne->date_naissance = $request["date_naissance"];
+            $abonne->niveau_etude = $request["niveau_etude"];
+            $abonne->profession = $request["profession"];
+            $abonne->contact_a_prevenir = $request["contact_a_prevenir"];
+            $abonne->numero_carte = $request["numero_carte"];
+            $abonne->type_de_carte = $request["type_de_carte"];
+            $abonne->save();
+            $utilisateur->assignRole(Role::find(3));
+            //dd(Auth::user()->hasRole('abonne'));
+            if (Auth::user()->hasRole('abonne')){
+                return redirect("affiche_abonne/$abonne->id_abonne");
+            } else {
+                $abonne->profil_valider = $request->profil_valide;
+                // Mail::to($utilisateur->email)->queue(new Contact($utilisateur->userfullName, $utilisateur->nom_utilisateur));
+                return redirect()->route('abonnes.index');
+            }
+        } catch (\Throwable $th) {
+            abort(500, "");
         }
     }
     /**
@@ -222,16 +245,24 @@ class AbonneController extends Controller
      */
     public function destroy(Abonne $abonne)
     {
-        $abonne->etat=false;
+        try {
+            $abonne->etat=false;
         $abonne->save();
         return redirect()->route('listeAbonnes');
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     public function fenix_user(Abonne $abonne)
     {
-        $abonne->etat = true;
-        $abonne->save();
-        return redirect()->route('listeAbonnes');
+        try {
+            $abonne->etat = true;
+            $abonne->save();
+            return redirect()->route('listeAbonnes');
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     public function mesEmprunts(Abonne $abonne)
@@ -248,8 +279,11 @@ class AbonneController extends Controller
 
     public function exportExcel()
     {
-        //dd("Okay");
-        return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
+        try {
+            return Excel::download(new AbonnesExport(), "liste_des_abonnes.xlsx");
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     public function importExcel(Request $request)

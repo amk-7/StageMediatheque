@@ -77,6 +77,7 @@
                                         </button>
                                     </a>
                                 </div>
+                                @if(empty($emprunt->restitution))
                                 <div>
                                     <a href="{{ route('restitutions.create', $emprunt) }}">
                                         <button type="button" class="button button_primary">
@@ -91,7 +92,8 @@
                                         </button>
                                     </a>
                                 </div>
-                                @if(Auth::user()->hasRole('responsable'))
+                                @endif
+                                @if( empty($emprunt->restitution) && Auth::user()->hasRole('responsable'))
                                 <div>
                                     <form action="{{ route('emprunts.destroy', $emprunt) }}" id="form_destroy_{{$emprunt->id_emprunt}}" method="post">
                                         @csrf

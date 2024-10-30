@@ -139,7 +139,13 @@ class Abonne extends Model
     public static function getAbonnesValidateWithAllAttribut()
     {
         $result = Abonne::all()->where('profil_valider', 1);
-        $abonnes = self::formatAbonneList($result);
+        $_abonnes = self::formatAbonneList($result);
+        $abonnes = [];
+        foreach ($_abonnes as $abonne){
+            if (strtolower($abonne['pas_abonnement']) == "false" && strtolower($abonne['estEligible']) == "true"){
+                array_push($abonnes, $abonne);
+            }
+        }
         return $abonnes;
     }
 

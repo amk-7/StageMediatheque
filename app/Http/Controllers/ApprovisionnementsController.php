@@ -6,6 +6,7 @@ use App\Models\Approvisionnement;
 use App\Models\OuvragesPhysique;
 use App\Models\Ouvrage;
 use App\Models\Personnel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Integer;
@@ -19,17 +20,21 @@ class ApprovisionnementsController extends Controller
      */
     public function index(Request $request)
     {
-        $start_date = $request->input('start_date', date('Y-01-01'));
-        $end_date = $request->input('end_date', date('Y-m-d'));
-        $title = $request->input('search');
-
-        $approvisionnements = Approvisionnement::whereBetween('date_approvisionnement', [$start_date, $end_date])
-                                                ->whereHas('ouvrage', function ($query) use ($title) {
-                                                    $query->where('titre', 'like', "%$title%");
-                                                })
-                                                ->orderBy('date_approvisionnement', 'desc')->paginate(10);
-        
-        return view('approvisionnements.index', compact('approvisionnements', 'start_date', 'end_date', 'title'));
+        try {
+            $start_date = $request->input('start_date', date('Y-01-01'));
+            $end_date = $request->input('end_date', Carbon::now()->addDay(1));
+            $title = $request->input('search');
+    
+            $approvisionnements = Approvisionnement::whereBetween('date_approvisionnement', [$start_date, $end_date])
+                                                    ->whereHas('ouvrage', function ($query) use ($title) {
+                                                        $query->where('titre', 'like', "%$title%");
+                                                    })
+                                                    ->orderBy('date_approvisionnement', 'desc')->paginate(10);
+            
+            return view('approvisionnements.index', compact('approvisionnements', 'start_date', 'end_date', 'title'));
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     /**
@@ -39,9 +44,15 @@ class ApprovisionnementsController extends Controller
      */
     public function create()
     {
-        return view('approvisionnements.create')->with([
-            "ouvrages" => Ouvrage::all(),
-        ]);
+        try {
+            return view('approvisionnements.create')->with([
+                "ouvrages" => Ouvrage::all(),
+            ]);
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
+
+
     }
 
     /**
@@ -58,25 +69,29 @@ class ApprovisionnementsController extends Controller
             'nombres_exemplaires' => 'required',
         ]);
 
-        $id_personnel = Personnel::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_personnel;
-        $ouvrages = Ouvrage::whereIn('id_ouvrage', $validated_data['ids_ouvrages'])->get();
-        
-        for($i=0; $i <= count($validated_data['ids_ouvrages'])-1; $i++){
-            $id_ouvrage =  $validated_data['ids_ouvrages'][$i];
-            $nombre_exemplaire =  $validated_data['nombres_exemplaires'][$i];
-
-            $ouvrage = $ouvrages->find($id_ouvrage);
-            $ouvrage->augmenterNombreExemplaire($nombre_exemplaire);
-            $ouvrage->save();
-
-            Approvisionnement::create([
-                'nombre_exemplaire' => $nombre_exemplaire,
-                'id_personnel' => $id_personnel,
-                'id_ouvrage' => $id_ouvrage,
-            ]);
+        try {
+            $id_personnel = Personnel::all()->where('id_utilisateur', Auth::user()->id_utilisateur)->first()->id_personnel;
+            $ouvrages = Ouvrage::whereIn('id_ouvrage', $validated_data['ids_ouvrages'])->get();
+            
+            for($i=0; $i <= count($validated_data['ids_ouvrages'])-1; $i++){
+                $id_ouvrage =  $validated_data['ids_ouvrages'][$i];
+                $nombre_exemplaire =  $validated_data['nombres_exemplaires'][$i];
+    
+                $ouvrage = $ouvrages->find($id_ouvrage);
+                $ouvrage->augmenterNombreExemplaire($nombre_exemplaire);
+                $ouvrage->save();
+    
+                Approvisionnement::create([
+                    'nombre_exemplaire' => $nombre_exemplaire,
+                    'id_personnel' => $id_personnel,
+                    'id_ouvrage' => $id_ouvrage,
+                ]);
+            }
+    
+            return redirect()->route('approvisionnements.index')->with('success', 'Approvisionnement enregistré avec succès.');
+        } catch (\Throwable $th) {
+            abort(500, "");
         }
-
-        return redirect()->route('approvisionnements.index')->with('success', 'Approvisionnement enregistré avec succès.');
     }
 
     /**
@@ -98,10 +113,14 @@ class ApprovisionnementsController extends Controller
      */
     public function edit(Approvisionnement $approvisionnement)
     {
-        return view('approvisionnements.create')->with([
-            "ouvrages" => Ouvrage::all(),
-            "approvisionnement" => $approvisionnement,
-        ]);
+        try {
+            return view('approvisionnements.create')->with([
+                "ouvrages" => Ouvrage::all(),
+                "approvisionnement" => $approvisionnement,
+            ]);
+        } catch (\Throwable $th) {
+            abort(500, "");
+        }
     }
 
     /**
@@ -113,14 +132,20 @@ class ApprovisionnementsController extends Controller
      */
     public function update(Request $request, Approvisionnement $approvisionnement)
     {
-        $delta = $request->nombre_exemplaire - $approvisionnement->nombre_exemplaire;
-        $approvisionnement->ouvrage->augmenterNombreExemplaire($delta);
-        $approvisionnement->ouvrage->save();
+        try {
+            $delta = $request->nombre_exemplaire - $approvisionnement->nombre_exemplaire;
+            $approvisionnement->ouvrage->augmenterNombreExemplaire($delta);
+            $approvisionnement->ouvrage->save();
 
-        $approvisionnement->nombre_exemplaire= $request->nombre_exemplaire;
-        $approvisionnement->save();
+            $approvisionnement->nombre_exemplaire= $request->nombre_exemplaire;
+            $approvisionnement->save();
 
-        return redirect()->route('approvisionnements.index');
+            return redirect()->route('approvisionnements.index');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        abort(500, "");
+
     }
 
     /**

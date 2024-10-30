@@ -46,9 +46,14 @@
                 </div>
             </form>
             <div class="flex flex-row-reverse">
-                <a href="{{ route('abonnes.create') }}">
-                    <button type="button" class="button button_primary">Ajouter</button>
-                </a>
+                <div class="space-x-3">
+                    <a href="{{ route('downloadExcelListeAbonnes') }}">
+                        <button type="button" class="button button_primary">Exporter</button>
+                    </a>
+                    <a href="{{ route('abonnes.create') }}">
+                        <button type="button" class="button button_primary">Ajouter</button>
+                    </a>
+                </div>
             </div>
             <div class="w-full">
                 <table class="bg-white w-full">

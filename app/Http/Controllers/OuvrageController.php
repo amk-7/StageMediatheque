@@ -163,7 +163,6 @@ class OuvrageController extends Controller
             $domaines = Domaine::all();
             $auteurs = Auteur::all();
             $ouvrage = new Ouvrage();
-            // $ouvrage->id_ouvrage =null;
             return view('ouvrages.create', compact('types', 'niveaux', 'langues', 'domaines', 'auteurs', 'ouvrage'));
         } catch (Exception $e) {
             abort(500, 'Une erreur est survenue lors du chargement du formulaire de création.');
@@ -262,29 +261,28 @@ class OuvrageController extends Controller
             $niveaux = Niveau::all();
             $langues = Langue::all();
             $domaines = Domaine::all();
-            return view('ouvrages.edit', compact('ouvrage', 'types', 'niveaux', 'langues', 'domaines'));
+            $auteurs = Auteur::all();
+            return view('ouvrages.create', compact('types', 'niveaux', 'langues', 'domaines', 'auteurs', 'ouvrage'));
         } catch (Exception $e) {
             abort(500, 'Une erreur est survenue lors du chargement du formulaire de modification.');
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Ouvrage $ouvrage)
     {
+        $request->validate([
+            'titre' => 'required|unique:ouvrages,titre,'. $ouvrage->id_ouvrage.',id_ouvrage',
+            'niveau' => 'required|not_in:Sélectionner niveau',
+            'type' => 'required|not_in:Sélectionner type',
+            'langues' => 'required',
+            'annee_apparution' => 'required',
+            'lieu_edition' => 'required',
+            'data_auteurs' => 'required',
+            'domaines' => 'required',
+            'nombre_exemplaire' => 'numeric|min:1',
+        ]);
+
         try {
-            $ouvrage = Ouvrage::findOrFail($id);
-
-            $request->validate([
-                'titre' => 'required|unique:ouvrages,titre,' . $id,
-                'niveau' => 'required|not_in:Sélectionner niveau',
-                'type' => 'required|not_in:Sélectionner type',
-                'langues' => 'required',
-                'annee_apparution' => 'required',
-                'lieu_edition' => 'required',
-                'data_auteurs' => 'required',
-                'domaines' => 'required',
-                'nombre_exemplaire' => 'numeric|min:1',
-            ]);
-
             // Mise à jour des informations de l'ouvrage
             $ouvrage->update($request->all());
             $ouvrage->retirerLangues($request->langues);
